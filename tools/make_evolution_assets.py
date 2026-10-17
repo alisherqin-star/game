@@ -97,6 +97,110 @@ A('items/ribbon', dict(o='#6a1a3a', P='#f6a8c8', H='#ffffff', K='#e0608a', B='#7
 '.oBBo....oBBo.',
 '.ooo......ooo.'])
 
+# ---------------- RPG：宝箱、货物包、饰品图标 ----------------
+P_CHEST = dict(o='#2a1608', W='#a8652e', w='#7a4520', H='#d8924a', G='#ffd84a', g='#c89a20', k='#1a0c04', i='#3a2410')
+A('props/chest_0', P_CHEST, [
+'..oooooooooooo..',
+'.oHHHHHHHHHHHHo.',
+'oHWWWWWWWWWWWWWo',
+'oWWWWWWWWWWWWWwo',
+'oGGGGGGgGGGGGGGo',
+'oWWWWWGGGGWWWWwo',
+'oWWWWWGkkGWWWWwo',
+'oWWWWWGGGGWWWWwo',
+'oWWWWWWWWWWWWWwo',
+'oGGGGGGGGGGGGGGo',
+'oWWWWWWWWWWWWWwo',
+'owwwwwwwwwwwwwwo',
+'.oooooooooooooo.'])
+A('props/chest_1', dict(P_CHEST, y='#fff4b0'), [
+'..oooooooooooo..',
+'.oHHHHHHHHHHHHo.',
+'oGGGGGGGGGGGGGGo',
+'oiiiiiiiiiiiiiio',
+'okkkkyykkyykkkko',
+'oWWWWWWWWWWWWWwo',
+'oWWWWWGGGGWWWWwo',
+'oWWWWWGkkGWWWWwo',
+'oWWWWWGGGGWWWWwo',
+'oGGGGGGGGGGGGGGo',
+'oWWWWWWWWWWWWWwo',
+'owwwwwwwwwwwwwwo',
+'.oooooooooooooo.'])
+A('items/goods', dict(o='#3a2410', B='#c8a070', H='#e8c890', d='#9a7040', r='#c03838'), [
+'....oooo....',
+'...orrrro...',
+'..oHHrrHHo..',
+'.oHBBrrBBBo.',
+'oHBBBrrBBBdo',
+'oBBBBrrBBBdo',
+'orrrrrrrrrro',
+'oBBBBrrBBBdo',
+'oBBBBrrBBddo',
+'.oddddrddddo',
+'..oooooooo..'])
+A('items/acc_bell', dict(o='#5a3a08', Y='#ffd84a', H='#fff4b0', d='#c89a20', r='#e05050'), [
+'.....oo.....',
+'....orro....',
+'...oYYYYo...',
+'..oYHYYYYo..',
+'..oYHYYYYo..',
+'.oYYYYYYYdo.',
+'.oYYYYYYYdo.',
+'oYYYYYYYYYdo',
+'oddddddddddo',
+'.ooooYYoooo.',
+'.....oo.....'])
+A('items/acc_scarf', dict(o='#3a1030', R='#e0608a', H='#ffb0c8', d='#a03060'), [
+'.oooooooooo.',
+'oRRHRRRHRRRo',
+'oRRRRRRRRRdo',
+'.oddRRRRddo.',
+'...oRRRRo...',
+'...oRRdRo...',
+'..oRRo.oRo..',
+'..oRdo.oRo..',
+'.oRRo...oRo.',
+'.oddo...odo.',
+'.ooo.....oo.'])
+A('items/acc_magnet', dict(o='#2a1a1a', R='#e04848', H='#ff9a9a', S='#c8c8d8', s='#8a8aa0', d='#a02828'), [
+'.oooo..oooo.',
+'oRHRo..oRRdo',
+'oRRRo..oRRdo',
+'oRRRo..oRRdo',
+'oRRRo..oRRdo',
+'oRRRoooRRRdo',
+'oRRRRRRRRRdo',
+'.oddddddddo.',
+'..oooooooo..',
+'.oSSo..oSSo.',
+'.osso..osso.',
+'.oooo..oooo.'])
+A('items/acc_chime', dict(o='#103040', C='#7fe8ff', H='#e0ffff', d='#3aa0c0', s='#c8c8d8'), [
+'.....oo.....',
+'....osso....',
+'..oooooooo..',
+'..oCHoCHoC..',
+'..oCCoCCoC..',
+'..oCCoCCoC..',
+'..oddoCCod..',
+'..oooodooo..',
+'......oo....',
+'.....oCo....',
+'......o.....'])
+A('items/acc_leaf', dict(o='#1a3a10', G='#5fae3a', H='#9ad65a', d='#3f8a2a', s='#7a5020'), [
+'.......oo...',
+'.....ooHGo..',
+'....oHHGGo..',
+'...oHGGGGo..',
+'..oHGGdGGo..',
+'..oGGdGGGo..',
+'.oGGdGGGo...',
+'.oGdGGGo....',
+'.odGGoo.....',
+'osoo........',
+'so..........'])
+
 # ---------------- 古代石板 14x18（彩蛋：刻着进化线索的谜语） ----------------
 A('props/tablet', dict(o='#22263a', S='#8f93a8', H='#c2c6d6', d='#5f6378', g='#7fe8ff', G='#c8f8ff', m='#4f8a3a'), [
 '....oooooo....',
