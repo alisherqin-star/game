@@ -9,7 +9,8 @@
 #         'y' 迷路的小史莱姆（支线，计划放在夜之墓地的黑影墙后面）
 #         'c' 金币  'h' 心之碎片  '*' 闪光石  's' 存档石  '!' 路牌  'N' 村民伊布
 #         彩蛋：'T' 古代石板（刻着进化线索的谜语）  'o' 旧时代的果子（吃了回血但不会进化）
-#         '!' 和 'N' 的文字按出现顺序取 texts=[...]；'T' 和 'o' 的文字按出现顺序取 notes=[...]，
+#         伙伴：'k' 绒绒出现的地点，notes 写 '步骤|角色'，例如 '1|slimes'（起点村的绒绒是 texts 里以「绒绒：」开头的村民）
+#         '!' 和 'N' 的文字按出现顺序取 texts=[...]；'T'、'o'、'k' 的文字按出现顺序取 notes=[...]，
 #         果子的写法是 '图片名|吃下时的话'，例如 'food_1_blueberry|……'。
 #         彩蛋实体统一排在实体表最后，加新彩蛋不会改变已有实体的编号（旧存档仍然有效）。
 #
@@ -45,9 +46,9 @@ room((7, 2), '起点村', 'village', [
 '################################################',
 '################################################'], texts=[
 '村长伊布：欢迎回家！东边的草原最近有大史莱姆出没，西边的湖没有水伊布的本事可过不去。',
-'小伊布：听说伊布碰到水之石、雷之石、火之石就会进化，森林和冰窟里还藏着会让伊布进化的神奇巨石！按 1～9 可以切换已经学会的形态，按 X 使用当前形态的技能。',
+'绒绒：我叫绒绒！听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换学会的形态，按 X 用技能……我、我想去糖果花园的星光野餐，可是风暴把路吹断了，我一个人不敢去。你会等我一起去吗？',
 '路牌：← 湖泊（需要游泳）　　草原 →',
-'商人伊布：收集金币和徽章，以后我这里会有好东西卖。',
+'商人伊布：风暴把我的货吹得满地都是……收集金币和徽章吧，等路修好了，我这里会有好东西卖。',
 ], notes=[
 '古代石板（其五）：「冷风从湖北的冰缝里吹出。霜雪覆盖的巨石，在那里等待伊布。」',
 '古代石板（其一）：「蔚蓝之石，映着池水的光。触碰它的伊布，会生出鱼鳍与长尾。」',
@@ -65,10 +66,10 @@ room((9, 2), '草原·入口', 'plains', [
 '                        ',
 '                  co    ',
 '                 ###    ',
-'   !      e           e ',
+' k !      e           e ',
 '########################',
 '########################',
-'########################'], texts=['路牌：踩在怪物头上可以打倒它。被碰到会掉血，血没了就回到存档石。'], notes=['food_1_blueberry|吃了一颗蓝莓，酸酸甜甜的。……伊布没有进化。看来进化可不是靠吃东西的。'], deco=[('forest_tree_0', 6, 11), ('forest_tree_1', 19, 11), ('env_berry_bush', 23, 11, -4)])
+'########################'], texts=['路牌：踩在怪物头上可以打倒它。被碰到会掉血，血没了就回到存档石。'], notes=['food_1_blueberry|吃了一颗蓝莓，酸酸甜甜的。……伊布没有进化。看来进化可不是靠吃东西的。', '1|slimes'], deco=[('forest_tree_0', 6, 11), ('forest_tree_1', 19, 11), ('env_berry_bush', 23, 11, -4)])
 room((10, 2), '草原·坑洼', 'plains', [
 '                        ',
 '                        ',
@@ -299,7 +300,7 @@ room((14, 0), '雷电塔·中庭', 'tower', [
 'EE  s   !             Kh',
 'BBBBBBBBBBBBBBBBBBBBBBBB',
 'BBBBBBBBBBBBBBBBBBBBBBBB',
-'BBBBBBBBBBBBBBBBBBBBBBBB'], texts=['石碑：雷电塔。塔里到处是电网，只有雷伊布能穿过。一直往上爬，塔顶供奉着一颗火之石。'], size=(1, 3), deco=[
+'BBBBBBBBBBBBBBBBBBBBBBBB'], texts=['石碑：雷电塔。风暴那晚之后，塔里的电网就一直失控，只有雷伊布能穿过。一直往上爬，塔顶供奉着一颗火之石。'], size=(1, 3), deco=[
     ('env_coil', 18, 39), ('env_torch_0', 2, 33), ('env_torch_0', 21, 30), ('env_lever', 4, 26),
     ('env_gear', 20, 24), ('env_torch_0', 2, 19), ('env_torch_0', 21, 15), ('env_torch_0', 2, 7)])
 
@@ -338,10 +339,10 @@ def build():
         for yy, row in enumerate(r['rows']):
             for xx, ch in enumerate(row):
                 X, Y = x0 + xx, y0 + yy
-                if ch in 'Pevpf GM123miych*s!NTo'.replace(' ', ''):
+                if ch in 'Pevpf GM123miych*s!NTok'.replace(' ', ''):
                     e = dict(t=ch, x=X, y=Y, room=i)
                     if ch in '!N': e['text'] = r['texts'][ti] if ti < len(r['texts']) else '……'; ti += 1
-                    if ch in 'To': assert ni < len(r['notes']), ('notes 不够', r['name']); e['text'] = r['notes'][ni]; ni += 1
+                    if ch in 'Tok': assert ni < len(r['notes']), ('notes 不够', r['name']); e['text'] = r['notes'][ni]; ni += 1
                     ents.append(e)
                     nb = [row[xx - 1] if xx > 0 else ' ', row[xx + 1] if xx + 1 < len(row) else ' ']
                     grid[Y][X] = '~' if '~' in nb else ' '      # 水里的实体所在格仍是水
@@ -356,7 +357,8 @@ def build():
             if grid[y][x] == '#' and y > 0 and grid[y - 1][x] in ' -' : grid[y][x] = '='
         assert ti == len(r['texts']), ('texts 数量和路牌 / 村民不一致', r['name'], ti, len(r['texts']))
         assert ni == len(r['notes']), ('notes 数量和石板 / 果子不一致', r['name'], ni, len(r['notes']))
-    ents = [e for e in ents if e['t'] not in 'To'] + [e for e in ents if e['t'] in 'To']   # 彩蛋排最后
+    # 后加的实体种类各自成组排在最后（先彩蛋，再伙伴地点），已有实体的编号不变
+    ents = [e for e in ents if e['t'] not in 'Tok'] + [e for e in ents if e['t'] in 'To'] + [e for e in ents if e['t'] == 'k']
     start = next(e for e in ents if e['t'] == 'P')
     world = dict(tw=TW, th=TH, rows=[''.join(r) for r in grid], rooms=rooms_out, entities=[e for e in ents if e['t'] != 'P'], start=dict(x=start['x'], y=start['y']), deco=decos)
     root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
