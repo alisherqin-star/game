@@ -313,6 +313,7 @@ window.addEventListener('keydown', e => {
   if (state === 'inv') { if (e.key === 'Escape' || 'iIeE'.includes(e.key)) invToggle = true; if (e.key >= '1' && e.key <= '9') selectForm(FORM_ORDER[+e.key - 1]); return; }
   if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W' || e.key === 'z') jumpQueued = true;
   if (e.key === 'm' || e.key === 'M') mapToggle = true;
+  if (e.key === 'n' || e.key === 'N') cycleMinimap();
   if (e.key === 'Escape' || 'iIeE'.includes(e.key)) invToggle = true;
   if ('xXjJkK'.includes(e.key)) skillQueued = true;
   if (e.key === 'Tab') formNext = true;
@@ -906,13 +907,16 @@ function drawSkillBuff() {
 }
 // ---- 生命 ----
 function drawLife() {
-  const right = CW - 5, n = G.maxHp, sc = 1.45, w = 8 * sc + 1;
-  text('生命  ' + G.hp + ' / ' + G.maxHp, right, 1.5, 7.5, '#ffffff', 'right');
+  const right = CW - 4, n = G.maxHp, sc = 1.3, w = 8 * sc + 0.8;
   for (let i = 0; i < n; i++) {
     const full = i < G.hp, x = right - (n - i) * w, pulse = full && i === G.hp - 1 ? 1 + Math.sin(frame / 8) * 0.08 : 1;
     const im = IMG[full ? 'ui/heart_full' : 'ui/heart_empty'];
-    if (im) U.img(im, x + (8 * sc - 8 * sc * pulse) / 2, 12 + (7 * sc - 7 * sc * pulse) / 2, sc * pulse, full ? 1 : 0.55);
+    if (im) U.img(im, x + (8 * sc - 8 * sc * pulse) / 2, 3 + (7 * sc - 7 * sc * pulse) / 2, sc * pulse, full ? 1 : 0.55);
   }
+  // 心之碎片和金币：红心下面一行，右对齐
+  const ci = IMG['ui/coin_0'], hi = IMG['items/heart_piece'], coins = '' + G.coins, hp = (G.hearts % 4) + '/4';
+  text(coins, right, 14, 6.5, '#ffd84a', 'right'); const cx = right - textWidth(coins, 6.5) - 9; if (ci) U.img(ci, cx, 14.5, 1);
+  text(hp, cx - 4, 14, 6.5, '#ff9ab0', 'right'); if (hi) U.img(hi, cx - 13 - textWidth(hp, 6.5), 14.5, 1);
 }
 // ---- 地图数据 ----
 let mapCanvas = null, mapDirty = true;
@@ -929,29 +933,40 @@ function buildMapCanvas() {
   }
   g.putImageData(img, 0, 0); mapDirty = false;
 }
-function drawMapRegion(dx, dy, dw, dh, cx, cy, zoom) {
+function drawMapRegion(dx, dy, dw, dh, cx, cy, zoom, alpha = 1) {
   if (mapDirty || !mapCanvas) buildMapCanvas();
   const tw = dw / zoom, th = dh / zoom, sx = cx - tw / 2, sy = cy - th / 2;
   uctx.save(); uctx.beginPath(); uctx.rect(dx * UIS, dy * UIS, dw * UIS, dh * UIS); uctx.clip();
-  uctx.fillStyle = '#05060f'; uctx.fillRect(dx * UIS, dy * UIS, dw * UIS, dh * UIS);
+  uctx.globalAlpha = alpha; uctx.fillStyle = '#05060f'; uctx.fillRect(dx * UIS, dy * UIS, dw * UIS, dh * UIS);
   uctx.imageSmoothingEnabled = false;
   uctx.drawImage(mapCanvas, 0, 0, TWd, THt, (dx - sx * zoom) * UIS, (dy - sy * zoom) * UIS, TWd * zoom * UIS, THt * zoom * UIS);
   const toS = (tx, ty) => [dx + (tx - sx) * zoom, dy + (ty - sy) * zoom];
-  for (const st of saveStones) { const r = roomAt(st.x, st.y); if (!r || !G.visited[r.id]) continue; const [x, y] = toS(st.x / T + 0.5, st.y / T + 0.5); U.img(IMG['ui/save_stone_0'], x - 4, y - 5, 0.5); }
-  for (const e of enemies) { if (!e.boss || !e.alive) continue; const r = roomAt(e.x, e.y); if (!r || !G.visited[r.id]) continue; const [x, y] = toS(e.x / T + 1, e.y / T + 0.5); text('☠', x, y - 4, 7, '#ff6a6a', 'center'); }
+  for (const st of saveStones) { const r = roomAt(st.x, st.y); if (!r || !G.visited[r.id]) continue; const [x, y] = toS(st.x / T + 0.5, st.y / T + 0.5); U.img(IMG['ui/save_stone_0'], x - 4 * Math.min(1, zoom / 2), y - 5 * Math.min(1, zoom / 2), 0.5 * Math.min(1, zoom / 2), alpha); }
+  ctx.globalAlpha = alpha;   // text() 跟随画面的透明度
+  for (const e of enemies) { if (!e.boss || !e.alive) continue; const r = roomAt(e.x, e.y); if (!r || !G.visited[r.id]) continue; const [x, y] = toS(e.x / T + 1, e.y / T + 0.5); text('☠', x, y - 4, zoom < 2 ? 5.5 : 7, '#ff6a6a', 'center'); }
+  ctx.globalAlpha = 1;
   const [px0, py0] = toS((player.x + player.w / 2) / T, (player.y + player.h / 2) / T);
-  const head = charSprite(player.form, player.shiny, player.facing); if (head) { const sc = Math.max(0.35, Math.min(0.7, zoom / 6)); U.img(head, px0 - head.width * sc / 2, py0 - head.height * sc / 2, sc); }
+  const head = charSprite(player.form, player.shiny, player.facing); if (head) { const sc = Math.max(0.35, Math.min(0.7, zoom / 6)); U.img(head, px0 - head.width * sc / 2, py0 - head.height * sc / 2, sc, Math.max(alpha, 0.8)); }
   uctx.restore();
 }
-// ---- 小地图 ----
+// ---- 小地图（N 或点击小地图：小 → 大 → 关） ----
+const MINIMAP = { small: { w: 64, h: 36, zoom: 1.5 }, large: { w: 96, h: 56, zoom: 2 } }, MINIMAP_ORDER = ['small', 'large', 'off'];
+let minimapMode = (() => { try { const m = localStorage.getItem('eevee_minimap'); return MINIMAP_ORDER.includes(m) ? m : 'small'; } catch (e) { return 'small'; } })();
+let minimapAlpha = 0.9;
+function minimapRect() { const M = MINIMAP[minimapMode]; return M ? { x: CW - 4 - M.w, y: 24, w: M.w, h: M.h, zoom: M.zoom } : null; }
+function cycleMinimap() {
+  minimapMode = MINIMAP_ORDER[(MINIMAP_ORDER.indexOf(minimapMode) + 1) % MINIMAP_ORDER.length]; SFX.swap();
+  try { localStorage.setItem('eevee_minimap', minimapMode); } catch (e) { }
+  say('小地图：' + { small: '小', large: '大', off: '关闭（按 N 打开）' }[minimapMode], '#b8c8ff');
+}
 function drawMinimap() {
-  const w = 96, h = 56, x = CW - 5 - w, y = 26;
-  U.box(x - 2, y - 2, w + 4, h + 4, 3, '#6b4a22', '#2a1a08', 1);
-  U.box(x - 1, y - 1, w + 2, h + 2, 2, null, '#d8b060', 0.8);
-  drawMapRegion(x, y, w, h, (player.x + player.w / 2) / T, (player.y + player.h / 2) / T, 2);
-  const ci = IMG['ui/coin_0'], hi = IMG['items/heart_piece'];
-  text('' + G.coins, CW - 5, y + h + 5, 7, '#ffd84a', 'right'); if (ci) U.img(ci, CW - 16 - textWidth('' + G.coins, 7), y + h + 5.5, 1);
-  const hp = (G.hearts % 4) + ' / 4'; text(hp, CW - 46, y + h + 5, 7, '#ff9ab0', 'right'); if (hi) U.img(hi, CW - 56 - textWidth(hp, 7), y + h + 5.5, 1);
+  const r = minimapRect(); if (!r) return;
+  // 伊布走到小地图后面时淡出，免得挡住自己
+  const sx = player.x + player.w / 2 - camX, sy = player.y + player.h / 2 - camY;
+  const behind = sx > r.x - 12 && sx < r.x + r.w + 12 && sy > r.y - 12 && sy < r.y + r.h + 16;
+  minimapAlpha += ((behind ? 0.3 : 0.88) - minimapAlpha) * 0.15;
+  U.box(r.x - 1, r.y - 1, r.w + 2, r.h + 2, 2, null, 'rgba(216,176,96,' + (minimapAlpha * 0.8).toFixed(2) + ')', 0.8);
+  drawMapRegion(r.x, r.y, r.w, r.h, (player.x + player.w / 2) / T, (player.y + player.h / 2) / T, r.zoom, minimapAlpha);
 }
 // ---- Boss 血条 ----
 function drawBossBar() {
@@ -1063,7 +1078,8 @@ function drawHUD() {
 // ---- 点击 ----
 function uiClick(mx, my) {
   if (state === 'title') { if (menu.help) { menu.help = false; return; } menuItems().forEach((m, i) => { const y = MENU_Y + i * 17; if (my >= y - 2 && my <= y + 12 && Math.abs(mx - CW / 2) < 60) { menu.idx = i; menuSelect(i); } }); return; }
-  if (state === 'play') { for (let i = 0; i < FORM_ORDER.length; i++) if (inRect(hotbarRect(i), mx, my)) { selectForm(FORM_ORDER[i]); return; } }
+  if (state === 'play') { for (let i = 0; i < FORM_ORDER.length; i++) if (inRect(hotbarRect(i), mx, my)) { selectForm(FORM_ORDER[i]); return; }
+    const r = minimapRect(); if (r && mx >= r.x && mx <= r.x + r.w && my >= r.y && my <= r.y + r.h) { cycleMinimap(); return; } }
   if (state === 'inv') { for (let c = 0; c < FORM_ORDER.length; c++) if (inRect(invRect(0, c), mx, my)) { selectForm(FORM_ORDER[c]); return; } }
 }
 // ---- 标题菜单 ----
@@ -1096,10 +1112,10 @@ function drawTitleUI() {
   });
   text('v0.4 开发中', 5, CH - 10, 6, '#ffffff');
   if (menu.help) {
-    U.box(CW / 2 - 120, 40, 240, 132, 4, 'rgba(40,52,128,0.94)', 'rgba(12,16,48,0.95)', 1.2);
-    text('操作说明', CW / 2, 46, 10, '#ffe96a', 'center');
-    [['← → / A D', '移动'], ['空格 / ↑ / W', '跳跃（按住跳更高）'], ['X / J / K', '使用当前形态的技能'], ['1～9 / Tab / 点物品栏', '切换形态'], ['Esc / I / E', '背包'], ['M', '地图（方向键移动，+ - 缩放）'], ['存档石', '碰一下回满血并存档']].forEach((l, i) => { text(l[0], CW / 2 - 108, 64 + i * 13, 7.5, '#ffe6a0'); text(l[1], CW / 2 - 18, 64 + i * 13, 7.5, '#ffffff'); });
-    text('按任意键返回', CW / 2, 158, 7, '#a0a8d0', 'center');
+    U.box(CW / 2 - 120, 36, 240, 146, 4, 'rgba(40,52,128,0.94)', 'rgba(12,16,48,0.95)', 1.2);
+    text('操作说明', CW / 2, 42, 10, '#ffe96a', 'center');
+    [['← → / A D', '移动'], ['空格 / ↑ / W', '跳跃（按住跳更高）'], ['X / J / K', '使用当前形态的技能'], ['1～9 / Tab / 点物品栏', '切换形态'], ['Esc / I / E', '背包'], ['M', '地图（方向键移动，+ - 缩放）'], ['N / 点小地图', '小地图：小 / 大 / 关'], ['存档石', '碰一下回满血并存档']].forEach((l, i) => { text(l[0], CW / 2 - 108, 64 + i * 13, 7.5, '#ffe6a0'); text(l[1], CW / 2 - 18, 64 + i * 13, 7.5, '#ffffff'); });
+    text('按任意键返回', CW / 2, 170, 7, '#a0a8d0', 'center');
   }
 }
 
