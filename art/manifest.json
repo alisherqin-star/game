@@ -1,0 +1,1374 @@
+{
+  "version": 1,
+  "nativeTileSize": 16,
+  "filter": "nearest",
+  "coordinates": "x right, y down",
+  "alpha": "PNG RGBA, straight alpha",
+  "assets": [
+    {
+      "id": "backgrounds/env_cave_layer_0",
+      "path": "sprites/backgrounds/env_cave_layer_0.png",
+      "region": "cave",
+      "category": "backgrounds",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "211a0b8f03f9eef55e266f9715e7872b9ee935c55c29c6d8fd015c137c7e0ecd",
+      "repeat": "x",
+      "parallax": 0.12,
+      "placement": "bottom aligned to camera viewport; render behind gameplay"
+    },
+    {
+      "id": "backgrounds/env_cave_layer_1",
+      "path": "sprites/backgrounds/env_cave_layer_1.png",
+      "region": "cave",
+      "category": "backgrounds",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "09464b67c1f4215cb3a2e7ac2faafd595d6989626de5e2a678dae6d835c3473e",
+      "repeat": "x",
+      "parallax": 0.23,
+      "placement": "bottom aligned to camera viewport; render behind gameplay"
+    },
+    {
+      "id": "backgrounds/env_cave_layer_2",
+      "path": "sprites/backgrounds/env_cave_layer_2.png",
+      "region": "cave",
+      "category": "backgrounds",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "b8bee7ccc142a07f713a775bce80516a43319e4e4e8a13e83947ad1f6c7bc76b",
+      "repeat": "x",
+      "parallax": 0.38,
+      "placement": "bottom aligned to camera viewport; render behind gameplay"
+    },
+    {
+      "id": "backgrounds/env_forest_layer_0",
+      "path": "sprites/backgrounds/env_forest_layer_0.png",
+      "region": "forest",
+      "category": "backgrounds",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "1b784bde2cb0648aff3af4f566305c336f8b68b351992bfdb3f1ac4ccb07ef86",
+      "repeat": "x",
+      "parallax": 0.12,
+      "placement": "bottom aligned to camera viewport; render behind gameplay"
+    },
+    {
+      "id": "backgrounds/env_forest_layer_1",
+      "path": "sprites/backgrounds/env_forest_layer_1.png",
+      "region": "forest",
+      "category": "backgrounds",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "c20f0c1912e3080544b57a7a0cf96d03e9c769db7e1240da72eddf42cbf454fe",
+      "repeat": "x",
+      "parallax": 0.23,
+      "placement": "bottom aligned to camera viewport; render behind gameplay"
+    },
+    {
+      "id": "backgrounds/env_forest_layer_2",
+      "path": "sprites/backgrounds/env_forest_layer_2.png",
+      "region": "forest",
+      "category": "backgrounds",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "0e495c697d4c409fb3be1f281300747a251ad87cda45564fddc1b5c6255ea1ab",
+      "repeat": "x",
+      "parallax": 0.38,
+      "placement": "bottom aligned to camera viewport; render behind gameplay"
+    },
+    {
+      "id": "backgrounds/env_lake_layer_0",
+      "path": "sprites/backgrounds/env_lake_layer_0.png",
+      "region": "lake",
+      "category": "backgrounds",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "82c76cb2ef8bfedf6e01a0ee96cc64574e7c6e7c2e0c27c645fee0dedd672ef1",
+      "repeat": "x",
+      "parallax": 0.12,
+      "placement": "bottom aligned to camera viewport; render behind gameplay"
+    },
+    {
+      "id": "backgrounds/env_lake_layer_1",
+      "path": "sprites/backgrounds/env_lake_layer_1.png",
+      "region": "lake",
+      "category": "backgrounds",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "28050c49ea312e3bc8dce9eb2c01fd653dcab68d9f70b183c49e41726112fb8a",
+      "repeat": "x",
+      "parallax": 0.23,
+      "placement": "bottom aligned to camera viewport; render behind gameplay"
+    },
+    {
+      "id": "backgrounds/env_lake_layer_2",
+      "path": "sprites/backgrounds/env_lake_layer_2.png",
+      "region": "lake",
+      "category": "backgrounds",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "dc6ee4877af727903ea2f850f5004abbdb26b260ab9b60f361f8d54ce68b0c1b",
+      "repeat": "x",
+      "parallax": 0.38,
+      "placement": "bottom aligned to camera viewport; render behind gameplay"
+    },
+    {
+      "id": "backgrounds/env_tower_layer_0",
+      "path": "sprites/backgrounds/env_tower_layer_0.png",
+      "region": "tower",
+      "category": "backgrounds",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "c5f4d0c2082461c2032b0c261e378bf6b3e7d60bf2bf4fb03a6ad0495aecde4b",
+      "repeat": "x",
+      "parallax": 0.12,
+      "placement": "bottom aligned to camera viewport; render behind gameplay"
+    },
+    {
+      "id": "backgrounds/env_tower_layer_1",
+      "path": "sprites/backgrounds/env_tower_layer_1.png",
+      "region": "tower",
+      "category": "backgrounds",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "37bda038cf0a3f29d359e1945b06fc711737d7bd1ee97f33ab7cf9c7eeb8a3ea",
+      "repeat": "x",
+      "parallax": 0.23,
+      "placement": "bottom aligned to camera viewport; render behind gameplay"
+    },
+    {
+      "id": "backgrounds/env_tower_layer_2",
+      "path": "sprites/backgrounds/env_tower_layer_2.png",
+      "region": "tower",
+      "category": "backgrounds",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "d658b9ed37c600fe7187e4c47a9b878ff9888fe95f54dd456355bb4186a7f615",
+      "repeat": "x",
+      "parallax": 0.38,
+      "placement": "bottom aligned to camera viewport; render behind gameplay"
+    },
+    {
+      "id": "deco/biome_banner",
+      "path": "sprites/deco/biome_banner.png",
+      "region": "tower",
+      "category": "deco",
+      "width": 24,
+      "height": 40,
+      "anchor": [
+        12,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "b04e2f1527c9b737459031d14f3bdb58cb228373431da08a05d8a4ae00a0057a"
+    },
+    {
+      "id": "deco/biome_crystal_0",
+      "path": "sprites/deco/biome_crystal_0.png",
+      "region": "cave",
+      "category": "deco",
+      "width": 24,
+      "height": 32,
+      "anchor": [
+        12,
+        32
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "1e73f5d4e06f18198cea840c23687ec040e4abf23f3b7db28b82702cb86fe189"
+    },
+    {
+      "id": "deco/biome_crystal_1",
+      "path": "sprites/deco/biome_crystal_1.png",
+      "region": "cave",
+      "category": "deco",
+      "width": 24,
+      "height": 32,
+      "anchor": [
+        12,
+        32
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "72c09321ca0bcbd9d345a70767e42176acb55ca1b97eb5078b04584db5336aeb"
+    },
+    {
+      "id": "deco/biome_lamp",
+      "path": "sprites/deco/biome_lamp.png",
+      "region": "tower",
+      "category": "deco",
+      "width": 16,
+      "height": 24,
+      "anchor": [
+        8,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "b8a042cc1410553893e116c8d7782c047bd88c42e5f0052de905c38d0d561346"
+    },
+    {
+      "id": "deco/biome_pebbles",
+      "path": "sprites/deco/biome_pebbles.png",
+      "region": "lake",
+      "category": "deco",
+      "width": 24,
+      "height": 16,
+      "anchor": [
+        12,
+        16
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "6047ad9ae616ec8856cdd5be05c5e586a4f2e04cf73553346b19e8cceca659a5"
+    },
+    {
+      "id": "deco/biome_pillar",
+      "path": "sprites/deco/biome_pillar.png",
+      "region": "tower",
+      "category": "deco",
+      "width": 24,
+      "height": 48,
+      "anchor": [
+        12,
+        48
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "7740c5253d7cae1afd85ce89ba9586b447ddb5760001a040cb2a99f8cca6413f"
+    },
+    {
+      "id": "deco/biome_reeds",
+      "path": "sprites/deco/biome_reeds.png",
+      "region": "lake",
+      "category": "deco",
+      "width": 24,
+      "height": 32,
+      "anchor": [
+        12,
+        32
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "ff23cf8a14a117dfb59f511a71bb8d6fcf4fc00d6fab5cc9f260ac09a2bf64f4"
+    },
+    {
+      "id": "deco/biome_vine",
+      "path": "sprites/deco/biome_vine.png",
+      "region": "cave",
+      "category": "deco",
+      "width": 16,
+      "height": 32,
+      "anchor": [
+        8,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "b2b79b27ef6856d2f4cc3cc24ea9a01691e92fcec94ea1686e92d06c20f15abb"
+    },
+    {
+      "id": "deco/env_bench",
+      "path": "sprites/deco/env_bench.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 32,
+      "height": 32,
+      "anchor": [
+        16,
+        32
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "3b6e4b04595d0af62546192ef26c0e3f4a7c8eaaff91544eff43d9fc39b44134"
+    },
+    {
+      "id": "deco/env_berry_bush",
+      "path": "sprites/deco/env_berry_bush.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 40,
+      "height": 24,
+      "anchor": [
+        20,
+        24
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "948a7e10537f171f33431bbb7ae70d20f7876f8e3b5e5995e9069b27f1099636"
+    },
+    {
+      "id": "deco/env_boulder",
+      "path": "sprites/deco/env_boulder.png",
+      "region": "cave",
+      "category": "deco",
+      "width": 48,
+      "height": 24,
+      "anchor": [
+        24,
+        24
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "c28737dc8404ee9bd41a1db0d53355e056b89a7c868491b428e4d57427428b39"
+    },
+    {
+      "id": "deco/env_canoe",
+      "path": "sprites/deco/env_canoe.png",
+      "region": "lake",
+      "category": "deco",
+      "width": 64,
+      "height": 24,
+      "anchor": [
+        32,
+        24
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "ee9e78dcb58e8a15d4a5c8fec15b7a4b3ff88e31b75f184bc530d17de7cc3430"
+    },
+    {
+      "id": "deco/env_coil",
+      "path": "sprites/deco/env_coil.png",
+      "region": "tower",
+      "category": "deco",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        16,
+        48
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "7044635fb70469cc72c3b4d39cf0b118c4e6e259c20d15d625e2ceef59507c0a"
+    },
+    {
+      "id": "deco/env_crystal_cluster",
+      "path": "sprites/deco/env_crystal_cluster.png",
+      "region": "cave",
+      "category": "deco",
+      "width": 48,
+      "height": 64,
+      "anchor": [
+        24,
+        64
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "3d77ed0016ff5e45585192b12a901e04b9e345721ee725572cf6ed8144507bf7"
+    },
+    {
+      "id": "deco/env_fence",
+      "path": "sprites/deco/env_fence.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 32,
+      "height": 16,
+      "anchor": [
+        16,
+        16
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "4e9221c7607eb8f016946b530dca3afec33a478a98a9e900fabfd408d35443ac"
+    },
+    {
+      "id": "deco/env_fern",
+      "path": "sprites/deco/env_fern.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 32,
+      "height": 24,
+      "anchor": [
+        16,
+        24
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "f1c24faf629acd698f1138dd627b9d7af77302c7fc7835f09331860ff658d481"
+    },
+    {
+      "id": "deco/env_gear",
+      "path": "sprites/deco/env_gear.png",
+      "region": "tower",
+      "category": "deco",
+      "width": 32,
+      "height": 32,
+      "anchor": [
+        16,
+        32
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "3cf46b069308447d078e0a9b8cd92e408827aa7a5be6927f4747aa19c9fe04ad"
+    },
+    {
+      "id": "deco/env_glow_mushrooms",
+      "path": "sprites/deco/env_glow_mushrooms.png",
+      "region": "cave",
+      "category": "deco",
+      "width": 32,
+      "height": 24,
+      "anchor": [
+        16,
+        24
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "ccd578a6a80d8f0a0da1cc10f92ed039bdf9ced40b81b93ec76800b8392606ea"
+    },
+    {
+      "id": "deco/env_grate",
+      "path": "sprites/deco/env_grate.png",
+      "region": "tower",
+      "category": "deco",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        16,
+        48
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "ac57b80422c36a320b04355e362615fc58af40b3ecb9a4ed61416d7edd8bd170"
+    },
+    {
+      "id": "deco/env_lever",
+      "path": "sprites/deco/env_lever.png",
+      "region": "tower",
+      "category": "deco",
+      "width": 32,
+      "height": 32,
+      "anchor": [
+        16,
+        32
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "ce9548eda629d8568fc9df772a4c3707dbcecd65a16e864b0fda2dc8eb95a66d"
+    },
+    {
+      "id": "deco/env_lily_0",
+      "path": "sprites/deco/env_lily_0.png",
+      "region": "lake",
+      "category": "deco",
+      "width": 32,
+      "height": 16,
+      "anchor": [
+        16,
+        16
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "47a8c5491bc43b58247c0dbf7d9a5914d106f46339967b09d1b558eccfe3d5de"
+    },
+    {
+      "id": "deco/env_lily_1",
+      "path": "sprites/deco/env_lily_1.png",
+      "region": "lake",
+      "category": "deco",
+      "width": 32,
+      "height": 16,
+      "anchor": [
+        16,
+        16
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "69c9642e8cab9ebf159a3951464ba571c8f5182609be067df216306d7ae3604b"
+    },
+    {
+      "id": "deco/env_lily_2",
+      "path": "sprites/deco/env_lily_2.png",
+      "region": "lake",
+      "category": "deco",
+      "width": 32,
+      "height": 16,
+      "anchor": [
+        16,
+        16
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "47a8c5491bc43b58247c0dbf7d9a5914d106f46339967b09d1b558eccfe3d5de"
+    },
+    {
+      "id": "deco/env_mooring_post",
+      "path": "sprites/deco/env_mooring_post.png",
+      "region": "lake",
+      "category": "deco",
+      "width": 16,
+      "height": 32,
+      "anchor": [
+        8,
+        32
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "066024fd38eecc65d579a99598edd69c27746600eec4d5cb8b3b22f287b18850"
+    },
+    {
+      "id": "deco/env_pier",
+      "path": "sprites/deco/env_pier.png",
+      "region": "lake",
+      "category": "deco",
+      "width": 48,
+      "height": 40,
+      "anchor": [
+        24,
+        40
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "788df8266a2c295c18de2944d98731923f578c40eb02ac6985a7472461b73eee"
+    },
+    {
+      "id": "deco/env_planter",
+      "path": "sprites/deco/env_planter.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 32,
+      "height": 32,
+      "anchor": [
+        16,
+        32
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "60c23b2ef72b9788aa8d972d2c6790601ffc288f777c327a0e4044a2c4ba876d"
+    },
+    {
+      "id": "deco/env_river_stones",
+      "path": "sprites/deco/env_river_stones.png",
+      "region": "lake",
+      "category": "deco",
+      "width": 32,
+      "height": 16,
+      "anchor": [
+        16,
+        16
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "79b56909f4d3e9b834d4e6a62faf5bc55437a445218816fade879096f82032f4"
+    },
+    {
+      "id": "deco/env_signpost",
+      "path": "sprites/deco/env_signpost.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        16,
+        48
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "b0a9061b9d26afd6f3c2196e17ecd663e88643b5c24481e5e385dbacf13bb37c"
+    },
+    {
+      "id": "deco/env_stalactite",
+      "path": "sprites/deco/env_stalactite.png",
+      "region": "cave",
+      "category": "deco",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        16,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "6f747fcea509838b3b26a511336c73fff52ea49a5eca46c5be94439c5c96f3f9"
+    },
+    {
+      "id": "deco/env_stalagmite",
+      "path": "sprites/deco/env_stalagmite.png",
+      "region": "cave",
+      "category": "deco",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        16,
+        48
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "2a7b4f5b421179dbb84e725ad2b23bfa041379aee75d435e656affb3026bd701"
+    },
+    {
+      "id": "deco/env_stump",
+      "path": "sprites/deco/env_stump.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 32,
+      "height": 32,
+      "anchor": [
+        16,
+        32
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "15241c8ce53a5189a752df6eb404190b5986f47f8846e85eb929626d339cea0c"
+    },
+    {
+      "id": "deco/env_torch_0",
+      "path": "sprites/deco/env_torch_0.png",
+      "region": "tower",
+      "category": "deco",
+      "width": 16,
+      "height": 32,
+      "anchor": [
+        8,
+        32
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "e4e6e560c58be47852eb9aaecf334932351bb4de6f4ceb63b396e2196a851294"
+    },
+    {
+      "id": "deco/env_torch_1",
+      "path": "sprites/deco/env_torch_1.png",
+      "region": "tower",
+      "category": "deco",
+      "width": 16,
+      "height": 32,
+      "anchor": [
+        8,
+        32
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "17073fd22582a98733070ed9c874058e62659c5dc398a8238b6966670c7478fd"
+    },
+    {
+      "id": "deco/env_torch_2",
+      "path": "sprites/deco/env_torch_2.png",
+      "region": "tower",
+      "category": "deco",
+      "width": 16,
+      "height": 32,
+      "anchor": [
+        8,
+        32
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "e4e6e560c58be47852eb9aaecf334932351bb4de6f4ceb63b396e2196a851294"
+    },
+    {
+      "id": "deco/env_torch_3",
+      "path": "sprites/deco/env_torch_3.png",
+      "region": "tower",
+      "category": "deco",
+      "width": 16,
+      "height": 32,
+      "anchor": [
+        8,
+        32
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "8dd3f919519a7b3f22e7408980706de5dd98f2423f9806d10006167b3e1abfd1"
+    },
+    {
+      "id": "deco/env_village_cottage",
+      "path": "sprites/deco/env_village_cottage.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 96,
+      "height": 80,
+      "anchor": [
+        48,
+        80
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "9d2a79e879c12c76b702e0692e7083f19dacf6076bd2429798384446b448d386"
+    },
+    {
+      "id": "deco/env_waterweed",
+      "path": "sprites/deco/env_waterweed.png",
+      "region": "lake",
+      "category": "deco",
+      "width": 32,
+      "height": 40,
+      "anchor": [
+        16,
+        40
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "368167784cc7deb784526128d3fa931b7044de4796363ffcd56952bf9d7f854d"
+    },
+    {
+      "id": "deco/forest_plant_0",
+      "path": "sprites/deco/forest_plant_0.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        8,
+        16
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "5a7d06ce0d65372d6dbf95c934eea5aa49f8f9aff5a4e4b3dfa58cb0fa564ee4"
+    },
+    {
+      "id": "deco/forest_plant_1",
+      "path": "sprites/deco/forest_plant_1.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        8,
+        16
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "a21bed21c990041061f06f68dcbe9fd9ae0d7e1008e71ccfd4d71908b675516d"
+    },
+    {
+      "id": "deco/forest_plant_2",
+      "path": "sprites/deco/forest_plant_2.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        8,
+        16
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "00c5a7f61529ba85c9d386aeafa1aefb376f2a80e8e4651f709581873d726c5e"
+    },
+    {
+      "id": "deco/forest_plant_3",
+      "path": "sprites/deco/forest_plant_3.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        8,
+        16
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "b18e09231a5ae353e203d60198108fdf81c78fdc48509242c54ee414183a0771"
+    },
+    {
+      "id": "deco/forest_tree_0",
+      "path": "sprites/deco/forest_tree_0.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 80,
+      "height": 112,
+      "anchor": [
+        40,
+        112
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "a15a29a75e004f0323d3606183bb52a99b3ad38ec0afebdba31826d41171220d"
+    },
+    {
+      "id": "deco/forest_tree_1",
+      "path": "sprites/deco/forest_tree_1.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 80,
+      "height": 112,
+      "anchor": [
+        40,
+        112
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "afd534fd788801d38c11b041c6a642565d8d15f4f20e2932e6781140b1e8cd85"
+    },
+    {
+      "id": "deco/forest_tree_2",
+      "path": "sprites/deco/forest_tree_2.png",
+      "region": "forest",
+      "category": "deco",
+      "width": 80,
+      "height": 112,
+      "anchor": [
+        40,
+        112
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "79c6b8148550cb37cb6337b0588f925121ff3df5bc070c6819439bb8363beb68"
+    },
+    {
+      "id": "tiles/biome_cave_0",
+      "path": "sprites/tiles/biome_cave_0.png",
+      "region": "cave",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "ecd34da3e477fad8b80d975ee8b0fde2d7498fbc1e894d2025426234a090e4fb",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_cave_1",
+      "path": "sprites/tiles/biome_cave_1.png",
+      "region": "cave",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "a9987eb2a5e89cd2d947313cf3f26eca15303ec969a278a95d5e7bd17ace0520",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_cave_2",
+      "path": "sprites/tiles/biome_cave_2.png",
+      "region": "cave",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "1584245247b9ced421723cd9ae8be9e035b554c9ce6a5d8a47265bf1c49b14fb",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_cave_3",
+      "path": "sprites/tiles/biome_cave_3.png",
+      "region": "cave",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "bbf4ea30d1fe0bc1f2a3da9efdb5820d04e1fc55b4ae7c31b1faddbb3f260580",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_cave_surface_0",
+      "path": "sprites/tiles/biome_cave_surface_0.png",
+      "region": "cave",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "6efcfeeb59d9b6b8598c3bc2a9a29272a63d1bb5bb42d2685d2837bec68b97aa",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_cave_surface_1",
+      "path": "sprites/tiles/biome_cave_surface_1.png",
+      "region": "cave",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "364ef96f5df0045b53829561b0779e77df85f40bdb81fca11690772896197738",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_cave_water",
+      "path": "sprites/tiles/biome_cave_water.png",
+      "region": "cave",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "2ebf206cb96d8e03aac6d26fa798cabde6def3a19acfa0d4c1af196d9762acc4",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_lake_surface_0",
+      "path": "sprites/tiles/biome_lake_surface_0.png",
+      "region": "lake",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "2df942370fec21e6b5cff333dd9e123ee757c6932a74c4fcd0ec2f63ced5ba22",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_lake_surface_1",
+      "path": "sprites/tiles/biome_lake_surface_1.png",
+      "region": "lake",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "aa4c1b5401e08d059a3ec8afcd2d61b593ef183ae9d019f0a88be8993ad5f7f6",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_lake_water",
+      "path": "sprites/tiles/biome_lake_water.png",
+      "region": "lake",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "8bf8b8112e3f47993188ea018b3a90b26664064665273c05da1971c17e32ee98",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_shore_0",
+      "path": "sprites/tiles/biome_shore_0.png",
+      "region": "lake",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "b2ff9aba7636d79fdfb7350b5ff4d9940cea7416875702228e28ef81ccaf42ee",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_shore_1",
+      "path": "sprites/tiles/biome_shore_1.png",
+      "region": "lake",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "16ea67f707b46e42f279df0f013b51f7e2474f76fc75f583129d5694fa2d05de",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_shore_2",
+      "path": "sprites/tiles/biome_shore_2.png",
+      "region": "lake",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "53ff231f8475044c7972121e7ed90c2cdee5321dd86a174db30a36e6d40e3877",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_shore_3",
+      "path": "sprites/tiles/biome_shore_3.png",
+      "region": "lake",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "93dce3cc61da40f71ffd81cce953785a3fddaeea2b5952c23d012ad3c25fb2b7",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_tower_0",
+      "path": "sprites/tiles/biome_tower_0.png",
+      "region": "tower",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "b44f532de0a639cab9f5e5268bb4b95fcda160473a6468a2b60832e5133311bc",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_tower_1",
+      "path": "sprites/tiles/biome_tower_1.png",
+      "region": "tower",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "117cbc6aa54dfd738c224abaefe1d8ea633c699d4049b5acacdd6857609c2c02",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_tower_2",
+      "path": "sprites/tiles/biome_tower_2.png",
+      "region": "tower",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "819bf8c0c0f6439ab4d33ae63538ff6d842dc548f000fd849fb1c0d0d2aebb41",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/biome_tower_3",
+      "path": "sprites/tiles/biome_tower_3.png",
+      "region": "tower",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "26775f56624c64feecc0d018d85f2747b76b4008c4754ed580f013dd0c9347b3",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/env_trim_stone",
+      "path": "sprites/tiles/env_trim_stone.png",
+      "region": "shared",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "d4ee344dfa0c4b9bcb02b9598808f962848787559b82627ca3ca1a3b8d566bcf",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/env_trim_wood",
+      "path": "sprites/tiles/env_trim_wood.png",
+      "region": "shared",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "7cec18e856f22db3474e09d91887b7de9e3204550454ce3018748d32cda2703f",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/forest_dirt_0",
+      "path": "sprites/tiles/forest_dirt_0.png",
+      "region": "forest",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "ccbc38b985370af3cca6f9ae059ebba9a7743f5ca4bab527a63f58fe977f4dc2",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/forest_dirt_1",
+      "path": "sprites/tiles/forest_dirt_1.png",
+      "region": "forest",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "718e22bea3b8bd39bbe5a0c0e14897bba6f9bc9c11e3dc9c3d1f6713c763ca63",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/forest_dirt_2",
+      "path": "sprites/tiles/forest_dirt_2.png",
+      "region": "forest",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "76e4306b34fb3ad034beaa50e7aa93eb8839eb2eb07c6c72bb4aa1c13eabcfa2",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/forest_dirt_3",
+      "path": "sprites/tiles/forest_dirt_3.png",
+      "region": "forest",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "ee9907eb8c11491b7d499151d9ad8124ed4fcc4d6b60475b34310e6c3c5e6cfd",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/forest_grass_0",
+      "path": "sprites/tiles/forest_grass_0.png",
+      "region": "forest",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "c66b17e2ac5ee7064b18efb8a583ea12635225cfb7c8e5f2fbf6e5489c6080cf",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/forest_grass_1",
+      "path": "sprites/tiles/forest_grass_1.png",
+      "region": "forest",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "9b776234479aa05d534471219bdb76c7fb727ce88bc57b2fc8bd70a012815e80",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/forest_grass_2",
+      "path": "sprites/tiles/forest_grass_2.png",
+      "region": "forest",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "e52627de4ee67b5455bd94cad1aeb7a7a17fb85d95ef67a76ff9aff5fda85c19",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    },
+    {
+      "id": "tiles/forest_grass_3",
+      "path": "sprites/tiles/forest_grass_3.png",
+      "region": "forest",
+      "category": "tiles",
+      "width": 16,
+      "height": 16,
+      "anchor": [
+        0,
+        0
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "ec6d7a56421d6c458559ae291d5e050a098cf2539d021bdc826bae09d842d503",
+      "placement": "16px grid; variant chosen by stable tile-coordinate hash"
+    }
+  ],
+  "animations": [
+    {
+      "id": "torch",
+      "frames": [
+        "deco/env_torch_0",
+        "deco/env_torch_1",
+        "deco/env_torch_2",
+        "deco/env_torch_3"
+      ],
+      "fps": 8,
+      "loop": true
+    },
+    {
+      "id": "lily",
+      "frames": [
+        "deco/env_lily_0",
+        "deco/env_lily_1",
+        "deco/env_lily_2"
+      ],
+      "fps": 3,
+      "loop": true
+    },
+    {
+      "id": "lake_surface",
+      "frames": [
+        "tiles/biome_lake_surface_0",
+        "tiles/biome_lake_surface_1"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "cave_surface",
+      "frames": [
+        "tiles/biome_cave_surface_0",
+        "tiles/biome_cave_surface_1"
+      ],
+      "fps": 4,
+      "loop": true
+    }
+  ]
+}

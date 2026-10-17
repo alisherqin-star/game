@@ -43,3 +43,12 @@
   2. 运行 `python3 tools/embed_assets.py` 写回 `index.html`
 - 目录说明：`characters/` 9 只伊布（普通 + 闪光，朝右、脚贴底），`tiles/` 地形（草地、泥土、砖块、木箱、水面两帧、水体、冰面、电网两帧、黑影墙两帧、尖刺、单向平台），`items/` 8 种食物，`enemies/` 史莱姆和蝙蝠各两帧，`ui/` 金币四帧、爱心、路牌、终点旗，`deco/` 云、灌木、树、小花。
 - 角色图来自用户提供的拼贴图，由 `tools/extract/extract_sheet.py` 切出、`tools/extract/clean_sprites.py` 清理杂点并补描边，闪光版按色相映射生成。拼贴图里的角色是任天堂 / Game Freak 的宝可梦形象，仅供个人娱乐使用。
+
+## 场景美术
+
+`sprites/backgrounds`、`sprites/tiles` 和 `sprites/deco` 里新增了一套场景素材包，分森林、湖泊、洞穴、塔四套，说明见 `art/CLAUDE_HANDOFF.md`，素材审阅页是 `art/index.html`。
+
+- 目前起点村和草原已经换成森林套：雾色天空加三层横向循环的视差背景，草地和泥土各四种变体按坐标选，房屋、树、长椅、栅栏等手摆装饰，地面小草按坐标自动撒。效果见 `docs/forest-ingame.png`。
+- 区域用哪套由 `index.html` 里 `REGION` 的 `biome` 字段决定，套组本身定义在 `BIOME`。湖泊、湖底洞穴、雷电塔还是旧画面。
+- 只换画面，不改碰撞和玩法。尖刺、电网、木箱、水、单向平台等仍用原来的瓦片，方便辨认。
+- 装饰写在 `tools/build_world.py` 每个房间的 `deco=[(素材名, 列, 地面行[, 像素偏移]), ...]` 里，改完运行它重新生成世界；换了图片要再运行 `python3 tools/embed_assets.py`。
