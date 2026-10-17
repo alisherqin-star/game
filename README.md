@@ -35,6 +35,8 @@
 ## 画面与素材
 
 - 内部分辨率 384×224（16 像素瓦片），最近邻放大，桌面端按整数倍缩放保证像素整齐。
-- 角色图是用户提供的拼贴图切出来的像素 PNG（普通 + 闪光共 18 张，base64 内嵌在 `index.html` 里），切图与闪光配色脚本在 `tools/extract/`，`tools/embed_sprites.py` 负责写回游戏。拼贴图里的角色是任天堂 / Game Freak 的宝可梦形象，仅供个人娱乐使用。
-- 没有 PNG 时会回退到 `tools/gen_sprites.py` 生成的原创像素图。
-- **替换角色素材**：在 `index.html` 旁新建 `assets/` 目录，放入 `eevee.png`、`vaporeon.png` 等 9 张图，会优先于内置图被使用。要求：角色朝右、脚贴图片底边、透明背景；也可以把两帧走路动画横向拼成一张（宽度约为高度的两倍）。
+- 所有美术都是 `sprites/` 目录里的 PNG（原始像素尺寸、透明背景），游戏加载时从 `index.html` 内嵌的 base64 读取。改图流程：
+  1. 用任意像素编辑器（Aseprite、Piskel 等）修改 `sprites/` 下的 PNG，或改 `tools/make_assets.py` 里的字符画后运行它重新生成
+  2. 运行 `python3 tools/embed_assets.py` 写回 `index.html`
+- 目录说明：`characters/` 9 只伊布（普通 + 闪光，朝右、脚贴底），`tiles/` 地形（草地、泥土、砖块、木箱、水面两帧、水体、冰面、电网两帧、黑影墙两帧、尖刺、单向平台），`items/` 8 种食物，`enemies/` 史莱姆和蝙蝠各两帧，`ui/` 金币四帧、爱心、路牌、终点旗，`deco/` 云、灌木、树、小花。
+- 角色图来自用户提供的拼贴图，由 `tools/extract/extract_sheet.py` 切出、`tools/extract/clean_sprites.py` 清理杂点并补描边，闪光版按色相映射生成。拼贴图里的角色是任天堂 / Game Freak 的宝可梦形象，仅供个人娱乐使用。
