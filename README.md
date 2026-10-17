@@ -31,6 +31,8 @@
 ## 画面与素材
 
 - 内部分辨率 384×224（16 像素瓦片），最近邻放大，桌面端按整数倍缩放保证像素整齐。
-- 角色、怪物、食物、瓦片都是代码里手绘的原创像素图（`index.html` 顶部的 `BODY` / `EARS` / `TAILS` / `FOOD_ART` 等字符画，改字符和调色板就能改造型）。
+- 角色、怪物、食物、瓦片都是原创像素图，不含任何官方素材。
+- 9 种伊布的像素图（28×26，两帧走路动画）由 `tools/gen_sprites.py` 用形状拼接 + 自动描边生成：改耳朵/尾巴/颈毛的形状参数或调色板后运行 `python3 tools/gen_sprites.py`，会直接写回 `index.html`。
+- 怪物、食物、金币等小图是 `index.html` 里的字符画（`FOOD_ART`、`ENEMY_ART` 等），改字符和调色板即可。
 - **替换角色素材**：在 `index.html` 旁新建 `assets/` 目录，放入 `eevee.png`、`vaporeon.png`、`jolteon.png`、`flareon.png`、`leafeon.png`、`glaceon.png`、`espeon.png`、`umbreon.png`、`sylveon.png`，游戏会自动用它们替换内置像素图。要求：角色朝右、脚贴图片底边、透明背景；也可以把两帧走路动画横向拼成一张（宽度约为高度的两倍）。建议尺寸 16～24 像素高。
   注意：网上的宝可梦官方像素图属于任天堂 / Game Freak 的版权素材，仓库里不附带，请自行确认使用许可。

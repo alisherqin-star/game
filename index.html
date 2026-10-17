@@ -53,6 +53,7 @@ const H = 14;            // 关卡高度（瓦片）
 const GRAVITY = 0.22;
 const JUMP_V = -4.6;
 const RUN = 1.6;
+const PW = 12, PH = 18;   // 玩家碰撞盒
 
 // ---------------- 进化形态定义 ----------------
 const FORMS = {
@@ -73,60 +74,11 @@ const FOODS = {
 };
 
 // ---------------- 像素图：伊布与进化形态 ----------------
-// 图层 18x16，'.' 透明；字母颜色由各形态调色板决定。
-const SW = 18, SH = 16;
-const BODY = [
-'..................', '..................', '..................', '..................',
-'..........oooo....', '........oobbbboo..', '.......obbbbbbbbo.', '.......obbwebbbbo.',
-'.......obbbbbbbno.', '....ooooobbbbbbo..', '...obbbbbbllllo...', '..obbbbbbbblllo...',
-'..obbbbbbbbbbo....', '..obbbbbbbbbbo....', '...obo..obo.obo...', '...ooo..ooo.ooo...'];
-const LEGS_B = ['..obo...obo..obo..', '..ooo...ooo..ooo..'];
-const EARS = {
-  big:     ['........oo....oo..', '.......oiio..oiio.', '.......oiiio.oiiio', '.......obiio.obiio', '........obbo.obbo.'],
-  fin:     ['..................', '.....oo.....oo....', '....oiio...oiio...', '....oiiio.oiiioo..', '.....oiiioiiiiio..'],
-  spike:   ['........o.....o...', '.......oio...oio..', '.......obo...obo..', '......obbo..obbo..', '......obbbo.obbo..'],
-  leaf:    ['..................', '...oooo......ooo..', '..oiiiio....oiiio.', '...oiiiio..oiiiio.', '....ooiiiooiiioo..'],
-  diamond: ['.........o.....o..', '........oio...oio.', '.......oiiio.oiiio', '........oio...oio.', '........obo...obo.'],
-};
-const TAILS = {
-  bushy: ['..................', '..................', '..................', '..................', '..................', '..oo..............', '.ottto............', 'otttbbo...........', 'otbbbbbo..........', '.obbbbbbo.........', '..obbbbb..........', '...oooo...........'],
-  fish:  ['..................', '..................', '..................', '..................', '..................', 'oo................', 'otto..............', 'otttoo............', '.ottbbbo..........', '..otbbbbo.........', '...obbbb..........', '....ooo...........'],
-  spike: ['..................', '..................', '..................', '..................', '..................', '..................', '..................', '...oo.............', '..otto............', '..ottbo...........', '...obb............', '....oo............'],
-  leaf:  ['..................', '..................', '..................', '..................', '..................', '..o...............', '.otto.............', 'otttto............', 'ottttto...........', '.otttboo..........', '..oobbb...........', '....ooo...........'],
-  fork:  ['..................', '..................', '..................', '..o...o...........', '.oto.oto..........', '.ototto...........', '..otto............', '...oto............', '...obo............', '....obo...........', '....obb...........', '.....oo...........'],
-  thin:  ['..................', '..................', '..................', '..................', '..o...............', '.oto..............', '.ottto............', '..ottto...........', '...obbbo..........', '....obbb..........', '.....oo...........', '..................'],
-};
-const ACCENT = { // [row, 字符串, col]
-  eevee: [],
-  vaporeon: [[6, 'ooooo', 2], [7, 'oiiio', 1], [8, 'oiio', 1]],
-  jolteon: [[9, 'lo', 6], [8, 'lo', 5], [7, 'lo', 4], [10, 'l', 6], [11, 'l', 5]],
-  flareon: [[9, 'l', 8], [10, 'llllll', 8], [11, 'lllll', 9], [12, 'l', 10], [9, 'll', 11], [8, 'l', 11]],
-  leafeon: [], glaceon: [],
-  espeon: [[6, 'x', 11]],
-  umbreon: [[2, 'x', 8], [2, 'x', 14], [3, 'x', 9], [3, 'x', 15], [11, 'xx', 5], [12, 'x', 5], [12, 'x', 7], [8, 'x', 2], [8, 'x', 3]],
-  sylveon: [[2, 'x', 8], [2, 'x', 14], [10, 'xx', 8], [11, 'x', 8], [12, 'x', 7], [13, 'x', 6], [14, 'x', 6], [15, 'x', 5], [10, 'x', 12], [11, 'x', 13]],
-};
-const SPRITE_DEF = {
-  eevee:    { ears: 'big',     tail: 'bushy', pal: { o: '#3a2314', b: '#c98a44', d: '#9c5f2a', l: '#f3e0bf', i: '#6b4423', t: '#f3e0bf', e: '#1a1008', w: '#ffffff', n: '#2a1a10', x: '#fff' } },
-  vaporeon: { ears: 'fin',     tail: 'fish',  pal: { o: '#1f4d66', b: '#5fc3e6', d: '#3b93b8', l: '#f5efc8', i: '#f5efc8', t: '#2f7fa6', e: '#1a1008', w: '#ffffff', n: '#1f4d66', x: '#fff' } },
-  jolteon:  { ears: 'spike',   tail: 'spike', pal: { o: '#5a4a0a', b: '#f3d14a', d: '#c9a327', l: '#ffffff', i: '#8a6a10', t: '#ffffff', e: '#1a1008', w: '#ffffff', n: '#2a1a10', x: '#fff' } },
-  flareon:  { ears: 'big',     tail: 'bushy', pal: { o: '#5a2208', b: '#ee6a2a', d: '#b84a16', l: '#f8e6a4', i: '#f8e6a4', t: '#f8e6a4', e: '#1a1008', w: '#ffffff', n: '#2a1a10', x: '#fff' } },
-  leafeon:  { ears: 'leaf',    tail: 'leaf',  pal: { o: '#3f5a1e', b: '#efe3b8', d: '#c4b07a', l: '#efe3b8', i: '#7cc043', t: '#7cc043', e: '#1a1008', w: '#ffffff', n: '#4a3a20', x: '#fff' } },
-  glaceon:  { ears: 'diamond', tail: 'fish',  pal: { o: '#1e4a70', b: '#a8dcf3', d: '#6fb3d9', l: '#a8dcf3', i: '#2f6a9c', t: '#2f6a9c', e: '#1a1008', w: '#ffffff', n: '#1e4a70', x: '#fff' } },
-  espeon:   { ears: 'big',     tail: 'fork',  pal: { o: '#4a2a5e', b: '#cfa3e3', d: '#a070bf', l: '#cfa3e3', i: '#b283cf', t: '#cfa3e3', e: '#1a1008', w: '#ffffff', n: '#4a2a5e', x: '#e8323f' } },
-  umbreon:  { ears: 'big',     tail: 'thin',  pal: { o: '#0c0c12', b: '#34343f', d: '#22222a', l: '#34343f', i: '#22222a', t: '#34343f', e: '#e8323f', w: '#ffe08a', n: '#0c0c12', x: '#f5d442' } },
-  sylveon:  { ears: 'big',     tail: 'bushy', pal: { o: '#6a3250', b: '#f6c4d8', d: '#d892b0', l: '#ffffff', i: '#7fb0e6', t: '#ffffff', e: '#1a1008', w: '#ffffff', n: '#6a3250', x: '#7fb0e6' } },
-};
-const FORM_COLOR = Object.fromEntries(Object.entries(SPRITE_DEF).map(([k, v]) => [k, v.pal.b]));
-function composeSprite(form, walk) {
-  const def = SPRITE_DEF[form];
-  const g = BODY.map(r => r.split(''));
-  if (walk) { g[14] = LEGS_B[0].split(''); g[15] = LEGS_B[1].split(''); }
-  const put = (layer) => layer.forEach((row, ri) => row.split('').forEach((ch, ci) => { if (ch !== '.') g[ri][ci] = ch; }));
-  put(EARS[def.ears]); put(TAILS[def.tail]);
-  ACCENT[form].forEach(([r, str, c]) => str.split('').forEach((ch, i) => { g[r][c + i] = ch; }));
-  return g;
-}
+// 由 tools/gen_sprites.py 生成（28x26，两帧走路动画），'.' 透明，字母颜色见各形态 pal。
+/* SPRITE_DATA_BEGIN */
+const SPRITE_DATA = {"eevee":{"pal":{"o":"#3a2010","b":"#c98a46","d":"#9a5f2b","l":"#f6e8c8","i":"#5c3a22","e":"#2b1a10","w":"#ffffff","n":"#2b1a10"},"frames":[["............................","............o.......o.......","...........oo.......oo......","...........oio......oo......","...........oio.....oio......","...........oio.....oiio.....","..........oiiio.oooiiio.....",".ooooo....oiiioobboiiio.....",".olllloo..obbooobbooobbo....","ollllllbo.ooobbbbbbbboooo...","olllllbbbo..obbbbbbbeebbo...","olllllbbbo.obbbbbbbeweebbo..","obbbbbbbbo.obbbbbbbeweebbo..","obbbbbbbbo.obbbbbbbeeeebbo..",".obbboooooooobbbbbbbeewbnn..","..ooobbbbbbbobbbbbbbbbbbo...","...obbbbbboolobbbbbbbbbo....","..obbbbbbolllloobbbbbooo....","..obbbbbbolllllloooooloo....","..obbbbbbolllllllllllloo....","...obbbbbolllllllllllloo....","....obbbollollllllllollo....","....obbboooboooooooooooo....","....obbo.obbo..obbo.obbo....","....obbo.obbo..obbo.obbo....","....oooo.oooo..oooo.oooo...."],["............................","............o.......o.......","...........oo.......oo......","...........oio......oo......","...........oio.....oio......","...........oio.....oiio.....","..........oiiio.oooiiio.....",".ooooo....oiiioobboiiio.....",".olllloo..obbooobbooobbo....","ollllllbo.ooobbbbbbbboooo...","olllllbbbo..obbbbbbbeebbo...","olllllbbbo.obbbbbbbeweebbo..","obbbbbbbbo.obbbbbbbeweebbo..","obbbbbbbbo.obbbbbbbeeeebbo..",".obbboooooooobbbbbbbeewbnn..","..ooobbbbbbbobbbbbbbbbbbo...","...obbbbbboolobbbbbbbbbo....","..obbbbbbolllloobbbbbooo....","..obbbbbbolllllloooooloo....","..obbbbbbolllllllllllloo....","..obbbbbbollllllllllllobo...","..obbbbbollollllllllolloo...","..obbboooooboooooooo.oobo...","..obbo....obbbbbbo...obbo...","..obbo....oooooooo...obbo...","..oooo...............oooo..."]]},"vaporeon":{"pal":{"o":"#1b4a66","b":"#5fc3e6","d":"#3b93b8","l":"#f6efc8","i":"#f6efc8","e":"#1b1a2a","w":"#ffffff","n":"#1b4a66","D":"#2a6f99"},"frames":[["............................","............................",".........o..........o.......",".........oo........olo......","..........oo.......olo......","..........olo......ollo.....","o.........ollo..oooollo.....",".o........ollloobbbolllo....",".oo........olloobbolloooo...","..oo.......ooobbbbooobbbo..o",".oDDo.......obbbbbbbeebboooo","..obo......obbbbbbbeweeolllo","..oobo.....obbbbbbbeweebolo.","....oDoD.D.Dbbbbbbbeeeebboo.","....ooDoDoDoDbbbbbbbeewbnno.","....obbbbbbbobbbbbbbbbbbo...","...obbbbbbbooobbbbbbbbbo....","..obbbbbbbbboloobbbbbooo....","..obbbbbbbbbolobooooobbo....","..obbbbbbbbbboobbolobbbo....","...obbbbbbbbbbbbbboobbbo....","....obbbbbbbbbobbbo.obbo....","....obbbobbbbo.obbo.obbo....","....obbo.obbo..obbo.obbo....","....obbo.obbo..obbo.obbo....","....oooo.oooo..oooo.oooo...."],["............................","............................",".........o..........o.......",".........oo........olo......","..........oo.......olo......","..........olo......ollo.....","o.........ollo..oooollo.....",".o........ollloobbbolllo....",".oo........olloobbolloooo...","..oo.......ooobbbbooobbbo..o",".oDDo.......obbbbbbbeebboooo","..obo......obbbbbbbeweeolllo","..oobo.....obbbbbbbeweebolo.","....oDoD.D.Dbbbbbbbeeeebboo.","....ooDoDoDoDbbbbbbbeewbnno.","....obbbbbbbobbbbbbbbbbbo...","...obbbbbbbooobbbbbbbbbo....","..obbbbbbbbboloobbbbbooo....","..obbbbbbbbbolobooooobbo....","..obbbbbbbbbboobbolobbbo....","..obbbbbbbbbbbbbbbooobbbo...","..obbbbbbbbbbbbbbo...obbo...","..obbboooobbbbbbbo...obbo...","..obbo....obbbbbbo...obbo...","..obbo....oooooooo...obbo...","..oooo...............oooo..."]]},"jolteon":{"pal":{"o":"#5a4a0a","b":"#f5d33f","d":"#c9a327","l":"#ffffff","i":"#8a6a10","e":"#2b1a10","w":"#ffffff","n":"#2b1a10"},"frames":[["............................","....................o.......","...........oo.......oo......","...........oo.......oo......","...........oo..oo..obo......","...........obo.oo..obbo.....","...........obo.ooooobbo.....","..........obbbobooobbbo.....","..........oboooobbooobbo....","..........ooobbbbbbbboooo...","..oo........obbbbbbbeebbo...","...ooo..oo.obbbbbbbeweebbo..","..owoo..oo.obbbbbbbeweebbo..","...ooboobboobbbbbbbeeeebbo..","...obbbbbbbbobbbbbbbeewbnn..","....obbbbbbbobbbbbbbbbbbo...","...obbbboooooobbbbbbbbboo...","..obbbbbowwwowoobbbbboooo...","..obbbbbbowobowwooooowooo...","..obbbbbbowobbowobbowwooo...","...obbbbboobbbowobbowwoo....","....obbbboobbboobbo.oobo....","....obbbobobbooobbo.oobo....","....obbo.obbo..obbo.oobo....","....obbo.obbo..obbo.obbo....","....oooo.oooo..oooo.oooo...."],["............................","....................o.......","...........oo.......oo......","...........oo.......oo......","...........oo..oo..obo......","...........obo.oo..obbo.....","...........obo.ooooobbo.....","..........obbbobooobbbo.....","..........oboooobbooobbo....","..........ooobbbbbbbboooo...","..oo........obbbbbbbeebbo...","...ooo..oo.obbbbbbbeweebbo..","..owoo..oo.obbbbbbbeweebbo..","...ooboobboobbbbbbbeeeebbo..","...obbbbbbbbobbbbbbbeewbnn..","....obbbbbbbobbbbbbbbbbbo...","...obbbboooooobbbbbbbbboo...","..obbbbbowwwowoobbbbboooo...","..obbbbbbowobowwooooowooo...","..obbbbbbowobbowobbowwooo...","..obbbbbboobbbowoboowwobo...","..obbbbbboobbboobo..oobbo...","..obbbooooobbboobo..oobbo...","..obbo....obbbbobo..oobbo...","..obbo....oooooooo...obbo...","..oooo...............oooo..."]]},"flareon":{"pal":{"o":"#5a2208","b":"#ee6a2a","d":"#b84a16","l":"#f8e6a4","i":"#f8e6a4","e":"#2b1a10","w":"#ffffff","n":"#2b1a10"},"frames":[["............................","............o.......o.......","...........oo.......oo......","...........oio......oo......","...........oio.....oio......","...........oioooooooiio.....","..........oiiiolllloiio.....",".ooooo....oiiiooooooiio.....",".olllloo..obbooobbooobbo....","olllllllo.ooobbbbbbbboooo...","ollllllllo..obbbbbbbeebbo...","ollllllllo.obbbbbbbeweebbo..","ollllllllo.obbbbbbbeweebbo..","ollllllllo.obbbbbbbeeeebbo..",".ollloooooooobbbbbbbeewbnn..","..ooobbbbbbbobbbbbbbbbbbo...","...obbbbbboolobbbbbbbbbo....","..obbbbbbolllloobbbbbooo....","..obbbbbbolllllloooooloo....","..obbbbbbolllllllllllloo....","...obbbbbolllllllllllloo....","....obbbollollllllllollo....","....obbboooboooooooooooo....","....obbo.obbo..obbo.obbo....","....obbo.obbo..obbo.obbo....","....oooo.oooo..oooo.oooo...."],["............................","............o.......o.......","...........oo.......oo......","...........oio......oo......","...........oio.....oio......","...........oioooooooiio.....","..........oiiiolllloiio.....",".ooooo....oiiiooooooiio.....",".olllloo..obbooobbooobbo....","olllllllo.ooobbbbbbbboooo...","ollllllllo..obbbbbbbeebbo...","ollllllllo.obbbbbbbeweebbo..","ollllllllo.obbbbbbbeweebbo..","ollllllllo.obbbbbbbeeeebbo..",".ollloooooooobbbbbbbeewbnn..","..ooobbbbbbbobbbbbbbbbbbo...","...obbbbbboolobbbbbbbbbo....","..obbbbbbolllloobbbbbooo....","..obbbbbbolllllloooooloo....","..obbbbbbolllllllllllloo....","..obbbbbbollllllllllllobo...","..obbbbbollollllllllolloo...","..obbboooooboooooooo.oobo...","..obbo....obbbbbbo...obbo...","..obbo....oooooooo...obbo...","..oooo...............oooo..."]]},"leafeon":{"pal":{"o":"#3f5a1e","b":"#efe3b8","d":"#c4b07a","l":"#efe3b8","i":"#7cc043","e":"#2b1a10","w":"#ffffff","n":"#4a3a20","L":"#7cc043","G":"#3f8a2a"},"frames":[["............................","............................",".................oo..oo.....","......ooo........oo.oLLooo..",".....oLLLo.......oo.oLLLLo..","......oLLLo.....ooooLLLLo...",".......oLLLoo...ooooLLLGo...","oo......oLLLLooobbboLLGLo...","oLooo....oLooobbbboooLLo....","oLGo......o.obbbbbbbboooo...",".oLGo.......obbbbbbbeebbo...","..oLGo.....obbbbbbbeweebbo..","...oLLo....obbbbbbbeweebbo..","....oLLo...obbbbbbbeeeebbo..",".....oooooooobbbbbbbeewbnn..","....obbbbbbbobbbbbbbbbbbo...","...obbbbbbbbbobbbbbbbbbo....","..obbbbbbbbbbboobbbbbooo....","..obbbbbbbbbbbbbooooobbo....","..obbbbbbbbbbbbbbbbbbbbo....","...oddddbddddbbddddodddo....","....odddbddddbodddo.oddo....","....odddoddddo.oddo.oddo....","....oddo.oddo..oddo.oddo....","....oddo.oddo..oddo.oddo....","....oooo.oooo..oooo.oooo...."],["............................","............................",".................oo..oo.....","......ooo........oo.oLLooo..",".....oLLLo.......oo.oLLLLo..","......oLLLo.....ooooLLLLo...",".......oLLLoo...ooooLLLGo...","oo......oLLLLooobbboLLGLo...","oLooo....oLooobbbboooLLo....","oLGo......o.obbbbbbbboooo...",".oLGo.......obbbbbbbeebbo...","..oLGo.....obbbbbbbeweebbo..","...oLLo....obbbbbbbeweebbo..","....oLLo...obbbbbbbeeeebbo..",".....oooooooobbbbbbbeewbnn..","....obbbbbbbobbbbbbbbbbbo...","...obbbbbbbbbobbbbbbbbbo....","..obbbbbbbbbbboobbbbbooo....","..obbbbbbbbbbbbbooooobbo....","..obbbbbbbbbbbbbbbbbbbbo....","..odddbbbbddddddddooodddo...","..odddbbbbdddddddo...oddo...","..odddoooodddddddo...oddo...","..oddo....oddddddo...oddo...","..oddo....oooooooo...oddo...","..oooo...............oooo..."]]},"glaceon":{"pal":{"o":"#1e4a70","b":"#a8dcf3","d":"#6fb3d9","l":"#a8dcf3","i":"#2f6a9c","e":"#1b1a2a","w":"#ffffff","n":"#1e4a70","D":"#2f6a9c"},"frames":[["............................","...........oo.......oo......","..........oDo......oDo......","..........obbo.....obbo.....",".........oDbbDo...oDbbDo....",".........oDbbDo...oDbbDo....","o.........obbo..oooobbo.....",".o........oDo.oobbboDoo.....",".oo........ooobbbbbboobo....","..oo........obbbbbbbbbbbo...",".oDDo.....ooobbbbbbbeebbooo.","..obo.....oobbbbbbbeweebboo.","..oobo....oobbbbbbbeweebboo.","....obo...oobbbbbbbeeeebboo.","....ooooooooobbbbbbbeewbnn..","....obbbbbbbobbbbbbbbbbbo...","...obbbbbbbbbobbbbbbbbbo....","..obbbbbbbbbbboobbbbbooo....","..obbbbbbbbbbbbbooooobbo....","..obbbbbbbbbbbbbbbbbbbbo....","...obbbbbbbbbbbbbbbobbbo....","....obbbbbbbbbobbbo.obbo....","....obbbobbbbo.obbo.obbo....","....obbo.obbo..obbo.obbo....","....obbo.obbo..obbo.obbo....","....oooo.oooo..oooo.oooo...."],["............................","...........oo.......oo......","..........oDo......oDo......","..........obbo.....obbo.....",".........oDbbDo...oDbbDo....",".........oDbbDo...oDbbDo....","o.........obbo..oooobbo.....",".o........oDo.oobbboDoo.....",".oo........ooobbbbbboobo....","..oo........obbbbbbbbbbbo...",".oDDo.....ooobbbbbbbeebbooo.","..obo.....oobbbbbbbeweebboo.","..oobo....oobbbbbbbeweebboo.","....obo...oobbbbbbbeeeebboo.","....ooooooooobbbbbbbeewbnn..","....obbbbbbbobbbbbbbbbbbo...","...obbbbbbbbbobbbbbbbbbo....","..obbbbbbbbbbboobbbbbooo....","..obbbbbbbbbbbbbooooobbo....","..obbbbbbbbbbbbbbbbbbbbo....","..obbbbbbbbbbbbbbbooobbbo...","..obbbbbbbbbbbbbbo...obbo...","..obbboooobbbbbbbo...obbo...","..obbo....obbbbbbo...obbo...","..obbo....oooooooo...obbo...","..oooo...............oooo..."]]},"espeon":{"pal":{"o":"#4a2a5e","b":"#cfa3e3","d":"#a070bf","l":"#cfa3e3","i":"#b283cf","e":"#2b1a10","w":"#ffffff","n":"#4a2a5e","x":"#e8323f"},"frames":[["............................","............o.......o.......","...........oo.......oo......","...........oio......oo......","...........oio.....oio......","...........oio.....oiio.....",".o........oiiio.oooiiio.....","..o..oo...oiiioobboiiio.....","..oo.oo...obbooobbxxxxbo....","...ooo....ooobbbbbbxxoooo...","...oo.......obbbbbbbeebbo...","....oo.....obbbbbbbeweebbo..","....oo.....obbbbbbbeweebbo..","....oo.....obbbbbbbeeeebbo..","....ooooooooobbbbbbbeewbnn..","....obbbbbbbobbbbbbbbbbbo...","...obbbbbbbbbobbbbbbbbbo....","..obbbbbbbbbbboobbbbbooo....","..obbbbbbbbbbbbbooooobbo....","..obbbbbbbbbbbbbbbbbbbbo....","...obbbbbbbbbbbbbbbobbbo....","....obbbbbbbbbobbbo.obbo....","....obbbobbbbo.obbo.obbo....","....obbo.obbo..obbo.obbo....","....obbo.obbo..obbo.obbo....","....oooo.oooo..oooo.oooo...."],["............................","............o.......o.......","...........oo.......oo......","...........oio......oo......","...........oio.....oio......","...........oio.....oiio.....",".o........oiiio.oooiiio.....","..o..oo...oiiioobboiiio.....","..oo.oo...obbooobbxxxxbo....","...ooo....ooobbbbbbxxoooo...","...oo.......obbbbbbbeebbo...","....oo.....obbbbbbbeweebbo..","....oo.....obbbbbbbeweebbo..","....oo.....obbbbbbbeeeebbo..","....ooooooooobbbbbbbeewbnn..","....obbbbbbbobbbbbbbbbbbo...","...obbbbbbbbbobbbbbbbbbo....","..obbbbbbbbbbboobbbbbooo....","..obbbbbbbbbbbbbooooobbo....","..obbbbbbbbbbbbbbbbbbbbo....","..obbbbbbbbbbbbbbbooobbbo...","..obbbbbbbbbbbbbbo...obbo...","..obbboooobbbbbbbo...obbo...","..obbo....obbbbbbo...obbo...","..obbo....oooooooo...obbo...","..oooo...............oooo..."]]},"umbreon":{"pal":{"o":"#0c0c12","b":"#34343f","d":"#22222a","l":"#34343f","i":"#22222a","e":"#e8323f","w":"#ffe08a","n":"#0c0c12","x":"#f5d442"},"frames":[["............................","............o.......o.......","...........oo.......oo......","...........xxx......xxx.....","...........xxx.....oxxx.....","...........obo.....obbo.....","..........obbbo.ooobbbo.....","..........obbboobxxxbbo.....",".ooo......obboooxxxxxbbo....","..obo.....ooobbbbxxxboooo...","..obo.......obbbbbbbeebbo...","...oo......obbbbbbbeweebbo..","...oxo.....obbbbbbbeweebbo..","...obo.....obbbbbbbeeeebbo..","....ooooooooobbbbbbbeewbnn..","....obbbbbbbobbbbbbbbbbbo...","...obbbxxxxbbobbbbbbbbbo....","..obbbbxxxxbbboobbbbbooo....","..obbbbbbbbbbbbbooooobbo....","..obbbbbbbbbbbbbbbbbbbbo....","...obbbbbbbbbbbbbbbobbbo....","....obbbbbbbbbobbbo.obbo....","....obbbobbbbo.obbo.obbo....","....oxxo.obbo..obbo.oxxo....","....obbo.obbo..obbo.obbo....","....oooo.oooo..oooo.oooo...."],["............................","............o.......o.......","...........oo.......oo......","...........xxx......xxx.....","...........xxx.....oxxx.....","...........obo.....obbo.....","..........obbbo.ooobbbo.....","..........obbboobxxxbbo.....",".ooo......obboooxxxxxbbo....","..obo.....ooobbbbxxxboooo...","..obo.......obbbbbbbeebbo...","...oo......obbbbbbbeweebbo..","...oxo.....obbbbbbbeweebbo..","...obo.....obbbbbbbeeeebbo..","....ooooooooobbbbbbbeewbnn..","....obbbbbbbobbbbbbbbbbbo...","...obbbxxxxbbobbbbbbbbbo....","..obbbbxxxxbbboobbbbbooo....","..obbbbbbbbbbbbbooooobbo....","..obbbbbbbbbbbbbbbbbbbbo....","..obbbbbbbbbbbbbbbooobbbo...","..obbbbbbbbbbbbbbo...obbo...","..obbboooobbbbbbbo...obbo...","..obbxx...obbbbbbo...xxbo...","..obbo....oooooooo...obbo...","..oooo...............oooo..."]]},"sylveon":{"pal":{"o":"#6a3250","b":"#f6c4d8","d":"#d892b0","l":"#ffffff","i":"#7fb0e6","e":"#2b1a10","w":"#ffffff","n":"#6a3250","x":"#7fb0e6","p":"#ff6b9a"},"frames":[["............................","............o.......o.......","...........oo.......oo......","...........oio......oo......","..........xxxo.....xxx......","..........xxxo.....xxxo.....","..........oiiio.oooiiio.....",".ooooo....oiiioobboiiio.....",".olllloo..obbooobbooobbo....","ollllllbo.ooobbbbbbbboooo...","olllllbbbo..obbbbbbbeebbo...","olllllbbbo.obbbbbbbeweebbo..","obbbbbbbbo.obbbbbbbeweebbo..","obbbbbbbbo.obbbbbbbeeeebbo..",".obbboooooooobbbbbbbeewbnn..","..ooobbbbbbbobbbbbbbbbbbo...","...obbbbbboolobbbbbbbbbo....","..obbbbbbolppppobbbbbooo....","..obbbbbbolpppploooooloo....","..obbbbbbollxlxllllllloo....","...obbbbbolxlxlllllllloo....","....obbbolxoxlllllllollo....","....obbboxoxoooooooooooo....","....obboxoxbo..obbo.obbo....","....obbx.obbo..obbo.obbo....","....oooo.oooo..oooo.oooo...."],["............................","............o.......o.......","...........oo.......oo......","...........oio......oo......","..........xxxo.....xxx......","..........xxxo.....xxxo.....","..........oiiio.oooiiio.....",".ooooo....oiiioobboiiio.....",".olllloo..obbooobbooobbo....","ollllllbo.ooobbbbbbbboooo...","olllllbbbo..obbbbbbbeebbo...","olllllbbbo.obbbbbbbeweebbo..","obbbbbbbbo.obbbbbbbeweebbo..","obbbbbbbbo.obbbbbbbeeeebbo..",".obbboooooooobbbbbbbeewbnn..","..ooobbbbbbbobbbbbbbbbbbo...","...obbbbbboolobbbbbbbbbo....","..obbbbbbolppppobbbbbooo....","..obbbbbbolpppploooooloo....","..obbbbbbollxlxllllllloo....","..obbbbbbolxlxllllllllobo...","..obbbbbolxoxlllllllolloo...","..obbboooxoxoooooooo.oobo...","..obbo..x.xbbbbbbo...obbo...","..obbo.x..oooooooo...obbo...","..oooo...............oooo..."]]}};
+/* SPRITE_DATA_END */
+const FORM_COLOR = Object.fromEntries(Object.entries(SPRITE_DATA).map(([k, v]) => [k, v.pal.b]));
 // 把像素字符串画成离屏画布
 function bake(rows, pal, flip) {
   const w = rows[0].length, h = rows.length;
@@ -139,9 +91,9 @@ function bake(rows, pal, flip) {
   return c;
 }
 const SPRITES = {};
-for (const f in SPRITE_DEF) {
+for (const f in SPRITE_DATA) {
   SPRITES[f] = {};
-  for (const walk of [0, 1]) { const rows = composeSprite(f, walk).map(r => r.join('')); SPRITES[f][walk] = { 1: bake(rows, SPRITE_DEF[f].pal, false), '-1': bake(rows, SPRITE_DEF[f].pal, true) }; }
+  SPRITE_DATA[f].frames.forEach((rows, walk) => { SPRITES[f][walk] = { 1: bake(rows, SPRITE_DATA[f].pal, false), '-1': bake(rows, SPRITE_DATA[f].pal, true) }; });
 }
 // 可选的外部素材：把 assets/<形态>.png（朝右、脚贴底）放进去即可替换内置像素图。
 // 可以是单张图，也可以是横向两帧的走路图（宽度为两帧拼接）。
@@ -162,7 +114,9 @@ function tryLoadExternal(form) {
   img.onerror = () => { };
   img.src = 'assets/' + form + '.png';
 }
-for (const f in SPRITE_DEF) tryLoadExternal(f);
+{ // 先探测 assets/eevee.png，存在时才尝试加载其余形态，避免控制台一堆 404
+  const probe = new Image(); probe.onload = () => { for (const f in SPRITE_DATA) tryLoadExternal(f); }; probe.src = 'assets/eevee.png';
+}
 const spriteOf = (form, walk, facing) => (EXT[form] || SPRITES[form])[walk][facing];
 
 // ---------------- 像素图：食物、怪物、杂项 ----------------
@@ -216,7 +170,7 @@ function buildLevel() {
   const sign = (x, text) => signs.push({ x, text });
 
   ground(0, 34);
-  startPos = { x: 3 * T, y: 10 * T - 16 };
+  startPos = { x: 3 * T, y: 10 * T - PH };
   sign(5, '← → 移动，空格 / ↑ 跳跃。伊布吃不同的食物会进化！');
   coinRow(8, 12, 7);
   enemy(18);
@@ -312,7 +266,7 @@ function resetGame() {
   timeStart = performance.now();
 }
 function makePlayer(form) {
-  return { x: checkpoint.x, y: checkpoint.y, w: 10, h: 14, vx: 0, vy: 0, facing: 1, onGround: false, jumpsLeft: 0,
+  return { x: checkpoint.x, y: checkpoint.y, w: PW, h: PH, vx: 0, vy: 0, facing: 1, onGround: false, jumpsLeft: 0,
     inWater: false, breath: 1, form, invuln: 0, anim: 0, gliding: false };
 }
 
@@ -485,7 +439,7 @@ function updatePlayer() {
       if (form !== p.form) evolveTo(form);
     }
   }
-  for (const s of signs) if (Math.abs(s.x * T - p.x) < 8 && checkpoint.x < s.x * T) checkpoint = { x: s.x * T, y: 10 * T - 16 };
+  for (const s of signs) if (Math.abs(s.x * T - p.x) < 8 && checkpoint.x < s.x * T) checkpoint = { x: s.x * T, y: 10 * T - PH };
 
   for (const e of enemies) {
     if (!e.alive) continue;
@@ -724,7 +678,7 @@ function draw() {
     drawBackground();
     for (let x = 0; x < CW; x += 16) { drawTile('=', x / 16, 10); for (let y = 11; y < H; y++) drawTile('#', x / 16, y); }
     ['eevee', ...FORM_ORDER].forEach((f, i) => {
-      const x = 22 + i * 42, y = 10 * T - Math.round(Math.abs(Math.sin(titleAnim + i * 0.5)) * 8);
+      const x = 22 + i * 42, y = 10 * T - Math.round(Math.abs(Math.sin(titleAnim + i * 0.5)) * 6);
       const spr = spriteOf(f, Math.floor(titleAnim * 2 + i) & 1, 1);
       ctx.drawImage(spr, x - Math.floor(spr.width / 2), y - spr.height);
       text(FORMS[f].name, x, 10 * T + 8, 7, '#fff', 'center');
@@ -754,7 +708,7 @@ function draw() {
   if (state === 'win') {
     const secs = Math.round((timeEnd - timeStart) / 1000);
     drawOverlay('通关！', ['分数 ' + score + '   用时 ' + secs + ' 秒', '金币 ' + coinCount + '   发现了 ' + Object.keys(discovered).length + ' / 9 种伊布', '伊布和它的所有进化形态一起抵达了终点！'], '按任意键回到标题');
-    ['eevee', ...FORM_ORDER].forEach((f, i) => { if (discovered[f]) { const spr = spriteOf(f, (frame >> 3) & 1, 1); ctx.drawImage(spr, 30 + i * 38, 166 - spr.height - ((frame >> 3) + i) % 2); } });
+    ['eevee', ...FORM_ORDER].forEach((f, i) => { if (discovered[f]) { const spr = spriteOf(f, (frame >> 3) & 1, 1); ctx.drawImage(spr, 14 + i * 40, 162 - spr.height - ((frame >> 3) + i) % 2); } });
   }
 }
 let last = 0, acc = 0;
