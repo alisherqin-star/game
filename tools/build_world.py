@@ -1,7 +1,7 @@
 # 世界构建：把每个房间的字符画拼成一张大地图，写出 levels/world.json 并嵌入 index.html。
 # 用法：python3 tools/build_world.py
 #
-# 房间网格：每间 24x14 格（可以横向占多格）。字符含义：
+# 房间网格：每间 24x14 格，用 size=(宽, 高) 可以横向、纵向占多格，大房间里镜头连续滚动、不换页。字符含义：
 #   地形  ' ' 空  '#' 泥土/地面  'r' 岩石  'b' 砖  'B' 塔石  'W' 木箱  '~' 水  'E' 电网  'S' 黑影墙
 #         '^' 尖刺  '-' 单向平台  '_' 深渊（掉下去扣血回安全点）  'D' 锁门（集齐 8 种进化）  'K' 裂墙（雷伊布冲撞）  'L' 熔岩
 #   实体  'P' 出生点  'e' 史莱姆  'v' 蝙蝠  'p' 刺河豚  'f' 跳跳蛙  'G' 大史莱姆 Boss  'M' 湖蚌 Boss
@@ -18,10 +18,10 @@ RW, RH = 24, 14
 T = 16
 ROOMS = []
 def room(pos, name, region, rows, texts=(), size=(1, 1), deco=()):
-    w = RW * size[0]
-    assert len(rows) == RH, (name, len(rows))
+    w, h = RW * size[0], RH * size[1]
+    assert len(rows) == h, (name, len(rows))
     for i, r in enumerate(rows): assert len(r) == w, (name, i, len(r), r)
-    for d in deco: assert 0 <= d[1] < w and 0 < d[2] <= RH, (name, d)
+    for d in deco: assert 0 <= d[1] < w and 0 < d[2] <= h, (name, d)
     ROOMS.append(dict(pos=pos, name=name, region=region, rows=rows, texts=list(texts), size=size, deco=list(deco)))
 
 # ================= 起点村 =================
@@ -125,7 +125,7 @@ room((12, 2), '草原·史莱姆王', 'plains', [
 '########################'], texts=['路牌：前方是大史莱姆的地盘！它每被踩一次就会分裂出一只小史莱姆。最近它特别暴躁，好像在找什么东西……'], deco=[('env_stump', 6, 11), ('env_berry_bush', 17, 11), ('forest_tree_1', 21, 11)])
 room((13, 2), '草原·池塘', 'plains', [
 '                        ',
-'          EEEE          ',
+'                        ',
 '                        ',
 '                        ',
 '                        ',
@@ -137,7 +137,7 @@ room((13, 2), '草原·池塘', 'plains', [
 ' s   !    ####       !  ',
 '######~~~~####~~~~######',
 '######~~~~####~~~~######',
-'########################'], texts=['路牌：池塘中央的小岛上闪着蓝光，是水之石！伊布碰到它就会进化成会游泳的水伊布，回头去西边的湖看看吧！', '路牌：↑ 雷电塔。电网只有雷伊布能过。'], deco=[('env_berry_bush', 3, 11), ('forest_tree_2', 20, 11)])
+'########################'], texts=['路牌：池塘中央的小岛上闪着蓝光，是水之石！伊布碰到它就会进化成会游泳的水伊布，回头去西边的湖看看吧！', '路牌：→ 雷电塔。塔门的电网只有雷伊布能穿过。'], deco=[('env_berry_bush', 3, 11), ('forest_tree_2', 20, 11)])
 room((13, 1), '雷电塔·门口', 'tower', [
 'BBBBBBBBBBBBBBBBBBBBBBBB',
 'BBBBBBBBBBBBBBBBBBBBBBBB',
@@ -148,11 +148,12 @@ room((13, 1), '雷电塔·门口', 'tower', [
 'BB        ---         BB',
 'BB                    BB',
 'BB  ---          ---  BB',
-'BB         !          BB',
-'BB                    BB',
-'BB                    BB',
+'BB         !            ',
+'BB                      ',
+'BB                      ',
 'BBBBBBBBB      BBBBBBBBB',
-'BBBBBBBBB      BBBBBBBBB'], texts=['石碑：雷电塔暂未开放，施工中。'])
+'BBBBBBBBB      BBBBBBBBB'], texts=['石碑：这里是雷电塔的门厅。从地板的缺口跳下去就是草原的池塘，往东回到中庭继续向上。'])
+
 
 # ================= 湖泊 =================
 room((6, 2), '湖畔', 'lake', [
@@ -245,6 +246,73 @@ room((2, 2), '柠檬岩', 'lake', [
 '####################~~~~',
 '####################~~~~',
 '####################~~~~'], texts=['路牌：岩缝里嵌着雷之石！伊布碰到它就会进化成雷伊布，冲过草原尽头的电网。'])
+
+# ================= 雷电塔内部（新房间放在最后，已有房间和实体的编号不变，旧存档仍然有效） =================
+# 中庭：三屏高的竖井，一路往上爬不换页。塔基西墙是电网门（只有雷伊布能穿过），东墙裂墙后藏着心之碎片。
+room((14, 0), '雷电塔·中庭', 'tower', [
+'BBBBBBBBBBBBBBBBBBBBBBBB',
+'BBBBBBBBBBBBBBBBBBBBBBBB',
+'BB                    BB',
+'BB                    BB',
+'BB    c c c c c       BB',
+'BB    -----------     BB',
+'BB                    BB',
+'BB               v      ',
+'BB   ----               ',
+'BB                      ',
+'BB                      ',
+'BB        -----  BBBBBBB',
+'BB                    BB',
+'BB    ----            BB',
+'BB                    BB',
+'BB                    BB',
+'BB      ----          BB',
+'BB      EEEE          BB',
+'BB                    BB',
+'BB          ---       BB',
+'BB                    BB',
+'BB               v    BB',
+'BB  ------            BB',
+'           c          BB',
+'                      BB',
+'         -----        BB',
+'BBBBBB                BB',
+'BB         -----      BB',
+'BB                    BB',
+'BB                    BB',
+'BB  -----             BB',
+'BB              v     BB',
+'BB                    BB',
+'BB          -----     BB',
+'BB                    BB',
+'BB     c  c  c        BB',
+'EE    ---------    ---BB',
+'EE                    K ',
+'EE  s   !             Kh',
+'BBBBBBBBBBBBBBBBBBBBBBBB',
+'BBBBBBBBBBBBBBBBBBBBBBBB',
+'BBBBBBBBBBBBBBBBBBBBBBBB'], texts=['石碑：雷电塔。塔里到处是电网，只有雷伊布能穿过。一直往上爬，塔顶供奉着一颗火之石。'], size=(1, 3), deco=[
+    ('env_coil', 18, 39), ('env_torch_0', 2, 33), ('env_torch_0', 21, 30), ('env_lever', 4, 26),
+    ('env_gear', 20, 24), ('env_torch_0', 2, 19), ('env_torch_0', 21, 15), ('env_torch_0', 2, 7)])
+
+# 塔顶：两屏宽的大厅，镜头连续横移。电网帘子挡住不是雷伊布的形态，尽头的祭坛上是火之石。
+room((15, 0), '雷电塔·塔顶', 'tower', [
+'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+'BB                                            BB',
+'BB                                            BB',
+'BB                          c c c             BB',
+'BB                         -------            BB',
+'BB              v                     v       BB',
+'                    E                         BB',
+'                    E                         BB',
+'                    E                     3   BB',
+'    s       !       E        f       BBBBBBBBBBB',
+'BBBBBBBBBBBBBBBBBBBBBBBBB^^^BBBBBBBBBBBBBBBBBBBB',
+'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'], texts=['石碑：火之石就供奉在大厅尽头。让伊布碰到它，伊布就会进化成浑身火焰的火伊布。'], size=(2, 1), deco=[
+    ('env_torch_0', 6, 9), ('biome_pillar', 9, 11), ('env_coil', 17, 11), ('env_gear', 24, 4),
+    ('env_torch_0', 26, 9), ('biome_pillar', 33, 11), ('env_torch_0', 41, 8), ('env_lever', 44, 10)])
 
 # ================= 输出 =================
 def build():
