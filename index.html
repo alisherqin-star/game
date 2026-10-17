@@ -95,7 +95,22 @@ for (const f in SPRITE_DATA) {
   SPRITES[f] = {};
   SPRITE_DATA[f].frames.forEach((rows, walk) => { SPRITES[f][walk] = { 1: bake(rows, SPRITE_DATA[f].pal, false), '-1': bake(rows, SPRITE_DATA[f].pal, true) }; });
 }
-// 可选的外部素材：把 assets/<形态>.png（朝右、脚贴底）放进去即可替换内置像素图。
+// 内置角色图（像素 PNG，base64，普通版 + 闪光版），由 tools/embed_sprites.py 写入
+/* SPRITE_PNG_BEGIN */
+const SPRITE_PNG = {"vaporeon":{"normal":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAUCAYAAACTQC2+AAACeUlEQVR4nL2VTUgUYRjHfxMZHlxyIYZMd5QEYSXIhfyIhAb20GLbxTLz4NJGl0VRVg/bRQ95sFhCNrK9BKtbB80uUi5bBzMoFDXEQ3hIiKasWIR1mQ4bHt4OMQPjB7pt9r8N78P7e/7P88zzQp6yy4rI9459qWZwRvwX2I+158IbiuwJO3Tgmfwr2WVFTL95taervB2tLA1z9tQqAOf8vbvG5QSyy8q2rDuDE2SyDgC+Fp+2TKFdVoQxLFIuECPjd7F7pFOaVKk2C9uFrm2xn4d8AJQH4wC0HfnAvkEAV676xIOhFjxx27YzZ0MpK3NrAJRtLPOo6yQARwu/0B6Yyw1klxXxbeUWAJmsA0/cRtnGMjZPkxmjJxPYPE1sRgd4HG0gk3VwvPSSlFOP0ilNOuG8Y2aa9OnYPE3oyQR6MgFggWayDpyuDuAvhmFlaZhM1kF7YI7O4AQl2jqFn94z1u8zYSXaOgBOVwfplCYB+yudMQhGtpvRAUZiEQCu3Y5TVV0HwHflmAnyVug8HH7Cs6dxyeJop9GFP7vMraqWkhiaX1xgrN+HNhU1AZvRAbwVOgC19fVmrGRA3KpKQaAPgGSrm3RKk2oGZ8TWZhsyXP3ceEtRcSPziwsA1J2pZX5xweIG4LBdVoQ/PG7aBnCrKquuGzuuk2SrG394HC4GuO7vBmAk1miBXG65afbG4qhSbRYAzvrz5kFVdR3T336hv7yPSy6iINCHnkzw4m63BOANRYTRG20qapYp1NuR0y9j6ZldVkTP6KzYul56RmdF2+uP+T0T6ZQmGfbdqspkLGxZmumUJk3GwuZ3eTCONxQ5uAfQcLXb1Br6DbnRC6MYmxzyAAAAAElFTkSuQmCC","shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAUCAYAAACTQC2+AAACc0lEQVR4nL2VXUhTYRjHf0e86CJoB9kMa7vyRpkwIbOGxpFdeOVFuIUM1gdEsE0o8aIMBEFo3UjI0nOpZkg67wQvhOIUi4kKEgN3s6tV0jZkGwqOQN4u5Bw4fqBr2XN3eB/e3/N/nv95XqgyZJtDVHvHuSLujov/Avv1c0moXvVMWM2FV/KvQrY5xKfPK2eqqlpRanOC2840AK/uDJ2aVxFItjmOVd0/EKNUtgPQst1icqFscwjdLFIlEL3il18iFHIZyd/sFyFL6FhuT9oPwFLjHABfe79xbhCA99598faNj7RPPnZW11rHzuYOAMmGJHfHrwNw5dJ3AsHVykCyzSG2Uy8AKJXtpH0yyYYkSr1i5GhZDaVeYTgfYVa9Rals5+q1HqmiGRVyGamh6bVRaWOsgFKvoGU1tKwGYIKWynaaWsPAX5ghtTlBqWwnEFylfyBG0VrkY02CwEyfAStaiwA0tYYp5DIScL7W6UbQqx3OR5ieGgdg9sEHXE4XAJa8xQDtd+0yOfGexYV3kknRSdaFw13mURRTS/RY21gnMNPH2JZqAIbzEfa7dgFoa283ciUd4lEURq2H9nXHuinkMlLcHRdHh62HrmqvGOeypYO1jXUAbt5oY21j3aQGoFa2OcRyaN6QDeBRFJ79eHLiOnHHulkOzTNoDfLw0VMApqc6TJBe32NjNiZF/ma/AOhs7jQOXE4XBysHTBYn+e2sZdQ6hJbVCC4GJQDVqwp9NmNbqtGm54Phin4Z08xkm0MkRhLi6HpJjCREKpyq7pko5DKSLt+jKEQXoqalWchlpOhC1PheapxD9aoX9wDqqk5zrR5/AEpHElXn0e6pAAAAAElFTkSuQmCC"},"jolteon":{"normal":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAYAAABvVQZ0AAACkUlEQVR4nKWTQUhTcRzHP6/0oDn4s/CZMJibdUgJwkKH4sEgnYeSCBxKp6mHELp0iIJ2mJIEBSFIB91Ooa1LgYeWSnpZaNgIRb3MOUOCFk8ebDpI4t9B9vLtOQn6nt6f9/t//t//9/f/wX9qerhVqkJIgFPHFfTevCD/BaQKId1lGWNtgalCyPGRSvbWmo0TT9LkZlVxWFrXFVfLOtHFCrZidUVdqkLI+cc1JDR7cdhR+YNOXA53UWAyZ2P+w3vSuq4UhaV1XYl/UQBIaHbGRyrJX/mkPEuOs942lKLhiiQx89fhVgwGHv6U4yOVuBxumdDs/KrWDFcmZ6oQsq2jk2TOxkBvE15PlnBg23Ty7S4Xqeg+jwYzBBo38HqyhEbDhlPlKGwrVsfHt6dxl2WY3KwiodkJB7bxB50AdLdreD1ZAEqrbwDgcD8lreuKKoQ0ZZaK7nPt1m9qvOUkNDsToTH8QSfd7RqABQSwk3xg5FmSd3UU+mTMRnvLdd6E3zERGqO/b9D4d+hyxRRBW0fn4TXz1ytUdLGCdt9rABZedJF/6Yul9wCYic2agP6gk1NpXVfO1H9SXC3rRjZHtbQc59Wqw1h7DkbxHIxaQJHIlGI0YHq41ZizGm+5UTRwtw+A8ZchAAKNGwYkmbMZB5lgee2tNRv5+YNOJkJjLC3HLY4Bmq42GN+2Crti6qYqhExF94HDJuRBeVfHgWodbpaW4/h8PebJUIWQa88vy8KRUYWQmeyu9Pl6ZGg0LOcW5uT0cKssBFhmM/j5Ij2N5yzPpb9vkDuXdpiJzbK98o2+Z6tEIlOmmCyZFVN+bpM5G4vfy+mt/UH9/a+m/SXFNhcqrevK5GaVTGh2zp/dpW0oZan5AxN2Dt2MHVsWAAAAAElFTkSuQmCC","shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAYAAABvVQZ0AAACjElEQVR4nKWUT0gUURzHP2N2ENd4bDgmFixuCBJJRviHhNjybwcvgYtLXdYWDKGDEZ3ykIeIKEGQhHH3FGvrKfCgrVtbB0lDJLZiQVawQsStiSEVIYnXQWbacVwJ+p7e4735vO/7/t5v4D81NNkkVSEkQMF+Gy4HTsp/AalCyNalTWvugKlCyH6tlMRWo3XiQYoul+WHZQ1DCVSkSU2XEF2tzutSFUIm73rI6O78sFxpQQ+1wpsXGK9ykXwxRdYwlLywrGEo+ksFgIzupl8rxbzyQXkW7mfdN7jC0UuSzMRfh9FVeBz6Jvu1UmqFV2Z0N/KXbrmyOVOFkL62DuJVLkKBemraNwhFVmwnN1+ppHx0G9/DnwzUpalp3yA8HLGcKrmw6Go1H14donVpk+hyGRndTSiyghb0AFDfpVPTvgFARWEnABfKHpA1DEUVQtoyKx/d5vTF36z1FpHR3YyFR9CCHuq7dAAHCODN+h0rz0LTVS40efsIredbmIg8Zyw8wvWePmtt12XKFoGvrWP3mub19io1XUKo7RkAY8lOzJc+d/gmAPHZGRtQC3ooyBqG0lz8VglUpK1scjW/sMjc0xPWvGFnmIadYQcoFhtXrAIMTTZZfbbWW2RtCt3o2R0/CQMwUJe2IPEql3WQDWYqsdVo5acFPYyFR5hfWHQ4Bqg/d9Yal7jciq2aqhCyfHQb2C2CCTJd7QfyHq9kfmERv7/b3hmqEPLTozNyb8uoQsiNzR/S7++W4eGITLxOyKHJJrkX4OjNe++qaek+5ngu13v6aLj6lfjsDJ9TX7h/7SOx2LgtJkdm+WT2bbzKxfepYgLedU7dem/7/sBfUK6yhqFEl8us6vkGVxx7/gAVZwxZxjMAwQAAAABJRU5ErkJggg=="},"flareon":{"normal":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAWCAYAAADAQbwGAAACn0lEQVR4nJ2UUUhTURjHf0dENh9k4kG6IqLCfFAEJTQfFoKjTHowKCLShUKCiawxDGxC4IOrhyVmPUhBBlOCekiTUB8KDA1R0EAMSqiQYC83Jz3okOD0sO7d7twE/V7uvef7+J3/d77/PZAmutuuKk1KlS537NCkVLHfw2onMnMiaFYqbHNjnL0DJwDvZh+Z6ycCtjY3WZKlxXnsRGbU2LO7x1eoSamCIY8lGegLA3C2oeJIlZqUyl1Xpw4pTA2/2EW/85ip3lEGB28eqaytxIEmpcoCMOipMawcDCsHLrtg7dN3vrWfVwDTbx6qtdVJpUmpNCnVUGMtAEONtWRrUqrXb++Rm7PF3oEVWB+LxsG2fMt6d9d9NjfG6brVztLckiVntmxMNjlq+jtw2YVFsSal+vE1AICvx42zooyV/xsOLKyTFdF1YRx+apQW57G4bz0Noz0jgiEPwZCHFVs+EV0XpsLcnK200EtPvNTHovjFLgAuu8DnXWaqd9RSNz3/IdFyYXkRewfOjNCa/g4myipNqF/s4rILS72hPBug+JTNTMaH4zSfgb4wLVfO4OtxA24CfWETvH17jsX9WROqSamyNSnVjWuF5mKy0p+//pBq9vpYlEUwB+G3x+GL+yp+hhFdF7YCv7h44eWhs/z84AXJA0vOFZYXWTZy2UXC2ADvV1dFcGTbLPB5l3HZhelFA/a36TQApV82zRxA49waEV0XCZMlhbuuTrWVOEwPTpRVEvCVWGp83mXLdzDkoaq6k7RAgOeXz5kGvP60JW1N6s9QVd2Z+XKY3N41320FfuHzLjP/Mf2Fk5uzRaAvnLlliFugtbmJ+liUgYV1IO41Y7ojow1AovWxyVcCyNxypk2SocbfARDR9WOxLNCjLtt/Bq3762GbnlQAAAAASUVORK5CYII=","shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAWCAYAAADAQbwGAAACmklEQVR4nJ2UX0hTURzHP3eEjD2I4sG6MmQo9iJC0iYShKA0kx4Mgh6yQUaChYyL+DCXBIIuH1bY6EEUMhAJisg/RGkkFChDxQJTEEnDhAXdNHqYQ4LTg93r7twE/b7ce8/vdz/ne87vdw6kUXPDVakKIdPFjixVCJn49VBuxcaPBbWlwpYWB4nvlgDw+s0jc/xYwPraakvQ5cxmKzYu+wbaj+5QFUKGwj5LMNg2BMD5ytOHulSFkDUejzzgMFUdWjHxzRlGWiJ0dt461FlDYQ6qENIGYNBT1dX7la7er3gDbhZm1tica5cAo68eyIW5YakKIVUhZHdVOQDdVeWcUIWQL8bu4chaJb5rBVYktk1wspqb7rO0OEjT7etMv522xBSjsun0bfMP+XyxAEcnplhfCZqdYOxzRWKbux8+YYvpumIMpsrlzGayZ94yZizPUCjsIxT2MWvPJabrilkUR9ZqWujlx34qEtt0aMUAeANuNH+UkZaIJW90Ygr4X+X8ogLiuyUZoWcCN+gf2zGhHVox3oDbkm84twE4T9nNYOoz2DbE980faHdqcDjPWfZTX/vJSEvEdKsKIRVVCLm+EjSTkp0ur53E5cy2uDV+nrXnmm4BJnvmufnynWKL6bpiz2tVLl18dmAvP/c8JblgybH8ogLLRN6Ae7+xAd7PzSmh3g0zQfNH8QbcZi8asL/VZwFwLS+ZMQBP3QAxXVcU0qjG45ENhTl4A24A+sd2CGqFlhzNH7V8h8I+SssaSQsEeHLlgnkcr/XXpc0xmttQaVlj5stheOO3+W7Pa1U0f5SJj+kvHEfWKsG2ocxLhr0WqK+tNo8U7PWaUd3eSCWwv/S+4ecKkHnJmSZJhhqnAyCm60diWaCHXbb/ACKhBiTaTUsxAAAAAElFTkSuQmCC"},"espeon":{"normal":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAVCAYAAACzK0UYAAACq0lEQVR4nK1VQUsbQRT+NvSiPSzbbmAvgVBDFqSXaATBeLErFAmWkB8QS8gpIZVCFXIKBBbicXHpYRH0UnqRkBC8uAqltpU0RgqlEPEg5CIYGtJDofQwPchbd81mDdjvMjvz3rzvvfftzAD3QGm1xAReZCM5C7zIwnJ0NOcR45VWSzfxwnKUnRweM6Ow6ZpVKpl2bhgBc0rCEct31m5y0wuzXEbNcWaljpPDY4dDKBDEeecCo7RF4EVmFDYZAPiloLXuI9Y5JcE03QAAmJW65XDeuUA+m4FZqUPgRU8NXr98BQD49STgWPdddToAgOdPpxCTIyAi0ujL92/Yq+0jr5YxOTMPqtauocCLLJVMM2lcwHbjAGMTYfgDN0ScnbG0WmLSuICj9ilqZhW9fpcLy1H2JrmC7caBIzutsA4lEcdGtogpJQoAyKtl/F18BgBorOes2A4SgRcZbVIScfT6XQ64Fh8AWo8fAgDGJsJ4OxN1bdnK+3f48+EzztpNdxIiMit1TC/Muto2skVsNw6gFdYdtr3aPqgLAHDe/4kfXz+i1+9yA4GoZRk1N2Aj+9LyIgBA0w3E5IjVLoKmGwgFgiCNHtzOdGl5EUoiPhCcKnSDphvIZzPWvGZW4ZeCuLq8gF8KOkkmZ+at8ZNZGUqQV8sI8Y8QkyM4ap8iJkcsm5KIwy8FLU16/e5gVnQl2M8D/aL026aSaWYUNpl9pLPmVqlr30ngNb0I4OZwtswm1vQizEodLbNp+Q/Tz5OEkEqmmZuwt6HpBnZ2t4bG8nlt3tnd4i5/96x5Xi07KiDUzKpnEp4kAi8yaVwAcN2qq04HGTXHEVHLbGKvto9l5YUniSfoViVh7esnh8eW8HfF8ayEQPcYze3fdMLvhWFXeyqZZrffnv+Ou94WO/4BbTc7i6HoA5UAAAAASUVORK5CYII=","shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAVCAYAAACzK0UYAAACq0lEQVR4nK1VQUsbQRT+NvSiPSzbbmAvgVBDFqSXaATBeLErFAmWkB8QS8gpIZVCFXIKBBbicXHpYRH0UnqRkBC8uAqltpU0RgqlEPEg5CIYGtJDofQwPchbd81mDdjvMjvz3rzvvfftzAD3QGm1xAReZCM5C7zIwnJ0NOcR45VWSzfxwnKUnRweM6Ow6ZpVKpl2bhgBc0rCEct31m5y0wuzXEbNcWaljpPDY4dDKBDEeecCo7RF4EVmFDYZAPiloLXuI9Y5JcE03QAAmJW65XDeuUA+m4FZqUPgRU8NXr98BQD49STgWPdddToAgOdPpxCTIyAi0ujL92/Yq+0jr5YxOTMPqtauocCLLJVMM2lcwHbjAGMTYfgDN0ScnbG0WmLSuICj9ilqZhW9fpcLy1H2JrmC7caBIzutsA4lEcdGtogpJQoAyKtl/F18BgBorOes2A4SgRcZbVIScfT6XQ64Fh8AWo8fAgDGJsJ4OxN1bdnK+3f48+EzztpNdxIiMit1TC/Muto2skVsNw6gFdYdtr3aPqgLAHDe/4kfXz+i1+9yA4GoZRk1N2Aj+9LyIgBA0w3E5IjVLoKmGwgFgiCNHtzOdGl5EUoiPhCcKnSDphvIZzPWvGZW4ZeCuLq8gF8KOkkmZ+at8ZNZGUqQV8sI8Y8QkyM4ap8iJkcsm5KIwy8FLU16/e5gVnQl2M8D/aL026aSaWYUNpl9pLPmVqlr30ngNb0I4OZwtswm1vQizEodLbNp+Q/Tz5OEkEqmmZuwt6HpBnZ2t4bG8nlt3tnd4i5/96x5Xi07KiDUzKpnEp4kAi8yaVwAcN2qq04HGTXHEVHLbGKvto9l5YUniSfoViVh7esnh8eW8HfF8ayEQPcYze3fdMLvhWFXeyqZZrffnv+Ou94WO/4BbTc7i6HoA5UAAAAASUVORK5CYII="},"eevee":{"normal":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAASCAYAAAC9+TVUAAABYElEQVR4nJWUP0vDQBjGnxyXfgI3hX4AB5ci9Ct0kJAP0KWLAUkncRDnEjJFAp2yuArlpu4uCiWOLTgGWqcurknIufheL7lE7QNH7i7v+3v/5C4WjpDNuKR5UZUWzdkxEACYTx3Mp04NyJoRbMYljS5QmuU1ELMZl/vtGrqjHo32foNymuy3azyH90izvBYNALxIKLj+3oDsVovWtAf9HibOCIN+DwDUU4cwAry+vCsjctZBTRHcZlyyoiqtC/ehM4s2ACmIQwCA+tbUOEqd0m2mr0O9SBzKAQ6HRzfyx0PlnIilikyixrcetjTL4Y+Hxv7dzW1t7UUCRVVaCmIzLomsK4hDpFmOiTNSAWjQ+eKG148en95UNkEcYrda4PTSbbU1IGmWIxFLtfYBw5mAJ2fntYuoSmreo42YyWv3Sn59fsiNmKm1blentIh6pX9iamhnOV0i5wQwS/iP/vo1fAPkeb5UvjUm2AAAAABJRU5ErkJggg==","shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAASCAYAAAC9+TVUAAABbElEQVR4nJWTMWvCQBTH/zmSvXTpclu+h0uWIlJCv0AGHTroELIKoruD6KiCi3MGkS5ZHFoQupQsDg6FUHAp3RWvg7zruxgjPgjcXd7/d++9e8/CDeYIW9F6fzxYt2gNyHw6UPPpQHGgyN/gCFvRdwm2WiSYjftaJxxhqyzbggtn4752orMyqE2LLNsieY2xWiTGbQAQNCIN5/+NdADg92dXGDYA1P2qBlZqHio1z/CzHGGr9PMNH+t3Q1ypeRqSF3G/SbyERfnSTTyCS2Iy79GHlC70W1Ph6n61MIoicNCIALCaUPNwp7DX1uJJvER3NDQioegFCmy1SBD22mfnnWbL2AeNCPvjwdJPnK8LWXc0RKfZQt2vGmkBp7aQ0lVWEYQcw14bd/cPAE4tQGtuUrr/zcZTmcRLvecgMgJK6Z4PYn5mHGGrTbpWL89Pavf9pTbpWu+539VxpjT5E1NBr2kNCB//skG8CioT/wEwhcOyUKfw7gAAAABJRU5ErkJggg=="},"umbreon":{"normal":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAACgklEQVR4nK1VwWoTURQ9M4hJNNJi48QiViohnUiYBFJ0kYCtlUZmEWgJWVmhOz+gdCHZ2Y0t/YNiFdrNkIUUGoIbRczGtNCOFidDcFFqa2ICDgpJ7OK5KO+RyUwmLnpWb2buPfe88+7cx+Gc4XZ5CADw50nodnmInEkDAC44BQbEIACgoulotZucE/Gj+2HwfvH/VczOzZFXqw9JIiSQXnGJkEAOVqLkYCVKTFbQBzuIvj+YmT7FthLqGbfz7TdKvM/0jqe+2CW12k3uQ6HYd2cBMYitvWHEsmVmGddpuK6qCPgv4s3bEvOTFqQxeSUHAIhPTKL64zsAYOHJNaytqfj4tcbyTF1R3BjE69VLCEciTD1V0EkIAAPCEIKShOLGIABgWwmZ8vhWu8nllRyeS59ZgYqmWyyhcQPCEFNPsbU3jKOCgYqm2/fxUcHAi5dX4eQ5Vd6J9cVDlHifqSBPE2LZMjaPR6HVvZZECnoeRq3BrJlduMxUA0B15y7cLg9higNi0JG0E/fuuLC7NIa8ksMV8hPxx7/YN//4J7TaTY4Rf9nf54xaA0atYVLYaQm1Qqt7sXk8it2lMfB+EUFJshS3/Kbd7QWctSE9UDmThq6qFjJqDevjbuJESCDCeLKfG8grOVbcqDVQfP/ONE8s08138xZS0RNbsvXFQ7bu3FE3qS1xpfoXM9OnJmW0z+eXRxg53XpeydlOPhOx2+UhqQe3Mb88wpLiE5OQM2nEsmUWp6sq5Ey6J6mtYq3uhVFrQFdVtNpNjs4DAEhFT1jRfuh5g9Au8F+/wZQ/fXY26YKSxFQ7jVyGcCRCunu3G26Xh0wlZTKVlB1jHa8bJ3K67uXxP985K47LMdthAAAAAElFTkSuQmCC","shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAACf0lEQVR4nK1VMWgaURj+zoSqYJPh5BRKKSlyOYucAQuBKDUxBcsNhYoIHQIdQwkxmbq4NVuWDkG6dcoiDpkklJIWSQKlzZBrQ/Ui3SrJ1aOYBtRmeB3Ke9zpeXbIN727+//v/973/vsfh2uGx+0lAOC6TkKP20uUXBYAMO4UGJJEAECjpqHb63BOxI+SEbgC0v+ryCwtkYfrb0giLJBhcYmwQE42Z8jJ5gyxWEEf7CD5L3ElZjC2ejo07vP338g385Z3LuqLXVK31+GquwcjdxaSREy09hAr1JllnNlwTVURCtzAzttPzE9akMZUSmUAQHx+AednPwAAwdQaursvsP9NZ3mWruCXq/j15B0i0ShTTxWYCQFgUuAhyjL45SoAYGz11JLn6vY6XKVUxkv5CyvQqGkDltC4SYFn6ikmWnsoXibRqGn2fVy8TCKuPYOT51S5GcbcFvLNvKWgiybECnVsN6dQa/kGEinoebR1g1kzvvOUqQaA2Vdn8Li9hCkOSaIjqRmz99w42phGpVTGTfITxusH7NvHtSC6vQ7HiL8eH3Nt3UBbNywKzZZQK2otH7abUzjamIYrIEGU5YHiA79pf3sB/9qQHqiSy0JT1QEyag3r437iRFggwv30SDsqpTIr3tYNHHx4b5knA9PNf/sOLvwpWzJjboutzTvqJ7Ulbpz/wZWYsSijfc4frjByuvVKqWw7+SzEHreXPE7dBX+4wpLi8wtQclnECnUWp6kqlFx2KKmt4lrLh7ZuQFNVdHsdjs4DALjwp1jRURh6g9AuCARvMeX7xecAAFGWmWqnkcsQiUZJf+/2w+P2ksW0QhbTimOs43XjRE7Xwzz+C2ScLDNS0F3nAAAAAElFTkSuQmCC"},"leafeon":{"normal":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAATCAYAAACUef2IAAAC1ElEQVR4nJ2VQUgUURjHfyNupajsQixZGRkriRQhIgU5Wkmw0mJqdVHUpYsghhcNCazJurlQ20IReTCoDnXQxHAvZmZFIqa0EEmbhZLBUMwSC2oDvU7zdNxdif6n977vff/v//5v3hsADu7bK7JcTsEmSJXPcjmT1qYBOIsK8Y9qZAfrki7KcjmFop1I2jBuxJTfpQVkB+tEdrBO1qYBTAyHlf5KjapcD62hdlSf10buH9U2Vb1l6hMAq88W7YoB8l1O3J6d3PkZ4VCPl7Z3NyXJ/YmXssHGpg31tXJ+bvtuuet0K/jFiFEBNKvlNgviRkxZH5s9mQnDa3lXRwX+jgoAjMlxqicFT0oL1hSvV2YhbsQUgMwPBnp0CSMwTrNantQSIzAux1tP5ZG+nqRNLZcF/ZWaXHj7QhD/qIZ722fmAuP4RzUcw/NC/7jmqYX929KYyC22K7bI9OgSxUeP2JT3V2rETxyQsSJzlc6aEjI/GAC4C/PorCkhd9d2piKLKBs7ZrmcojXUzp2fEYT2XNph5V7d7WAoPEO1t1jW9A5OY9YUcIkcAMpaAnbFljpz3qBZLac11J6Q6x2clvOh8AwAnTUlkjSqm5yuOp5IDHDj8i3l2BuD+i2OpAdV7S0mqpvMrfxhKDxDVDdlLhie5OnIWHJigLNtV5XGrj76r7Xbru3DRwMKgMftAGBu5Y8cA+zJySBuxJQEjzfC8tVCVDfxuB1MRRb5/u2HzevGrj4i818VAEX1ecXEcDhlg3vdLaL0YF7KxlHdZODNe7kTC2kzr9+mVHrxwRXxaf8OGStrCdj87B2cxuN2MHQ4UVdKpQ31tWLh1zKhpjJ6B6elItXnFaGmMmmJ9ZUs/Fpms50nqL7X3ZLwlGYH68Ts4+uiob5W9Jw/k/TF+6fDy3c55aGoPq/Yk5OBuzCPInOVF591no6M2S7Sf8FSr/q8ouf8mZR/nr8+/jV+o4mJcAAAAABJRU5ErkJggg==","shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAATCAYAAACUef2IAAACx0lEQVR4nJ2UX0hTYRjGf2f0Z8LIjSJFsjxJJFFUMiGoXfTHOMUoRZTSC9MbQWhB4C7GrIhR6E1oIKy7gRNqFzWKHG0iIaXVKKOLktBpf4ZFMYmBo6KvizpfHncW0XP1ne/93ud53vc93wfAjs0VwuawC/6CQnGbw26aawGwb6vCk4xBImp6yOawi2wkZCqYzSwoX2u2QCIqSETzxW0Ou2iPXxfewfPC5dYMB3zTE6KQqKwmERWrDtfIuEVfqA47pZs30Vtajavvwi+y37iU+gCAJxljuWhLc738bly3QVatLFX1JGMGJ/1OjWxmQckTOXRcMcuZ6+4BIPLp3R/HS53pyGYWFIDv48PMz8wx192DTy0xHaROCvDV62fFUhKfWiIT+p2aPDhwug9PMobVamGquwdPMsZieEh8fPV2OT9brRZernxvdKyTzc/MsXvvHoPzfqdG9sB2uecstuLvqOX7+DAA66vK8XfUUrmzkqeTsygsg81hF51Xz9BbWo2tsVW2Q489uXWJSGiExtaDMicQjLO67QRdqz4DUFPnMzrW3X2byeBTS+i8eiYvFgjG5XckNAKAv6NWkqbSOY4f2Z9PDHDlXL+y7/FD2srNB9XYepBUOsdU7geR0AipdE7GLofvER0eNScGOHryrNLU1suNgXOGaxseuqkAqGVWAKZyP+QaYOOaIrKZBSWvx8uh91VHKp1DLbPydHKW6efThl43tfXyYmZWAVBcbk2M3YkVFAj3eUX1roqCwql0jvDtMVmJDsuzBxMFnXoHz4vna4vkXk2dz9DPQDCOWmYl3H4qL7+g05bmevHmyyLXuo4RCMalI5dbE9e6jsmW6H/Jmy+L/K3yPNfhPm/+q5aIipf3B0RLc7242N5g+uL90/BUh10OxeXWxMY1RayvKsdZbOXuo9dEh0cNF+m/oLt3uTVxsb2h4Bv9E/fzPI0HCt00AAAAAElFTkSuQmCC"},"sylveon":{"normal":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAABG1c6oAAACxElEQVR4nJWUX0hTURzHP1dFhKBZlzsqJCFENCnQMmb4ZuESH3rSethkuBKtrfShQOxFl0KYMQ1MNCT3pEb5IDoqw0JCHWn4J2VgMRNEx9CpQRR4e5B72vAq+YUL99zz+33O95z7Oz84oGSDoo6X3FNlg6LqzcccFKipwFyIHlQXaMnMU32Otj1dAKRmnyF/cIycBwNRcbrAgW9TAHitLl0XAH7ftO5CAhiZWHDqrAjwWl1Yim2qFhMKByWArPhEvg/Ok9L/GO2bAGowPTdPrl/GaTQhGxQ1sORHNihqy68gE7/XcS8Oi91okmSDouYPjgEQ667D090pwc45OnOL+Jp+nGfLcaT4e2ntaAJgrrpHAEbW55mYmcIzOSQBxITCQSnWXceRhQ2cRpMI9EwOSc2ro7z78JoUfy+OBCUKpCk3MY1LN+78c6i9WIptqtNowpv8E79vGk93p2TJzFNbP74UrkbW5wUkUs0jPcJhlGSDom5tronH52hTLcU2MQ4sBKLmtjbX1FueL1HnHlU2oXBQSk5KpdxeRWh1A9j5m+X2KtoragG43xdgeGWT9PoikVfX2CSgcbtsAo4Ehays86IcLJl56sXGUh59WtsVeyXnKCXnGvQdai5bpj7T1PAc2aDs3ILUkwBYT2wB8PDFjIhXAosUmAv3Bmo6PbeM1+qiwFxIa0cTGRcyeDM5zka/m+b1H5Tbq5ir7iGmbzZq26KwI4vbmVtE8+oo21czuH2zlNnxWcrtVVSW2QAw3jXjSFAASK8vIis+kcoyG7JBUcUZXnv6lmMr71Vz4BDmrhq8VhfbEY41sNNoQjYe5tX2HyZWR8E+itNoIjkplVA4KInaibx2oXBQ8jnaxNjcVQNAYMkPQHtFLbmJaWS3lElaXuR91pXWSLXGADA2NCJqcL/Wti8wMlEr/APD9tP/NN8Daz/YXyaWUF2GXmvgAAAAAElFTkSuQmCC","shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAABG1c6oAAACxklEQVR4nJWUXUgUURiGn1kq6KJGHUYjDIlQENFEUiLzKhBbh4ggRHOJJasdciGli8wboWBvaoncsMBQ2lC8qIT8CauLSIO2KE2lsjaQpB+3bd30xsBOFzKnXRolXxiYM+f7nvOeM9/5YI3SVF0cvfFMaKou7OYdawVaclYY2EFtgYVOl/AGQyu6AMgpzidU2czAbm9SnC3w08h9AGoC/bYuAKaej9suJIGJidtKK2RATaAfV5VbWDHReEQBEDsKePcxzLm0OaxvEmjB7NycHnxKimGiqbqYnplCU3Xxe+gaSvg1Pcdr5W4sKZqqi1BlMwAtS2MEezoUWD7Hsmovu+a/ot98QHfWAm3tfgCaet9LQOzNCBOjLxkdCCoAjmg8orQsjTGfup4Uw5SBowNBZa6vjYeP79KdtYCj3JMEspSaW0qDcfivQ+vFVeUWKYZJ+rdhpp6PE+zpUAqdLjHcc0W6ir0ZkZBEPelulQ6TpKm6WJiPyccbDAlXlVuOp8PTSXML8zExeupq0rknlU00HlGyMnMw6xqJzv4Elv+mWdeIx9cJwIezXfx4/BbfwWyZd/6iX0LX/WMTcJR7KCraJcuh0OkS1/cVE/P3/RObtr+Iy0cO2Du0XI7dDuD33UBTdaGpusjftLzu4qGdAExc6JLxXzYu4awwVgZaerFpCzWBfpwVBm3tfvJK8hh6FeLS9xcMnnJh1jXS1PueW583JG1bFnZicZdVe5nra6N26y/qTxxjMjSJWddIw0k3AGf2ZOAo9wDgO5iN2FFAw0k3mqoLeYaPalu4t31RzGbspau+kppAP/BLOrbAKYaJlr6ZpfAd5sKvMfsg1TDJyswhGo8osnYSr100HlG8wZAcd9VXAjA9MwWAx9dJam4pra4SxcpLvM+2shqp1RgAnj0aljW4WmtbFZiYaBX+mmGr6X+a75q1GuwPriRT0CVWId0AAAAASUVORK5CYII="},"glaceon":{"normal":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAYAAACXtf2DAAACwklEQVR4nLWUX0jTURTHP9sKSpm/aqVYBiU9BUVlZnsIE8ZQ+D1oYvogKdp8ESRBAgOtXPQUYcakWEKhkP/CDQbJGJj4sJb9w9oeYqAPQymc8UOkB8Hbw/j98uf8zQg6cOHee873fO8595wD/0Gskk2oe3OBo1JkMpRrGgz129n7Y3G9vWXEJ/Y8frqtExWgrs0vM7J1jX3Q2ZkB1nPz2I5kVUmaALyvggSiCkPhCJlIthOzujEiqbeX4Kp28vFHjJ6pMO6HTzQSq2RLi2r4ulN7GIC54tviX72ku8zOudyTRHMKKXXKWCWbGApHtKjqngWZD3/SOQcwWSWbuPbIw9u1dS5m78bTWGfa6lyuaRDTwQBD4YjufsI7wPKBo2SXV7A2+RrH4UPcaK7R47d+ZKaqUavKH4uLxvZO4Y/FRZFnUNTOzqew7v60lJlXlaSp3l6iXUwHA4ZpWlWSJke5DMByYpErX74CkLOwQs9UGOYiSMWXdBizCgy+ew9AdVOLIQHAcftZAPKvtlExPkF3mZ2l0T7y34RwlMuc2S9lxOOPxUXvwJhhmvyxuGh9PixqZ+eFXNMgZHe/Lr1bU5T2oWp1tLZ1AKDMzqBGqeqrm1pYTizC6VRqXdVODR+IKrpSTSNQpbG9U1S5mgHomQpzKh4DILo3i8Kqeg5GIzgvnNdhJrwDf4jnIgTGXpgMCdRINov3tpvsm3fIWVhhabQP190uINWMapRWySZKO9wATD/oYpcRQalT1p3vDb1k47KDE6A5b23rQJmd0TXXqpI0ff+VFBtHjhm5TsnmAWeVbMIy4hOWEZ/WBzsNv+Jb7ox6ZHe/bspaRnyiwFGpOe8dGBNFnsEdB5/ZSBHaZ9Gds1qaSYR8WlOGJlMNudN0zfjJQNrwsko2sX7vPuu5eVSMT/D5p0Ii5DP0809S4KjMnN9N8hvohXKKYz9aaQAAAABJRU5ErkJggg==","shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAYAAACXtf2DAAACx0lEQVR4nLWUX0hTcRTHP5uDIrxe4hIlQUHBiqgHkyKUEGnVhNsfJgZFtDLaiwRqkvUQEqOFgVH0klHafEmKBrWFZYslUZRgo1HBfNiDlSZ4qbEFPix+PYx72XW7M4IOXLi/3znn+z3n/M458B9EkhWh/9urPS5RzlBt8VrqS9mHUokF9uGA4O65kiC6g/4VRmZl6008MdnZAVCqKEWSSWs2gFvPwzzKfiEYj1GOpJTYjT8LEm9NI77d+3j/+SM94yP4r940SCRZKcoqtPOYERiA3T39dwFd3N7E1k2biW9bRsMeFUlWRDAeM7LyvBpiKpY0gQPYJFkRR25f5s3vH9RVLKe/xWdbCK62eMXYaIRgPGa6f3zjHt83VrJUrWc+8hq3w0n7yRaz/8KHLNc1eleFUglxvOO8CKUSYstwrzj47aUIpRLC3X+pqGT2TFqzeWsajYux0YhlmTJpzeZyqwDMfZ3G8ylvK2u/6BkfwRGdpHJXjcnHrjs+m3gLQHOrz5IAYE3jBgCUC4dQh5Jc3N6E5r/P2oefcblVaitWm+yL6h1KJcRULFlcywL9s4m3zNY5ybUPknM58e3eB8BAdx9joxHTQxeB6N3R1tUJQPZF3CiPrm9u9TH3dZqcywlgEAA8yn4xtWrJKAGOd5wX+08fBqBnfITadz8B+LBinrXeA6x8M8ne2h0mn8c37hnEjugkkQdBmyWBnkmhDHT34bh2Aln7hea/T2vvGSA/jHqWkqyI+iv57F+fvYrDiqBhj2o6+4cHyTVvYj0Y4G1dnWRfxE01z6Q126w2J3LrVllB56VwwUmyIggHBOGAMQeLLb+aQEdZPe7+S+YtGw6Iao/LAL9254HYMty76J6xWymeLsmYztLRPmZCUWMoo0/zQ7bYdi37yEDR8pJkRWSunwKlCnUoycTvb8yEopY4/yTVHlf5+hbIH9FWbaNyBbWEAAAAAElFTkSuQmCC"}};
+/* SPRITE_PNG_END */
+const SHINY_RATE = 1 / 8;   // 每次进化变成闪光版的概率
+const IMG = {};             // IMG[form][shiny ? 1 : 0] = { 1: canvas, -1: canvas }
+function bakeImage(img) {
+  const make = (flip) => { const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const g = c.getContext('2d'); g.imageSmoothingEnabled = false;
+    if (flip) { g.translate(img.width, 0); g.scale(-1, 1); } g.drawImage(img, 0, 0); return c; };
+  return { 1: make(false), '-1': make(true) };
+}
+for (const f in SPRITE_PNG) {
+  IMG[f] = {};
+  [['normal', 0], ['shiny', 1]].forEach(([k, i]) => { if (!SPRITE_PNG[f][k]) return; const img = new Image(); img.onload = () => { IMG[f][i] = bakeImage(img); }; img.src = SPRITE_PNG[f][k]; });
+}
+// 可选的外部素材：把 assets/<形态>.png（朝右、脚贴底）放进去即可替换内置角色图。
 // 可以是单张图，也可以是横向两帧的走路图（宽度为两帧拼接）。
 const EXT = {};
 function tryLoadExternal(form) {
@@ -110,6 +125,7 @@ function tryLoadExternal(form) {
         if (flip) { g.translate(fw, 0); g.scale(-1, 1); } g.drawImage(img, fi * fw, 0, fw, fh, 0, 0, fw, fh); return c; };
       EXT[form][w] = { 1: make(false), '-1': make(true) };
     }
+    EXT[form].anim = frames;
   };
   img.onerror = () => { };
   img.src = 'assets/' + form + '.png';
@@ -117,7 +133,12 @@ function tryLoadExternal(form) {
 { // 先探测 assets/eevee.png，存在时才尝试加载其余形态，避免控制台一堆 404
   const probe = new Image(); probe.onload = () => { for (const f in SPRITE_DATA) tryLoadExternal(f); }; probe.src = 'assets/eevee.png';
 }
-const spriteOf = (form, walk, facing) => (EXT[form] || SPRITES[form])[walk][facing];
+function spriteOf(form, walk, facing, shiny) {
+  if (EXT[form]) return EXT[form][walk][facing];
+  if (IMG[form] && (IMG[form][shiny ? 1 : 0] || IMG[form][0])) return (IMG[form][shiny ? 1 : 0] || IMG[form][0])[facing];
+  return SPRITES[form][walk][facing];
+}
+const usesPng = (form) => !EXT[form] && !!(IMG[form] && IMG[form][0]);
 
 // ---------------- 像素图：食物、怪物、杂项 ----------------
 const FOOD_ART = {
@@ -251,15 +272,17 @@ const SFX = {
   win: () => [0, 1, 2, 3, 4, 5, 6].forEach(i => setTimeout(() => beep([523, 659, 784, 1046, 784, 1046, 1318][i], 0.18, 'square', 0.06), i * 130)),
   die: () => [0, 1, 2].forEach(i => setTimeout(() => beep(300 - i * 80, 0.25, 'square', 0.07), i * 180)),
   charm: () => { beep(900, 0.1, 'sine', 0.07); setTimeout(() => beep(1300, 0.15, 'sine', 0.07), 80); },
+  shiny: () => [0, 1, 2, 3].forEach(i => setTimeout(() => beep([1568, 2093, 2637, 3136][i], 0.14, 'sine', 0.07), i * 90)),
 };
 
 // ---------------- 游戏状态 ----------------
 let state = 'title';
+let discoveredShiny = {};
 let player, camX = 0, score = 0, lives = 3, coinCount = 0, frame = 0, discovered, evo, checkpoint, timeStart, timeEnd, particles, floaters, deathTimer, burnQueue = [];
 function resetGame() {
   buildLevel();
   score = 0; lives = 3; coinCount = 0; frame = 0; camX = 0;
-  discovered = { eevee: true };
+  discovered = { eevee: true }; discoveredShiny = {};
   particles = []; floaters = []; burnQueue = [];
   checkpoint = { x: startPos.x, y: startPos.y };
   player = makePlayer('eevee');
@@ -267,7 +290,7 @@ function resetGame() {
 }
 function makePlayer(form) {
   return { x: checkpoint.x, y: checkpoint.y, w: PW, h: PH, vx: 0, vy: 0, facing: 1, onGround: false, jumpsLeft: 0,
-    inWater: false, breath: 1, form, invuln: 0, anim: 0, gliding: false };
+    inWater: false, breath: 1, form, invuln: 0, anim: 0, gliding: false, shiny: false };
 }
 
 // ---------------- 输入 ----------------
@@ -345,7 +368,7 @@ function collide(ent, p) {
 const overlap = (a, b) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 
 // ---------------- 玩家逻辑 ----------------
-function evolveTo(form) { evo = { from: player.form, to: form, t: 0 }; state = 'evolving'; player.vx = 0; SFX.evolve(); }
+function evolveTo(form) { evo = { from: player.form, to: form, t: 0, shiny: Math.random() < SHINY_RATE }; state = 'evolving'; player.vx = 0; SFX.evolve(); }
 function hurt() {
   if (player.invuln > 0) return;
   lives--; SFX.hurt();
@@ -359,7 +382,7 @@ function die(loseLife) {
   state = 'dead'; deathTimer = 0; SFX.die();
   player.vy = -3.6;
 }
-function respawn() { const form = player.form; player = makePlayer(form); player.invuln = 60; state = 'play'; }
+function respawn() { const form = player.form, shiny = player.shiny; player = makePlayer(form); player.shiny = shiny; player.invuln = 60; state = 'play'; }
 
 function updatePlayer() {
   const p = player, F = p.form;
@@ -587,6 +610,7 @@ function drawWater() {
 function drawParticles() {
   for (const q of particles) {
     if (q.heart) { px(q.x - camX - 1, q.y, 1, 1, q.color); px(q.x - camX + 1, q.y, 1, 1, q.color); px(q.x - camX - 1, q.y + 1, 3, 1, q.color); px(q.x - camX, q.y + 2, 1, 1, q.color); }
+    else if (q.star) { px(q.x - camX, q.y - 1, 1, 3, q.color); px(q.x - camX - 1, q.y, 3, 1, q.color); }
     else px(q.x - camX, q.y, q.life > 10 ? 2 : 1, q.life > 10 ? 2 : 1, q.color);
   }
 }
@@ -594,8 +618,11 @@ function drawPlayer() {
   const p = player;
   if (p.invuln > 0 && (frame >> 2) & 1 && state === 'play') return;
   const walk = p.onGround && Math.abs(p.vx) > 0.2 ? (Math.floor(p.anim / 4) & 1) : (p.onGround ? 0 : 1);
-  const spr = spriteOf(p.form, walk, p.facing);
-  const sx = R(p.x + p.w / 2 - spr.width / 2 - camX), sy = R(p.y + p.h - spr.height);
+  const spr = spriteOf(p.form, walk, p.facing, p.shiny);
+  const png = EXT[p.form] || usesPng(p.form);
+  const bob = png && !(EXT[p.form] && EXT[p.form].anim > 1) && walk && p.onGround ? 1 : 0;
+  const sx = R(p.x + p.w / 2 - spr.width / 2 - camX), sy = R(p.y + p.h - spr.height) - bob;
+  if (p.shiny && frame % 6 === 0) particles.push({ x: p.x + p.w / 2 + (Math.random() - .5) * spr.width, y: p.y + p.h - Math.random() * spr.height, vx: 0, vy: -0.25, life: 22, color: ['#fff', '#ffe96a'][frame % 2], star: true });
   if (p.form === 'umbreon') { ctx.globalAlpha = 0.15; px(sx - 6, sy - 4, spr.width + 12, spr.height + 6, '#f5d442'); ctx.globalAlpha = 1; }
   if (p.form === 'espeon' && p.gliding) { ctx.globalAlpha = 0.4; px(sx - 2, sy - 2 + ((frame >> 2) & 1), spr.width + 4, 1, '#f2c8ff'); px(sx - 2, sy + spr.height, spr.width + 4, 1, '#f2c8ff'); ctx.globalAlpha = 1; }
   ctx.drawImage(spr, sx, sy);
@@ -623,7 +650,7 @@ function drawHUD() {
   ctx.drawImage(COIN_SPR[0], 56, 6); text('' + coinCount, 66, 5, 9, '#ffd84a', 'left', null);
   text('分数 ' + score, 88, 5, 9, '#fff', 'left', null);
   px(7, 18, 8, 8, FORM_COLOR[player.form]);
-  text(FORMS[player.form].name, 18, 17, 9, '#fff', 'left', null);
+  text(FORMS[player.form].name + (player.shiny ? ' ✨' : ''), 18, 17, 9, player.shiny ? '#ffe96a' : '#fff', 'left', null);
   text(FORMS[player.form].ability, 56, 18, 7, '#cfd8ff', 'left', null);
   panel(CW - 3 - 8 * 15 - 6, 3, 8 * 15 + 6, 22);
   FORM_ORDER.forEach((f, i) => {
@@ -631,6 +658,7 @@ function drawHUD() {
     px(x, 6, 10, 8, got ? FORM_COLOR[f] : '#3a3050');
     if (player.form === f) { px(x - 1, 5, 12, 1, '#fff'); px(x - 1, 14, 12, 1, '#fff'); px(x - 1, 5, 1, 10, '#fff'); px(x + 10, 5, 1, 10, '#fff'); }
     text(got ? FORMS[f].name.replace('伊布', '') : '?', x + 5, 15, 7, got ? '#fff' : '#8a80a0', 'center', null);
+    if (discoveredShiny[f]) text('✦', x + 10, 2, 6, '#ffe96a', 'center', null);
   });
   for (const s of signs) {
     if (Math.abs(s.x * T + 8 - (player.x + player.w / 2)) < 44) {
@@ -656,7 +684,11 @@ function update() {
   if (state === 'play') { updatePlayer(); updateEnemies(); }
   else if (state === 'evolving') {
     evo.t++;
-    if (evo.t === 50) { player.form = evo.to; discovered[evo.to] = true; }
+    if (evo.t === 50) {
+      player.form = evo.to; player.shiny = evo.shiny; discovered[evo.to] = true;
+      if (evo.shiny) { discoveredShiny[evo.to] = true; score += 300; SFX.shiny(); floaters.push({ x: player.x + player.w / 2, y: player.y - 10, text: '✨ 闪光！+300', life: 90, color: '#ffe96a' }); }
+    }
+    if (evo.shiny && evo.t > 50 && evo.t % 2 === 0) particles.push({ x: player.x + player.w / 2 + (Math.random() - .5) * 36, y: player.y + player.h - Math.random() * 30, vx: (Math.random() - .5) * 0.6, vy: -0.3 - Math.random() * 0.6, life: 30, color: ['#fff', '#ffe96a', '#9fe8ff'][evo.t % 3], star: true });
     if (evo.t % 3 === 0) particles.push({ x: player.x + player.w / 2 + (Math.random() - .5) * 24, y: player.y + player.h - Math.random() * 24, vx: (Math.random() - .5) * 0.4, vy: -0.4 - Math.random() * 0.8, life: 40, color: ['#fff', '#ffe14a', FORM_COLOR[evo.to]][evo.t % 3] });
     if (evo.t > 120) { state = 'play'; jumpQueued = false; }
   } else if (state === 'dead') {
@@ -679,7 +711,7 @@ function draw() {
     for (let x = 0; x < CW; x += 16) { drawTile('=', x / 16, 10); for (let y = 11; y < H; y++) drawTile('#', x / 16, y); }
     ['eevee', ...FORM_ORDER].forEach((f, i) => {
       const x = 22 + i * 42, y = 10 * T - Math.round(Math.abs(Math.sin(titleAnim + i * 0.5)) * 6);
-      const spr = spriteOf(f, Math.floor(titleAnim * 2 + i) & 1, 1);
+      const spr = spriteOf(f, Math.floor(titleAnim * 2 + i) & 1, 1, false);
       ctx.drawImage(spr, x - Math.floor(spr.width / 2), y - spr.height);
       text(FORMS[f].name, x, 10 * T + 8, 7, '#fff', 'center');
     });
@@ -707,8 +739,8 @@ function draw() {
   if (state === 'over') drawOverlay('游戏结束', ['分数 ' + score, '发现了 ' + Object.keys(discovered).length + ' / 9 种伊布'], '按任意键回到标题');
   if (state === 'win') {
     const secs = Math.round((timeEnd - timeStart) / 1000);
-    drawOverlay('通关！', ['分数 ' + score + '   用时 ' + secs + ' 秒', '金币 ' + coinCount + '   发现了 ' + Object.keys(discovered).length + ' / 9 种伊布', '伊布和它的所有进化形态一起抵达了终点！'], '按任意键回到标题');
-    ['eevee', ...FORM_ORDER].forEach((f, i) => { if (discovered[f]) { const spr = spriteOf(f, (frame >> 3) & 1, 1); ctx.drawImage(spr, 14 + i * 40, 162 - spr.height - ((frame >> 3) + i) % 2); } });
+    drawOverlay('通关！', ['分数 ' + score + '   用时 ' + secs + ' 秒', '金币 ' + coinCount + '   发现了 ' + Object.keys(discovered).length + ' / 9 种伊布   闪光 ' + Object.keys(discoveredShiny).length + ' 只', '伊布和它的所有进化形态一起抵达了终点！'], '按任意键回到标题');
+    ['eevee', ...FORM_ORDER].forEach((f, i) => { if (discovered[f]) { const spr = spriteOf(f, (frame >> 3) & 1, 1, !!discoveredShiny[f]); ctx.drawImage(spr, 22 + i * 42 - Math.floor(spr.width / 2), 164 - spr.height - ((frame >> 3) + i) % 2); } });
   }
 }
 let last = 0, acc = 0;
