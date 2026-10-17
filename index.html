@@ -23,8 +23,9 @@
   #bL { left: max(18px, env(safe-area-inset-left)); bottom: max(18px, env(safe-area-inset-bottom)); } #bR { left: calc(max(18px, env(safe-area-inset-left)) + 80px); bottom: max(18px, env(safe-area-inset-bottom)); }
   #bJ { right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); width: 84px; height: 84px; }
   #bS { right: calc(max(18px, env(safe-area-inset-right)) + 100px); bottom: max(18px, env(safe-area-inset-bottom)); width: 64px; height: 64px; }
-  #bF { right: max(18px, env(safe-area-inset-right)); top: 60px; width: 48px; height: 48px; font-size: 18px; }
-  #bM { right: calc(max(18px, env(safe-area-inset-right)) + 60px); top: 60px; width: 48px; height: 48px; font-size: 18px; }
+  #bF { right: max(18px, env(safe-area-inset-right)); top: 46vh; width: 48px; height: 48px; font-size: 16px; }
+  #bM { right: calc(max(18px, env(safe-area-inset-right)) + 58px); top: 46vh; width: 48px; height: 48px; font-size: 16px; }
+  #bI { right: calc(max(18px, env(safe-area-inset-right)) + 116px); top: 46vh; width: 48px; height: 48px; font-size: 16px; }
   #rotate { position: fixed; inset: 0; background: #0f1024; color: #fff; display: none; flex-direction: column; align-items: center; justify-content: center; font-size: 20px; z-index: 10; text-align: center; line-height: 1.8; }
   @media (hover: none) and (pointer: coarse) and (orientation: portrait) { #rotate { display: flex; } }
 </style>
@@ -38,8 +39,9 @@
   <div class="btn" id="bS">技</div>
   <div class="btn" id="bF">形态</div>
   <div class="btn" id="bM">地图</div>
+  <div class="btn" id="bI">背包</div>
 </div>
-<div id="rotate"><div style="font-size:48px">📱↻</div>请把手机横过来玩<br><span style="font-size:14px;opacity:.7">左下角移动，右下角跳跃，右上角切换形态 / 地图，跳跃键左边是技能</span></div>
+<div id="rotate"><div style="font-size:48px">📱↻</div>请把手机横过来玩<br><span style="font-size:14px;opacity:.7">左下角移动，右下角跳跃，点左上角物品栏切换形态，右上角地图 / 背包，跳跃键左边是技能</span></div>
 <script>
 'use strict';
 // ------------------------------------------------------------
@@ -159,7 +161,7 @@ const SFX = {
 };
 
 // ---------------- 游戏状态 ----------------
-let state = 'loading';   // loading | title | play | evolving | dead | map
+let state = 'loading';   // loading | title | play | evolving | dead | map | inv
 let player, camX = 0, camY = 0, frame = 0, evo, particles = [], floaters = [], burnQueue = [], shinyFx = null, deathTimer = 0;
 let enemies = [], items = [], npcs = [], saveStones = [];
 let G;
@@ -182,8 +184,8 @@ function spawnEntities() {
       case 'v': enemies.push({ type: 'bat', id, x, y, w: 14, h: 10, vx: -0.7, vy: 0, alive: true, t: 0, hp: 1, inv: 0, x0: x - 4 * T, x1: x + 4 * T, baseY: y }); break;
       case 'p': enemies.push({ type: 'puffer', id, x: x + 1, y: y + 2, w: 14, h: 12, vx: 0.4, vy: 0, alive: true, t: 0, hp: 1, inv: 0, puff: 0 }); break;
       case 'f': enemies.push({ type: 'frog', id, x, y: y + T - 14, w: 16, h: 14, vx: 0, vy: 0, alive: true, t: 0, hp: 1, inv: 0, cd: 60 }); break;
-      case 'G': if (!G.bossDead[id]) enemies.push({ type: 'bigslime', id, x: x - 4, y: y + T - 20, w: 24, h: 20, vx: 0, vy: 0, alive: true, t: 0, hp: 3, boss: true, name: '大史莱姆', cd: 60, inv: 0 }); break;
-      case 'M': if (!G.bossDead[id]) enemies.push({ type: 'clam', id, x: x - 4, y: y + T - 16, w: 24, h: 16, vx: 0, vy: 0, alive: true, t: 0, hp: 3, boss: true, name: '湖蚌', inv: 0, open: false }); break;
+      case 'G': if (!G.bossDead[id]) enemies.push({ type: 'bigslime', id, x: x - 4, y: y + T - 20, w: 24, h: 20, vx: 0, vy: 0, alive: true, t: 0, hp: 3, maxHp: 3, boss: true, name: '大史莱姆', cd: 60, inv: 0 }); break;
+      case 'M': if (!G.bossDead[id]) enemies.push({ type: 'clam', id, x: x - 4, y: y + T - 16, w: 24, h: 16, vx: 0, vy: 0, alive: true, t: 0, hp: 3, maxHp: 3, boss: true, name: '湖蚌', inv: 0, open: false }); break;
       case 'c': case 'h': case '*': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8':
         if (!G.collected[id]) items.push({ type: e.t, id, x: x + T / 2, y: y + T / 2 }); break;
       case 's': saveStones.push({ id, x, y, cd: 0 }); break;
@@ -199,7 +201,7 @@ function startGame(progress) {
   G = progress; buildGrid(); spawnEntities();
   player = makePlayer(G.form); particles = []; floaters = []; burnQueue = []; shinyFx = null; dialog = null; bossActive = null; msg = null; projectiles = [];
   curRoom = roomAt(player.x + player.w / 2, player.y + player.h / 2); if (curRoom) G.visited[curRoom.id] = true;
-  clampCam(true);
+  clampCam(true); mapDirty = true; chat = []; say('欢迎来到伊布的世界！按 Esc 打开背包，M 打开地图。', '#ffe96a');
   state = 'play';
 }
 function saveGame() { try { G.form = player.form; localStorage.setItem(SAVE_KEY, JSON.stringify(G)); } catch (e) { } }
@@ -210,29 +212,42 @@ const hasSave = () => { try { return !!localStorage.getItem(SAVE_KEY); } catch (
 const keys = {};
 let jumpQueued = false, mapToggle = false, formNext = false, skillQueued = false;
 let projectiles = [];
-function anyStart() { if (state === 'title') startGame(loadGame() || newProgress()); }
+let invToggle = false;
+const mouse = { x: -1, y: -1 };
+const isTouch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 window.addEventListener('keydown', e => {
-  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault();
+  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ', 'Tab'].includes(e.key)) e.preventDefault();
   if (e.repeat) return;
   keys[e.key] = true;
+  if (state === 'title') { titleKey(e.key); return; }
+  if (state === 'map') { if (e.key === 'm' || e.key === 'M' || e.key === 'Escape') mapToggle = true; if (e.key === '+' || e.key === '=') mapZoom(1); if (e.key === '-' || e.key === '_') mapZoom(-1); return; }
+  if (state === 'inv') { if (e.key === 'Escape' || 'iIeE'.includes(e.key)) invToggle = true; if (e.key >= '1' && e.key <= '9') selectForm(FORM_ORDER[+e.key - 1]); return; }
   if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W' || e.key === 'z') jumpQueued = true;
   if (e.key === 'm' || e.key === 'M') mapToggle = true;
+  if (e.key === 'Escape' || 'iIeE'.includes(e.key)) invToggle = true;
   if ('xXjJkK'.includes(e.key)) skillQueued = true;
-  if (e.key === 'Tab') { formNext = true; e.preventDefault(); }
-  if (e.key >= '1' && e.key <= '9') switchForm(FORM_ORDER[+e.key - 1]);
-  if (state === 'title' && (e.key === 'n' || e.key === 'N')) { startGame(newProgress()); return; }
-  anyStart();
+  if (e.key === 'Tab') formNext = true;
+  if (e.key >= '1' && e.key <= '9') selectForm(FORM_ORDER[+e.key - 1]);
 });
 window.addEventListener('keyup', e => { keys[e.key] = false; });
 const bind = (id, key, fn) => {
   const el = document.getElementById(id);
-  const down = e => { e.preventDefault(); keys[key] = true; el.classList.add('on'); if (fn) fn(); else if (key === ' ') jumpQueued = true; anyStart(); };
+  const down = e => { e.preventDefault(); keys[key] = true; el.classList.add('on'); if (state === 'title') { if (key === ' ') titleKey('Enter'); return; } if (fn) fn(); else if (key === ' ') jumpQueued = true; };
   const up = e => { e.preventDefault(); keys[key] = false; el.classList.remove('on'); };
   el.addEventListener('touchstart', down, { passive: false }); el.addEventListener('touchend', up, { passive: false }); el.addEventListener('touchcancel', up, { passive: false });
   el.addEventListener('mousedown', down); el.addEventListener('mouseup', up); el.addEventListener('mouseleave', up);
 };
-bind('bL', 'ArrowLeft'); bind('bR', 'ArrowRight'); bind('bJ', ' '); bind('bS', '_s', () => { skillQueued = true; }); bind('bF', '_f', () => { formNext = true; }); bind('bM', '_m', () => { mapToggle = true; });
-canvas.addEventListener('pointerdown', () => anyStart());
+bind('bL', 'ArrowLeft'); bind('bR', 'ArrowRight'); bind('bJ', ' '); bind('bS', '_s', () => { skillQueued = true; }); bind('bF', '_f', () => { formNext = true; }); bind('bM', '_m', () => { mapToggle = true; }); bind('bI', '_i', () => { invToggle = true; });
+const toLogical = e => { const r = canvas.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width * CW, y: (e.clientY - r.top) / r.height * CH }; };
+canvas.addEventListener('pointermove', e => { const p = toLogical(e); mouse.x = p.x; mouse.y = p.y; });
+canvas.addEventListener('pointerleave', () => { mouse.x = -1; mouse.y = -1; });
+canvas.addEventListener('pointerdown', e => { const p = toLogical(e); mouse.x = p.x; mouse.y = p.y; uiClick(p.x, p.y); });
+canvas.addEventListener('wheel', e => { if (state === 'map') { mapZoom(e.deltaY < 0 ? 1 : -1); e.preventDefault(); } }, { passive: false });
+function selectForm(f) {
+  if (!G.unlocked[f]) return;
+  if (state === 'inv') { if (f !== player.form) { player.form = f; player.shiny = !!G.shiny[f]; SFX.swap(); } return; }
+  switchForm(f);
+}
 const left = () => keys.ArrowLeft || keys.a || keys.A;
 const right = () => keys.ArrowRight || keys.d || keys.D;
 const jumpHeld = () => keys[' '] || keys.ArrowUp || keys.w || keys.W || keys.z;
@@ -332,13 +347,13 @@ function spark(x, y, n, colors, spd = 1, life = 30) {
 }
 function burnCrate(tx, ty) {
   if (get(tx, ty) !== 'W') return;
-  grid[ty][tx] = ' '; G.burned.push([tx, ty]);
+  grid[ty][tx] = ' '; G.burned.push([tx, ty]); mapDirty = true;
   [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([dx, dy]) => { if (get(tx + dx, ty + dy) === 'W') burnQueue.push({ tx: tx + dx, ty: ty + dy, delay: 10 }); });
   SFX.burn(); spark(tx * T + 8, ty * T + 8, 12, ['#ff9a3c', '#ffd23c', '#ff5a2a'], 1.2, 25); G.coins += 1;
 }
 function breakWall(tx, ty) {
   if (get(tx, ty) !== 'K') return;
-  grid[ty][tx] = ' '; G.broken.push([tx, ty]); SFX.crack(); spark(tx * T + 8, ty * T + 8, 14, ['#8a86a0', '#5a566a', '#fff'], 1.6, 30);
+  grid[ty][tx] = ' '; G.broken.push([tx, ty]); mapDirty = true; SFX.crack(); spark(tx * T + 8, ty * T + 8, 14, ['#8a86a0', '#5a566a', '#fff'], 1.6, 30);
   [[0, 1], [0, -1]].forEach(([dx, dy]) => { if (get(tx + dx, ty + dy) === 'K') burnQueue.push({ tx: tx + dx, ty: ty + dy, delay: 6, wall: true }); });
 }
 const allEvos = () => FORM_ORDER.slice(1).every(f => G.unlocked[f]);
@@ -389,7 +404,7 @@ function respawnAtSave() {
   curRoom = roomAt(player.x + player.w / 2, player.y + player.h / 2); clampCam(true);
 }
 function evolveTo(form) { evo = { from: player.form, to: form, t: 0, shiny: Math.random() < SHINY_RATE }; state = 'evolving'; player.vx = 0; SFX.evolve(); }
-function say(text) { msg = { text, life: 180 }; }
+
 
 function updatePlayer() {
   const p = player, F = p.form;
@@ -488,7 +503,7 @@ function updatePlayer() {
   if (p.invuln > 0) p.invuln--;
   p.anim += Math.abs(p.vx) * 0.6;
   const r = roomAt(p.x + p.w / 2, p.y + p.h / 2);
-  if (r && r !== curRoom) { curRoom = r; G.visited[r.id] = true; msg = { text: (REGION[r.region] && !r.name.includes('·') ? REGION[r.region].name + ' · ' : '') + r.name, life: 120 }; }
+  if (r && r !== curRoom) { const first = !G.visited[r.id]; curRoom = r; G.visited[r.id] = true; mapDirty = true; say((first ? '发现了 ' : '进入 ') + (REGION[r.region] && !r.name.includes('·') ? REGION[r.region].name + ' · ' : '') + r.name, first ? '#9cf09c' : '#b8c8ff'); }
   G.time++;
 }
 function killEnemy(e) { e.alive = false; G.coins += 1; SFX.stomp(); spark(e.x + e.w / 2, e.y + e.h / 2, 8, ['#c9a3ff', '#8e5bd3'], 1.2, 20); floaters.push({ x: e.x + e.w / 2, y: e.y, text: '+1', life: 30, color: '#fff' }); }
@@ -553,7 +568,7 @@ function updateParticles() {
   particles = particles.filter(q => q.life > 0);
   for (const f of floaters) { f.y -= 0.3; f.life--; }
   floaters = floaters.filter(f => f.life > 0);
-  if (msg && --msg.life <= 0) msg = null;
+
 }
 function clampCam(snap) {
   const p = player;
@@ -673,58 +688,258 @@ function text(str, x, y, size, color, align = 'left', outline = '#1a1020') {
 function textWidth(str, size) { uctx.font = `bold ${Math.round(size * UIS)}px sans-serif`; return uctx.measureText(str).width / UIS; }
 function wrap(str, size, maxW) { const lines = []; let cur = ''; for (const ch of str) { if (textWidth(cur + ch, size) > maxW) { lines.push(cur); cur = ch; } else cur += ch; } if (cur) lines.push(cur); return lines; }
 function panel(x, y, w, h, fill = '#2c2050') { px(x, y, w, h, '#1a1030'); px(x + 1, y + 1, w - 2, h - 2, fill); px(x + 1, y + 1, w - 2, 1, '#5a4a8a'); }
-function drawHUD() {
-  panel(3, 3, 150, 32);
-  for (let i = 0; i < G.maxHp; i++) blit(i < G.hp ? 'ui/heart_full' : 'ui/heart_empty', 7 + i * 9, 7);
-  blit('ui/coin_0', 92, 6); text('' + G.coins, 102, 5, 9, '#ffd84a', 'left', null);
-  px(7, 18, 8, 8, FORMS[player.form].color);
-  text(FORMS[player.form].name + (player.shiny ? ' ✨' : ''), 18, 17, 9, player.shiny ? '#ffe96a' : '#fff', 'left', null);
-  text(FORMS[player.form].ability, 62, 18, 7, '#cfd8ff', 'left', null);
-  const S = FORMS[player.form]; text('X ' + S.skill, 62, 26, 6, '#ffe6a0', 'left', null); px(104, 28, 40, 3, '#1a1030'); px(104, 28, R(40 * (1 - player.skillCd / S.cd)), 3, player.skillCd > 0 ? '#8a80a0' : '#ffe96a');
-  const n = FORM_ORDER.length, w0 = n * 13 + 6;
-  panel(CW - 3 - w0, 3, w0, 22);
+
+// ================= 泰拉瑞亚风格界面 =================
+// 画在高清层 uctx 上，坐标仍然使用 384x224 的逻辑单位。
+let chat = [];
+function say(text, color = '#ffffff') { chat.push({ text, color, t: 0 }); if (chat.length > 5) chat.shift(); }
+const menu = { idx: 0, help: false };
+const MENU_Y = 78;
+const mapView = { cx: 0, cy: 0, zoom: 3 };
+const MAP_ZOOMS = [1, 2, 3, 4, 6];
+function mapZoom(d) { const i = Math.max(0, Math.min(MAP_ZOOMS.length - 1, MAP_ZOOMS.indexOf(mapView.zoom) + d)); mapView.zoom = MAP_ZOOMS[i]; }
+const U = {
+  box(x, y, w, h, r, fill, stroke, lw = 1) {
+    uctx.beginPath();
+    if (uctx.roundRect) uctx.roundRect(x * UIS, y * UIS, w * UIS, h * UIS, r * UIS); else uctx.rect(x * UIS, y * UIS, w * UIS, h * UIS);
+    if (fill) { uctx.fillStyle = fill; uctx.fill(); }
+    if (stroke) { uctx.strokeStyle = stroke; uctx.lineWidth = lw * UIS; uctx.stroke(); }
+  },
+  img(im, x, y, sc = 1, alpha = 1) { if (!im) return; uctx.imageSmoothingEnabled = false; uctx.globalAlpha = alpha; uctx.drawImage(im, Math.round(x * UIS), Math.round(y * UIS), Math.round(im.width * sc * UIS), Math.round(im.height * sc * UIS)); uctx.globalAlpha = 1; },
+};
+function slot(x, y, s, selected, dim) {
+  U.box(x, y, s, s, 2.5, selected ? 'rgba(86,104,206,0.88)' : (dim ? 'rgba(36,44,104,0.55)' : 'rgba(54,68,156,0.75)'), selected ? '#ffd84a' : 'rgba(14,18,52,0.95)', selected ? 1.3 : 0.8);
+  U.box(x + 1.2, y + 1.2, s - 2.4, 2, 1, 'rgba(255,255,255,0.12)');
+}
+function slotIcon(im, x, y, s, alpha = 1) { if (!im) return; const sc = Math.min((s - 4) / im.width, (s - 4) / im.height); U.img(im, x + (s - im.width * sc) / 2, y + (s - im.height * sc) / 2, sc, alpha); }
+function stackNum(n, x, y, s) { if (n > 1 || n === 0) text('' + n, x + s - 2, y + s - 8, 6, '#ffffff', 'right'); }
+const hexRgb = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+const panelBox = (x, y, w, h) => U.box(x, y, w, h, 3, 'rgba(40,52,128,0.85)', 'rgba(12,16,48,0.95)', 1);
+
+// ---- 物品栏（形态快捷栏） ----
+const HB = { x: 5, y: 12, s: 18, gap: 2.4 };
+function hotbarRect(i) { const sel = FORM_ORDER[i] === player.form; const big = sel ? 3 : 0; return { x: HB.x + i * (HB.s + HB.gap) - big / 2, y: HB.y - big / 2, s: HB.s + big }; }
+function drawHotbar() {
   FORM_ORDER.forEach((f, i) => {
-    const x = CW - 3 - w0 + 4 + i * 13, got = G.unlocked[f];
-    px(x, 6, 10, 8, got ? FORMS[f].color : '#3a3050');
-    if (player.form === f) { px(x - 1, 5, 12, 1, '#fff'); px(x - 1, 14, 12, 1, '#fff'); px(x - 1, 5, 1, 10, '#fff'); px(x + 10, 5, 1, 10, '#fff'); }
-    text(got ? '' + (i + 1) : '?', x + 5, 15, 6, got ? '#fff' : '#8a80a0', 'center', null);
-    if (G.shiny[f]) text('✦', x + 10, 2, 6, '#ffe96a', 'center', null);
+    const r = hotbarRect(i), got = G.unlocked[f], sel = f === player.form;
+    slot(r.x, r.y, r.s, sel, !got);
+    if (got) slotIcon(charSprite(f, !!G.shiny[f], 1), r.x, r.y, r.s);
+    else text('?', r.x + r.s / 2, r.y + r.s / 2 - 4, 8, 'rgba(200,210,255,0.45)', 'center', null);
+    text('' + (i + 1), r.x + 2.5, r.y + 1, 5.5, sel ? '#ffe96a' : '#ffffff');
+    if (G.shiny[f] && got) text('✦', r.x + r.s - 4, r.y + 0.5, 5.5, '#ffe96a', 'center', null);
   });
-  if (bossActive && bossActive.alive) { panel(CW / 2 - 60, 30, 120, 12); text(bossActive.name, CW / 2 - 56, 31, 7, '#fff', 'left', null); for (let i = 0; i < 3; i++) px(CW / 2 + 10 + i * 14, 33, 12, 6, i < bossActive.hp ? '#ff4a6a' : '#3a2030'); }
-  if (msg) { ctx.globalAlpha = Math.min(1, msg.life / 20); text(msg.text, CW / 2, 44, 9, '#fff', 'center'); ctx.globalAlpha = 1; }
-  if (dialog) {
-    const lines = wrap(dialog, 9, CW - 40);
-    const h = lines.length * 12 + 10; panel(10, CH - h - 8, CW - 20, h, '#fff4d8');
-    lines.forEach((l, i) => text(l, 18, CH - h - 3 + i * 12, 9, '#4a2a10', 'left', null));
+  const name = FORMS[player.form].name + (player.shiny ? ' ✨' : '');
+  text(name, HB.x + 4.5 * (HB.s + HB.gap), 1.5, 8, player.shiny ? '#ffe96a' : '#ffffff', 'center');
+}
+// ---- 技能（像泰拉瑞亚的增益图标） ----
+function drawSkillBuff() {
+  const S = FORMS[player.form], x = HB.x, y = HB.y + HB.s + 6, s = 14, k = player.skillCd / S.cd;
+  slot(x, y, s, false, false);
+  U.box(x + 3, y + 3, s - 6, s - 6, 2, S.color);
+  text(S.skill[0], x + s / 2, y + 3, 7, '#ffffff', 'center');
+  if (k > 0) U.box(x, y, s, s * k, 2.5, 'rgba(0,0,0,0.55)');
+  text('X  ' + S.skill, x + s + 3, y + 0.5, 7, '#ffffff');
+  text(k > 0 ? (player.skillCd / 60).toFixed(1) + ' 秒' : '就绪', x + s + 3, y + 7.5, 6, k > 0 ? '#c8c8d8' : '#9cf09c');
+}
+// ---- 生命 ----
+function drawLife() {
+  const right = CW - 5, n = G.maxHp, sc = 1.45, w = 8 * sc + 1;
+  text('生命  ' + G.hp + ' / ' + G.maxHp, right, 1.5, 7.5, '#ffffff', 'right');
+  for (let i = 0; i < n; i++) {
+    const full = i < G.hp, x = right - (n - i) * w, pulse = full && i === G.hp - 1 ? 1 + Math.sin(frame / 8) * 0.08 : 1;
+    const im = IMG[full ? 'ui/heart_full' : 'ui/heart_empty'];
+    if (im) U.img(im, x + (8 * sc - 8 * sc * pulse) / 2, 12 + (7 * sc - 7 * sc * pulse) / 2, sc * pulse, full ? 1 : 0.55);
   }
+}
+// ---- 地图数据 ----
+let mapCanvas = null, mapDirty = true;
+const TILE_COL = { '#': [139, 94, 56], '=': [92, 190, 72], 'r': [108, 104, 122], 'b': [196, 106, 66], 'B': [88, 84, 116], 'W': [190, 140, 72], '~': [56, 132, 214], 'E': [240, 218, 80], 'S': [72, 42, 124], '^': [206, 212, 224], '-': [180, 128, 72], 'L': [255, 118, 40], 'D': [126, 84, 190], 'K': [128, 124, 140], '_': [10, 8, 24] };
+function buildMapCanvas() {
+  if (!mapCanvas) { mapCanvas = document.createElement('canvas'); mapCanvas.width = TWd; mapCanvas.height = THt; }
+  const g = mapCanvas.getContext('2d'), img = g.createImageData(TWd, THt), d = img.data;
+  for (const r of WORLD.rooms) {
+    if (!G.visited[r.id]) continue;
+    const reg = REGION[r.region], sky = reg && reg.outdoor ? [92, 140, 210] : [30, 34, 58];
+    for (let y = r.y; y < r.y + r.h; y++) for (let x = r.x; x < r.x + r.w; x++) {
+      const c = TILE_COL[grid[y][x]] || sky, i = (y * TWd + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2]; d[i + 3] = 255;
+    }
+  }
+  g.putImageData(img, 0, 0); mapDirty = false;
+}
+function drawMapRegion(dx, dy, dw, dh, cx, cy, zoom) {
+  if (mapDirty || !mapCanvas) buildMapCanvas();
+  const tw = dw / zoom, th = dh / zoom, sx = cx - tw / 2, sy = cy - th / 2;
+  uctx.save(); uctx.beginPath(); uctx.rect(dx * UIS, dy * UIS, dw * UIS, dh * UIS); uctx.clip();
+  uctx.fillStyle = '#05060f'; uctx.fillRect(dx * UIS, dy * UIS, dw * UIS, dh * UIS);
+  uctx.imageSmoothingEnabled = false;
+  uctx.drawImage(mapCanvas, 0, 0, TWd, THt, (dx - sx * zoom) * UIS, (dy - sy * zoom) * UIS, TWd * zoom * UIS, THt * zoom * UIS);
+  const toS = (tx, ty) => [dx + (tx - sx) * zoom, dy + (ty - sy) * zoom];
+  for (const st of saveStones) { const r = roomAt(st.x, st.y); if (!r || !G.visited[r.id]) continue; const [x, y] = toS(st.x / T + 0.5, st.y / T + 0.5); U.img(IMG['ui/save_stone_0'], x - 4, y - 5, 0.5); }
+  for (const e of enemies) { if (!e.boss || !e.alive) continue; const r = roomAt(e.x, e.y); if (!r || !G.visited[r.id]) continue; const [x, y] = toS(e.x / T + 1, e.y / T + 0.5); text('☠', x, y - 4, 7, '#ff6a6a', 'center'); }
+  const [px0, py0] = toS((player.x + player.w / 2) / T, (player.y + player.h / 2) / T);
+  const head = charSprite(player.form, player.shiny, player.facing); if (head) { const sc = Math.max(0.35, Math.min(0.7, zoom / 6)); U.img(head, px0 - head.width * sc / 2, py0 - head.height * sc / 2, sc); }
+  uctx.restore();
+}
+// ---- 小地图 ----
+function drawMinimap() {
+  const w = 96, h = 56, x = CW - 5 - w, y = 26;
+  U.box(x - 2, y - 2, w + 4, h + 4, 3, '#6b4a22', '#2a1a08', 1);
+  U.box(x - 1, y - 1, w + 2, h + 2, 2, null, '#d8b060', 0.8);
+  drawMapRegion(x, y, w, h, (player.x + player.w / 2) / T, (player.y + player.h / 2) / T, 2);
+  const ci = IMG['ui/coin_0'], hi = IMG['items/heart_piece'];
+  text('' + G.coins, CW - 5, y + h + 5, 7, '#ffd84a', 'right'); if (ci) U.img(ci, CW - 16 - textWidth('' + G.coins, 7), y + h + 5.5, 1);
+  const hp = (G.hearts % 4) + ' / 4'; text(hp, CW - 46, y + h + 5, 7, '#ff9ab0', 'right'); if (hi) U.img(hi, CW - 56 - textWidth(hp, 7), y + h + 5.5, 1);
+}
+// ---- Boss 血条 ----
+function drawBossBar() {
+  const e = bossActive; if (!e || !e.alive) return;
+  const w = 180, h = 12, x = CW / 2 - w / 2, y = CH - (isTouch ? 64 : 22);
+  text(e.name, CW / 2, y - 10, 8, '#ffffff', 'center');
+  U.box(x, y, w, h, 3, 'rgba(20,12,24,0.85)', '#0a0610', 1);
+  const k = Math.max(0, e.hp / (e.maxHp || 3));
+  U.box(x + 16, y + 2.5, (w - 20) * k, h - 5, 2, '#c42a40'); U.box(x + 16, y + 2.5, (w - 20) * k, (h - 5) / 2, 2, '#ff5a6e');
+  const k2 = (e.type === 'bat' ? 'enemies/bat_0' : 'enemies/' + (e.type === 'clam' ? 'clam_0' : e.type === 'bigslime' ? 'bigslime_0' : 'slime_0'));
+  const im = IMG[k2]; if (im) { const sc = 11 / Math.max(im.width, im.height); U.img(im, x + 3, y + (h - im.height * sc) / 2, sc); }
+  text(e.hp + ' / ' + (e.maxHp || 3), x + w - 5, y + 2.5, 6, '#ffffff', 'right');
+}
+// ---- NPC 对话 ----
+function drawDialog() {
+  if (!dialog) return;
+  const i = dialog.indexOf('：'), name = i > 0 && i < 8 ? dialog.slice(0, i) : '', body = i > 0 && i < 8 ? dialog.slice(i + 1) : dialog;
+  const w = 250, x = CW / 2 - w / 2, y = 100, lines = wrap(body, 8, w - 16), h = lines.length * 11 + (name ? 24 : 14);
+  U.box(x, y, w, h, 4, 'rgba(46,58,140,0.88)', 'rgba(12,16,48,0.95)', 1.2);
+  let yy = y + 5;
+  if (name) { text(name, x + 8, yy, 8, '#ffe96a'); yy += 11; }
+  lines.forEach(l => { text(l, x + 8, yy, 8, '#ffffff'); yy += 11; });
+  text('走开即可关闭', x + w - 6, y + h - 8, 5.5, '#aab4e8', 'right', null);
+}
+// ---- 聊天记录 ----
+function drawChat() {
+  const base = CH - (isTouch ? 56 : 10);
+  chat.slice().reverse().forEach((c, i) => {
+    const a = c.t > 300 ? (420 - c.t) / 120 : 1; if (a <= 0) return;
+    ctx.globalAlpha = a; text(c.text, 5, base - i * 10.5, 7.5, c.color); ctx.globalAlpha = 1;
+  });
+}
+// ---- 悬停提示 ----
+function tooltip(lines) {
+  if (mouse.x < 0) return;
+  const w = Math.max(...lines.map(l => textWidth(l[0], l[2] || 7))) + 10, h = lines.length * 10 + 6;
+  let x = mouse.x + 8, y = mouse.y + 8; if (x + w > CW - 2) x = mouse.x - w - 4; if (y + h > CH - 2) y = CH - h - 2;
+  U.box(x, y, w, h, 3, 'rgba(14,16,40,0.85)', 'rgba(120,130,220,0.6)', 0.8);
+  lines.forEach((l, i) => text(l[0], x + 5, y + 3 + i * 10, l[2] || 7, l[1] || '#ffffff'));
+}
+const inRect = (r, mx, my) => mx >= r.x && mx <= r.x + r.s && my >= r.y && my <= r.y + r.s;
+function formTooltip(f) {
+  if (!G.unlocked[f]) return tooltip([['？？？', '#a0a8d0', 8], ['尚未进化成这个形态', '#c8c8d8']]);
+  const F = FORMS[f]; tooltip([[F.name + (G.shiny[f] ? ' ✨ 闪光' : ''), G.shiny[f] ? '#ffe96a' : F.color, 8], ['能力：' + F.ability], ['技能（X）：' + F.skill, '#ffe6a0'], ['按 ' + (FORM_ORDER.indexOf(f) + 1) + ' 切换', '#a0a8d0', 6]]);
+}
+// ---- 背包 ----
+const INV = { x: 5, y: 12, s: 18, gap: 2.4, cols: 10 };
+const invRect = (row, col) => ({ x: INV.x + col * (INV.s + INV.gap), y: INV.y + row * (INV.s + INV.gap), s: INV.s });
+function invItems() {
+  const foods = Object.keys(FOODS).map(k => ({ kind: 'food', k, got: !!G.unlocked[FOODS[k].form] }));
+  const shinyN = Object.keys(G.shiny).filter(f => G.shiny[f]).length;
+  return [foods, [{ kind: 'heart', n: G.hearts }, { kind: 'shiny', n: shinyN }, { kind: 'coin', n: G.coins }]];
+}
+function drawInventory() {
+  text('背包', INV.x, 1.5, 8, '#ffffff');
+  text('Esc 关闭', INV.x + 10 * (INV.s + INV.gap) - 2, 2.5, 6, '#a0a8d0', 'right');
+  let hover = null;
+  for (let c = 0; c < INV.cols; c++) {
+    const r = invRect(0, c), f = FORM_ORDER[c], sel = f === player.form;
+    slot(r.x, r.y, r.s, sel, f ? !G.unlocked[f] : true);
+    if (f && G.unlocked[f]) slotIcon(charSprite(f, !!G.shiny[f], 1), r.x, r.y, r.s);
+    if (f) text('' + (c + 1), r.x + 2.5, r.y + 1, 5.5, sel ? '#ffe96a' : '#ffffff');
+    if (f && inRect(r, mouse.x, mouse.y)) hover = () => formTooltip(f);
+  }
+  const rows = invItems();
+  for (let row = 1; row <= 4; row++) for (let c = 0; c < INV.cols; c++) {
+    const r = invRect(row, c), it = rows[row - 1] && rows[row - 1][c];
+    slot(r.x, r.y, r.s, false, !it || it.got === false);
+    if (!it) continue;
+    if (it.kind === 'food') { slotIcon(IMG[FOODS[it.k].img], r.x, r.y, r.s, it.got ? 1 : 0.18); if (inRect(r, mouse.x, mouse.y)) hover = () => tooltip(it.got ? [[FOODS[it.k].name, '#ffe6a0', 8], ['吃下后进化成' + FORMS[FOODS[it.k].form].name]] : [['？？？', '#a0a8d0', 8], ['还没有找到这种食物']]); }
+    if (it.kind === 'heart') { slotIcon(IMG['items/heart_piece'], r.x, r.y, r.s); stackNum(it.n, r.x, r.y, r.s); if (inRect(r, mouse.x, mouse.y)) hover = () => tooltip([['心之碎片', '#ff9ab0', 8], ['已收集 ' + it.n + ' 片'], ['每 4 片血量上限 +1（当前 ' + (it.n % 4) + ' / 4）', '#c8c8d8']]); }
+    if (it.kind === 'shiny') { slotIcon(IMG['items/shiny_stone'], r.x, r.y, r.s); stackNum(it.n, r.x, r.y, r.s); if (inRect(r, mouse.x, mouse.y)) hover = () => tooltip([['闪光形态', '#ffe96a', 8], ['已获得 ' + it.n + ' / 9'], ['进化时有 1/15 概率闪光，闪光石可直接点亮', '#c8c8d8']]); }
+    if (it.kind === 'coin') { slotIcon(IMG['ui/coin_0'], r.x, r.y, r.s); stackNum(it.n, r.x, r.y, r.s); if (inRect(r, mouse.x, mouse.y)) hover = () => tooltip([['金币', '#ffd84a', 8], ['共 ' + it.n + ' 枚'], ['死亡会掉一半，以后可以在村里花', '#c8c8d8']]); }
+  }
+  // 角色面板（格子下方）
+  const px0 = INV.x, y0 = INV.y + 5 * (INV.s + INV.gap) + 3, w = 10 * (INV.s + INV.gap) - INV.gap;
+  panelBox(px0, y0, w, 44);
+  const im = charSprite(player.form, player.shiny, 1); if (im) { const sc = Math.min(1.6, 36 / im.height, 40 / im.width); U.img(im, px0 + 26 - im.width * sc / 2, y0 + 22 - im.height * sc / 2, sc); }
+  const visited = WORLD.rooms.filter(r => G.visited[r.id]).length;
+  const stats = [['生命 ' + G.hp + ' / ' + G.maxHp, '#ff9ab0'], ['形态 ' + FORM_ORDER.filter(f => G.unlocked[f]).length + ' / 9', '#ffffff'], ['探索 ' + visited + ' / ' + WORLD.rooms.length + ' 个房间', '#9cf09c'], ['游玩 ' + Math.floor(G.time / 3600) + ' 分钟', '#c8c8d8']];
+  text(FORMS[player.form].name + (player.shiny ? ' ✨' : ''), px0 + 54, y0 + 4, 8, player.shiny ? '#ffe96a' : '#ffffff');
+  stats.forEach((l, i) => text(l[0], px0 + 54 + (i % 2) * 74, y0 + 17 + Math.floor(i / 2) * 11, 7, l[1]));
+  if (hover) hover();
+}
+// ---- 全屏地图 ----
+function drawMapScreen() {
+  U.box(0, 0, CW, CH, 0, '#05060f');
+  drawMapRegion(0, 0, CW, CH, mapView.cx, mapView.cy, mapView.zoom);
+  const r = WORLD.rooms.find(r => mapView.cx >= r.x && mapView.cx < r.x + r.w && mapView.cy >= r.y && mapView.cy < r.y + r.h);
+  if (r && G.visited[r.id]) text((REGION[r.region] ? REGION[r.region].name + ' · ' : '') + r.name, CW / 2, 6, 9, '#ffffff', 'center');
+  U.box(0, CH - 14, CW, 14, 0, 'rgba(10,12,32,0.8)');
+  text('方向键 移动地图    + / - 或滚轮 缩放（' + mapView.zoom + 'x）    M / Esc 关闭', CW / 2, CH - 11, 7, '#c8d0ff', 'center');
+}
+// ---- 主 HUD ----
+function drawHUD() {
   for (const f of floaters) { ctx.globalAlpha = Math.min(1, f.life / 15); text(f.text, f.x - camX, f.y - 8 - camY, 8, f.color, 'center'); }
   ctx.globalAlpha = 1;
+  if (state === 'inv') { U.box(0, 0, CW, CH, 0, 'rgba(0,0,0,0.25)'); drawInventory(); drawLife(); drawMinimap(); drawChat(); return; }
+  drawHotbar(); drawSkillBuff(); drawLife(); drawMinimap(); drawBossBar(); drawDialog(); drawChat();
+  for (let i = 0; i < FORM_ORDER.length; i++) if (inRect(hotbarRect(i), mouse.x, mouse.y)) formTooltip(FORM_ORDER[i]);
 }
-function drawMap() {
-  ctx.globalAlpha = 0.85; px(0, 0, CW, CH, '#0a0a28'); ctx.globalAlpha = 1;
-  text('地图（M 关闭）', CW / 2, 6, 10, '#fff', 'center');
-  const sc = Math.min((CW - 40) / TWd, (CH - 60) / THt);
-  const ox = R((CW - TWd * sc) / 2), oy = 28;
-  for (const r of WORLD.rooms) {
-    const v = G.visited[r.id];
-    const near = !v && WORLD.rooms.some(o => G.visited[o.id] && o.x < r.x + r.w + 1 && o.x + o.w + 1 > r.x && o.y < r.y + r.h + 1 && o.y + o.h + 1 > r.y);
-    if (!v && !near) continue;
-    const x = ox + r.x * sc, y = oy + r.y * sc, w = r.w * sc, h = r.h * sc;
-    const col = REGION[r.region] ? REGION[r.region].color : '#888';
-    if (v) px(x, y, Math.max(2, R(w) - 1), Math.max(2, R(h) - 1), col);
-    else { ctx.strokeStyle = '#8a80a0'; ctx.lineWidth = 1; ctx.strokeRect(R(x) + 0.5, R(y) + 0.5, R(w) - 2, R(h) - 2); }
-    if (r === curRoom) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.strokeRect(R(x) - 0.5, R(y) - 0.5, R(w), R(h)); }
+// ---- 点击 ----
+function uiClick(mx, my) {
+  if (state === 'title') { if (menu.help) { menu.help = false; return; } menuItems().forEach((m, i) => { const y = MENU_Y + i * 17; if (my >= y - 2 && my <= y + 12 && Math.abs(mx - CW / 2) < 60) { menu.idx = i; menuSelect(i); } }); return; }
+  if (state === 'play') { for (let i = 0; i < FORM_ORDER.length; i++) if (inRect(hotbarRect(i), mx, my)) { selectForm(FORM_ORDER[i]); return; } }
+  if (state === 'inv') { for (let c = 0; c < FORM_ORDER.length; c++) if (inRect(invRect(0, c), mx, my)) { selectForm(FORM_ORDER[c]); return; } }
+}
+// ---- 标题菜单 ----
+function menuItems() { return hasSave() ? ['继续游戏', '新游戏', '操作说明'] : ['开始游戏', '操作说明']; }
+function menuSelect(i) {
+  const it = menuItems()[i];
+  if (it === '继续游戏') startGame(loadGame() || newProgress());
+  else if (it === '新游戏' || it === '开始游戏') { try { localStorage.removeItem(SAVE_KEY); } catch (e) { } startGame(newProgress()); }
+  else menu.help = true;
+  SFX.coin();
+}
+function titleKey(k) {
+  if (state !== 'title') return;
+  if (menu.help) { menu.help = false; return; }
+  const n = menuItems().length;
+  if (k === 'ArrowUp' || k === 'w' || k === 'W') { menu.idx = (menu.idx + n - 1) % n; SFX.swap(); }
+  else if (k === 'ArrowDown' || k === 's' || k === 'S') { menu.idx = (menu.idx + 1) % n; SFX.swap(); }
+  else if (k === 'Enter' || k === ' ' || k === 'z' || k === 'Z') menuSelect(menu.idx);
+}
+function drawTitleUI() {
+  const bob = Math.sin(titleAnim * 0.8) * 2, sc = 1 + Math.sin(titleAnim * 0.6) * 0.02;
+  text('伊布 · 进化大冒险', CW / 2, 14 + bob, 24 * sc, '#ffd23c', 'center', '#3a2008');
+  text('银河恶魔城版', CW / 2, 46 + bob, 9, '#ffffff', 'center');
+  const items = menuItems();
+  items.forEach((m, i) => {
+    const hov = Math.abs(mouse.x - CW / 2) < 60 && mouse.y >= MENU_Y - 2 + i * 17 && mouse.y <= MENU_Y + 12 + i * 17;
+    if (hov && menu.idx !== i) menu.idx = i;
+    const sel = menu.idx === i, size = sel ? 12 + Math.sin(frame / 10) * 0.6 : 10;
+    text(m, CW / 2, MENU_Y + i * 17 - (sel ? 1 : 0), size, sel ? '#ffe14a' : '#e8e8f0', 'center', '#1a1020');
+  });
+  text('v0.4 开发中', 5, CH - 10, 6, '#ffffff');
+  if (menu.help) {
+    U.box(CW / 2 - 120, 40, 240, 132, 4, 'rgba(40,52,128,0.94)', 'rgba(12,16,48,0.95)', 1.2);
+    text('操作说明', CW / 2, 46, 10, '#ffe96a', 'center');
+    [['← → / A D', '移动'], ['空格 / ↑ / W', '跳跃（按住跳更高）'], ['X / J / K', '使用当前形态的技能'], ['1～9 / Tab / 点物品栏', '切换形态'], ['Esc / I / E', '背包'], ['M', '地图（方向键移动，+ - 缩放）'], ['存档石', '碰一下回满血并存档']].forEach((l, i) => { text(l[0], CW / 2 - 108, 64 + i * 13, 7.5, '#ffe6a0'); text(l[1], CW / 2 - 18, 64 + i * 13, 7.5, '#ffffff'); });
+    text('按任意键返回', CW / 2, 158, 7, '#a0a8d0', 'center');
   }
-  for (const s of saveStones) { const r = roomAt(s.x, s.y); if (r && G.visited[r.id]) px(ox + s.x / T * sc - 1, oy + s.y / T * sc - 1, 3, 3, '#7fe8ff'); }
-  if ((frame >> 3) & 1) px(ox + (player.x + player.w / 2) / T * sc - 1, oy + (player.y + player.h / 2) / T * sc - 1, 3, 3, '#ffffff');
-  const got = FORM_ORDER.filter(f => G.unlocked[f]).length;
-  text(`形态 ${got} / 9   心之碎片 ${G.hearts}   金币 ${G.coins}   游玩 ${Math.floor(G.time / 3600)} 分钟`, CW / 2, CH - 16, 8, '#dfe7ff', 'center');
 }
 
 // ---------------- 主循环 ----------------
 function update() {
   frame++;
-  if (mapToggle) { mapToggle = false; if (state === 'play') state = 'map'; else if (state === 'map') state = 'play'; }
+  if (mapToggle) { mapToggle = false; if (state === 'play') { state = 'map'; mapView.cx = (player.x + player.w / 2) / T; mapView.cy = (player.y + player.h / 2) / T; mapDirty = true; } else if (state === 'map') state = 'play'; }
+  if (invToggle) { invToggle = false; if (state === 'play') state = 'inv'; else if (state === 'inv') state = 'play'; }
+  if (state === 'map') { const sp = 3 / mapView.zoom; if (left()) mapView.cx -= sp; if (right()) mapView.cx += sp; if (keys.ArrowUp || keys.w || keys.W) mapView.cy -= sp; if (keys.ArrowDown || keys.s || keys.S) mapView.cy += sp; mapView.cx = Math.max(0, Math.min(TWd, mapView.cx)); mapView.cy = Math.max(0, Math.min(THt, mapView.cy)); }
+  for (const c of chat) c.t++; chat = chat.filter(c => c.t < 420);
   if (formNext) { formNext = false; cycleForm(); }
   if (state === 'play') { updatePlayer(); updateEnemies(); updateProjectiles(); }
   else if (state === 'evolving') {
@@ -739,7 +954,7 @@ function update() {
     deathTimer++; player.vy += GRAVITY; player.y += player.vy;
     if (deathTimer > 70) respawnAtSave();
   }
-  if (state !== 'title' && state !== 'loading') { updateBurning(); updateShinyFx(); updateParticles(); if (state !== 'map') clampCam(false); }
+  if (state !== 'title' && state !== 'loading' && state !== 'map' && state !== 'inv') { updateBurning(); updateShinyFx(); updateParticles(); clampCam(false); }
 }
 function draw() {
   uctx.clearRect(0, 0, ui.width, ui.height);
@@ -750,11 +965,7 @@ function draw() {
     for (let x = 0; x < CW; x += 16) { blit('tiles/grass_top', x, 10 * T); for (let y = 11; y < 14; y++) blit('tiles/dirt', x, y * T); }
     blit('deco/bush', 300, 10 * T - 10); blit('deco/tree', 30, 10 * T - 22); blit('deco/cloud_big', 60, 20); blit('deco/cloud_small', 260, 40);
     FORM_ORDER.forEach((f, i) => { const x = 22 + i * 42, y = 10 * T - Math.round(Math.abs(Math.sin(titleAnim + i * 0.5)) * 6); const im = charSprite(f, false, 1); if (im) ctx.drawImage(im, x - Math.floor(im.width / 2), y - im.height); text(FORMS[f].name, x, 10 * T + 8, 7, '#fff', 'center'); });
-    text('伊布 · 进化大冒险', CW / 2, 26, 24, '#ffd23c', 'center');
-    text('银河恶魔城版 · 开发中', CW / 2, 58, 10, '#fff', 'center');
-    text('← → 移动  空格 跳跃  X 技能  1～9 / Tab 切换形态  M 地图', CW / 2, 86, 8, '#dfe7ff', 'center');
-    if (hasSave()) { text('按任意键 / 点击屏幕：继续', CW / 2, 112, 10, (frame >> 4) & 1 ? '#fff' : '#ffd23c', 'center'); text('按 N：新游戏（会覆盖存档）', CW / 2, 128, 8, '#dfe7ff', 'center'); }
-    else text('按任意键 / 点击屏幕开始', CW / 2, 118, 10, (frame >> 4) & 1 ? '#fff' : '#ffd23c', 'center');
+    drawTitleUI();
     return;
   }
   drawBackground(); drawLevel(); drawPlayer(); drawWater();
@@ -772,8 +983,8 @@ function draw() {
     text(m, CW / 2, 60, 14, t < 50 ? '#fff' : '#ffd23c', 'center');
     if (t >= 50) { text('新能力：' + FORMS[evo.to].ability + '   技能（X）：' + FORMS[evo.to].skill, CW / 2, 80, 9, '#fff', 'center'); text('按 ' + (FORM_ORDER.indexOf(evo.to) + 1) + ' 随时切换形态', CW / 2, 94, 8, '#dfe7ff', 'center'); }
   }
-  if (state === 'map') drawMap();
-  if (state === 'dead' && deathTimer > 30) { ctx.globalAlpha = Math.min(0.7, (deathTimer - 30) / 40); px(0, 0, CW, CH, '#0a0a28'); ctx.globalAlpha = 1; text('回到存档石……', CW / 2, CH / 2 - 8, 12, '#fff', 'center'); }
+  if (state === 'map') drawMapScreen();
+  if (state === 'dead' && deathTimer > 20) { ctx.globalAlpha = Math.min(0.6, (deathTimer - 20) / 40); px(0, 0, CW, CH, '#1a0006'); ctx.globalAlpha = Math.min(1, (deathTimer - 20) / 20); text('伊布倒下了……', CW / 2, CH / 2 - 22, 18, '#e03c3c', 'center', '#200004'); text('回到存档石  ' + Math.max(0, Math.ceil((70 - deathTimer) / 60 * 3)), CW / 2, CH / 2 + 4, 9, '#ffffff', 'center'); ctx.globalAlpha = 1; }
 }
 let last = 0, acc = 0;
 function loop(ts) {
