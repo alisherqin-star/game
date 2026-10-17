@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0f1024">
-<title>伊布马里奥 · 进化大冒险</title>
+<title>伊布 · 进化大冒险</title>
 <style>
   html, body { margin: 0; padding: 0; background: #0f1024; height: 100%; overflow: hidden; touch-action: none;
     font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
@@ -16,12 +16,14 @@
   #ui { position: absolute; left: 0; top: 0; pointer-events: none; }
   #touch { position: fixed; inset: 0; pointer-events: none; display: none; }
   @media (hover: none) and (pointer: coarse) { #touch { display: block; } }
-  .btn { position: absolute; bottom: max(18px, env(safe-area-inset-bottom)); width: 64px; height: 64px; background: rgba(255,255,255,.18);
+  .btn { position: absolute; width: 64px; height: 64px; background: rgba(255,255,255,.18);
     border: 3px solid rgba(255,255,255,.75); color: #fff; font-size: 24px; font-weight: bold; display: flex; align-items: center; justify-content: center;
     pointer-events: auto; touch-action: none; }
   .btn:active, .btn.on { background: rgba(255,255,255,.5); }
-  #bL { left: max(18px, env(safe-area-inset-left)); } #bR { left: calc(max(18px, env(safe-area-inset-left)) + 80px); }
-  #bJ { right: max(18px, env(safe-area-inset-right)); width: 84px; height: 84px; }
+  #bL { left: max(18px, env(safe-area-inset-left)); bottom: max(18px, env(safe-area-inset-bottom)); } #bR { left: calc(max(18px, env(safe-area-inset-left)) + 80px); bottom: max(18px, env(safe-area-inset-bottom)); }
+  #bJ { right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); width: 84px; height: 84px; }
+  #bF { right: max(18px, env(safe-area-inset-right)); top: 60px; width: 48px; height: 48px; font-size: 18px; }
+  #bM { right: calc(max(18px, env(safe-area-inset-right)) + 60px); top: 60px; width: 48px; height: 48px; font-size: 18px; }
   #rotate { position: fixed; inset: 0; background: #0f1024; color: #fff; display: none; flex-direction: column; align-items: center; justify-content: center; font-size: 20px; z-index: 10; text-align: center; line-height: 1.8; }
   @media (hover: none) and (pointer: coarse) and (orientation: portrait) { #rotate { display: flex; } }
 </style>
@@ -32,14 +34,15 @@
   <div class="btn" id="bL">◀</div>
   <div class="btn" id="bR">▶</div>
   <div class="btn" id="bJ">跳</div>
+  <div class="btn" id="bF">形态</div>
+  <div class="btn" id="bM">地图</div>
 </div>
-<div id="rotate"><div style="font-size:48px">📱↻</div>请把手机横过来玩<br><span style="font-size:14px;opacity:.7">左下角移动，右下角跳跃（在水里按住跳跃可上浮）</span></div>
+<div id="rotate"><div style="font-size:48px">📱↻</div>请把手机横过来玩<br><span style="font-size:14px;opacity:.7">左下角移动，右下角跳跃，右上角切换形态 / 地图</span></div>
 <script>
 'use strict';
 // ------------------------------------------------------------
-// 伊布马里奥 · 进化大冒险（像素风）
-// 内部分辨率 384x224（24x14 个 16px 瓦片），最近邻放大显示。
-// 所有美术素材来自 sprites/ 目录的 PNG，由 tools/embed_assets.py 内嵌到下方 ASSET_PNG。
+// 伊布 · 进化大冒险（银河恶魔城版）
+// 内部分辨率 384x224，16px 瓦片。素材在 sprites/，世界在 tools/build_world.py。
 // ------------------------------------------------------------
 const canvas = document.getElementById('c');
 const ctx = canvas.getContext('2d');
@@ -48,144 +51,68 @@ const CW = canvas.width, CH = canvas.height;
 const ui = document.getElementById('ui');
 const uctx = ui.getContext('2d');
 let UIS = 2;
-const T = 16;            // 瓦片大小
-const H = 14;            // 关卡高度（瓦片）
-const GRAVITY = 0.22;
-const JUMP_V = -4.6;
-const RUN = 1.6;
-const PW = 12, PH = 18;  // 玩家碰撞盒
-const SHINY_RATE = 1 / 15;  // 每次进化变成闪光版的概率
+const T = 16;
+const GRAVITY = 0.22, JUMP_V = -4.6, RUN = 1.6;
+const PW = 12, PH = 18;
+const SHINY_RATE = 1 / 15;
+const SAVE_KEY = 'eevee_mv_save_v1';
 
-// ---------------- 进化形态定义 ----------------
+// ---------------- 形态 ----------------
 const FORMS = {
-  eevee:    { name: '伊布',     color: '#c98a44', ability: '普通形态，什么都还不会' },
-  vaporeon: { name: '水伊布',   color: '#5fc3e6', ability: '可以在水里游泳（↑ 上浮）' },
-  jolteon:  { name: '雷伊布',   color: '#f5d33f', ability: '跑得飞快，电网无效' },
-  flareon:  { name: '火伊布',   color: '#ee6a2a', ability: '碰到木箱就把它烧掉' },
-  leafeon:  { name: '叶伊布',   color: '#9cd05a', ability: '可以二段跳' },
-  glaceon:  { name: '冰伊布',   color: '#a8dcf3', ability: '冻住水面，在冰上行走' },
-  espeon:   { name: '太阳伊布', color: '#cfa3e3', ability: '下落时按住跳跃可以滑翔' },
-  umbreon:  { name: '月亮伊布', color: '#34343f', ability: '可以穿过黑影墙' },
-  sylveon:  { name: '仙子伊布', color: '#f6c4d8', ability: '碰到怪物会把它变成爱心' },
+  eevee:    { name: '伊布',     color: '#c98a44', ability: '普通形态' },
+  vaporeon: { name: '水伊布',   color: '#5fc3e6', ability: '游泳（↑ 上浮）' },
+  jolteon:  { name: '雷伊布',   color: '#f5d33f', ability: '疾跑，免疫电网，撞碎裂墙' },
+  flareon:  { name: '火伊布',   color: '#ee6a2a', ability: '烧掉木箱' },
+  leafeon:  { name: '叶伊布',   color: '#9cd05a', ability: '二段跳' },
+  glaceon:  { name: '冰伊布',   color: '#a8dcf3', ability: '冻住水面' },
+  espeon:   { name: '太阳伊布', color: '#cfa3e3', ability: '按住跳跃滑翔' },
+  umbreon:  { name: '月亮伊布', color: '#34343f', ability: '穿过黑影墙' },
+  sylveon:  { name: '仙子伊布', color: '#f6c4d8', ability: '魅惑小怪' },
 };
-const FORM_ORDER = ['vaporeon', 'jolteon', 'flareon', 'leafeon', 'glaceon', 'espeon', 'umbreon', 'sylveon'];
+const FORM_ORDER = ['eevee', 'vaporeon', 'jolteon', 'flareon', 'leafeon', 'glaceon', 'espeon', 'umbreon', 'sylveon'];
 const FOODS = {
   '1': { name: '蓝莓', form: 'vaporeon', img: 'items/food_1_blueberry' }, '2': { name: '柠檬', form: 'jolteon', img: 'items/food_2_lemon' },
   '3': { name: '辣椒', form: 'flareon', img: 'items/food_3_chili' }, '4': { name: '树叶', form: 'leafeon', img: 'items/food_4_leaf' },
   '5': { name: '冰淇淋', form: 'glaceon', img: 'items/food_5_icecream' }, '6': { name: '太阳饼', form: 'espeon', img: 'items/food_6_suncake' },
   '7': { name: '月饼', form: 'umbreon', img: 'items/food_7_mooncake' }, '8': { name: '彩虹糖', form: 'sylveon', img: 'items/food_8_candy' },
 };
+const REGION = {
+  village: { name: '起点村', color: '#f0c86e', sky: ['#6fbfff', '#8fd0ff'], shinyForm: null, outdoor: true },
+  plains:  { name: '草原',   color: '#82d264', sky: ['#6fbfff', '#8fd0ff'], shinyForm: 'eevee', outdoor: true },
+  lake:    { name: '湖泊',   color: '#468cdc', sky: ['#5fb0f0', '#a0dcff'], shinyForm: 'vaporeon', outdoor: true },
+  lakecave:{ name: '湖底洞穴', color: '#2a4a8a', sky: ['#1a2a4a', '#223a5a'], shinyForm: 'vaporeon', outdoor: false },
+  tower:   { name: '雷电塔', color: '#f0dc5a', sky: ['#3a3a5a', '#5a5a7a'], shinyForm: 'jolteon', outdoor: false },
+};
 
 // ---------------- 素材 ----------------
 /* ASSET_PNG_BEGIN */
-const ASSET_PNG = {"characters/eevee":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAASCAYAAAC9+TVUAAABYElEQVR4nJWUP0vDQBjGnxyXfgI3hX4AB5ci9Ct0kJAP0KWLAUkncRDnEjJFAp2yuArlpu4uCiWOLTgGWqcurknIufheL7lE7QNH7i7v+3v/5C4WjpDNuKR5UZUWzdkxEACYTx3Mp04NyJoRbMYljS5QmuU1ELMZl/vtGrqjHo32foNymuy3azyH90izvBYNALxIKLj+3oDsVovWtAf9HibOCIN+DwDUU4cwAry+vCsjctZBTRHcZlyyoiqtC/ehM4s2ACmIQwCA+tbUOEqd0m2mr0O9SBzKAQ6HRzfyx0PlnIilikyixrcetjTL4Y+Hxv7dzW1t7UUCRVVaCmIzLomsK4hDpFmOiTNSAWjQ+eKG148en95UNkEcYrda4PTSbbU1IGmWIxFLtfYBw5mAJ2fntYuoSmreo42YyWv3Sn59fsiNmKm1blentIh6pX9iamhnOV0i5wQwS/iP/vo1fAPkeb5UvjUm2AAAAABJRU5ErkJggg==","characters/eevee_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAASCAYAAAC9+TVUAAABa0lEQVR4nJVTMWvCQBT+ctyRX9KhP6CrSzbBKsWhW4YsxaEgrnayqxQ7uAXJIh0clICbi0MLSqdWRPwlkpDXwb7jLomKDwJ3l/d977vv3XNwRSghiddJljrXYC2S8WhA49GATEKRr6CEJP5OkS3jBaKwr3FSCUmHNIErlQZFYR8A4AcdYunnSCUvDmmCj+gdy3hhVTPJorBv/beuAwD77bpUNgAEjaomrNQ8VGqelecoIen35xPfqy8LXKl5miQPMvPC6RwOcDSTK5kKToE5Hv1nuFJB95qNCxrVUhVlxH7QAWB4wo/HTGr3uhocTucYTmaWElYvUBLLeIF2r1s4bzXr1t4POkiy1NEtzvvCMZzM0GrWETSq1rWA47NwpSJZQP3H28urVjOczLDfrnFze1eaWyDhtnG0e90CmAldqYqDmJ8ZJSTtNit6erinLCPabVZ6b+ZdHGf2ymwxG3oJa5GY439uEC8SnQP/AW50wjum6eX2AAAAAElFTkSuQmCC","characters/espeon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAVCAYAAACzK0UYAAACaUlEQVR4nL1VMYvaYBh+Irf0Fsmh4CKIFQNuFp1Op8ttoog/wBa5KWChUAWnTIIOhQYySamlcxFF7GDsouWKWuXgEGJbOHA5UCq6dLghHXpfmk9jTqH0mfJ9b77neZ/3zfcG+F9g7Q7Nz4W0f8nH2h06n42Qz29vYAwQpFMZzWzfCoFw9OEMjKSs3aHtK0TOnvJJqjK2Uz6pB+J8AkqtSR2M8wlkhQsoteZWGcxQFkSsvW5qzzafzQAAk0EXES4ISa5AqTVBMrm8vkKr0Ua2WEIgHNXFjJkSt2VBRLXfwaPHfjjdf4WYTbtlQURPHaOh1LFcLRg/F9Jepp6i2u9Q2UmFPPhkDAB099liCXfnZ/hWFLFcLXRum5nlrHChP0/VIdNTx/DZT7D2urH2unF3fqaTG8srFfL49WMKp8tD8VFOiBsAVCabTqv9DqRCnoq1Gm24jln01DEA4PvqJyaDLparBXOQCImT7CW5gggXxBM+RL0jyRX43B64jllU+x26XEYCM/JdcUmuUOuGUsf7j3XkZBHz2QxHxiC5RIFwFJ+V2k7xbLEEn/0EES6InjpGhAvqMT4Zg9PlwVQdMvcVMe/Ji2fP8erta71krN2hxfkELq+vML+9QZxPUALka7xPbotzZ92Na+JipAyRk0UotSZGyhAAkJPFnf2zFCFIpzKaWWM3IckVvPvwZieXpQhA9yNbLGEy6G6NHj4Zs3RjehmNAmVBBPCnVPPZDMvVgiE3faQM0Wq0EecTlokeWUbvIckVfcwY943jx+q8pROCTSKjm4dc7IVdoz2dymhfP305+Id2sPi+Ar8Bgps0THXf1U0AAAAASUVORK5CYII=","characters/espeon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAVCAYAAACzK0UYAAACU0lEQVR4nL1UPWjbUBg8mQz5A9XFhAwShhZqsBDYGerFoUMWb24hITSDl4bMmTw4g6RBgWZxhkIweMpgDxbYmZzFm8F4aAkUGWSoqZFG4x9o6fg6uE+VbElxaemBQO+ddPd9J30P+F8IsxHCp6PkX+qF2YitF6Li3z5/h5OgSF8niNd+ELgs/3gFTtEwGyGrGtF3xVzSlUxIzCVtQlA4VPSy60VB4XBxKKOil5di8MLR/QGwvu/aC00HYwCAdWcinopB1eaCtJKhNkHJKCJfUMBledvMWSnt9uj+AJ2bPjaev8CTZ0/92z3rHLvi4dNRctY5JmIu6bqaVsOOtmk1SNNqEDGXJC/ff1jqNuRldnEo2/dme8j0ugbYPTKPYX0fG8I7AEBFL7vivbqU8ONLH9vilkuP8eoGACazkSdHI7m6lFxcyShiZ3MXva4BAJh9YmDdmZjMRswfmVCeVq9qMuKpGN7wb13PqJqMiMhiZ3MXnZu+Oy6ngJe4H69qsmutSxY+Sl9Ry7QwHYyx5iTpEHFZHpPbka95vqCA3SOIp2LodQ3EUzGbOxFOsS1uwWwPGQCYtH/ruARft155DiSfjhJ6T/9C598o5pKeM+Sbu3NNu6ibVdQyLVT0MupmFQBQy7R8v1+gCUX6OkG8PuwiVE1G+/zBV8tzTija5w9MLdOy1/mCghPhdOk5XbICiwg0oXMBzKOaDsaYzEYMNaqbVZSMIgSFCzRZC2R/QdVk6JK1lH2va3juLyKwE4pFIWc3j3WxEvyO9vR1wj4k/94lwHxVg59JgDHbAKOE6wAAAABJRU5ErkJggg==","characters/flareon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAWCAYAAADAQbwGAAACgElEQVR4nJ2UUUiTURTHf3fIcHuICR/BIsQFU1AEJWY+LIRJmPRgUPjQGOibRIwxFsiE3hw9DBGLiB4ymBJUD5kv7sGBoTCUMpAJsodFBN/LzY0e5hjB14Putm/7NPTAhe9+9/I7/3POPQcsbCo4brg1zbA6O7e5Nc2o/JozDvXVC0FtjbDc3iLlqrfJyYWAYyMB02Fub/FcsCYVh/qqaU0Fx9X3WWC3phnDPp8B0HKWk6goIR8/Y/Po/yKD7S72C5phA6jRG23OcDFnuPA7BGMjARW+W9OM+jU71A/A7FA/LW5NM95/eoLTnqdcNQMHKsVjcGtbk7Pc3iLzL9bZWtsy/VdFaawsQN/0BH6HUPuaysJBHIDIw2G8nR62TxzObOxi06UU8VjKMi8dVy815a8WXs0SyRCJZIjt1jZ0KYVS6LTnLaF3n4cZqBSJihIAfocgEs7y8dGC6d5KOvMv5JV0hnLVeyq0b3qCJU+3gkZFCb9DmO7XlAvAlBdAwctVL/FYitH7N7g52AlAPJZSYMCUkpmN3eMq16upV/r9528SyZBJ7UClyCaoQkQdJQXWpRQ2XUqhSynu3H4LmHP57ekb6gtWf3b52hWTI79D4NY0Q3XK+s6O8HQVDIDCQZxIOEvUIeCoaIL9CVynJfOFjv0cHQAnz2po7Su6lEJgYcM+nxFsd6k3uOTpJh5pN92JhLOmfSIZoqd3EksgwOt7t1RuH7watbzT2Aw9vZPm8VVvyz9K6tvTlSASzpL+bD0knPY88VgKXUpx6rTZLxTY7gyofl5JZxioFIl8OK7u/MIgTntehf5y+Z0ATg/ZymqTpfZkat0BoEt5LpYJetaw/QsNaA5EB/NYrgAAAABJRU5ErkJggg==","characters/flareon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAWCAYAAADAQbwGAAACd0lEQVR4nJ2UT0gUURzHP6OyC+thWRiiEcRUykVCSFj2KGiwUYSdRDEID4IXt1UPi3pY9rDIHtT+XAIPQhguHdKCJCGCAg9L4GEPy3RoKwwnbEL24NKKMh2mec3sjIb+YJg37/3m8/v+fr/3HnjY2PCAociy4bV2ZlNk2fj9a94o762dC1pXC1OLS1SP21xBzgXsj/U6FtXi0plgLhXlvTXHMzY8IMangRVZNvoiEQOg4bQgmckgRzsbHO7n/ytoZa5K96Bs1AFY9FqbXSgzu1DGF4rSH+sV6SuybNif7VwTANu5JhoUWTZevJ7BX1+ieuwEpkbUv+CwK5haXGL+8Xu23mwBVTEvmlLbWQAtmMQXiopvS+WXT9MATI33cPlKK+llM2D34C51mq5LyYlVz7q0twRc9bPSsyy7OER2cYj0chhN1yWh0F9f8oQGutKkRlQyk0EAfKEoiXieSiHl8Hu5+Q4ACf5taLOO7tQ/f6uw/uoj9+8cOOYbL4WFf6WQQrlecCusfScnVtn5/oOp8R4amm8yu1AWwIOvKpVCSqhVZNmQrK1gFbp63CZgxdJF2lsCDlXWz1YjrFIc7udNhZquS5quS7du5Fy1VMpZ7A2zr11oczbHF4qaCu2TdrWJeJ7MZJDD/TyBrrSAPc395HbHhgMEcDW2hqbrkgNoWV8kYqzMVYXzw/VGZhLNDp9E3LmdsotDhDtH8QQCaG+7xHEMXbvn6VO7I8Kdo87ry253p/1i3NoxRyKeZ/ODt6+/vkRyYvXklMGsZ3+sl9SISvfgLmCeEqu7Dx6Z5bBSf/LsuQScnPJJQexQ63QAaLp+JpYDetpl+wcaUg/r9MxxmAAAAABJRU5ErkJggg==","characters/glaceon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAYAAACXtf2DAAACn0lEQVR4nLVUTUgUYRh+Zu1QyexQE4rkISQ6BEWEuswhNmEZEuawtmx5WNqw1osgBUuQoNaOeJIwoyhWIWEhdQ1XWEiWBVs8TIMUYe0eYiEP0lK0xrBIhwW/Dts37jA/StBz+uZ73+d5eL/3nRf4D2A5ntCzq9XnJ06JUjBsG7fKrxfXLw8/eWEpwnI8WS4UCSWayBa5keR7Q54LAKpNzbAyqWhlJiR44I3K6J3OIKGocDKxgose7EwAIBIQ8eFHAbFVBfKj57qJVVVzt0VUtDJjMtgPI10CLjadRd7dBq8ogeV4klBUvare6QxCgscgDgAMy/HkxuOneLdTxZehO6YEAJCCYZLLpJFQVJNx/HUGjVe6sbPyBrmJYRPfBQBiZztGugQkFBVWU5NOzjK0H/FR2RArHWcB1J7RG5VNPXJRIkUuk7Z9popWZmg8Pirj6qfPAAD35jZiqwqwoYLruGTguCgxJHgQEjwI9PXbGtSj5doguheXMNIloLQwhZa3WQDAhWOcM/Eg8z7wco5cX/9KpGCYSPIzslwokuVCkUjBsIlraihNoKVq62ugVdJ4oK8fP7e+AedrTxsJiDo/ndcMo2oyoLh59z7pidwCAMRWFZwrFgAA+SNH0dYTwom8CrGz3cBZis/sGW+oSCdnGVsDOuf1iI/KaLz3AO7NbZQWphB5OAwAoENS0coMy/HEG61NWm5iGIfsDLyiZPgeS7zC7mUfTgO6+MBgFNr6mmH2K1qZ+f67THZPnrKT3qugftE1zKdIw3yKSMGw3lSnYegYkh3jpi3Lcjxp9fl18cmZpLPAX9juourYuOluK5vSf8rsShpnxif33a6OTQZg2i0sx5Pq2DiqTc3oXlzCx18atrIpW51/QqvPf6DnAYA/brNG69Ew90EAAAAASUVORK5CYII=","characters/glaceon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAYAAACXtf2DAAACqklEQVR4nLWUQUgUURjHf7OkRLSMsYpGlCKBxHoJtRAUL7qBDF5EERQXJQIPFkG04mWTRNRDBB42oaAVFxYlEBkoNy+LSxa1dNFEPKhkJtgaw4LaSr0ONZvjzKwR9J3evO/7///z/d97H/yHcMouoa8dec0ekalQafLa5q3qD5OnN0+O3rEkccouMb61JHSgCWxR2/rhuaHOAZDKz8FKJKklpK6SKopCfhrmxwksx8gkYhUOfWEnAuArr+P94gIDcyr3HzxKi1h1NV3ZRlJLSCaB46K3WuGyu5S3laep8Sg4ZZcILMfSXTXMj9NVUmUgB5CcsktUREfZWlnl4/VBUwGA0uQV0YhKYDlmEh5695JLbjdLi4ustfaZ8A6AzgI3vdUKgeUYVrdGnQxK+nmEuwcNue9734BfNhaF/KYzcuhAPaIR1dampJaQ9Hy4e5D2188AyNpLMTCnUhiMc/JamQHj0IFdJVV0lVTR2HnDVuBwyH0t1IdW6K1W0PxhiicWALgqzhrqTH7rLVqdhZ6viI6SK59h9+4Y694yfOV16a6iEdWAPWH3h/oL35+Jc1TwQjDOl41N1r1GO1pGepB3WpiubBN6vUlATzSeKxO1vnYABuZUrrzaEQCx4h/sKrXsal/xFbgN2NmhMbSNTYpCfgqDcaFOBiVLG3Qrjl7LcPcgp4bbydpLofnDtIz0AKBfkqSWkJyySxSF/ACstfbZW1TjUQzf9yafkt1cSimkyW/fvMX+TNxgX1JLSHurn0R2Qa4d9Z8ODg86x1S/cEz1C6XJK8a3ltI5O/zFEV/GvGnKOmWXyGv2pMkfPpnMTPA7bGfRwXCHaW97IpJ+lLMvVM4/7jl2umY8ZDC/B6fsEgfDHaTyc6gPrfBG+sz2RMSW558ir9nzV/YA/ARL5EjIN2Ql6AAAAABJRU5ErkJggg==","characters/jolteon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAYAAABvVQZ0AAACWElEQVR4nKWUQUgUURjHf2N6cHFh2HAlWHB2LAghCAsTpINBuh4qujQYnTQPIXSNAvcgoQQJsbB4WHdPseWpQ4c2k9bLwgrmocgu466CeJgYeaDoQeJ1WOa5s+suQd9p3ps3v+///d98H/xnhHVdhnVdArScdeDh3UvyX0H5aUOt62BhXZepuU5fxmaR3epqDHOE0KKDmyzM91Mu9DZU6amy3VBjWHWMz3QTjZgNgaXjIPnPn3CE0BrCHCG0jW8aALYbwisbmvvZWivde+67JrGXTxWWCzD5/LdMzXUSjZjSdkNMvD5VBaBVg4ZGRnl0ZZfiXoAXUwcKBJCJ75ArdnBZOBixANu5I4xYgOjgpgL6YOVCL18/nMNsPyC71YXthsjEdxTwwbBLbOAQgLYLdwCImK9whNDCui59nm3njrh1/w9GLIDthlhMJxUIqAMB7JaeKXtaa70CmE0GGR68DcBiOsnjiSn1rgL/Tia+o/aGRkYrnnmgcqG3mkeu2MGw9R6A1Tf3MNsrHhbbngKwXPjiA47PdNPiCKF5P2p1SV6srW/w9kdErQdOEgycJOpAS0vvNN8FAOSnDYxYQB2afDIBQGohDUC8/5eClI6DKpEPVg31Sh6f6WYxnWRtfaNOMcCN630A9ERMHCE0321WT4HZZKVVeiKmUtUIBGBZY/7OCOu6/Dl/Vda2TFjX5cHhvrSsMZlOZOTK6or8+PKmrAPUfmRZY7J2/Hj7HiCdyJw5nuo8a5YoP21QOg5S3AuQyq75+hJqGr1ZOEJo2a0uabshLp7fP/PMX6rMCI8tAjMWAAAAAElFTkSuQmCC","characters/jolteon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAYAAABvVQZ0AAACTklEQVR4nKWUP0gbYRjGfycBoS3HEWsI5IZgJMEWpBStQycHG1061EIIdIp2KAoZWuvmXq2DktDB/NlapDqbtFK7OKSKSIdK5CoOCaQJkeOaxenrEO6au/yh0Ge677v3ft/zPtz7wX/KoyjCoygCoK9TwdOFAfGvoGTBZ63bYB5FEfHVoO3EXjrdULvDqrouzfrOWPtym93ySFeXpiut7u4Oa1Ui5ickxroCG8Y1B/k9qroudYVVdV06TwUA0OpuzLahd54up3XzOTj/E+2N23K4W4aN1+civhokJGSh1d0sT/11BSC1gibDM0y/OkLLBpheMywQwGLmkotijRs3+/GqMpWSgVeVmfWddW5zMXMJwL14idySTCLmt/ZMqFeVmzX+Z3hdj21d2WCVksHwnUG8qoxWd5NKJy0IwFBosAlsgRz+WrbicTmzAsgtyTx6OAVAKp1kfm7BeteEf7ccA0yGZ5qZmaDd8kgrj4tijSfBbwDsnD3gltwPgJF/CcCnw882YCLmp6+q65L5o7a2ZKpwfELu7bi1lsPryOH1NtD29gfJltlBfo9KybDyMdt7/mKOnZVRdlZGrdpKyUD7UbMZkHDIoyjCbDkR85NKJykcn7Q5BpgYuw9AQB2iqut2Z623QG5J5iC/R0AdYutduicIIBKJ2ifDoyjiY/GucI6MR1HE78aViESiIr2ZEftf90X2aFi0AZwfRSJR4bx+zH0TkN7MdLye2jLrdVCy4KNhXKNlA2y9L9jmEhyD3ktVXZdONyaEVnczPHDVseYPgkYCoWXBtocAAAAASUVORK5CYII=","characters/leafeon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAATCAYAAACUef2IAAACnElEQVR4nJWVX0hTcRTHP3egTdnkDmSgZWgtlEhiDUnQSSrBRqJrEYERjl4EKfbiIHqIiz1uEMMohIj5oC9RrlG0lxmmBCOGkRBJI4L+PIziXug+mANvD3Gvu+5O8Dz9zjm/8/l9z7n3/i4A3cfaNYdL1NjHauUdLtGy1gYgnuwikpNwJsOWmxwuUROkIcsDVVkRtntO4EyGNWcybNTaAFZfZIXUsESwxcPUbBT/SKCmOqt4/bvPAPx9+c2sGKDDJeL2tPLw9wanZwImiK42kpOqDr06ftHwLzcfMboWKtVEcpJJSWpYQpUVoTI3v/qGP9FnglWNnFgB4Mmv77uK9aK9UN0vFX8iJ1aY8A9YjkSHAhy60LYLVmVF0KTlvfsNc3ta6bTbkBMrRHISDpeojQUHq/Z12m1o0rJZcaU6b1+v4auyIqSGJdShU0bs3o0rxEI+Gj/K/w/uaiMW8tFyuBnADNYB7dsNvD/faGpZlRXhwc0ksZAP9/1VerrbABivr0NOrPCjyw5gxKsU64AJ/0BVJ6qsCPF0wfAz2XUAYiEft2kCoFgqMxYctB6FrnxtbtryQY0GvBRLZTa3dshk1ymWykYumc3z/NVra7AOv3brEam7UdNnu7C4JPRPJvC46wDY3Nox1gBHmxpQZUUQrLG75nCJ2trcNAD9kwkAdD+TXWc04DVyHS6RjS9fBYADga2sWCqz9PYDC4tLJlbNUejtT81GDUX9kwnTPOPpAh53HZmz1fpqgseCg3j7ehmvryOeLqDKiqDKipDM5g2lsZCPeLrAaF6rukP2HcXe91hfO5NhbbXlDPF0gU67jTuPn1ZxaiquhHW4RCPmHwloo3mN+U8lzh13s7m1U/M6PZDpEP9IQJu5fqnmn+cff9EXiXruNMIAAAAASUVORK5CYII=","characters/leafeon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAATCAYAAACUef2IAAACmUlEQVR4nJWVX0hTcRTHP1csrA25Axlq9kfLP8QqHQaDIaQQOFm5IREpCFN6K3zQt4096PamxOZbOArRvRRsgTSfVhSWkgwpCSQRkQih4N6HG4wSbw9xr153r+B5uuec3/n8vufc3/1dAK41XFLtDlHlGLPK2x2iaW0ZgHi1hUAuhS0aMl1kd4iq+jhouqEiycKfm43YoiHVFg3ptWUA7xcWhaxvmBtuN55Mgg5/t6U6s/jpT98A+Lu8blQMUO8Qaaiu5WP+LRcjDw0QTW0glyrZdKA/qPv3qur0roXDagK5lEFJ1jeMIsnC4Vzm9QK/x58JZjVqcg6AF7++HyjWio5CNX9r9wdqco5gj990JBoU4JTHdQBWJFkQpjNH1+vWUF1Lc0UZanKOQC6F3SGqvb7OknXNFWUI0xmj4sPq2rwe3VckWcj6hnk3eFePPXl0n3jEzW5RAcDZcp54xE3NuSoAI1gDnBUrKbhrDC0rkiwsB0eIR9w0PU1z+0EdADPOHdTkHCvXGwH0eIliDRDs8Zd0okiyEI4VdH92cg2AeMRNukkGYDW/R6+v03wUmvL1pVHTFzU41spqfo+N4j6zk2us5vf0XGJxhVe5N+ZgDX7Hn+L5xIjhs51PZwSXd4r2rnIANor7+jPAhcoz/w+CFVgzu0NU15dGAXB5pwDQ/NnJNQbHWvVcvUPky9a2AHAisJmt5vfIfPjMfDpjYFmOQmvfk0noilzeKcM8w7EC7V3lZK+IJfWW4F5fJ21eDzPOHcKxAookC4okC4nFFV1pPOImHCsQ2JQtL65jVR89GbZoSN3+OqEO9AfV8aE+U6ClYkC/K+odoh7r8HergU2ZxMuf3LrsZKO4b3mdnsg0SIe/Wx0f6rP88/wDUzAb8cZ9+1EAAAAASUVORK5CYII=","characters/sylveon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAABG1c6oAAACoElEQVR4nK2UUUhTYRTHf9dCfPKuLvdCYQkpQ4sCR8EK33xwiYRP2kMbiKMw2iV9CcKnWgZRE2cgI0PMl1KoHsQNSjCQmK0UNDMGGhMh2hDd9EEK/HqQXXfnVZA6T9895//97++ec7gSBwxFVkX2vJJOSfn1goMaAoQbmqlz1ZvM9zV0V9UIRVaF1YVs2C+cpTY8Sb7O0nB0cYaIx0/E47ekAIjHZreN9QFrwtyLdafOGYKIx4+7qVnkaxyFNn6Ev1M+8sTUy4Jc4V40uuZEkVWRWI4D0LOZYur3Gt1L44wuzpgJFVkVteFJasOT1LnqARicHpOCE0MAfKs8hm47YdQSy3F0zYmuOZGKy+i4cg13Vc1OD1fSKelQ932OLGQYjYwYbxqcHpOCySjvP7yhPD6Mr0hl/u7QLvpqW4WJsgBg8FW/lBnpNoaQ7RnxJXr7AvT2BZCKy5hY+86zm/d2meb23BSKrIqN9VWxsb4qFFkVMV9IuJuajVxiIWGcY76QoTP1MPdhJZ2SSkvstHrbmZr6DGxPs9XbbpDdeZtg/Nc6lZ2NAFx9+s40zMNWpL4iFYfjvOmTLj1u4dHH1V3ayxeP8nIvwixlz8wXAg+f7yTtJwHwHN8A4MHAV6OkJpaMDdiTEOD0/E8iHj/BZJTevgAAXaF+MrFZgpqTVu8wuuY0iBRZFSvplGQsdu5y69WNBJNRthrOcOt6C3Of5mj1ttN2oxkA7bYLX5EKQGVnI45CG4nlOIqsChOhIqsi4vHjetFBxONnK6eWNdY1J4pWzOutP0wlo+CNomtOSkvs5t9ZljKXNOYLiZgvZOSzK9PlbjPpLKds9bMUmQV6NlNGrbTELhLLcaptFex3zzLyibM5q2X+p3BX1Rht+G+m+5n9BfajQJJ1m0BEAAAAAElFTkSuQmCC","characters/sylveon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAABG1c6oAAACqElEQVR4nK2UX0hTURzHP3cYIWYr5n2QBGGi2ENIUUSFPW6iEyWQ+aCIuErnesiHCnzIN0FsvTg1MMQcyvBBxRHL/kAaQeaEIZLNJgwWCTp0TREhvT3IPezqVZD6PZ3zO9/z5cPv9ztH4oRhMsqKuo4nVqWD54aTGgLY3H5KS2wa82MN82xOxWSUFb0LahRcu8RMWSsHdbqGG9Mj2D0B7J6ALgVA+Os8AIMXq/UJUy+eK64SArsnQK29XjmoWS6s5PtyhAdZu5paGlKFR9FklrswGWUlGgsDsDfZi3lxDN/dGjamRzRayWSUlZmyVgDadkMM+vol2K+jtbqB679/Ir96y3DuJj19bgAejS8Lg9BSjJXgGyL+bgnAEE+sSm27IZLnT/E64BfCiL9bSk508e7jKMO5mxgsjRojNYryczSUBoBBX7/0bG1WNEGt2eetdHr63PT0uck4nUZoKYa1c+qQaWrNNWEyyspmcl3ZTK4rJqOsOL1BpdZeL3LRSFSsnd6g0KV6aMYmnliVcnMKaHK0MDc3C+x3s8nRIsh+PBki8eEbHRVmAN7XtGmamaZHarA0cuXKVbFfKa5i6LaJdbf/kFa2XAbvEYQq5afRAdztL0XuZsY2ADt3igAItQ+Ls9iZPUpLbGKvSwjw5ewF7J4AyYkuMS7PX/QTXpsn0+Vi2NFCZrkLSAf26x9PrEpisFOH21rdQHKii7rsbVz3GliYWaDJ0cLD+/UAPL6RhcHSCEBHhZnlwkqisTAmo6xIqolKZvcE8DWXYPcEqMvePkQ+8Cudjgoz1s4pzItjwP5L8jWXaL8zlTKV1OkNKk5vUOTVkbn1dFyj0+2y3me5tfOHvclecZabU6BEY2GK8nNYPOaebhwkVnN6w/xPkWdzijL8N9PjzP4CuERHKhpmZpUAAAAASUVORK5CYII=","characters/umbreon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAACgklEQVR4nK1VwWoTURQ9M4hJNNJi48QiViohnUiYBFJ0kYCtlUZmEWgJWVmhOz+gdCHZ2Y0t/YNiFdrNkIUUGoIbRczGtNCOFidDcFFqa2ICDgpJ7OK5KO+RyUwmLnpWb2buPfe88+7cx+Gc4XZ5CADw50nodnmInEkDAC44BQbEIACgoulotZucE/Gj+2HwfvH/VczOzZFXqw9JIiSQXnGJkEAOVqLkYCVKTFbQBzuIvj+YmT7FthLqGbfz7TdKvM/0jqe+2CW12k3uQ6HYd2cBMYitvWHEsmVmGddpuK6qCPgv4s3bEvOTFqQxeSUHAIhPTKL64zsAYOHJNaytqfj4tcbyTF1R3BjE69VLCEciTD1V0EkIAAPCEIKShOLGIABgWwmZ8vhWu8nllRyeS59ZgYqmWyyhcQPCEFNPsbU3jKOCgYqm2/fxUcHAi5dX4eQ5Vd6J9cVDlHifqSBPE2LZMjaPR6HVvZZECnoeRq3BrJlduMxUA0B15y7cLg9higNi0JG0E/fuuLC7NIa8ksMV8hPxx7/YN//4J7TaTY4Rf9nf54xaA0atYVLYaQm1Qqt7sXk8it2lMfB+EUFJshS3/Kbd7QWctSE9UDmThq6qFjJqDevjbuJESCDCeLKfG8grOVbcqDVQfP/ONE8s08138xZS0RNbsvXFQ7bu3FE3qS1xpfoXM9OnJmW0z+eXRxg53XpeydlOPhOx2+UhqQe3Mb88wpLiE5OQM2nEsmUWp6sq5Ey6J6mtYq3uhVFrQFdVtNpNjs4DAEhFT1jRfuh5g9Au8F+/wZQ/fXY26YKSxFQ7jVyGcCRCunu3G26Xh0wlZTKVlB1jHa8bJ3K67uXxP985K47LMdthAAAAAElFTkSuQmCC","characters/umbreon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAACeUlEQVR4nK2Vz2sTQRTHP5sWk0ClYEpS1FCx6ZKGklxse2jV/jhUgihIW/BQEHpqyamQW0+95lqKIP4DIQcvBhFFKRax8dKt1JAWeyhKGrPaoCWtl/EgM+wmm62HvtPszHvf933f/TKjcc7h8/oFgOc8AX1ev0jOTgPQ7pYYieoA7BVLnJzWNTfgO7cH8ISi/8/iwdycuJp6L0b7g6JV3mh/UPQt74u+5X1hk0J+OEW06ze9eoy2hd2WeR+//KJ+VLbteaQuTkUnp3Vt/cXGmZNFojpDtTUOMjElmWYVvGQYREIXePayoPSUDWVOPpsDYGRsnMPyVwCObj7m2uv7vPtcUXU2VwTm1/l59xUDiYRiLxlYAQE6gwH0eJzA/DoAbQu7tjpNsgqnd7gcvATAh3S3owus08kwB1cJFFJs96xwkIkpMjbG3yo/GNl/hJvmknkjeP2ojLWpRxYcZGLMHC9RrHY0FTYyrlVMJU3784cADNXWABjOlPF5/UIxjkR1V1BrDMe8hNM75LM5LorvmE9vqTMpowL+tLWl1SomtYppY2iVREpRrHYwc7xEOL2DJxRFj8ebmjv+IMCmV8kw2CuWkPslw2gCk9IoHzcCj/YHRfDG1Jly5LM51bxWMdl4+8bmpKbbrSvcw2bnoiOYObiq1taJGkEdgfcO/9Crx2zM8tkc2z0rBAopBS5Hz2dzjp63Afu8fnFv4jqBQkoVjYyNk5ydVuaHf5onZ6dbgjoyLlY7qFVMSobByWldk/cBwGbnomp6VrR8QaQLQt1XFPPqkwkA9HhcsXa7clUMJBKi0buN4fP6xeRUUkxOJV1zXZ8bN3C5bqXxX/PXJfwwJdaiAAAAAElFTkSuQmCC","characters/vaporeon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAUCAYAAACTQC2+AAACcUlEQVR4nK2UT0gUYRiHnwkFDy45EANWO2sJwkogQmqh0MAeWpY9CVEdWtpLIIWyerCLHtqLsoRsZHsJ1oYOWl2EXKaDtYfC8A/iJQ9F0hQGgzDKdDD2MB1khh3dzV3c32m+73vne97f+74zcEKJkmxXEnfqpKBKYTUB9cZHjoXVBFSJagIajgSPdVUT0NVL34CDEpZTXTUXOhmbhi44eyFFYW/fD3znV1MHoiTbznmxQ+HIbf+BOBl/yj7GNHShVem3fdcHj8T+mIoBEEio7rri0pmGLjRsrfF88CKBhIooyR5I8Mo597k3PsLm+jRazGLp3hdCilK5I8fV9uZDAPb2/YRVH+d3N/CFI26MpeXwhSMUMkmeTt0g2Hkf09CFqobBNHThbHACgNMNP9FiFr5wBEvLYWk5AA+0WFWBREm2N9en2dv3c2fgMw8Sr2nWd2jYWmN2PObCmvUdANcNVDgMziA42RYySWayaQBuPVJpa+8G4Ld8xgVFWyyeTb/kzStV8DgSJdku9cGJkmyHFKVkSZZXV5gdj6EvZFxAIZMk2mIBsJjPu7FC8WX1A2NoN0PAQT8OOymW4+rP7kcam/pYXl0BoPtyF8urKx43AHWiJNvx1JxrOzy3SCGTZDGftwMJFXY3PAAnkXhqjrvxIQBmsn0uxH+hw020+D0BoFXptwGCPdfcg7b2bt5v/8V694ROqZH6gTEsLcfbySEBIDqatp3e6AsZunp6mJicPAI4VsU9EyXZHn6x5Omhs3f7w1c7Opou2d9ilR1v09AFJ7uQojCfTXl+mqahC/PZlLsOJFSio+mysOpsltBhJ+VK9w+eNwFEME/dsQAAAABJRU5ErkJggg==","characters/vaporeon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAUCAYAAACTQC2+AAACZUlEQVR4nK2UMUgbYRiGnxOhgpX2wBylJEfTLVCRQlKpBBrrJCWDWMVFqRkEaWnplkkkUxQaKWgHF610ikUoR3WyjeggJlBKhFscJBWRi5DaGrih9O+Q3nHRBBPMu93/f/c/7/t/3x1cUbKiilrqmq4KqhXWENCyOn8prCGgWtQQUOuba5emagjo4b19oHSF1dRcz4GW44KRk6y13lCIU9MDgOuvC1lRhbXvTChRo2RFFZbj0dxzCkZOirgjYlwZv1DbdzgEwLo7aT/XDAJ4OjQq5mYHOQi76Dscsg8CaO9s5+T7CQD5pjyBT6X1Gy0/GJnYqQ8kK6o40qMAnJoeDsIu8k15fB0+u0bP6vg6fESLMeZmB/HdL6WvaxgKRk667YvbTu9oJYie1dGzOkAZ1Km6QLKiCv3bPKemh5GJHV68XsFsM3l/d4WezaANM9vMEvR/GqhxGKxBsNxGizGWFt8C8PXRNt5uLwAtv1tskDFwxLv5D3xMLktliWRFFZU+OFlRRW8oVPFKdjNpejaDTB3P2IBoMYYxcATARipl10rOw+KtkwQ+PwZK/TifxCkr1dnPba7fDLKbSQPwwB9gN5MuSwPQLCuq2Bpes2Onn3whWoyxkUqJdXeSPPkygGVka3iNZ2OvAFhaDNoQj7fTNup8TwKIuCMCoP9Wv73h7fZytn3GgrHAr+4/xFsn0bM64UxYAtD8mrB6M3U8Q6Cri/j09AXApXL2TFZUsfdyr6yH1tr+2L7Q/FrF/jpVdbwLRk6y3PWGQiRWE2U/zYKRkxKrCft53Z1E82tVYfXFrKDzSapd3T/CZARQLfJBHgAAAABJRU5ErkJggg==","deco/bush":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAAs0lEQVR4nGNkwAF087T+w9iXJ11jJCQOAyy4DArKcEAWhhuCTRzZYAybgzIcGDTFFBiuv3qAy/EYYN2MA3AXM8IMgxnEwMCAYVjDFjeGBp9dRBnMiGwYsa5q4GVgaPiMKrZ7y0mGz0++MzDBBNAN273lJG4DsRgGA0y4JFx9zDEMwmYJuhhKGOICu7ecJGjB5yffEZECM5SBgYGBV4YTp8G4wOcn3xkYGBhQDUQ3mBSAnA4BDmFZftQ/GNIAAAAASUVORK5CYII=","deco/cloud_big":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAKCAYAAADVTVykAAAAcUlEQVR4nGNkIBL8////PzKfkZGRkVi9+ABeQ9AtxWoADocQ62CiNBMDYBYQ0ovuEBQOORaTC2AOIcrVtHQE40BZDgNMA2k5AwMDAxMsLu6+g2BCAKaOFLW45BiRU+Sdt/SNChVhpESIDGjtEJjFMAAALfY2aROyK8wAAAAASUVORK5CYII=","deco/cloud_small":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAAVUlEQVR4nGNkwAH+////H5nPyMjIiEstijp8hmDVADUYWS2yZRiSlABGRkZGRmoZBgNMDAwMDHffQTAuQEgepoaBAerlO2+p40oVYbSYI9dgFWGEOQB27CT8z+/f1QAAAABJRU5ErkJggg==","deco/flower":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAMUlEQVR4nGNgYGBg+N+14T8yzfC/a8P/////////OAtCI0ugqIQB/w3OcAEmZAEYDQA7+SVZv53+JAAAAABJRU5ErkJggg==","deco/tree":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAWCAYAAADafVyIAAABCUlEQVR4nO2VIQ/CMBCF3xbEEgyK2ckxhcOT4LCYKX4Ikh+CwsziSEDjEASQTI4gZkhwQ5Cxbr32joDkmSXX9n1v6e3mgFEUhwVVPy7PDncWAFqc8WQ2JNcToJCAtEXVuNcNAACn68VokMw3sIFqxSgOC6kxBaIg74Jq/okxB3Gbmyjz9WrHmpv2uECV3qTReCAy7PTbWtdpbyBJa4JS0gDcQSqALZQLvFqsbDfucDOAup7v7/wlc4a2vZTI74ATZUyl1wAlBNBHhC2tyZwENEES2eaRaCJGcVhM4QEA0izH1vfE01S75F/rD/geoF5wqeBwE3eZFdA0T7P8Ywj7T17gURV9r/4U6An5uoUW6S46kwAAAABJRU5ErkJggg==","enemies/bat_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAAsklEQVR4nJ2SsQ3CMBREXyIGsBCVK9cRxZ+AAZINGIChGIANyABM4AKlTpUKoWxgqg+O8pWIXHU6+Z5PlvFOEhvlnaRSzZYyQAkgVf0XxDtJUtUA7DSUqoaONIyxsFbluZYngByiXo4nAOLzMclzTQDWgbXcnAVwDz1NH2ZeFbuWYYxFoYEJuV0AaM5Xs/xdkEOW5sauBX4POgMsrclvzWUCFHLYBwBe794sr8o7SWsf7ANj2E0htB0MSAAAAABJRU5ErkJggg==","enemies/bat_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAAqElEQVR4nNWSsQ3DIBBFH5IHsKJUrqitFEyQAewNMkCGygDZwAyQCSgiaipXUeQNSGMswIY+vwIe//i6A/5eogS6Vvl4Py/m8G5TMql+QF2uAJj3Cywbi4s1sVn1QzFqwiw+FBEl8yQdo5O7dZCxmnkxQtRenp53AMbb45Abq9MeGKuTuLkx57D2IICtOZZdqhA58HBeHeP5JAH4fF1xjFV1rfL5f8j1A53vSEk8kYqvAAAAAElFTkSuQmCC","enemies/slime_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAOCAYAAAAmL5yKAAAA0klEQVR4nGNkwAG0BBz+I/OvfTjAiE0dhiBM4/zJ+1HEE3MdsRqEwtEScPgP03jxwEMUA/Qd5OEGIRvCiK4ZXSM60HeQRzGECVkSpjl1jjxD6hx5uDgyH90CJpjtBcELUCSkBRVx8guCF8DDCsUFyODp+/t4+TDAgk1wdspDvHyCBjAwMDAcOL4Khe9gGUaaAQ6WYQyp6icgLrhpgdMFKGFw4c4JFMnZNy0wNKOrQUkHDvoZcAkDFdwaD1ycAU8HGCkR2RBsAFkzhgEwQ/AZgJ4XAG/2XAf/lq0rAAAAAElFTkSuQmCC","enemies/slime_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAOCAYAAAAmL5yKAAAA4klEQVR4nGNgoBAwYhPUEnD4j0382ocDGOpRBGAa50/ej9W2xFxHDIPgDC0Bh/8wjRcPPMRqgL6DPNwgFNdoCTj8P7n4//9ZyQ/+z0p+8B8GcPFPLv7/H+ZaJpgh6LZKCyri5COrZWLAAZ6+v4+XDwOMWgIO/wuCF+AyBy+YsDaBgQWX5IHjq1D4DpZhWNXhNMDBMowhVf0EAwMDA8PsmxY4XQEPgwt3TmBIzr5pgVUzslpGBgZINDroZ6AoMlCxwKmJgYGB4cDFGQzXPhxgRElI6IbgAjDNcBcgG0KMAcipEACAVHNgIu2PCwAAAABJRU5ErkJggg==","items/food_1_blueberry":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAyklEQVR4nKWRIRLCMBBFfzq9AbIgMBBXFAJRwQymBo5Q1TP0CHX4qkpOUMMMojeoW1RNe45FpZOmGxB89ednX2bzA3h0rU7sOwOAwAcdjrtv3FKRzjjSGbv+J5TmxPcHs+vdWWVDcVLgct7j+XovLu3aEiPV0/zijS409CRuJ5Yz9ISuLQEA660WwdCsCQBNpZXxq81tgkVJJdhZmpNYTmi/LU4KAGA7AzDl3nKGnszQLJMUjFQrqYim0qprS285s3803l7J5Hb2lz6efW1u8hoJqQAAAABJRU5ErkJggg==","items/food_2_lemon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAp0lEQVR4nGNgIBJ4zdL6X38h4T+x6snXlBUi8D8rRABDEwsuxTC2ghgDw4NXmGoYsWno7dNGUVRcdJWBgYGBYdqaDyjq4Zq+P7L+///7iv/fH1ljxcguYYJp6u3TZuAQzcXjWwaG/BQOuKuY0CV/vJ6MVzOKjcRoenTtLm6NxGqCa5y25gMjLOTwaZo45wc8ZOHxCBG4ihId6JqQAWa8MKAmAFSDqQAAVSBd6q0ZPkQAAAAASUVORK5CYII=","items/food_3_chili":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAoUlEQVR4nGNgQAP2XVr/6y8k/EcXRwdM6Joc3MwYDuw6RUgfJogSEPhv36VFmo0wsHAFI0OUgABezVg1MjAwMCytSiCoGQNECQj8f2Ck/f9/V8F/XJpx2sjAwMDwcMVu0m2G2YrLZrw2nnj1Fm4zOmDBpWnZhw+MDAwC/xkY3jJYiAkztClJMzDcY/gPESdgIzbbCdqIbitZIEpAAGe0kAwAR6tDkxrGKdEAAAAASUVORK5CYII=","items/food_4_leaf":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAxklEQVR4nL3SMQ6CMBiG4Rfi6MTIZJyNGC7gDRwcPUITNw/gFYwJR3AyDt6ACzRCnA1hYCQdnKlTGxCEsPhtTf8nX/qnMDKB8DXAZCzYH7ecuelBWAf19MJA+NqAWErWYUgsJQDuEIqltMOnw9XeO7/QcjOz58flxWo3ByC9ZyRR4bQa+1A9jcY6+gZ5qlCZIokKpwENylNF+SwtylMF0EDQsVWDDOhCtjEQvq7eFd7Ca72lCzUa3alrB026gE0gfG1+x1/yAd/rZXnVm1JXAAAAAElFTkSuQmCC","items/food_5_icecream":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAApElEQVR4nGNkwAK8rLL+w9jbjk1jxKYGqyYYOPbm/39kQwhqOvYGFWPTzIQucPwthLY8dY0oFzJ4WWXBbfi/7er//9ld//9vu4rTVhZshhw302KwhNIk20rIj4zImqbl4Tc4axIieuCBs+3YNMasSRD2iTNXMGhkTSgakYGFiQ5WGhmgaMRlK7ptOG0kZBtO4GWV9f/Biqz/K0rsiEty6JrxaQIAJLORYI6BhgEAAAAASUVORK5CYII=","items/food_6_suncake":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAjUlEQVR4nGNgwAG+LlP+j0uOgYGBgYlYhejyjOiS3FF3GausGFAUtR1jYITJ4TS5yorh///LXigY3SDcmj4tgGA8mplgTsTw48NVWP0JU8fCwMDAAHM73FQsmpDVwW3EBx4uP0ZICQQgB86DKoH/D6oEsAYOC7ofuKPuMjKkbyM+OtADhxAfJyBaId0AAC1hc2cyhLMIAAAAAElFTkSuQmCC","items/food_7_mooncake":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAx0lEQVR4nGNkQANRBgL/0cUYGBgYll34wIjMZ0HXVJpkwCCrZ4Ci6fGlCwwM8y78R9bMiE3TuiVbMGw01ZNh6J53AW4zIzZNpnoyGBpPX3qCopkJWRJZk5oTE8PpS08Y1JyY4DaevvQErhZFIwyoOTExLJ3wiCG6QA6bNG6NDAwMcE1LJzzCKs+CTfDWvn9wP2HzL4aNyP5A1wAzCAYwogOmCB1gjQ5kzQpSHAyhHhoomlbvuMHw4NkPBqwJAFkzNj+hJzn6AwAawFljJKaNDgAAAABJRU5ErkJggg==","items/food_8_candy":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAuklEQVR4nM2RLw7CMBjFf11QU5yjmdgddoGZ+UmyWgyKoDhBp+dnppjiDgiyc6AQM0UsbdqxjARBeKbN+/O9Nh/8GqKSuQGoh074guUtfL2SuYkAdFEGxkrmRqcxuh/R/QgX6XR7RtY8Dy/BHDujixKAjWOzBE0JLathsgRar9GRgE5jOD8AUCYN9eud4KmWWIXnCRrVbk89dELdnnDYTu3itjjDBVXbvK1kHhanXKi2me7f7vHTr/4IL/bdR/bY4s0pAAAAAElFTkSuQmCC","tiles/brick":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAZ0lEQVR4nGPMM5H4z0ABYGFgYGBoyY/GKlkzcSkDIXkWGOfZxesokrcefEDh45JnIsG1WAHFBrAwMDAwHNh4HK8ifPKMVI0FYkIdXT08FtCdSShWYOoHaSyQEivUjQV0QJe8QHFKBAAFJ0hrFR915QAAAABJRU5ErkJggg==","tiles/crate":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAArUlEQVR4nGOMspL4z0ABYGFgYGDoqUsgWeOyZZsYzt15BzGAgYGB4d71S2S5gAmZUzb7HEEN6GpQDOhKNWLYduAKTs3bDlxh6Eo1wm0AAwMDg5eDDlZDth24wuDloIMhjmEANkNwaWZgYEAEIj5DcGnG6QJSAE4DYM7GFSZ4DUD3Mz5DMAzAFWC4DMFISPgCzMtBh3BCIgTQ1bAwMEAyBrmAhYGBgeHcnXdkGwAA61xCqKg0dAIAAAAASUVORK5CYII=","tiles/dirt":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAq0lEQVR4nKWTsQ2DUAxEjSegoUHAAGyQJitlrWzCBhkgRDQ0bBAqI9v/Tj9SrkIfuLtnQ/N83L/yh9Qutv2ADwzj9JtB37XhxvJaRUTks77D+bYfIUxZym0eYWLftSFMWUqWNcpSdJhxUCNrfRmwBDZEa30ZMOYaXoFQW1vGKwx8Yl6ZyeMqquXTagNVVAuJoQUEtgmRcpjQwFdDiQgVfkgsEaHSf8ELodk7J/CpRKLODlG+AAAAAElFTkSuQmCC","tiles/fence_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAtklEQVR4nMWSsQ3CMBBFny0KupTZKRUzUEQUjEBDkxkQBWNESoqUCCFo2SFTOJWti3NO3PHL7/+su28bgOf75wC6fuB6ORs2JPPWm10/8P28ttggn7fb0XVZgFN9VA/dWDk3Vi72Zd4C3O4PFaaoMWW76ETm1RUCvD+YmZdaIQsuao1fdmDK1miw9LI6SMFxPvmMMZx6kV0urE0SJoj/gezhzx2AOraU2oFfYw2cXdA0TU42SOYnNN5twHc/C6IAAAAASUVORK5CYII=","tiles/fence_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxUlEQVR4nJ2SIQ7CMBiFvzYTuMndCcUZEAuCI2AwOwOZ4AyoJZuYJISA5Q6TOFwR0OZf07XLnmn68t7fvpdfAVzvLwPQdj3Hw16RgNRrS7Zdz/NxS3kdrF6npXFogF25jYrMsDbyLvUa4FSf4+a8HHFSH4xgX7RmtdpMFpsF2bzEDCTN7gd+B75pUQeqaBTvGvO5/OL8T18fjiCGpKJE92BOiZN74JtlD8kOgmaxC8kOVNEoaMbckg7GA8PIAKqqmjPHQeq/oOJkdEqBewsAAAAASUVORK5CYII=","tiles/grass_top":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA80lEQVR4nKVQPQrCMBh9DZ1FhDoU69JM4gVawdXNzQt4AcHzeABXL6Go4CDFqVlUHFqU0gvUQaJfYlIH39Lv7/2kzuI+r9ZpiphzSOh93cyZbsdVzDnWaQoAoPWvPub8JQAAIskQ9tvvQ723zZhIMuWA9qaZrOXcfYgSACC/rbCB/eoTme5bYQMPUSq1s5wNK/wBJotO0LUe3fLit8D1clYIlOR7TYVEzZjJwfeaCmlzuih7auaaHHS3iCTT75mJYHPTk30J3PICu8PRmkaCPkkRMDmYkkW9QBXQfxJNJEGfQsEAYDIaGJe2NFSY1anb0lHhJ3pWjDoO7glKAAAAAElFTkSuQmCC","tiles/ice_surface":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAnUlEQVR4nKWQOw6EMAxEJ1FoWdFH3IJyj8it6LanRogSgUjJFlAFgT8glGki2y/22GZatw0JsgDQBl5og5ynvItBkQHznwNaLb6mGdNWcL9huSQq/wHN3dXMt+7SjwgAoR8eYYk5GuSlZzD9QBkAcNo0CZZkNWuaqDP3ZprEWgpIu9+JNchLLzrSmrIGmrQ1jyO+sX129HjECFImxjvccU5tnzru4gAAAABJRU5ErkJggg==","tiles/platform":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAX0lEQVR4nGOc87bo/7E7dxisVFQYGBgYGJDZMIBPjNHLROw/AwWAhYGBgWFWSxJZmtNq5kEMuHzqEorE5E1nGHL9TAiKMTAwMDCRZTUSgLjg1iMMCWLFKA7EUTAKqAIAg08lThTYv3EAAAAASUVORK5CYII=","tiles/shadow_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVR4nGNUEXP4z0ABYIIxJEW0GCRFtAhqQFfDAhPUVbCDCz5/cw2nZpg6mBomZAX5MeEMugp2BF2CrIYF2bSJS/A7H9llMDYLPklChqAYgEsjzKm4DGXBKoqkmVDg4jQApjk/JpyBgQERPuiGMKFrRAdSDhCMC+B0Acym8hQI//KDQ/i9ICmihaGAmJhhgmnGlYCev7mGoRlZHUpCwhf/yJqRkzPWhIQPoFtGMBbwGcLAwMAAAI8tWPr/aZyuAAAAAElFTkSuQmCC","tiles/shadow_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAtElEQVR4nGNUEXP4z0ABYELmSIpokW+ApIgWg66CHUFDJEW0UNSwoCvQVbBjYGBgYHj+5hpWzTB5mBomZM7lB4eIcnZ+TDjcIEb0QJQU0cJqO7I8sgsxDCCkAR1ghAG6ZnQ/E20ATHPnnHAGBgYGhvIU7IbgdQEDAwPDswP45XEaALNp4hII//KDQ6R5AdkQdDZWA3CFNr4ohRtATGgjW4Qsz0KsU9EtgqmDe4GQU5HVIKsFAHtbU9KL3rJiAAAAAElFTkSuQmCC","tiles/spikes":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAh0lEQVR4nGNgoCawsvf5T7a8lb3P/0cvPvzHpQiXPBNZTsVl+qMXH/7PWrIFwxZ88hS7AMWAHXuO4FWMTZ7Jyt7n/4qVS1AEE1Iz4CFOSJ56XiDH+QwMDAyMhBIPIcCSZ/CJEv0ILzx7/QGvQlzycAOkRAXwakCXxzAAHeDSgG4wEz7nEWMwABPuVkPT44rXAAAAAElFTkSuQmCC","tiles/water_body":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAf0lEQVR4nGPUzz/yn4ECwARj8MnJEK0JWS3cgE+PnuBUjG44sloWQrbhMhjDBbicSAhgNQCfrd/fosphNQAf4BRGdR2KAdgCjBBAMeDToyd4Y4OgAfgALoPhBqAHDrEAbgB64DAwEBedeL1ATOokmBIJGYzhAoqiEd10GMAXwAAIVindOLKpyQAAAABJRU5ErkJggg==","tiles/water_surface_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAmklEQVR4nKWTUQ5AMBBEp+LbBQgncQ5xBIfx7QbErUq4gAvUF2G7o8T8NXk7O7ttTb84BwB1CgDAsIJKY0zZWtdUxQ3sxskrZowpW+t4z7CiP8U3g21egrDGnAZJnnmwLJAMAMSsmwZrilg0Jpks/tJNY71b0GZ/kmeQ5JmaiJm+fgdszHOJX2JfEwWXeICSOc70HUiQ6fdf2AEccjxwCtuhwwAAAABJRU5ErkJggg==","tiles/water_surface_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAkUlEQVR4nGNc9uT/fwY0ECkNoZc/RZfBVMNo2/vgPwMDA0NmuDyGoukrH6LwsamBG0AuYKJEM04DPj16glcTsjwTsiBMgk9OBqsmbPIsMAY2TcgAlzzeMCDkFYIGEHIVXgOQ/YxNDsMAdMV8cjI4XYAszoRNkBSA4QV8Tscmz4KuAFcagImjyxOVlPF5j+K8AAAAzj53s+PT8wAAAABJRU5ErkJggg==","ui/coin_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAZElEQVR4nGNkgIKqAIb/DEigbQMDIwOy5P8vCyD4ks3/BwsY/sM0sFQFMPxvXbKAgeHeHLgGeSMbhjSGIwwMDAz/mRgIAIgCJN0MDAwMD88dQVOAQxLVkVDHwTDMkYzIirB5EwCmAjKLNtOZLgAAAABJRU5ErkJggg==","ui/coin_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAUElEQVR4nHWOsRGAMAzEdMyVITyPZ6HIMNQUGYALO9B/yhhi1Er3NgTckBsiww3pqVIraxSlWlGvc2lL5wIzuHYA7vP4CRK5/NErr/tp9JUDqm0wBpHcWssAAAAASUVORK5CYII=","ui/coin_2":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAANUlEQVR4nGNgQAJVAQz/qwIY/iOLMTEQC6oCGP7//7Lg/4MFqKYQNAFVwb05BBQQ4w6SfQEArJwSTIT9QAAAAAAASUVORK5CYII=","ui/coin_3":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAUElEQVR4nHWOsRGAMAzEdMyVITyPZ6HIMNQUGYALO9B/yhhi1Er3NgTckBsiww3pqVIraxSlWlGvc2lL5wIzuHYA7vP4CRK5/NErr/tp9JUDqm0wBpHcWssAAAAASUVORK5CYII=","ui/flag":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAgCAYAAAAbifjMAAAAy0lEQVR4nGNgwAG8vKL+/7/h9f//Da//Xl5R/3Gpw6/5/3+ChjDhNemmN0kWY7jiwwKF/x8WKOD1Ags+Q15YHGG4cOEKw7ZtHoxkGYDsGmzi27YtYyTKgHnfsCtL8or6jz8Q0YD4/oUM4vsXooiRZAA2QJQXYOClYzwDAwMDw4UXLyACSiKkuwCmeZKSCPGBCLcRCmCaGRiI9MIkJRE4e9u2ZYwMNxByRBkAsw0boDgWRg0YNWDUgGFjANaCAltFgqtQwXABrloIlzgAwplTgQ4aZHAAAAAASUVORK5CYII=","ui/heart_empty":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAHCAYAAAA1WQxeAAAAVklEQVR4nIWPIQ7AIBRDH2QK1SP8c3HAnQuFrsIyMxIyxOpeXisKQFXMqpi82TlVxWwSKgX1DsDO11p5DCyxs4DMT/LtlsI+RNjcbikDfEtLHqvvG4AHR6gpf8BqP8YAAAAASUVORK5CYII=","ui/heart_full":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAHCAYAAAA1WQxeAAAAaElEQVR4nGNgYGBgiBJQ+B8loPCfAQpQ+FECCv//e2X9/z9rw3+YBDKfBaaLYcMuhqVWXgzIfAYGBgYmBhzg4L17EAXLPjxgjD62DUNy1osbDMs+PGCEC8LsPqDhgeJgFIDuGwYGBgYAsfM1YO2F9j0AAAAASUVORK5CYII=","ui/sign":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAf0lEQVR4nGP00hL4z0AGYGFgYGBYtqiKaA071mxgWLTpGkQjAwMDw5s711AUxNVsYGBgYGBY1BKA1QAmUp1IsUYWXBK4nEjQxriaDXB/YgOMXloC/+P8tAi7Ddk1m65BNJKkC2YjLgkvLYH/ilICDAwMDAxT9zzAUEf/6KC/RgBYnRvQ+gbWYwAAAABJRU5ErkJggg=="};
+const ASSET_PNG = {"characters/eevee":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAASCAYAAAC9+TVUAAABYElEQVR4nJWUP0vDQBjGnxyXfgI3hX4AB5ci9Ct0kJAP0KWLAUkncRDnEjJFAp2yuArlpu4uCiWOLTgGWqcurknIufheL7lE7QNH7i7v+3v/5C4WjpDNuKR5UZUWzdkxEACYTx3Mp04NyJoRbMYljS5QmuU1ELMZl/vtGrqjHo32foNymuy3azyH90izvBYNALxIKLj+3oDsVovWtAf9HibOCIN+DwDUU4cwAry+vCsjctZBTRHcZlyyoiqtC/ehM4s2ACmIQwCA+tbUOEqd0m2mr0O9SBzKAQ6HRzfyx0PlnIilikyixrcetjTL4Y+Hxv7dzW1t7UUCRVVaCmIzLomsK4hDpFmOiTNSAWjQ+eKG148en95UNkEcYrda4PTSbbU1IGmWIxFLtfYBw5mAJ2fntYuoSmreo42YyWv3Sn59fsiNmKm1blentIh6pX9iamhnOV0i5wQwS/iP/vo1fAPkeb5UvjUm2AAAAABJRU5ErkJggg==","characters/eevee_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAASCAYAAAC9+TVUAAABa0lEQVR4nJVTMWvCQBT+ctyRX9KhP6CrSzbBKsWhW4YsxaEgrnayqxQ7uAXJIh0clICbi0MLSqdWRPwlkpDXwb7jLomKDwJ3l/d977vv3XNwRSghiddJljrXYC2S8WhA49GATEKRr6CEJP5OkS3jBaKwr3FSCUmHNIErlQZFYR8A4AcdYunnSCUvDmmCj+gdy3hhVTPJorBv/beuAwD77bpUNgAEjaomrNQ8VGqelecoIen35xPfqy8LXKl5miQPMvPC6RwOcDSTK5kKToE5Hv1nuFJB95qNCxrVUhVlxH7QAWB4wo/HTGr3uhocTucYTmaWElYvUBLLeIF2r1s4bzXr1t4POkiy1NEtzvvCMZzM0GrWETSq1rWA47NwpSJZQP3H28urVjOczLDfrnFze1eaWyDhtnG0e90CmAldqYqDmJ8ZJSTtNit6erinLCPabVZ6b+ZdHGf2ymwxG3oJa5GY439uEC8SnQP/AW50wjum6eX2AAAAAElFTkSuQmCC","characters/espeon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAVCAYAAACzK0UYAAACaUlEQVR4nL1VMYvaYBh+Irf0Fsmh4CKIFQNuFp1Op8ttoog/wBa5KWChUAWnTIIOhQYySamlcxFF7GDsouWKWuXgEGJbOHA5UCq6dLghHXpfmk9jTqH0mfJ9b77neZ/3zfcG+F9g7Q7Nz4W0f8nH2h06n42Qz29vYAwQpFMZzWzfCoFw9OEMjKSs3aHtK0TOnvJJqjK2Uz6pB+J8AkqtSR2M8wlkhQsoteZWGcxQFkSsvW5qzzafzQAAk0EXES4ISa5AqTVBMrm8vkKr0Ua2WEIgHNXFjJkSt2VBRLXfwaPHfjjdf4WYTbtlQURPHaOh1LFcLRg/F9Jepp6i2u9Q2UmFPPhkDAB099liCXfnZ/hWFLFcLXRum5nlrHChP0/VIdNTx/DZT7D2urH2unF3fqaTG8srFfL49WMKp8tD8VFOiBsAVCabTqv9DqRCnoq1Gm24jln01DEA4PvqJyaDLparBXOQCImT7CW5gggXxBM+RL0jyRX43B64jllU+x26XEYCM/JdcUmuUOuGUsf7j3XkZBHz2QxHxiC5RIFwFJ+V2k7xbLEEn/0EES6InjpGhAvqMT4Zg9PlwVQdMvcVMe/Ji2fP8erta71krN2hxfkELq+vML+9QZxPUALka7xPbotzZ92Na+JipAyRk0UotSZGyhAAkJPFnf2zFCFIpzKaWWM3IckVvPvwZieXpQhA9yNbLGEy6G6NHj4Zs3RjehmNAmVBBPCnVPPZDMvVgiE3faQM0Wq0EecTlokeWUbvIckVfcwY943jx+q8pROCTSKjm4dc7IVdoz2dymhfP305+Id2sPi+Ar8Bgps0THXf1U0AAAAASUVORK5CYII=","characters/espeon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAVCAYAAACzK0UYAAACU0lEQVR4nL1UPWjbUBg8mQz5A9XFhAwShhZqsBDYGerFoUMWb24hITSDl4bMmTw4g6RBgWZxhkIweMpgDxbYmZzFm8F4aAkUGWSoqZFG4x9o6fg6uE+VbElxaemBQO+ddPd9J30P+F8IsxHCp6PkX+qF2YitF6Li3z5/h5OgSF8niNd+ELgs/3gFTtEwGyGrGtF3xVzSlUxIzCVtQlA4VPSy60VB4XBxKKOil5di8MLR/QGwvu/aC00HYwCAdWcinopB1eaCtJKhNkHJKCJfUMBledvMWSnt9uj+AJ2bPjaev8CTZ0/92z3rHLvi4dNRctY5JmIu6bqaVsOOtmk1SNNqEDGXJC/ff1jqNuRldnEo2/dme8j0ugbYPTKPYX0fG8I7AEBFL7vivbqU8ONLH9vilkuP8eoGACazkSdHI7m6lFxcyShiZ3MXva4BAJh9YmDdmZjMRswfmVCeVq9qMuKpGN7wb13PqJqMiMhiZ3MXnZu+Oy6ngJe4H69qsmutSxY+Sl9Ry7QwHYyx5iTpEHFZHpPbka95vqCA3SOIp2LodQ3EUzGbOxFOsS1uwWwPGQCYtH/ruARft155DiSfjhJ6T/9C598o5pKeM+Sbu3NNu6ibVdQyLVT0MupmFQBQy7R8v1+gCUX6OkG8PuwiVE1G+/zBV8tzTija5w9MLdOy1/mCghPhdOk5XbICiwg0oXMBzKOaDsaYzEYMNaqbVZSMIgSFCzRZC2R/QdVk6JK1lH2va3juLyKwE4pFIWc3j3WxEvyO9vR1wj4k/94lwHxVg59JgDHbAKOE6wAAAABJRU5ErkJggg==","characters/flareon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAWCAYAAADAQbwGAAACgElEQVR4nJ2UUUiTURTHf3fIcHuICR/BIsQFU1AEJWY+LIRJmPRgUPjQGOibRIwxFsiE3hw9DBGLiB4ymBJUD5kv7sGBoTCUMpAJsodFBN/LzY0e5hjB14Putm/7NPTAhe9+9/I7/3POPQcsbCo4brg1zbA6O7e5Nc2o/JozDvXVC0FtjbDc3iLlqrfJyYWAYyMB02Fub/FcsCYVh/qqaU0Fx9X3WWC3phnDPp8B0HKWk6goIR8/Y/Po/yKD7S72C5phA6jRG23OcDFnuPA7BGMjARW+W9OM+jU71A/A7FA/LW5NM95/eoLTnqdcNQMHKsVjcGtbk7Pc3iLzL9bZWtsy/VdFaawsQN/0BH6HUPuaysJBHIDIw2G8nR62TxzObOxi06UU8VjKMi8dVy815a8WXs0SyRCJZIjt1jZ0KYVS6LTnLaF3n4cZqBSJihIAfocgEs7y8dGC6d5KOvMv5JV0hnLVeyq0b3qCJU+3gkZFCb9DmO7XlAvAlBdAwctVL/FYitH7N7g52AlAPJZSYMCUkpmN3eMq16upV/r9528SyZBJ7UClyCaoQkQdJQXWpRQ2XUqhSynu3H4LmHP57ekb6gtWf3b52hWTI79D4NY0Q3XK+s6O8HQVDIDCQZxIOEvUIeCoaIL9CVynJfOFjv0cHQAnz2po7Su6lEJgYcM+nxFsd6k3uOTpJh5pN92JhLOmfSIZoqd3EksgwOt7t1RuH7watbzT2Aw9vZPm8VVvyz9K6tvTlSASzpL+bD0knPY88VgKXUpx6rTZLxTY7gyofl5JZxioFIl8OK7u/MIgTntehf5y+Z0ATg/ZymqTpfZkat0BoEt5LpYJetaw/QsNaA5EB/NYrgAAAABJRU5ErkJggg==","characters/flareon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAWCAYAAADAQbwGAAACd0lEQVR4nJ2UT0gUURzHP6OyC+thWRiiEcRUykVCSFj2KGiwUYSdRDEID4IXt1UPi3pY9rDIHtT+XAIPQhguHdKCJCGCAg9L4GEPy3RoKwwnbEL24NKKMh2mec3sjIb+YJg37/3m8/v+fr/3HnjY2PCAociy4bV2ZlNk2fj9a94o762dC1pXC1OLS1SP21xBzgXsj/U6FtXi0plgLhXlvTXHMzY8IMangRVZNvoiEQOg4bQgmckgRzsbHO7n/ytoZa5K96Bs1AFY9FqbXSgzu1DGF4rSH+sV6SuybNif7VwTANu5JhoUWTZevJ7BX1+ieuwEpkbUv+CwK5haXGL+8Xu23mwBVTEvmlLbWQAtmMQXiopvS+WXT9MATI33cPlKK+llM2D34C51mq5LyYlVz7q0twRc9bPSsyy7OER2cYj0chhN1yWh0F9f8oQGutKkRlQyk0EAfKEoiXieSiHl8Hu5+Q4ACf5taLOO7tQ/f6uw/uoj9+8cOOYbL4WFf6WQQrlecCusfScnVtn5/oOp8R4amm8yu1AWwIOvKpVCSqhVZNmQrK1gFbp63CZgxdJF2lsCDlXWz1YjrFIc7udNhZquS5quS7du5Fy1VMpZ7A2zr11oczbHF4qaCu2TdrWJeJ7MZJDD/TyBrrSAPc395HbHhgMEcDW2hqbrkgNoWV8kYqzMVYXzw/VGZhLNDp9E3LmdsotDhDtH8QQCaG+7xHEMXbvn6VO7I8Kdo87ry253p/1i3NoxRyKeZ/ODt6+/vkRyYvXklMGsZ3+sl9SISvfgLmCeEqu7Dx6Z5bBSf/LsuQScnPJJQexQ63QAaLp+JpYDetpl+wcaUg/r9MxxmAAAAABJRU5ErkJggg==","characters/glaceon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAYAAACXtf2DAAACn0lEQVR4nLVUTUgUYRh+Zu1QyexQE4rkISQ6BEWEuswhNmEZEuawtmx5WNqw1osgBUuQoNaOeJIwoyhWIWEhdQ1XWEiWBVs8TIMUYe0eYiEP0lK0xrBIhwW/Dts37jA/StBz+uZ73+d5eL/3nRf4D2A5ntCzq9XnJ06JUjBsG7fKrxfXLw8/eWEpwnI8WS4UCSWayBa5keR7Q54LAKpNzbAyqWhlJiR44I3K6J3OIKGocDKxgose7EwAIBIQ8eFHAbFVBfKj57qJVVVzt0VUtDJjMtgPI10CLjadRd7dBq8ogeV4klBUvare6QxCgscgDgAMy/HkxuOneLdTxZehO6YEAJCCYZLLpJFQVJNx/HUGjVe6sbPyBrmJYRPfBQBiZztGugQkFBVWU5NOzjK0H/FR2RArHWcB1J7RG5VNPXJRIkUuk7Z9popWZmg8Pirj6qfPAAD35jZiqwqwoYLruGTguCgxJHgQEjwI9PXbGtSj5doguheXMNIloLQwhZa3WQDAhWOcM/Eg8z7wco5cX/9KpGCYSPIzslwokuVCkUjBsIlraihNoKVq62ugVdJ4oK8fP7e+AedrTxsJiDo/ndcMo2oyoLh59z7pidwCAMRWFZwrFgAA+SNH0dYTwom8CrGz3cBZis/sGW+oSCdnGVsDOuf1iI/KaLz3AO7NbZQWphB5OAwAoENS0coMy/HEG61NWm5iGIfsDLyiZPgeS7zC7mUfTgO6+MBgFNr6mmH2K1qZ+f67THZPnrKT3qugftE1zKdIw3yKSMGw3lSnYegYkh3jpi3Lcjxp9fl18cmZpLPAX9juourYuOluK5vSf8rsShpnxif33a6OTQZg2i0sx5Pq2DiqTc3oXlzCx18atrIpW51/QqvPf6DnAYA/brNG69Ew90EAAAAASUVORK5CYII=","characters/glaceon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAYAAACXtf2DAAACqklEQVR4nLWUQUgUURjHf7OkRLSMsYpGlCKBxHoJtRAUL7qBDF5EERQXJQIPFkG04mWTRNRDBB42oaAVFxYlEBkoNy+LSxa1dNFEPKhkJtgaw4LaSr0ONZvjzKwR9J3evO/7///z/d97H/yHcMouoa8dec0ekalQafLa5q3qD5OnN0+O3rEkccouMb61JHSgCWxR2/rhuaHOAZDKz8FKJKklpK6SKopCfhrmxwksx8gkYhUOfWEnAuArr+P94gIDcyr3HzxKi1h1NV3ZRlJLSCaB46K3WuGyu5S3laep8Sg4ZZcILMfSXTXMj9NVUmUgB5CcsktUREfZWlnl4/VBUwGA0uQV0YhKYDlmEh5695JLbjdLi4ustfaZ8A6AzgI3vdUKgeUYVrdGnQxK+nmEuwcNue9734BfNhaF/KYzcuhAPaIR1dampJaQ9Hy4e5D2188AyNpLMTCnUhiMc/JamQHj0IFdJVV0lVTR2HnDVuBwyH0t1IdW6K1W0PxhiicWALgqzhrqTH7rLVqdhZ6viI6SK59h9+4Y694yfOV16a6iEdWAPWH3h/oL35+Jc1TwQjDOl41N1r1GO1pGepB3WpiubBN6vUlATzSeKxO1vnYABuZUrrzaEQCx4h/sKrXsal/xFbgN2NmhMbSNTYpCfgqDcaFOBiVLG3Qrjl7LcPcgp4bbydpLofnDtIz0AKBfkqSWkJyySxSF/ACstfbZW1TjUQzf9yafkt1cSimkyW/fvMX+TNxgX1JLSHurn0R2Qa4d9Z8ODg86x1S/cEz1C6XJK8a3ltI5O/zFEV/GvGnKOmWXyGv2pMkfPpnMTPA7bGfRwXCHaW97IpJ+lLMvVM4/7jl2umY8ZDC/B6fsEgfDHaTyc6gPrfBG+sz2RMSW558ir9nzV/YA/ARL5EjIN2Ql6AAAAABJRU5ErkJggg==","characters/jolteon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAYAAABvVQZ0AAACWElEQVR4nKWUQUgUURjHf2N6cHFh2HAlWHB2LAghCAsTpINBuh4qujQYnTQPIXSNAvcgoQQJsbB4WHdPseWpQ4c2k9bLwgrmocgu466CeJgYeaDoQeJ1WOa5s+suQd9p3ps3v+///d98H/xnhHVdhnVdArScdeDh3UvyX0H5aUOt62BhXZepuU5fxmaR3epqDHOE0KKDmyzM91Mu9DZU6amy3VBjWHWMz3QTjZgNgaXjIPnPn3CE0BrCHCG0jW8aALYbwisbmvvZWivde+67JrGXTxWWCzD5/LdMzXUSjZjSdkNMvD5VBaBVg4ZGRnl0ZZfiXoAXUwcKBJCJ75ArdnBZOBixANu5I4xYgOjgpgL6YOVCL18/nMNsPyC71YXthsjEdxTwwbBLbOAQgLYLdwCImK9whNDCui59nm3njrh1/w9GLIDthlhMJxUIqAMB7JaeKXtaa70CmE0GGR68DcBiOsnjiSn1rgL/Tia+o/aGRkYrnnmgcqG3mkeu2MGw9R6A1Tf3MNsrHhbbngKwXPjiA47PdNPiCKF5P2p1SV6srW/w9kdErQdOEgycJOpAS0vvNN8FAOSnDYxYQB2afDIBQGohDUC8/5eClI6DKpEPVg31Sh6f6WYxnWRtfaNOMcCN630A9ERMHCE0321WT4HZZKVVeiKmUtUIBGBZY/7OCOu6/Dl/Vda2TFjX5cHhvrSsMZlOZOTK6or8+PKmrAPUfmRZY7J2/Hj7HiCdyJw5nuo8a5YoP21QOg5S3AuQyq75+hJqGr1ZOEJo2a0uabshLp7fP/PMX6rMCI8tAjMWAAAAAElFTkSuQmCC","characters/jolteon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAUCAYAAABvVQZ0AAACTklEQVR4nKWUP0gbYRjGfycBoS3HEWsI5IZgJMEWpBStQycHG1061EIIdIp2KAoZWuvmXq2DktDB/NlapDqbtFK7OKSKSIdK5CoOCaQJkeOaxenrEO6au/yh0Ge677v3ft/zPtz7wX/KoyjCoygCoK9TwdOFAfGvoGTBZ63bYB5FEfHVoO3EXjrdULvDqrouzfrOWPtym93ySFeXpiut7u4Oa1Ui5ickxroCG8Y1B/k9qroudYVVdV06TwUA0OpuzLahd54up3XzOTj/E+2N23K4W4aN1+civhokJGSh1d0sT/11BSC1gibDM0y/OkLLBpheMywQwGLmkotijRs3+/GqMpWSgVeVmfWddW5zMXMJwL14idySTCLmt/ZMqFeVmzX+Z3hdj21d2WCVksHwnUG8qoxWd5NKJy0IwFBosAlsgRz+WrbicTmzAsgtyTx6OAVAKp1kfm7BeteEf7ccA0yGZ5qZmaDd8kgrj4tijSfBbwDsnD3gltwPgJF/CcCnw882YCLmp6+q65L5o7a2ZKpwfELu7bi1lsPryOH1NtD29gfJltlBfo9KybDyMdt7/mKOnZVRdlZGrdpKyUD7UbMZkHDIoyjCbDkR85NKJykcn7Q5BpgYuw9AQB2iqut2Z623QG5J5iC/R0AdYutduicIIBKJ2ifDoyjiY/GucI6MR1HE78aViESiIr2ZEftf90X2aFi0AZwfRSJR4bx+zH0TkN7MdLye2jLrdVCy4KNhXKNlA2y9L9jmEhyD3ktVXZdONyaEVnczPHDVseYPgkYCoWXBtocAAAAASUVORK5CYII=","characters/leafeon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAATCAYAAACUef2IAAACnElEQVR4nJWVX0hTcRTHP3egTdnkDmSgZWgtlEhiDUnQSSrBRqJrEYERjl4EKfbiIHqIiz1uEMMohIj5oC9RrlG0lxmmBCOGkRBJI4L+PIziXug+mANvD3Gvu+5O8Dz9zjm/8/l9z7n3/i4A3cfaNYdL1NjHauUdLtGy1gYgnuwikpNwJsOWmxwuUROkIcsDVVkRtntO4EyGNWcybNTaAFZfZIXUsESwxcPUbBT/SKCmOqt4/bvPAPx9+c2sGKDDJeL2tPLw9wanZwImiK42kpOqDr06ftHwLzcfMboWKtVEcpJJSWpYQpUVoTI3v/qGP9FnglWNnFgB4Mmv77uK9aK9UN0vFX8iJ1aY8A9YjkSHAhy60LYLVmVF0KTlvfsNc3ta6bTbkBMrRHISDpeojQUHq/Z12m1o0rJZcaU6b1+v4auyIqSGJdShU0bs3o0rxEI+Gj/K/w/uaiMW8tFyuBnADNYB7dsNvD/faGpZlRXhwc0ksZAP9/1VerrbABivr0NOrPCjyw5gxKsU64AJ/0BVJ6qsCPF0wfAz2XUAYiEft2kCoFgqMxYctB6FrnxtbtryQY0GvBRLZTa3dshk1ymWykYumc3z/NVra7AOv3brEam7UdNnu7C4JPRPJvC46wDY3Nox1gBHmxpQZUUQrLG75nCJ2trcNAD9kwkAdD+TXWc04DVyHS6RjS9fBYADga2sWCqz9PYDC4tLJlbNUejtT81GDUX9kwnTPOPpAh53HZmz1fpqgseCg3j7ehmvryOeLqDKiqDKipDM5g2lsZCPeLrAaF6rukP2HcXe91hfO5NhbbXlDPF0gU67jTuPn1ZxaiquhHW4RCPmHwloo3mN+U8lzh13s7m1U/M6PZDpEP9IQJu5fqnmn+cff9EXiXruNMIAAAAASUVORK5CYII=","characters/leafeon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAATCAYAAACUef2IAAACmUlEQVR4nJWVX0hTcRTHP1csrA25Axlq9kfLP8QqHQaDIaQQOFm5IREpCFN6K3zQt4096PamxOZbOArRvRRsgTSfVhSWkgwpCSQRkQih4N6HG4wSbw9xr153r+B5uuec3/n8vufc3/1dAK41XFLtDlHlGLPK2x2iaW0ZgHi1hUAuhS0aMl1kd4iq+jhouqEiycKfm43YoiHVFg3ptWUA7xcWhaxvmBtuN55Mgg5/t6U6s/jpT98A+Lu8blQMUO8Qaaiu5WP+LRcjDw0QTW0glyrZdKA/qPv3qur0roXDagK5lEFJ1jeMIsnC4Vzm9QK/x58JZjVqcg6AF7++HyjWio5CNX9r9wdqco5gj990JBoU4JTHdQBWJFkQpjNH1+vWUF1Lc0UZanKOQC6F3SGqvb7OknXNFWUI0xmj4sPq2rwe3VckWcj6hnk3eFePPXl0n3jEzW5RAcDZcp54xE3NuSoAI1gDnBUrKbhrDC0rkiwsB0eIR9w0PU1z+0EdADPOHdTkHCvXGwH0eIliDRDs8Zd0okiyEI4VdH92cg2AeMRNukkGYDW/R6+v03wUmvL1pVHTFzU41spqfo+N4j6zk2us5vf0XGJxhVe5N+ZgDX7Hn+L5xIjhs51PZwSXd4r2rnIANor7+jPAhcoz/w+CFVgzu0NU15dGAXB5pwDQ/NnJNQbHWvVcvUPky9a2AHAisJmt5vfIfPjMfDpjYFmOQmvfk0noilzeKcM8w7EC7V3lZK+IJfWW4F5fJ21eDzPOHcKxAookC4okC4nFFV1pPOImHCsQ2JQtL65jVR89GbZoSN3+OqEO9AfV8aE+U6ClYkC/K+odoh7r8HergU2ZxMuf3LrsZKO4b3mdnsg0SIe/Wx0f6rP88/wDUzAb8cZ9+1EAAAAASUVORK5CYII=","characters/sylveon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAABG1c6oAAACoElEQVR4nK2UUUhTYRTHf9dCfPKuLvdCYQkpQ4sCR8EK33xwiYRP2kMbiKMw2iV9CcKnWgZRE2cgI0PMl1KoHsQNSjCQmK0UNDMGGhMh2hDd9EEK/HqQXXfnVZA6T9895//97++ec7gSBwxFVkX2vJJOSfn1goMaAoQbmqlz1ZvM9zV0V9UIRVaF1YVs2C+cpTY8Sb7O0nB0cYaIx0/E47ekAIjHZreN9QFrwtyLdafOGYKIx4+7qVnkaxyFNn6Ev1M+8sTUy4Jc4V40uuZEkVWRWI4D0LOZYur3Gt1L44wuzpgJFVkVteFJasOT1LnqARicHpOCE0MAfKs8hm47YdQSy3F0zYmuOZGKy+i4cg13Vc1OD1fSKelQ932OLGQYjYwYbxqcHpOCySjvP7yhPD6Mr0hl/u7QLvpqW4WJsgBg8FW/lBnpNoaQ7RnxJXr7AvT2BZCKy5hY+86zm/d2meb23BSKrIqN9VWxsb4qFFkVMV9IuJuajVxiIWGcY76QoTP1MPdhJZ2SSkvstHrbmZr6DGxPs9XbbpDdeZtg/Nc6lZ2NAFx9+s40zMNWpL4iFYfjvOmTLj1u4dHH1V3ayxeP8nIvwixlz8wXAg+f7yTtJwHwHN8A4MHAV6OkJpaMDdiTEOD0/E8iHj/BZJTevgAAXaF+MrFZgpqTVu8wuuY0iBRZFSvplGQsdu5y69WNBJNRthrOcOt6C3Of5mj1ttN2oxkA7bYLX5EKQGVnI45CG4nlOIqsChOhIqsi4vHjetFBxONnK6eWNdY1J4pWzOutP0wlo+CNomtOSkvs5t9ZljKXNOYLiZgvZOSzK9PlbjPpLKds9bMUmQV6NlNGrbTELhLLcaptFex3zzLyibM5q2X+p3BX1Rht+G+m+5n9BfajQJJ1m0BEAAAAAElFTkSuQmCC","characters/sylveon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAABG1c6oAAACqElEQVR4nK2UX0hTURzHP3cYIWYr5n2QBGGi2ENIUUSFPW6iEyWQ+aCIuErnesiHCnzIN0FsvTg1MMQcyvBBxRHL/kAaQeaEIZLNJgwWCTp0TREhvT3IPezqVZD6PZ3zO9/z5cPv9ztH4oRhMsqKuo4nVqWD54aTGgLY3H5KS2wa82MN82xOxWSUFb0LahRcu8RMWSsHdbqGG9Mj2D0B7J6ALgVA+Os8AIMXq/UJUy+eK64SArsnQK29XjmoWS6s5PtyhAdZu5paGlKFR9FklrswGWUlGgsDsDfZi3lxDN/dGjamRzRayWSUlZmyVgDadkMM+vol2K+jtbqB679/Ir96y3DuJj19bgAejS8Lg9BSjJXgGyL+bgnAEE+sSm27IZLnT/E64BfCiL9bSk508e7jKMO5mxgsjRojNYryczSUBoBBX7/0bG1WNEGt2eetdHr63PT0uck4nUZoKYa1c+qQaWrNNWEyyspmcl3ZTK4rJqOsOL1BpdZeL3LRSFSsnd6g0KV6aMYmnliVcnMKaHK0MDc3C+x3s8nRIsh+PBki8eEbHRVmAN7XtGmamaZHarA0cuXKVbFfKa5i6LaJdbf/kFa2XAbvEYQq5afRAdztL0XuZsY2ADt3igAItQ+Ls9iZPUpLbGKvSwjw5ewF7J4AyYkuMS7PX/QTXpsn0+Vi2NFCZrkLSAf26x9PrEpisFOH21rdQHKii7rsbVz3GliYWaDJ0cLD+/UAPL6RhcHSCEBHhZnlwkqisTAmo6xIqolKZvcE8DWXYPcEqMvePkQ+8Cudjgoz1s4pzItjwP5L8jWXaL8zlTKV1OkNKk5vUOTVkbn1dFyj0+2y3me5tfOHvclecZabU6BEY2GK8nNYPOaebhwkVnN6w/xPkWdzijL8N9PjzP4CuERHKhpmZpUAAAAASUVORK5CYII=","characters/umbreon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAACgklEQVR4nK1VwWoTURQ9M4hJNNJi48QiViohnUiYBFJ0kYCtlUZmEWgJWVmhOz+gdCHZ2Y0t/YNiFdrNkIUUGoIbRczGtNCOFidDcFFqa2ICDgpJ7OK5KO+RyUwmLnpWb2buPfe88+7cx+Gc4XZ5CADw50nodnmInEkDAC44BQbEIACgoulotZucE/Gj+2HwfvH/VczOzZFXqw9JIiSQXnGJkEAOVqLkYCVKTFbQBzuIvj+YmT7FthLqGbfz7TdKvM/0jqe+2CW12k3uQ6HYd2cBMYitvWHEsmVmGddpuK6qCPgv4s3bEvOTFqQxeSUHAIhPTKL64zsAYOHJNaytqfj4tcbyTF1R3BjE69VLCEciTD1V0EkIAAPCEIKShOLGIABgWwmZ8vhWu8nllRyeS59ZgYqmWyyhcQPCEFNPsbU3jKOCgYqm2/fxUcHAi5dX4eQ5Vd6J9cVDlHifqSBPE2LZMjaPR6HVvZZECnoeRq3BrJlduMxUA0B15y7cLg9higNi0JG0E/fuuLC7NIa8ksMV8hPxx7/YN//4J7TaTY4Rf9nf54xaA0atYVLYaQm1Qqt7sXk8it2lMfB+EUFJshS3/Kbd7QWctSE9UDmThq6qFjJqDevjbuJESCDCeLKfG8grOVbcqDVQfP/ONE8s08138xZS0RNbsvXFQ7bu3FE3qS1xpfoXM9OnJmW0z+eXRxg53XpeydlOPhOx2+UhqQe3Mb88wpLiE5OQM2nEsmUWp6sq5Ey6J6mtYq3uhVFrQFdVtNpNjs4DAEhFT1jRfuh5g9Au8F+/wZQ/fXY26YKSxFQ7jVyGcCRCunu3G26Xh0wlZTKVlB1jHa8bJ3K67uXxP985K47LMdthAAAAAElFTkSuQmCC","characters/umbreon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAACeUlEQVR4nK2Vz2sTQRTHP5sWk0ClYEpS1FCx6ZKGklxse2jV/jhUgihIW/BQEHpqyamQW0+95lqKIP4DIQcvBhFFKRax8dKt1JAWeyhKGrPaoCWtl/EgM+wmm62HvtPszHvf933f/TKjcc7h8/oFgOc8AX1ev0jOTgPQ7pYYieoA7BVLnJzWNTfgO7cH8ISi/8/iwdycuJp6L0b7g6JV3mh/UPQt74u+5X1hk0J+OEW06ze9eoy2hd2WeR+//KJ+VLbteaQuTkUnp3Vt/cXGmZNFojpDtTUOMjElmWYVvGQYREIXePayoPSUDWVOPpsDYGRsnMPyVwCObj7m2uv7vPtcUXU2VwTm1/l59xUDiYRiLxlYAQE6gwH0eJzA/DoAbQu7tjpNsgqnd7gcvATAh3S3owus08kwB1cJFFJs96xwkIkpMjbG3yo/GNl/hJvmknkjeP2ojLWpRxYcZGLMHC9RrHY0FTYyrlVMJU3784cADNXWABjOlPF5/UIxjkR1V1BrDMe8hNM75LM5LorvmE9vqTMpowL+tLWl1SomtYppY2iVREpRrHYwc7xEOL2DJxRFj8ebmjv+IMCmV8kw2CuWkPslw2gCk9IoHzcCj/YHRfDG1Jly5LM51bxWMdl4+8bmpKbbrSvcw2bnoiOYObiq1taJGkEdgfcO/9Crx2zM8tkc2z0rBAopBS5Hz2dzjp63Afu8fnFv4jqBQkoVjYyNk5ydVuaHf5onZ6dbgjoyLlY7qFVMSobByWldk/cBwGbnomp6VrR8QaQLQt1XFPPqkwkA9HhcsXa7clUMJBKi0buN4fP6xeRUUkxOJV1zXZ8bN3C5bqXxX/PXJfwwJdaiAAAAAElFTkSuQmCC","characters/vaporeon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAUCAYAAACTQC2+AAACcUlEQVR4nK2UT0gUYRiHnwkFDy45EANWO2sJwkogQmqh0MAeWpY9CVEdWtpLIIWyerCLHtqLsoRsZHsJ1oYOWl2EXKaDtYfC8A/iJQ9F0hQGgzDKdDD2MB1khh3dzV3c32m+73vne97f+74zcEKJkmxXEnfqpKBKYTUB9cZHjoXVBFSJagIajgSPdVUT0NVL34CDEpZTXTUXOhmbhi44eyFFYW/fD3znV1MHoiTbznmxQ+HIbf+BOBl/yj7GNHShVem3fdcHj8T+mIoBEEio7rri0pmGLjRsrfF88CKBhIooyR5I8Mo597k3PsLm+jRazGLp3hdCilK5I8fV9uZDAPb2/YRVH+d3N/CFI26MpeXwhSMUMkmeTt0g2Hkf09CFqobBNHThbHACgNMNP9FiFr5wBEvLYWk5AA+0WFWBREm2N9en2dv3c2fgMw8Sr2nWd2jYWmN2PObCmvUdANcNVDgMziA42RYySWayaQBuPVJpa+8G4Ld8xgVFWyyeTb/kzStV8DgSJdku9cGJkmyHFKVkSZZXV5gdj6EvZFxAIZMk2mIBsJjPu7FC8WX1A2NoN0PAQT8OOymW4+rP7kcam/pYXl0BoPtyF8urKx43AHWiJNvx1JxrOzy3SCGTZDGftwMJFXY3PAAnkXhqjrvxIQBmsn0uxH+hw020+D0BoFXptwGCPdfcg7b2bt5v/8V694ROqZH6gTEsLcfbySEBIDqatp3e6AsZunp6mJicPAI4VsU9EyXZHn6x5Omhs3f7w1c7Opou2d9ilR1v09AFJ7uQojCfTXl+mqahC/PZlLsOJFSio+mysOpsltBhJ+VK9w+eNwFEME/dsQAAAABJRU5ErkJggg==","characters/vaporeon_shiny":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAUCAYAAACTQC2+AAACZUlEQVR4nK2UMUgbYRiGnxOhgpX2wBylJEfTLVCRQlKpBBrrJCWDWMVFqRkEaWnplkkkUxQaKWgHF610ikUoR3WyjeggJlBKhFscJBWRi5DaGrih9O+Q3nHRBBPMu93/f/c/7/t/3x1cUbKiilrqmq4KqhXWENCyOn8prCGgWtQQUOuba5emagjo4b19oHSF1dRcz4GW44KRk6y13lCIU9MDgOuvC1lRhbXvTChRo2RFFZbj0dxzCkZOirgjYlwZv1DbdzgEwLo7aT/XDAJ4OjQq5mYHOQi76Dscsg8CaO9s5+T7CQD5pjyBT6X1Gy0/GJnYqQ8kK6o40qMAnJoeDsIu8k15fB0+u0bP6vg6fESLMeZmB/HdL6WvaxgKRk667YvbTu9oJYie1dGzOkAZ1Km6QLKiCv3bPKemh5GJHV68XsFsM3l/d4WezaANM9vMEvR/GqhxGKxBsNxGizGWFt8C8PXRNt5uLwAtv1tskDFwxLv5D3xMLktliWRFFZU+OFlRRW8oVPFKdjNpejaDTB3P2IBoMYYxcATARipl10rOw+KtkwQ+PwZK/TifxCkr1dnPba7fDLKbSQPwwB9gN5MuSwPQLCuq2Bpes2Onn3whWoyxkUqJdXeSPPkygGVka3iNZ2OvAFhaDNoQj7fTNup8TwKIuCMCoP9Wv73h7fZytn3GgrHAr+4/xFsn0bM64UxYAtD8mrB6M3U8Q6Cri/j09AXApXL2TFZUsfdyr6yH1tr+2L7Q/FrF/jpVdbwLRk6y3PWGQiRWE2U/zYKRkxKrCft53Z1E82tVYfXFrKDzSapd3T/CZARQLfJBHgAAAABJRU5ErkJggg==","deco/bush":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAAs0lEQVR4nGNkwAF087T+w9iXJ11jJCQOAyy4DArKcEAWhhuCTRzZYAybgzIcGDTFFBiuv3qAy/EYYN2MA3AXM8IMgxnEwMCAYVjDFjeGBp9dRBnMiGwYsa5q4GVgaPiMKrZ7y0mGz0++MzDBBNAN273lJG4DsRgGA0y4JFx9zDEMwmYJuhhKGOICu7ecJGjB5yffEZECM5SBgYGBV4YTp8G4wOcn3xkYGBhQDUQ3mBSAnA4BDmFZftQ/GNIAAAAASUVORK5CYII=","deco/cloud_big":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAKCAYAAADVTVykAAAAcUlEQVR4nGNkIBL8////PzKfkZGRkVi9+ABeQ9AtxWoADocQ62CiNBMDYBYQ0ovuEBQOORaTC2AOIcrVtHQE40BZDgNMA2k5AwMDAxMsLu6+g2BCAKaOFLW45BiRU+Sdt/SNChVhpESIDGjtEJjFMAAALfY2aROyK8wAAAAASUVORK5CYII=","deco/cloud_small":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAAVUlEQVR4nGNkwAH+////H5nPyMjIiEstijp8hmDVADUYWS2yZRiSlABGRkZGRmoZBgNMDAwMDHffQTAuQEgepoaBAerlO2+p40oVYbSYI9dgFWGEOQB27CT8z+/f1QAAAABJRU5ErkJggg==","deco/flower":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAMUlEQVR4nGNgYGBg+N+14T8yzfC/a8P/////////OAtCI0ugqIQB/w3OcAEmZAEYDQA7+SVZv53+JAAAAABJRU5ErkJggg==","deco/tree":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAWCAYAAADafVyIAAABCUlEQVR4nO2VIQ/CMBCF3xbEEgyK2ckxhcOT4LCYKX4Ikh+CwsziSEDjEASQTI4gZkhwQ5Cxbr32joDkmSXX9n1v6e3mgFEUhwVVPy7PDncWAFqc8WQ2JNcToJCAtEXVuNcNAACn68VokMw3sIFqxSgOC6kxBaIg74Jq/okxB3Gbmyjz9WrHmpv2uECV3qTReCAy7PTbWtdpbyBJa4JS0gDcQSqALZQLvFqsbDfucDOAup7v7/wlc4a2vZTI74ATZUyl1wAlBNBHhC2tyZwENEES2eaRaCJGcVhM4QEA0izH1vfE01S75F/rD/geoF5wqeBwE3eZFdA0T7P8Ywj7T17gURV9r/4U6An5uoUW6S46kwAAAABJRU5ErkJggg==","enemies/bat_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAAsklEQVR4nJ2SsQ3CMBREXyIGsBCVK9cRxZ+AAZINGIChGIANyABM4AKlTpUKoWxgqg+O8pWIXHU6+Z5PlvFOEhvlnaRSzZYyQAkgVf0XxDtJUtUA7DSUqoaONIyxsFbluZYngByiXo4nAOLzMclzTQDWgbXcnAVwDz1NH2ZeFbuWYYxFoYEJuV0AaM5Xs/xdkEOW5sauBX4POgMsrclvzWUCFHLYBwBe794sr8o7SWsf7ANj2E0htB0MSAAAAABJRU5ErkJggg==","enemies/bat_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAAqElEQVR4nNWSsQ3DIBBFH5IHsKJUrqitFEyQAewNMkCGygDZwAyQCSgiaipXUeQNSGMswIY+vwIe//i6A/5eogS6Vvl4Py/m8G5TMql+QF2uAJj3Cywbi4s1sVn1QzFqwiw+FBEl8yQdo5O7dZCxmnkxQtRenp53AMbb45Abq9MeGKuTuLkx57D2IICtOZZdqhA58HBeHeP5JAH4fF1xjFV1rfL5f8j1A53vSEk8kYqvAAAAAElFTkSuQmCC","enemies/bigslime_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAYAAACXtf2DAAABGklEQVR4nGNkIAC0BBz+45O/9uEAIz55nJIwg+dP3o/XAYm5jngtwhBEN/jojit4LbD20MFrEQpHS8DhP7EG47MI2RI4A2Y4qQZjswjZEhZkSWTDC5fowNn9MdgtxaYG3YFMMNeneE/GMEBaUJFBWlARr4uxqUnxngyPSyZ8mp++v8/w9P19vBYQUsOCSwJXsJCqBqcFyGDPybVYxV3Mg6ljAQMDA8PWNA0UvvesG0TpI8oCF/NgBu9ZazHEqGYBKQaiA5RUdOH2WbIMwWcGSk42UUuASxioGpNt8JlbC7DnZFwacFmGy8cmagkMDLcY/l/7cIARo7BD9gW5ANkHKHFw7cMBxjO3FlBsATLAWkkQqsUIAUK1HFUBAMEvfA7OZDJhAAAAAElFTkSuQmCC","enemies/bigslime_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAUCAYAAACXtf2DAAABFElEQVR4nGNgoDFgJEaRloDDf2zi1z4cIKgfpwJkQ+dP3o9VTWKuI0HLMARhBiMbenTHFawWWHvoYFiGbhGcg2wwLgMJAWsPHQyLGGGGoxtcuAThuv4Y7BbiUgOz6NqHA4xMWgIO/1O8J2N1tbSgIoO0oCJeV2NTc3THFYYU78kMWgIO/5nwaX76/j7D0/f38VpASA0LLglcwUKqGpwWIIM9J9diFXcxD6aOBQwMDAxb0zRQ+N6zbhCljygLXMyDGbxnrcUQI8mCC7fPMhioGuO1hFiAbBYTTACZpgSgm4URRMiW4PMRLj3oAJ6TTdQSiHcmEeDMrQWQnMzAACk3ztxaQHXDGRjQSlNc5T6pgJh6YugAAHD1fKxUyWjpAAAAAElFTkSuQmCC","enemies/clam_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAQCAYAAAAMJL+VAAAA1UlEQVR4nL2UvwrCMBCHfyl9GMnUBxDJ5FhKJx/Dyblzpz5GJxHHTkF8gE7Bt0kHvXj9Q4Ka+ptCDr7vQrgTCERKZX11Y7Tw1ReLHHq+XrwNlHnhlY0uCMyht3vvFey22UzGRe4gpbIEDkFDsjIvnERw+LfgJRFJErqMBZ+yhJTKHk9VNDhPU1dPwSr0V1IAWPMFiTFaNHV8QVNX40/u+0c0OGelgBsMCxwAAFm2+Qmsu9bNQUrFtwQg0SfRXcs5LsFdBABqPxcScNLgLN5NuCQLAf+eAbN2YpKuC65YAAAAAElFTkSuQmCC","enemies/clam_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAQCAYAAAAMJL+VAAAA+klEQVR4nK2UoY7CMACGv5K9AOrEKRyp2gNcSNVJQlC8A+YM6GnOYO4dUIQgEKiG8AAzNDjUCRSPUMTWQcayjqVfsqRptu/v1r8T5EipLAExRgsA4eTr7Sakn/FwhDFaRM+Th2MaRD74iotxB7LXGQ9HQeTwWD3kn8jh9uFnnrQSLxfZc07+ElAOepdncSOkVNbuTtlVJp9v3b5C7sMT0mkaeJ3+Vo59RP5bMj7+Znx2ewD83y6NA2oJsQdCSmXraumqV4WvzstF8vhVtO1+ndwYLYreSqms+p4AEMf9VtI0PQOg96vqk+yCAFzYO+j9CmhwksthPupO8B1M7bfOy5K7wgAAAABJRU5ErkJggg==","enemies/frog_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAOCAYAAAAmL5yKAAAA2UlEQVR4nJ1SsQ6CMBS8Ej7AgcmBuDnqxGYIa92d/Qu+oZ/B6gd0hegkk47GQUNwISR+Qp0Krw0lyG3tXe/upQ8gCHmgQh4oODDKhzxQSim1XKwGRS7es4Wf78tVYJD3tTsAHM97I9F+bPOVbBkLeaCSNBpNdSEXZT/Cbr2dZdIZXB63WQY+PYjNYdKj9H7qG1SyZbko/07ORYlKtsxoQJ2nwgMA2uJ5fTvFmtPpnQH9yrpokMXSGCsXJbJYsrpoAABJGnV7YuwBddbGuiG9o3pmbxwVD8HW/wDzam+7Y6IyugAAAABJRU5ErkJggg==","enemies/frog_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAOCAYAAAAmL5yKAAAAqklEQVR4nGNgGFRAzkvkv5yXyH+y5OW8RP7/////v5SAAlZFuOSZ0BU+fX8fryvR5VlgpjMwMDAkHPJGsRFdM7r8o21vGBnlvET+O5ab4bUVF9jfeQrhBVt1A7IMYYExDt+8wNCpH0aUpvKLq+Bspkfb3jDu7zxFss37O08xPNr2hpERJkBKWMA0MzBAo5HUgHQsN4PHEkYsIJuODrCpZUSPb1yakQ1B5gMAcI1WHttl6lUAAAAASUVORK5CYII=","enemies/puffer_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAwUlEQVR4nH3SLw7CMBQG8K8Nfp1GYSsIkjTZBYZBoQlqZ+AAnGGKoFGY7QIkDZIgalHodScoqkv/7nOvr7/2JS1BEMGZCdcAQCpN3NorBGemb0XKoW6kh2mIivUhCftWeNPQEI2fOwCgqDoUVZfF1B3PIptluYpu3l8HCM4MjTpOfsM321vkGuNzN3cmqFSa1I2c3eTmcSohlSbeqO+XyoKwN72L4MxcjgwAsNnyJDrf9PSW0QewOIyLImhxCoZf7g81g0vfGnqvqAAAAABJRU5ErkJggg==","enemies/puffer_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABA0lEQVR4nKWToW7DMBRFj63xpszS0FgVsA+wNFKYkalgHzCUb+iXFE3FA9HICkMqWYPTQBQ2NMms6Rd4YLPlRnFSdRdZz/deX+u9J/iDtdYppQSAzjPHAEzTiT5XxASdZ2630UPagKI0wQhAekcvnt0+jhrsNhqdZ85a60KCWHz8fAnk2d0bAMf9fTKJ9E7Aidjjen6TTGOtdXK1XDD27+/D12D94fnAarngKqlMRO9DVnVLUZpJYh+vT3OqukWc07oUitJcnqAoDVXdIv1EAXy8N5PCmKOUEhIgTjFm4u/868BvF5RSIp7/c5L45NIXTNOJ9babFK633ckuhMOl2/hv/ACh5oA9tDyUGAAAAABJRU5ErkJggg==","enemies/slime_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAOCAYAAAAmL5yKAAAA0klEQVR4nGNkwAG0BBz+I/OvfTjAiE0dhiBM4/zJ+1HEE3MdsRqEwtEScPgP03jxwEMUA/Qd5OEGIRvCiK4ZXSM60HeQRzGECVkSpjl1jjxD6hx5uDgyH90CJpjtBcELUCSkBRVx8guCF8DDCsUFyODp+/t4+TDAgk1wdspDvHyCBjAwMDAcOL4Khe9gGUaaAQ6WYQyp6icgLrhpgdMFKGFw4c4JFMnZNy0wNKOrQUkHDvoZcAkDFdwaD1ycAU8HGCkR2RBsAFkzhgEwQ/AZgJ4XAG/2XAf/lq0rAAAAAElFTkSuQmCC","enemies/slime_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAOCAYAAAAmL5yKAAAA4klEQVR4nGNgoBAwYhPUEnD4j0382ocDGOpRBGAa50/ej9W2xFxHDIPgDC0Bh/8wjRcPPMRqgL6DPNwgFNdoCTj8P7n4//9ZyQ/+z0p+8B8GcPFPLv7/H+ZaJpgh6LZKCyri5COrZWLAAZ6+v4+XDwOMWgIO/wuCF+AyBy+YsDaBgQWX5IHjq1D4DpZhWNXhNMDBMowhVf0EAwMDA8PsmxY4XQEPgwt3TmBIzr5pgVUzslpGBgZINDroZ6AoMlCxwKmJgYGB4cDFGQzXPhxgRElI6IbgAjDNcBcgG0KMAcipEACAVHNgIu2PCwAAAABJRU5ErkJggg==","items/food_1_blueberry":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAyklEQVR4nKWRIRLCMBBFfzq9AbIgMBBXFAJRwQymBo5Q1TP0CHX4qkpOUMMMojeoW1RNe45FpZOmGxB89ednX2bzA3h0rU7sOwOAwAcdjrtv3FKRzjjSGbv+J5TmxPcHs+vdWWVDcVLgct7j+XovLu3aEiPV0/zijS409CRuJ5Yz9ISuLQEA660WwdCsCQBNpZXxq81tgkVJJdhZmpNYTmi/LU4KAGA7AzDl3nKGnszQLJMUjFQrqYim0qprS285s3803l7J5Hb2lz6efW1u8hoJqQAAAABJRU5ErkJggg==","items/food_2_lemon":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAp0lEQVR4nGNgIBJ4zdL6X38h4T+x6snXlBUi8D8rRABDEwsuxTC2ghgDw4NXmGoYsWno7dNGUVRcdJWBgYGBYdqaDyjq4Zq+P7L+///7iv/fH1ljxcguYYJp6u3TZuAQzcXjWwaG/BQOuKuY0CV/vJ6MVzOKjcRoenTtLm6NxGqCa5y25gMjLOTwaZo45wc8ZOHxCBG4ihId6JqQAWa8MKAmAFSDqQAAVSBd6q0ZPkQAAAAASUVORK5CYII=","items/food_3_chili":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAoUlEQVR4nGNgQAP2XVr/6y8k/EcXRwdM6Joc3MwYDuw6RUgfJogSEPhv36VFmo0wsHAFI0OUgABezVg1MjAwMCytSiCoGQNECQj8f2Ck/f9/V8F/XJpx2sjAwMDwcMVu0m2G2YrLZrw2nnj1Fm4zOmDBpWnZhw+MDAwC/xkY3jJYiAkztClJMzDcY/gPESdgIzbbCdqIbitZIEpAAGe0kAwAR6tDkxrGKdEAAAAASUVORK5CYII=","items/food_4_leaf":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAxklEQVR4nL3SMQ6CMBiG4Rfi6MTIZJyNGC7gDRwcPUITNw/gFYwJR3AyDt6ACzRCnA1hYCQdnKlTGxCEsPhtTf8nX/qnMDKB8DXAZCzYH7ecuelBWAf19MJA+NqAWErWYUgsJQDuEIqltMOnw9XeO7/QcjOz58flxWo3ByC9ZyRR4bQa+1A9jcY6+gZ5qlCZIokKpwENylNF+SwtylMF0EDQsVWDDOhCtjEQvq7eFd7Ca72lCzUa3alrB026gE0gfG1+x1/yAd/rZXnVm1JXAAAAAElFTkSuQmCC","items/food_5_icecream":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAApElEQVR4nGNkwAK8rLL+w9jbjk1jxKYGqyYYOPbm/39kQwhqOvYGFWPTzIQucPwthLY8dY0oFzJ4WWXBbfi/7er//9ld//9vu4rTVhZshhw302KwhNIk20rIj4zImqbl4Tc4axIieuCBs+3YNMasSRD2iTNXMGhkTSgakYGFiQ5WGhmgaMRlK7ptOG0kZBtO4GWV9f/Biqz/K0rsiEty6JrxaQIAJLORYI6BhgEAAAAASUVORK5CYII=","items/food_6_suncake":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAjUlEQVR4nGNgwAG+LlP+j0uOgYGBgYlYhejyjOiS3FF3GausGFAUtR1jYITJ4TS5yorh///LXigY3SDcmj4tgGA8mplgTsTw48NVWP0JU8fCwMDAAHM73FQsmpDVwW3EBx4uP0ZICQQgB86DKoH/D6oEsAYOC7ofuKPuMjKkbyM+OtADhxAfJyBaId0AAC1hc2cyhLMIAAAAAElFTkSuQmCC","items/food_7_mooncake":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAx0lEQVR4nGNkQANRBgL/0cUYGBgYll34wIjMZ0HXVJpkwCCrZ4Ci6fGlCwwM8y78R9bMiE3TuiVbMGw01ZNh6J53AW4zIzZNpnoyGBpPX3qCopkJWRJZk5oTE8PpS08Y1JyY4DaevvQErhZFIwyoOTExLJ3wiCG6QA6bNG6NDAwMcE1LJzzCKs+CTfDWvn9wP2HzL4aNyP5A1wAzCAYwogOmCB1gjQ5kzQpSHAyhHhoomlbvuMHw4NkPBqwJAFkzNj+hJzn6AwAawFljJKaNDgAAAABJRU5ErkJggg==","items/food_8_candy":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAuklEQVR4nM2RLw7CMBjFf11QU5yjmdgddoGZ+UmyWgyKoDhBp+dnppjiDgiyc6AQM0UsbdqxjARBeKbN+/O9Nh/8GqKSuQGoh074guUtfL2SuYkAdFEGxkrmRqcxuh/R/QgX6XR7RtY8Dy/BHDujixKAjWOzBE0JLathsgRar9GRgE5jOD8AUCYN9eud4KmWWIXnCRrVbk89dELdnnDYTu3itjjDBVXbvK1kHhanXKi2me7f7vHTr/4IL/bdR/bY4s0pAAAAAElFTkSuQmCC","items/heart_piece":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAXElEQVR4nGNgYGBgiBJQ+B8loPAfnc0AE/jvlfX//6wN/9HZDAwMDExwlRt2MSy18oKzYQChAAkcvHcPoWDZhweM0ce2oUjOenGDYdmHB4woumD2ozgQHeCVxAUAsuAwHcY+CXcAAAAASUVORK5CYII=","items/shiny_stone":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAATUlEQVR4nGNgQANeVgL/0cUwgJeVwP//L7P+41UMU/T//3/cilEUwQCaYiYvK4H/W9dHYbVl6/ooVDfDTUSymrD1+BSR5GtkxQQV4QMA6zBbuMT3hm8AAAAASUVORK5CYII=","tiles/brick":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAZ0lEQVR4nGPMM5H4z0ABYGFgYGBoyY/GKlkzcSkDIXkWGOfZxesokrcefEDh45JnIsG1WAHFBrAwMDAwHNh4HK8ifPKMVI0FYkIdXT08FtCdSShWYOoHaSyQEivUjQV0QJe8QHFKBAAFJ0hrFR915QAAAABJRU5ErkJggg==","tiles/cracked":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAiUlEQVR4nKWSyRGAIAxFkaEQj9TCpBIPFmBdGWrhaCd6wolZEPDfMj+8bCz7dlzuh3zLRMzzAMTsANIcgD9GzGY3gSZV8co11roKI+0CJJHrtYpUpZwq5AWg4rPGuApfdGCZGpz73jL55i34cwW66VZsAqwqrRM2R+Di2xeAkX+gAnr1+Q96IVU3plNUWwfVe3sAAAAASUVORK5CYII=","tiles/crate":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAArUlEQVR4nGOMspL4z0ABYGFgYGDoqUsgWeOyZZsYzt15BzGAgYGB4d71S2S5gAmZUzb7HEEN6GpQDOhKNWLYduAKTs3bDlxh6Eo1wm0AAwMDg5eDDlZDth24wuDloIMhjmEANkNwaWZgYEAEIj5DcGnG6QJSAE4DYM7GFSZ4DUD3Mz5DMAzAFWC4DMFISPgCzMtBh3BCIgTQ1bAwMEAyBrmAhYGBgeHcnXdkGwAA61xCqKg0dAIAAAAASUVORK5CYII=","tiles/dirt":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAq0lEQVR4nKWTsQ2DUAxEjSegoUHAAGyQJitlrWzCBhkgRDQ0bBAqI9v/Tj9SrkIfuLtnQ/N83L/yh9Qutv2ADwzj9JtB37XhxvJaRUTks77D+bYfIUxZym0eYWLftSFMWUqWNcpSdJhxUCNrfRmwBDZEa30ZMOYaXoFQW1vGKwx8Yl6ZyeMqquXTagNVVAuJoQUEtgmRcpjQwFdDiQgVfkgsEaHSf8ELodk7J/CpRKLODlG+AAAAAElFTkSuQmCC","tiles/door":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAjUlEQVR4nGPUknL4z0ABYGFgYGBICGggS/OCDQ0QAxgYGBguXDhFkuYHr64xMDAwMDCRZTUSYMElsXTeARR+dJID8QYsnXcAQwM2MQYGLF7ApTA6yQHDVVgNQDcMmyaiDSAG4AxEBgbcAYfXBbj8iitssLoAmyEkRSM+DeiAOoG4YdcCygz48O0B2QYAANaWLYyFtKR4AAAAAElFTkSuQmCC","tiles/fence_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAtklEQVR4nMWSsQ3CMBBFny0KupTZKRUzUEQUjEBDkxkQBWNESoqUCCFo2SFTOJWti3NO3PHL7/+su28bgOf75wC6fuB6ORs2JPPWm10/8P28ttggn7fb0XVZgFN9VA/dWDk3Vi72Zd4C3O4PFaaoMWW76ETm1RUCvD+YmZdaIQsuao1fdmDK1miw9LI6SMFxPvmMMZx6kV0urE0SJoj/gezhzx2AOraU2oFfYw2cXdA0TU42SOYnNN5twHc/C6IAAAAASUVORK5CYII=","tiles/fence_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxUlEQVR4nJ2SIQ7CMBiFvzYTuMndCcUZEAuCI2AwOwOZ4AyoJZuYJISA5Q6TOFwR0OZf07XLnmn68t7fvpdfAVzvLwPQdj3Hw16RgNRrS7Zdz/NxS3kdrF6npXFogF25jYrMsDbyLvUa4FSf4+a8HHFSH4xgX7RmtdpMFpsF2bzEDCTN7gd+B75pUQeqaBTvGvO5/OL8T18fjiCGpKJE92BOiZN74JtlD8kOgmaxC8kOVNEoaMbckg7GA8PIAKqqmjPHQeq/oOJkdEqBewsAAAAASUVORK5CYII=","tiles/grass_top":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA80lEQVR4nKVQPQrCMBh9DZ1FhDoU69JM4gVawdXNzQt4AcHzeABXL6Go4CDFqVlUHFqU0gvUQaJfYlIH39Lv7/2kzuI+r9ZpiphzSOh93cyZbsdVzDnWaQoAoPWvPub8JQAAIskQ9tvvQ723zZhIMuWA9qaZrOXcfYgSACC/rbCB/eoTme5bYQMPUSq1s5wNK/wBJotO0LUe3fLit8D1clYIlOR7TYVEzZjJwfeaCmlzuih7auaaHHS3iCTT75mJYHPTk30J3PICu8PRmkaCPkkRMDmYkkW9QBXQfxJNJEGfQsEAYDIaGJe2NFSY1anb0lHhJ3pWjDoO7glKAAAAAElFTkSuQmCC","tiles/ice_surface":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAnUlEQVR4nKWQOw6EMAxEJ1FoWdFH3IJyj8it6LanRogSgUjJFlAFgT8glGki2y/22GZatw0JsgDQBl5og5ynvItBkQHznwNaLb6mGdNWcL9huSQq/wHN3dXMt+7SjwgAoR8eYYk5GuSlZzD9QBkAcNo0CZZkNWuaqDP3ZprEWgpIu9+JNchLLzrSmrIGmrQ1jyO+sX129HjECFImxjvccU5tnzru4gAAAABJRU5ErkJggg==","tiles/lava_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAjklEQVR4nGP8f8nrPwMDAwPDigcMDAwMDAwRCgwoACaOLgcVZ/xfpfWfgQLABGM8vPCKoGJsanC6AKZY3kAMr6GMD7xE/hNShM9g6oUBzHRiwgKnAfIGYjj9jMtgJmJtRTcYpodgGBCKDRZSbUYH8DDYuOEeIbOwqsPrBZhi/wAlnAZSJx0Q63xsail2AQDIkUk0p3ULZAAAAABJRU5ErkJggg==","tiles/lava_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAhklEQVR4nGP8X6X1n4GBgYEhQoGBgYGBgWHFAwY4IEKMEW4AmYAJm+DDC6/wakKWh7sAJihvIIZXE7o8bbyAbivZBuDyDlEGPLzwCqcLcAYiMTbidAE5mlEMQHYevsBDlycqGjduuMfgH6CE3wUbN9zDaQAuzSgG4FOE7hpkQLuUiM9LyAAAEcVHnwRSLQAAAAAASUVORK5CYII=","tiles/platform":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAX0lEQVR4nGOc87bo/7E7dxisVFQYGBgYGJDZMIBPjNHLROw/AwWAhYGBgWFWSxJZmtNq5kEMuHzqEorE5E1nGHL9TAiKMTAwMDCRZTUSgLjg1iMMCWLFKA7EUTAKqAIAg08lThTYv3EAAAAASUVORK5CYII=","tiles/rock":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAArUlEQVR4nI1SKxaDQAwccgIEckUVD1nJmRA9QE+IrORVIZCI3gBU+pbJpx2ZzU5mJmke0/MAgFJ6bNsbjH3/oOtaU9d+0YL3GYD7ue4XncJYltVVw5BoyjDc/lIjXCilN02ZOkMQZTHPL1edMCNDfY/j3X0XZmREW1CrxoKXtIfLGrOJmb0vQZY822OFUsupUaeeKTQWFFHqQHAHmVe2aO6Ai4zouC4Eil9r5GxOawxJFQmzvW0AAAAASUVORK5CYII=","tiles/shadow_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVR4nGNUEXP4z0ABYIIxJEW0GCRFtAhqQFfDAhPUVbCDCz5/cw2nZpg6mBomZAX5MeEMugp2BF2CrIYF2bSJS/A7H9llMDYLPklChqAYgEsjzKm4DGXBKoqkmVDg4jQApjk/JpyBgQERPuiGMKFrRAdSDhCMC+B0Acym8hQI//KDQ/i9ICmihaGAmJhhgmnGlYCev7mGoRlZHUpCwhf/yJqRkzPWhIQPoFtGMBbwGcLAwMAAAI8tWPr/aZyuAAAAAElFTkSuQmCC","tiles/shadow_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAtElEQVR4nGNUEXP4z0ABYELmSIpokW+ApIgWg66CHUFDJEW0UNSwoCvQVbBjYGBgYHj+5hpWzTB5mBomZM7lB4eIcnZ+TDjcIEb0QJQU0cJqO7I8sgsxDCCkAR1ghAG6ZnQ/E20ATHPnnHAGBgYGhvIU7IbgdQEDAwPDswP45XEaALNp4hII//KDQ6R5AdkQdDZWA3CFNr4ohRtATGgjW4Qsz0KsU9EtgqmDe4GQU5HVIKsFAHtbU9KL3rJiAAAAAElFTkSuQmCC","tiles/spikes":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAh0lEQVR4nGNgoCawsvf5T7a8lb3P/0cvPvzHpQiXPBNZTsVl+qMXH/7PWrIFwxZ88hS7AMWAHXuO4FWMTZ7Jyt7n/4qVS1AEE1Iz4CFOSJ56XiDH+QwMDAyMhBIPIcCSZ/CJEv0ILzx7/QGvQlzycAOkRAXwakCXxzAAHeDSgG4wEz7nEWMwABPuVkPT44rXAAAAAElFTkSuQmCC","tiles/stone":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAb0lEQVR4nGPU03L5z0ABYGFgYGAICIjAKrlhwwoGQvIsMM69e3dQJF+8eIbCxyXPRJJ7sQCKDWBhYGBgOHbsEF5F+ORZGBgYGF69eoZTASF5lFggJtTR1cNjAd2ZhGIFpn6QxgIpscI49PMCxSkRADzPTSEdZCPKAAAAAElFTkSuQmCC","tiles/water_body":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAf0lEQVR4nGPUzz/yn4ECwARj8MnJEK0JWS3cgE+PnuBUjG44sloWQrbhMhjDBbicSAhgNQCfrd/fosphNQAf4BRGdR2KAdgCjBBAMeDToyd4Y4OgAfgALoPhBqAHDrEAbgB64DAwEBedeL1ATOokmBIJGYzhAoqiEd10GMAXwAAIVindOLKpyQAAAABJRU5ErkJggg==","tiles/water_surface_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAmklEQVR4nKWTUQ5AMBBEp+LbBQgncQ5xBIfx7QbErUq4gAvUF2G7o8T8NXk7O7ttTb84BwB1CgDAsIJKY0zZWtdUxQ3sxskrZowpW+t4z7CiP8U3g21egrDGnAZJnnmwLJAMAMSsmwZrilg0Jpks/tJNY71b0GZ/kmeQ5JmaiJm+fgdszHOJX2JfEwWXeICSOc70HUiQ6fdf2AEccjxwCtuhwwAAAABJRU5ErkJggg==","tiles/water_surface_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAkUlEQVR4nGNc9uT/fwY0ECkNoZc/RZfBVMNo2/vgPwMDA0NmuDyGoukrH6LwsamBG0AuYKJEM04DPj16glcTsjwTsiBMgk9OBqsmbPIsMAY2TcgAlzzeMCDkFYIGEHIVXgOQ/YxNDsMAdMV8cjI4XYAszoRNkBSA4QV8Tscmz4KuAFcagImjyxOVlPF5j+K8AAAAzj53s+PT8wAAAABJRU5ErkJggg==","ui/bubble":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAP0lEQVR4nGNkYGBg0FJw+M+ABVx7cICRQUvB4T8uoKXg8J8JpjrauxorTdAERoJuQAZaCg7/cSmGK8ApiQsAAHF7RfdqRdH9AAAAAElFTkSuQmCC","ui/coin_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAZElEQVR4nGNkgIKqAIb/DEigbQMDIwOy5P8vCyD4ks3/BwsY/sM0sFQFMPxvXbKAgeHeHLgGeSMbhjSGIwwMDAz/mRgIAIgCJN0MDAwMD88dQVOAQxLVkVDHwTDMkYzIirB5EwCmAjKLNtOZLgAAAABJRU5ErkJggg==","ui/coin_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAUElEQVR4nHWOsRGAMAzEdMyVITyPZ6HIMNQUGYALO9B/yhhi1Er3NgTckBsiww3pqVIraxSlWlGvc2lL5wIzuHYA7vP4CRK5/NErr/tp9JUDqm0wBpHcWssAAAAASUVORK5CYII=","ui/coin_2":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAANUlEQVR4nGNgQAJVAQz/qwIY/iOLMTEQC6oCGP7//7Lg/4MFqKYQNAFVwb05BBQQ4w6SfQEArJwSTIT9QAAAAAAASUVORK5CYII=","ui/coin_3":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAUElEQVR4nHWOsRGAMAzEdMyVITyPZ6HIMNQUGYALO9B/yhhi1Er3NgTckBsiww3pqVIraxSlWlGvc2lL5wIzuHYA7vP4CRK5/NErr/tp9JUDqm0wBpHcWssAAAAASUVORK5CYII=","ui/flag":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAgCAYAAAAbifjMAAAAy0lEQVR4nGNgwAG8vKL+/7/h9f//Da//Xl5R/3Gpw6/5/3+ChjDhNemmN0kWY7jiwwKF/x8WKOD1Ags+Q15YHGG4cOEKw7ZtHoxkGYDsGmzi27YtYyTKgHnfsCtL8or6jz8Q0YD4/oUM4vsXooiRZAA2QJQXYOClYzwDAwMDw4UXLyACSiKkuwCmeZKSCPGBCLcRCmCaGRiI9MIkJRE4e9u2ZYwMNxByRBkAsw0boDgWRg0YNWDUgGFjANaCAltFgqtQwXABrloIlzgAwplTgQ4aZHAAAAAASUVORK5CYII=","ui/heart_empty":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAHCAYAAAA1WQxeAAAAVklEQVR4nIWPIQ7AIBRDH2QK1SP8c3HAnQuFrsIyMxIyxOpeXisKQFXMqpi82TlVxWwSKgX1DsDO11p5DCyxs4DMT/LtlsI+RNjcbikDfEtLHqvvG4AHR6gpf8BqP8YAAAAASUVORK5CYII=","ui/heart_full":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAHCAYAAAA1WQxeAAAAaElEQVR4nGNgYGBgiBJQ+B8loPCfAQpQ+FECCv//e2X9/z9rw3+YBDKfBaaLYcMuhqVWXgzIfAYGBgYmBhzg4L17EAXLPjxgjD62DUNy1osbDMs+PGCEC8LsPqDhgeJgFIDuGwYGBgYAsfM1YO2F9j0AAAAASUVORK5CYII=","ui/save_stone_0":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAuUlEQVR4nMWSMQ7CIBSGf0zv0MGlQ2MM6SG6sXEWxo4coWdxc/MQDTGmQxcGT4HTQ6oPqS5+0wPe+/ITEMggZR/StXMXwfVVuWFjhtXeOCJwkt2nYa8VvFYAAGOGt1SsgPBawdaArRElHCsBFz2FS5FNsD+dYe/PelMCDpLkYF8hTVGimOBrwTRds83cGXsFauy6Y1Eaf5aUfWiaAwCgbSXbPM8OALAst/i1xevwVkgifhlOJRUVf+MBQkBIbZs74KgAAAAASUVORK5CYII=","ui/save_stone_1":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAuklEQVR4nGNkwAG0tBz+I/OvXTvAiE0dCy7NBQUVKGITJjD8x2UIhuZZs3b8nzVrx38YgPHRXcXAwMDAhMug1FR3rGy8BmBzOjIoKKjACBucLpg9eydWNl4XoIOGl/hkIQBrLMCA9KadDLMJGIDXBcQADAOuXLmBUzE2OaxegCnU0dEgaCg8ZWlpOfxXUFBjYGBgYFBR0cKq+M6dawwMDAwMDx7cgidtRnTNxAKYIYzkaEY2hAXGGDAAAJagVG8vPGsKAAAAAElFTkSuQmCC","ui/sign":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAf0lEQVR4nGP00hL4z0AGYGFgYGBYtqiKaA071mxgWLTpGkQjAwMDw5s711AUxNVsYGBgYGBY1BKA1QAmUp1IsUYWXBK4nEjQxriaDXB/YgOMXloC/+P8tAi7Ddk1m65BNJKkC2YjLgkvLYH/ilICDAwMDAxT9zzAUEf/6KC/RgBYnRvQ+gbWYwAAAABJRU5ErkJggg=="};
 /* ASSET_PNG_END */
-const IMG = {};      // key -> canvas（朝右 / 原图）
-const IMGF = {};     // key -> 水平翻转后的 canvas
-let assetsLeft = 0;
+const IMG = {}, IMGF = {};
 function loadAssets(done) {
-  const keys = Object.keys(ASSET_PNG); assetsLeft = keys.length;
-  if (!assetsLeft) return done();
+  const keys = Object.keys(ASSET_PNG); let left = keys.length;
+  if (!left) return done();
   for (const k of keys) {
     const img = new Image();
+    const fin = () => { if (--left === 0) done(); };
     img.onload = () => {
       const make = (flip) => { const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const g = c.getContext('2d'); g.imageSmoothingEnabled = false;
         if (flip) { g.translate(img.width, 0); g.scale(-1, 1); } g.drawImage(img, 0, 0); return c; };
-      IMG[k] = make(false); if (k.startsWith('characters/') || k.startsWith('enemies/')) IMGF[k] = make(true);
-      if (--assetsLeft === 0) done();
+      IMG[k] = make(false); if (k.startsWith('characters/') || k.startsWith('enemies/')) IMGF[k] = make(true); fin();
     };
-    img.onerror = () => { if (--assetsLeft === 0) done(); };
-    img.src = ASSET_PNG[k];
+    img.onerror = fin; img.src = ASSET_PNG[k];
   }
 }
 const charSprite = (form, shiny, facing) => { const k = 'characters/' + form + (shiny && IMG['characters/' + form + '_shiny'] ? '_shiny' : ''); return facing < 0 ? IMGF[k] : IMG[k]; };
 
-// ---------------- 关卡生成 ----------------
-// 瓦片：'=' 草地顶  '#' 泥土  'b' 砖块  'W' 木箱  '~' 水  'E' 电网  'S' 黑影墙  '^' 尖刺  '-' 单向平台
-const LW = 268;
-let grid, coins, enemies, foods, signs, flag, startPos, deco, clouds;
-function buildLevel() {
-  grid = [];
-  for (let y = 0; y < H; y++) grid.push(new Array(LW).fill(' '));
-  coins = []; enemies = []; foods = []; signs = []; deco = []; clouds = [];
-  const set = (x, y, ch) => { if (x >= 0 && x < LW && y >= 0 && y < H) grid[y][x] = ch; };
-  const ground = (x0, x1, top = 10) => { for (let x = x0; x <= x1; x++) for (let y = top; y < H; y++) set(x, y, y === top ? '=' : '#'); };
-  const water = (x0, x1) => { for (let x = x0; x <= x1; x++) { for (let y = 10; y < 13; y++) set(x, y, '~'); set(x, 13, '#'); } };
-  const coinRow = (x0, x1, y) => { for (let x = x0; x <= x1; x++) coins.push({ x: x * T + T / 2, y: y * T + T / 2, taken: false }); };
-  const slime = (x) => enemies.push({ type: 'slime', x: x * T + 1, y: 10 * T - 12, w: 14, h: 12, vx: -0.4, vy: 0, alive: true, t: Math.floor(Math.random() * 100) });
-  const bat = (x, y, range = 4) => enemies.push({ type: 'bat', x: x * T, y: y * T, w: 14, h: 10, vx: -0.7, vy: 0, alive: true, t: Math.floor(Math.random() * 100), x0: (x - range) * T, x1: (x + range) * T, baseY: y * T });
-  const food = (x, y, type) => foods.push({ x: x * T + T / 2, y: y * T + T / 2, type, taken: false });
-  const sign = (x, text) => signs.push({ x, text });
-
-  ground(0, 34);
-  startPos = { x: 3 * T, y: 10 * T - PH };
-  sign(5, '← → 移动，空格 / ↑ 跳跃。伊布吃不同的食物会进化！');
-  coinRow(8, 12, 7);
-  slime(18);
-  for (let x = 22; x <= 25; x++) set(x, 7, 'b');
-  coinRow(22, 25, 5);
-  sign(30, '前方有水池！先吃蓝莓变成水伊布，才能游过去');
-  ground(35, 41); food(38, 9, '1');
-  water(42, 55); coinRow(44, 53, 11);
-  ground(56, 62); slime(58);
-  ground(63, 90);
-  sign(65, '电网会电到你！吃柠檬变成雷伊布，就能直接冲过去');
-  food(68, 9, '2');
-  for (let x = 74; x <= 75; x++) for (let y = 6; y <= 9; y++) set(x, y, 'E');
-  coinRow(77, 79, 8);
-  for (let x = 82; x <= 83; x++) for (let y = 6; y <= 9; y++) set(x, y, 'E');
-  slime(87);
-  ground(91, 118);
-  sign(93, '木箱挡路！吃辣椒变成火伊布，碰一下就烧掉它');
-  food(96, 9, '3');
-  for (let x = 101; x <= 102; x++) for (let y = 6; y <= 9; y++) set(x, y, 'W');
-  for (let x = 108; x <= 110; x++) for (let y = 7; y <= 9; y++) set(x, y, 'W');
-  coinRow(108, 110, 5); slime(114);
-  ground(119, 146);
-  sign(121, '好高的墙！吃树叶变成叶伊布，可以二段跳');
-  food(124, 9, '4');
-  for (let x = 129; x <= 130; x++) for (let y = 6; y <= 9; y++) set(x, y, 'b');
-  for (let x = 135; x <= 138; x++) set(x, 4, 'b');
-  coinRow(135, 138, 2); slime(142);
-  ground(147, 153);
-  sign(149, '深水区！吃冰淇淋变成冰伊布，踩着冰面走过去');
-  food(151, 9, '5');
-  water(154, 169); coinRow(156, 167, 9);
-  ground(170, 176);
-  ground(177, 186);
-  sign(179, '大峡谷！吃太阳饼变成太阳伊布，下落时按住跳跃滑翔');
-  food(181, 9, '6');
-  for (let y = 8; y <= 9; y++) set(184, y, '#'); set(184, 8, '=');
-  for (let y = 7; y <= 9; y++) set(185, y, '#'); set(185, 7, '=');
-  for (let y = 6; y <= 9; y++) set(186, y, '#'); set(186, 6, '=');
-  coinRow(189, 195, 7);
-  ground(198, 206);
-  ground(207, 232);
-  sign(209, '黑影墙！吃月饼变成月亮伊布，可以从阴影里穿过去');
-  food(212, 9, '7');
-  for (let x = 218; x <= 219; x++) for (let y = 3; y <= 9; y++) set(x, y, 'S');
-  coinRow(222, 224, 8); slime(226); slime(229);
-  ground(233, LW - 1);
-  sign(235, '最后一关！吃彩虹糖变成仙子伊布，用魅力把怪物变成爱心');
-  food(238, 9, '8');
-  [243, 246, 249, 252, 255].forEach(x => slime(x));
-  coinRow(244, 254, 7);
-  flag = { x: 260 * T, y: 10 * T - 32 };
-
-  // 背景装饰：确定性伪随机，放在空旷的草地上
-  let seed = 7; const rnd = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
-  const busy = new Set(); signs.forEach(s => { for (let d = -2; d <= 2; d++) busy.add(s.x + d); }); foods.forEach(f => { for (let d = -1; d <= 1; d++) busy.add(Math.floor(f.x / T) + d); });
-  for (let d = -2; d <= 3; d++) busy.add(Math.floor(flag.x / T) + d);
-  for (let x = 1; x < LW - 2; x++) {
-    if (grid[10][x] !== '=' || grid[9][x] !== ' ' || grid[9][x + 1] !== ' ' || busy.has(x)) continue;
-    const r = rnd();
-    if (r < 0.05 && grid[10][x + 1] === '=' && grid[9][x - 1] === ' ') { deco.push({ x: x * T - 4, y: 10 * T - 22, img: 'deco/tree' }); x += 2; }
-    else if (r < 0.14 && grid[10][x + 1] === '=') { deco.push({ x: x * T - 2, y: 10 * T - 10, img: 'deco/bush' }); x += 1; }
-    else if (r < 0.24) deco.push({ x: x * T + Math.floor(rnd() * 10), y: 10 * T - 5, img: 'deco/flower' });
-  }
-  for (let i = 0; i < 40; i++) clouds.push({ x: rnd() * LW * T * 0.5, y: 8 + rnd() * 70, big: rnd() < 0.5 });
-}
-const get = (x, y) => (x < 0 || x >= LW) ? '#' : (y < 0 || y >= H ? ' ' : grid[y][x]);
+// ---------------- 世界 ----------------
+/* WORLD_BEGIN */
+const WORLD = {"tw":336,"th":56,"rows":["################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################################################################################################################","################################################################################################################################################################################################################################################                        ################################################BBBBBBBBBBBBBBBBBBBBBBBB","################################################################################################################################################################################################################################################                        ################################################BBBBBBBBBBBBBBBBBBBBBBBB","################################################################################################################################################################################################################################################                        ################################################BB                    BB","################################################################################################################################################################################################################################################      ====              ################################################BB                    BB","################################################################################################################################################################################################################################################                        ################################################BB   ---        ---   BB","################################################################################################################################################################################################################################################                        ################################################BB                    BB","################################################################################################################################################################################################################################################                ---     ################################################BB        ---         BB","################################################################################################################################################################################################################################################                        ################################################BB                    BB","################################################################################################################################################################################################################################################           ---          ################################################BB  ---          ---  BB","################################################################################################################################################################################################################################################                        ################################################BB                    BB","################################################################################################################################################################################################################################################   WW                   ################################################BB                    BB","################################################################################################################################################################################################################################################   WW  ---              ################################################BB                    BB","################################################################################################################################################################################################################################################===##==          =======################################################BBBBBBBBB      BBBBBBBBB","#######################################################################################################################################################################################################################################################          #######################################################BBBBBBBBB      BBBBBBBBB","################################################                                                                                                                                                                                                                                                                                                ","################################################                                                                                                                                                                                                                                                                                  EEEE          ","################################################                                                                                                                                                                                                                                                                                                ","################################################                                                                                                                                                                                                            --                                                                                  ","################################################                                                                                                                                             ====                                                                                                                                               ","################################################                                                                              ---     ---                                                                                                              --        --                                                                             ","################################################                                                         -----                                                                      ====                  -------                 -----                                                                                                         ","################################################                                                                                                                                                                                                                             ---     ---     ---                                                ","################################################                                                                                                                                                                                                                                                                                                ","################################################    ======                                                                ---       ---                                                                                                  ===                         W                                                                          ","################################################    ######                                                                                                                                                                                                           W                                                            ====          ","################################################====######==========~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~===~~~~~~~~~~========================================================================================^^^=====^^^=====#========================================================~~~~####~~~~======","####################################################################~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~###~~~~~~~~~~#################################################################################################################################################################~~~~####~~~~######","####################################################################~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~###~~~~~~~~~~###################################################################################################################################################################################","########################################################################################################################rrrr~~~~~~~~~~~~~~~~rrrr################################################################################################################################################################################################","########################################################################################################################rrr~~~~~~~~~~~~~~~~~~rrr################################################################################################################################################################################################","########################################################################################################################rr~~~~~~~~~~~~~~~~~~~~rr################################################################################################################################################################################################","########################################################################################################################r~~~~~~~~~~~~~~~~~~~~~~r################################################################################################################################################################################################","########################################################################################################################r~~~~~~~~~rrrr~~~~~~~~~r################################################################################################################################################################################################","########################################################################################################################r~~~rrr~~~~~~~~~~rrr~~~r################################################################################################################################################################################################","########################################################################################################################r~~~~~~~~~~~~~~~~~~~~~~r################################################################################################################################################################################################","########################################################################################################################r~~~~~~~~~~~~~~~~~~~~~~r################################################################################################################################################################################################","########################################################################################################################rr~~~~~~~~~~~~~~~~~~~~rr################################################################################################################################################################################################","########################################################################################################################rrr~~~~~~~~~~~~~~~~~~rrr################################################################################################################################################################################################","########################################################################################################################rrrr~~~~~~~~~~~~~~~~rrrr################################################################################################################################################################################################","########################################################################################################################rrrrrr~~~~~~~~~~~~rrrrrr################################################################################################################################################################################################","########################################################################################################################rrrrrrrr~~~~~~~~rrrrrrrr################################################################################################################################################################################################","########################################################################################################################rrrrrrrrrrrrrrrrrrrrrrrr################################################################################################################################################################################################"],"rooms":[{"id":0,"name":"起点村","region":"village","x":168,"y":28,"w":48,"h":14},{"id":1,"name":"草原·入口","region":"plains","x":216,"y":28,"w":24,"h":14},{"id":2,"name":"草原·坑洼","region":"plains","x":240,"y":28,"w":24,"h":14},{"id":3,"name":"草原·高崖","region":"plains","x":240,"y":14,"w":24,"h":14},{"id":4,"name":"草原·蝙蝠林","region":"plains","x":264,"y":28,"w":24,"h":14},{"id":5,"name":"草原·史莱姆王","region":"plains","x":288,"y":28,"w":24,"h":14},{"id":6,"name":"草原·池塘","region":"plains","x":312,"y":28,"w":24,"h":14},{"id":7,"name":"雷电塔·门口","region":"tower","x":312,"y":14,"w":24,"h":14},{"id":8,"name":"湖畔","region":"lake","x":144,"y":28,"w":24,"h":14},{"id":9,"name":"湖面","region":"lake","x":120,"y":28,"w":24,"h":14},{"id":10,"name":"湖底洞穴","region":"lakecave","x":120,"y":42,"w":24,"h":14},{"id":11,"name":"湖心","region":"lake","x":96,"y":28,"w":24,"h":14},{"id":12,"name":"湖蚌洞","region":"lake","x":72,"y":28,"w":24,"h":14},{"id":13,"name":"柠檬岩","region":"lake","x":48,"y":28,"w":24,"h":14}],"entities":[{"t":"c","x":204,"y":33,"room":0},{"t":"c","x":206,"y":33,"room":0},{"t":"c","x":208,"y":33,"room":0},{"t":"N","x":173,"y":38,"room":0,"text":"村长伊布：欢迎回家！东边的草原最近有大史莱姆出没，西边的湖没有水伊布的本事可过不去。"},{"t":"s","x":180,"y":38,"room":0},{"t":"N","x":193,"y":38,"room":0,"text":"存档石：碰一下就能回满血并记录位置。"},{"t":"!","x":200,"y":38,"room":0,"text":"小伊布：听说吃了不同的食物会进化成不同的样子！按 1～9 可以切换已经学会的形态。"},{"t":"N","x":210,"y":38,"room":0,"text":"路牌：← 湖泊（需要游泳）　　草原 →"},{"t":"c","x":228,"y":33,"room":1},{"t":"c","x":230,"y":33,"room":1},{"t":"c","x":234,"y":36,"room":1},{"t":"!","x":219,"y":38,"room":1,"text":"路牌：踩在怪物头上可以打倒它。被碰到会掉血，血没了就回到存档石。"},{"t":"e","x":226,"y":38,"room":1},{"t":"e","x":238,"y":38,"room":1},{"t":"e","x":243,"y":38,"room":2},{"t":"v","x":252,"y":38,"room":2},{"t":"c","x":257,"y":38,"room":2},{"t":"c","x":263,"y":38,"room":2},{"t":"h","x":247,"y":16,"room":3},{"t":"v","x":272,"y":32,"room":4},{"t":"v","x":283,"y":32,"room":4},{"t":"c","x":267,"y":38,"room":4},{"t":"e","x":274,"y":38,"room":4},{"t":"e","x":281,"y":38,"room":4},{"t":"c","x":286,"y":38,"room":4},{"t":"!","x":290,"y":38,"room":5,"text":"路牌：前方是大史莱姆的地盘！它每被踩一次就会分裂出一只小史莱姆。"},{"t":"G","x":299,"y":38,"room":5},{"t":"1","x":323,"y":37,"room":6},{"t":"s","x":313,"y":38,"room":6},{"t":"!","x":317,"y":38,"room":6,"text":"路牌：池塘中央的小岛上有颗蓝莓。吃了它就能游泳了，回头去西边的湖看看吧！"},{"t":"!","x":333,"y":38,"room":6,"text":"路牌：↑ 雷电塔。电网只有雷伊布能过。"},{"t":"c","x":318,"y":17,"room":7},{"t":"c","x":329,"y":17,"room":7},{"t":"!","x":323,"y":23,"room":7,"text":"石碑：雷电塔暂未开放，施工中。"},{"t":"f","x":147,"y":38,"room":8},{"t":"s","x":159,"y":38,"room":8},{"t":"!","x":163,"y":38,"room":8,"text":"路牌：湖水又深又宽，没有水伊布过不去。"},{"t":"c","x":149,"y":41,"room":8},{"t":"c","x":151,"y":41,"room":8},{"t":"c","x":153,"y":41,"room":8},{"t":"c","x":155,"y":41,"room":8},{"t":"c","x":128,"y":32,"room":9},{"t":"c","x":135,"y":32,"room":9},{"t":"f","x":123,"y":36,"room":9},{"t":"f","x":133,"y":36,"room":9},{"t":"p","x":124,"y":41,"room":9},{"t":"p","x":141,"y":41,"room":9},{"t":"p","x":125,"y":45,"room":10},{"t":"p","x":138,"y":45,"room":10},{"t":"c","x":123,"y":49,"room":10},{"t":"c","x":140,"y":49,"room":10},{"t":"p","x":131,"y":50,"room":10},{"t":"*","x":132,"y":54,"room":10},{"t":"c","x":107,"y":33,"room":11},{"t":"f","x":99,"y":38,"room":11},{"t":"p","x":100,"y":40,"room":11},{"t":"p","x":114,"y":40,"room":11},{"t":"h","x":106,"y":41,"room":11},{"t":"M","x":82,"y":40,"room":12},{"t":"2","x":54,"y":36,"room":13},{"t":"!","x":50,"y":38,"room":13,"text":"路牌：柠檬！吃了它就能变成雷伊布，冲过草原尽头的电网。"},{"t":"s","x":61,"y":38,"room":13}],"start":{"x":185,"y":38}};
+/* WORLD_END */
+const TWd = WORLD.tw, THt = WORLD.th;
+let grid;
+const get = (x, y) => (x < 0 || x >= TWd || y < 0 || y >= THt) ? '#' : grid[y][x];
+const roomAt = (px, py) => { const tx = Math.floor(px / T), ty = Math.floor(py / T); return WORLD.rooms.find(r => tx >= r.x && tx < r.x + r.w && ty >= r.y && ty < r.y + r.h) || null; };
 
 // ---------------- 音效 ----------------
 let actx = null;
@@ -196,8 +123,7 @@ function beep(freq, dur = 0.08, type = 'square', vol = 0.08, slide = 0) {
     const o = actx.createOscillator(), g = actx.createGain();
     o.type = type; o.frequency.setValueAtTime(freq, actx.currentTime);
     if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(40, freq + slide), actx.currentTime + dur);
-    g.gain.setValueAtTime(vol, actx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + dur);
+    g.gain.setValueAtTime(vol, actx.currentTime); g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + dur);
     o.connect(g); g.connect(actx.destination); o.start(); o.stop(actx.currentTime + dur);
   } catch (e) { }
 }
@@ -212,69 +138,112 @@ const SFX = {
   win: () => [0, 1, 2, 3, 4, 5, 6].forEach(i => setTimeout(() => beep([523, 659, 784, 1046, 784, 1046, 1318][i], 0.18, 'square', 0.06), i * 130)),
   die: () => [0, 1, 2].forEach(i => setTimeout(() => beep(300 - i * 80, 0.25, 'square', 0.07), i * 180)),
   charm: () => { beep(900, 0.1, 'sine', 0.07); setTimeout(() => beep(1300, 0.15, 'sine', 0.07), 80); },
+  save: () => [0, 1, 2].forEach(i => setTimeout(() => beep([880, 1109, 1319][i], 0.15, 'sine', 0.06), i * 100)),
+  swap: () => beep(700, 0.08, 'triangle', 0.06, 400),
+  boss: () => [0, 1, 2].forEach(i => setTimeout(() => beep(110 + i * 20, 0.3, 'sawtooth', 0.08), i * 150)),
+  bosshit: () => beep(180, 0.2, 'square', 0.08, -100),
+  heart: () => [0, 1, 2, 3].forEach(i => setTimeout(() => beep([659, 784, 988, 1319][i], 0.16, 'triangle', 0.07), i * 110)),
+  crack: () => beep(90, 0.25, 'sawtooth', 0.09, -40),
   shiny: () => {
-    // 仿正作闪光音：一串快速上行的星星叮铃声，最后一个长音带颤音
     const seq = [1319, 1760, 2093, 2637, 2093, 2637, 3136, 3520];
     seq.forEach((f, i) => setTimeout(() => { beep(f, 0.09, 'sine', 0.06); beep(f * 2, 0.06, 'triangle', 0.025); }, i * 55));
-    setTimeout(() => {
-      try {
-        const o = actx.createOscillator(), g = actx.createGain(), v = actx.createOscillator(), vg = actx.createGain();
-        o.type = 'sine'; o.frequency.value = 4186; v.frequency.value = 9; vg.gain.value = 40; v.connect(vg); vg.connect(o.frequency);
-        g.gain.setValueAtTime(0.07, actx.currentTime); g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 0.7);
-        o.connect(g); g.connect(actx.destination); o.start(); v.start(); o.stop(actx.currentTime + 0.7); v.stop(actx.currentTime + 0.7);
-      } catch (e) { }
-    }, seq.length * 55);
+    setTimeout(() => { try {
+      const o = actx.createOscillator(), g = actx.createGain(), v = actx.createOscillator(), vg = actx.createGain();
+      o.type = 'sine'; o.frequency.value = 4186; v.frequency.value = 9; vg.gain.value = 40; v.connect(vg); vg.connect(o.frequency);
+      g.gain.setValueAtTime(0.07, actx.currentTime); g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 0.7);
+      o.connect(g); g.connect(actx.destination); o.start(); v.start(); o.stop(actx.currentTime + 0.7); v.stop(actx.currentTime + 0.7);
+    } catch (e) { } }, seq.length * 55);
   },
 };
 
 // ---------------- 游戏状态 ----------------
-let state = 'loading';
-let discoveredShiny = {};
-let shinyFx = null;
-let player, camX = 0, score = 0, lives = 3, coinCount = 0, frame = 0, discovered, evo, checkpoint, timeStart, timeEnd, particles, floaters, deathTimer, burnQueue = [];
-function resetGame() {
-  buildLevel();
-  score = 0; lives = 3; coinCount = 0; frame = 0; camX = 0;
-  discovered = { eevee: true }; discoveredShiny = {};
-  particles = []; floaters = []; burnQueue = []; shinyFx = null;
-  checkpoint = { x: startPos.x, y: startPos.y };
-  player = makePlayer('eevee');
-  timeStart = performance.now();
+let state = 'loading';   // loading | title | play | evolving | dead | map
+let player, camX = 0, camY = 0, frame = 0, evo, particles = [], floaters = [], burnQueue = [], shinyFx = null, deathTimer = 0;
+let enemies = [], items = [], npcs = [], saveStones = [];
+let G;
+let curRoom = null, bossActive = null, dialog = null, titleAnim = 0, msg = null;
+function newProgress() {
+  return { unlocked: { eevee: true }, shiny: {}, maxHp: 5, hp: 5, coins: 0, hearts: 0, collected: {}, visited: {}, bossDead: {}, burned: [], broken: [],
+    respawn: { x: WORLD.start.x * T, y: WORLD.start.y * T + T - PH }, form: 'eevee', time: 0 };
+}
+function buildGrid() {
+  grid = WORLD.rows.map(r => r.split(''));
+  for (const [x, y] of G.burned) grid[y][x] = ' ';
+  for (const [x, y] of G.broken) grid[y][x] = ' ';
+}
+function spawnEntities() {
+  enemies = []; items = []; npcs = []; saveStones = [];
+  WORLD.entities.forEach((e, idx) => {
+    const x = e.x * T, y = e.y * T, id = 'e' + idx;
+    switch (e.t) {
+      case 'e': enemies.push({ type: 'slime', id, x: x + 1, y: y + T - 12, w: 14, h: 12, vx: -0.4, vy: 0, alive: true, t: 0, hp: 1, inv: 0 }); break;
+      case 'v': enemies.push({ type: 'bat', id, x, y, w: 14, h: 10, vx: -0.7, vy: 0, alive: true, t: 0, hp: 1, inv: 0, x0: x - 4 * T, x1: x + 4 * T, baseY: y }); break;
+      case 'p': enemies.push({ type: 'puffer', id, x: x + 1, y: y + 2, w: 14, h: 12, vx: 0.4, vy: 0, alive: true, t: 0, hp: 1, inv: 0, puff: 0 }); break;
+      case 'f': enemies.push({ type: 'frog', id, x, y: y + T - 14, w: 16, h: 14, vx: 0, vy: 0, alive: true, t: 0, hp: 1, inv: 0, cd: 60 }); break;
+      case 'G': if (!G.bossDead[id]) enemies.push({ type: 'bigslime', id, x: x - 4, y: y + T - 20, w: 24, h: 20, vx: 0, vy: 0, alive: true, t: 0, hp: 3, boss: true, name: '大史莱姆', cd: 60, inv: 0 }); break;
+      case 'M': if (!G.bossDead[id]) enemies.push({ type: 'clam', id, x: x - 4, y: y + T - 16, w: 24, h: 16, vx: 0, vy: 0, alive: true, t: 0, hp: 3, boss: true, name: '湖蚌', inv: 0, open: false }); break;
+      case 'c': case 'h': case '*': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8':
+        if (!G.collected[id]) items.push({ type: e.t, id, x: x + T / 2, y: y + T / 2 }); break;
+      case 's': saveStones.push({ id, x, y, cd: 0 }); break;
+      case '!': case 'N': npcs.push({ type: e.t, id, x, y, text: e.text, facing: 1, bob: Math.random() * 100 }); break;
+    }
+  });
 }
 function makePlayer(form) {
-  return { x: checkpoint.x, y: checkpoint.y, w: PW, h: PH, vx: 0, vy: 0, facing: 1, onGround: false, jumpsLeft: 0,
-    inWater: false, breath: 1, form, invuln: 0, anim: 0, gliding: false, shiny: false };
+  return { x: G.respawn.x, y: G.respawn.y, w: PW, h: PH, vx: 0, vy: 0, facing: 1, onGround: false, jumpsLeft: 0, inWater: false, breath: 1,
+    form, invuln: 0, anim: 0, gliding: false, shiny: !!G.shiny[form], safeX: G.respawn.x, safeY: G.respawn.y, switchCd: 0 };
 }
+function startGame(progress) {
+  G = progress; buildGrid(); spawnEntities();
+  player = makePlayer(G.form); particles = []; floaters = []; burnQueue = []; shinyFx = null; dialog = null; bossActive = null; msg = null;
+  curRoom = roomAt(player.x + player.w / 2, player.y + player.h / 2); if (curRoom) G.visited[curRoom.id] = true;
+  clampCam(true);
+  state = 'play';
+}
+function saveGame() { try { G.form = player.form; localStorage.setItem(SAVE_KEY, JSON.stringify(G)); } catch (e) { } }
+function loadGame() { try { const s = localStorage.getItem(SAVE_KEY); if (!s) return null; return Object.assign(newProgress(), JSON.parse(s)); } catch (e) { return null; } }
+const hasSave = () => { try { return !!localStorage.getItem(SAVE_KEY); } catch (e) { return false; } };
 
 // ---------------- 输入 ----------------
 const keys = {};
-let jumpQueued = false;
-function anyStart() {
-  if (state === 'title') { resetGame(); state = 'play'; }
-  else if (state === 'over' || state === 'win') { state = 'title'; }
-}
+let jumpQueued = false, mapToggle = false, formNext = false;
+function anyStart() { if (state === 'title') startGame(loadGame() || newProgress()); }
 window.addEventListener('keydown', e => {
   if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault();
   if (e.repeat) return;
   keys[e.key] = true;
   if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W' || e.key === 'z') jumpQueued = true;
-  if (e.key === 'r' || e.key === 'R') { if (state !== 'title' && state !== 'loading') { resetGame(); state = 'play'; return; } }
+  if (e.key === 'm' || e.key === 'M') mapToggle = true;
+  if (e.key === 'Tab') { formNext = true; e.preventDefault(); }
+  if (e.key >= '1' && e.key <= '9') switchForm(FORM_ORDER[+e.key - 1]);
+  if (state === 'title' && (e.key === 'n' || e.key === 'N')) { startGame(newProgress()); return; }
   anyStart();
 });
 window.addEventListener('keyup', e => { keys[e.key] = false; });
-const bind = (id, key) => {
+const bind = (id, key, fn) => {
   const el = document.getElementById(id);
-  const down = e => { e.preventDefault(); keys[key] = true; el.classList.add('on'); if (key === ' ') jumpQueued = true; anyStart(); };
+  const down = e => { e.preventDefault(); keys[key] = true; el.classList.add('on'); if (fn) fn(); else if (key === ' ') jumpQueued = true; anyStart(); };
   const up = e => { e.preventDefault(); keys[key] = false; el.classList.remove('on'); };
   el.addEventListener('touchstart', down, { passive: false }); el.addEventListener('touchend', up, { passive: false }); el.addEventListener('touchcancel', up, { passive: false });
   el.addEventListener('mousedown', down); el.addEventListener('mouseup', up); el.addEventListener('mouseleave', up);
 };
-bind('bL', 'ArrowLeft'); bind('bR', 'ArrowRight'); bind('bJ', ' ');
+bind('bL', 'ArrowLeft'); bind('bR', 'ArrowRight'); bind('bJ', ' '); bind('bF', '_f', () => { formNext = true; }); bind('bM', '_m', () => { mapToggle = true; });
 canvas.addEventListener('pointerdown', () => anyStart());
 const left = () => keys.ArrowLeft || keys.a || keys.A;
 const right = () => keys.ArrowRight || keys.d || keys.D;
 const jumpHeld = () => keys[' '] || keys.ArrowUp || keys.w || keys.W || keys.z;
 const upHeld = () => keys.ArrowUp || keys.w || keys.W || keys[' '];
+
+function switchForm(form) {
+  if (state !== 'play' || !G.unlocked[form] || form === player.form || player.switchCd > 0) return;
+  player.form = form; player.shiny = !!G.shiny[form]; player.switchCd = 18; SFX.swap();
+  spark(player.x + player.w / 2, player.y + player.h / 2, 10, ['#fff', FORMS[form].color], 1, 18);
+  floaters.push({ x: player.x + player.w / 2, y: player.y - 6, text: FORMS[form].name, life: 40, color: '#fff' });
+}
+function cycleForm() {
+  const list = FORM_ORDER.filter(f => G.unlocked[f]); if (list.length < 2) return;
+  switchForm(list[(list.indexOf(player.form) + 1) % list.length]);
+}
 
 // ---------------- 碰撞 ----------------
 function spark(x, y, n, colors, spd = 1, life = 30) {
@@ -282,16 +251,22 @@ function spark(x, y, n, colors, spd = 1, life = 30) {
 }
 function burnCrate(tx, ty) {
   if (get(tx, ty) !== 'W') return;
-  grid[ty][tx] = ' ';
+  grid[ty][tx] = ' '; G.burned.push([tx, ty]);
   [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([dx, dy]) => { if (get(tx + dx, ty + dy) === 'W') burnQueue.push({ tx: tx + dx, ty: ty + dy, delay: 10 }); });
-  SFX.burn();
-  spark(tx * T + 8, ty * T + 8, 12, ['#ff9a3c', '#ffd23c', '#ff5a2a'], 1.2, 25);
-  score += 20;
+  SFX.burn(); spark(tx * T + 8, ty * T + 8, 12, ['#ff9a3c', '#ffd23c', '#ff5a2a'], 1.2, 25); G.coins += 1;
 }
+function breakWall(tx, ty) {
+  if (get(tx, ty) !== 'K') return;
+  grid[ty][tx] = ' '; G.broken.push([tx, ty]); SFX.crack(); spark(tx * T + 8, ty * T + 8, 14, ['#8a86a0', '#5a566a', '#fff'], 1.6, 30);
+  [[0, 1], [0, -1]].forEach(([dx, dy]) => { if (get(tx + dx, ty + dy) === 'K') burnQueue.push({ tx: tx + dx, ty: ty + dy, delay: 6, wall: true }); });
+}
+const allEvos = () => FORM_ORDER.slice(1).every(f => G.unlocked[f]);
 function solidFor(tx, ty, p) {
   const t = get(tx, ty);
-  if (t === '=' || t === '#' || t === 'b') return true;
+  if (t === '#' || t === '=' || t === 'r' || t === 'b' || t === 'B') return true;
   if (t === 'W') { if (p && p.form === 'flareon') { burnCrate(tx, ty); return false; } return true; }
+  if (t === 'K') { if (p && p.form === 'jolteon' && Math.abs(p.vx) > 2.2) { breakWall(tx, ty); return false; } return true; }
+  if (t === 'D') return !(p && allEvos());
   if (t === 'S') return !(p && p.form === 'umbreon');
   if (t === '~') return !!(p && p.form === 'glaceon' && get(tx, ty - 1) !== '~');
   return false;
@@ -301,50 +276,47 @@ function collide(ent, p) {
   let x0 = Math.floor(ent.x / T), x1 = Math.floor((ent.x + ent.w - 0.01) / T);
   let y0 = Math.floor(ent.y / T), y1 = Math.floor((ent.y + ent.h - 0.01) / T);
   for (let ty = y0; ty <= y1; ty++) for (let tx = x0; tx <= x1; tx++) {
-    if (solidFor(tx, ty, p)) {
-      if (ent.vx > 0) ent.x = tx * T - ent.w; else if (ent.vx < 0) ent.x = (tx + 1) * T;
-      ent.vx = 0; ent.hitWall = true;
-    }
+    if (solidFor(tx, ty, p)) { if (ent.vx > 0) ent.x = tx * T - ent.w; else if (ent.vx < 0) ent.x = (tx + 1) * T; ent.vx = 0; ent.hitWall = true; }
   }
   const prevBottom = ent.y + ent.h;
-  ent.y += ent.vy;
-  ent.onGround = false;
+  ent.y += ent.vy; ent.onGround = false;
   x0 = Math.floor(ent.x / T); x1 = Math.floor((ent.x + ent.w - 0.01) / T);
   y0 = Math.floor(ent.y / T); y1 = Math.floor((ent.y + ent.h - 0.01) / T);
   for (let ty = y0; ty <= y1; ty++) for (let tx = x0; tx <= x1; tx++) {
     const oneWay = get(tx, ty) === '-' && ent.vy > 0 && prevBottom <= ty * T + 0.01;
-    if (solidFor(tx, ty, p) || oneWay) {
-      if (ent.vy > 0) { ent.y = ty * T - ent.h; ent.onGround = true; } else if (ent.vy < 0) ent.y = (ty + 1) * T;
-      ent.vy = 0;
-    }
+    if (solidFor(tx, ty, p) || oneWay) { if (ent.vy > 0) { ent.y = ty * T - ent.h; ent.onGround = true; } else if (ent.vy < 0) ent.y = (ty + 1) * T; ent.vy = 0; }
   }
 }
 const overlap = (a, b) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 
-// ---------------- 玩家逻辑 ----------------
-function evolveTo(form) { evo = { from: player.form, to: form, t: 0, shiny: Math.random() < SHINY_RATE }; state = 'evolving'; player.vx = 0; SFX.evolve(); }
-function hurt() {
-  if (player.invuln > 0) return;
-  lives--; SFX.hurt();
-  player.invuln = 90;
-  player.vy = -2.4; player.vx = -player.facing * 1.6;
-  if (lives <= 0) die(false);
+// ---------------- 玩家 ----------------
+function damage(n, knock = true) {
+  const p = player; if (p.invuln > 0 || state !== 'play') return;
+  G.hp = Math.max(0, G.hp - n); SFX.hurt(); p.invuln = 90;
+  if (knock) { p.vy = -2.4; p.vx = -p.facing * 1.6; }
+  if (G.hp <= 0) die();
 }
-function die(loseLife) {
+function die() {
   if (state !== 'play') return;
-  if (loseLife) lives = Math.max(0, lives - 1);
-  state = 'dead'; deathTimer = 0; SFX.die();
-  player.vy = -3.6;
+  state = 'dead'; deathTimer = 0; SFX.die(); player.vy = -3.6; dialog = null;
+  G.coins = Math.floor(G.coins / 2);
 }
-function respawn() { const form = player.form, shiny = player.shiny; player = makePlayer(form); player.shiny = shiny; player.invuln = 60; state = 'play'; }
+function respawnAtSafe() { const p = player; p.x = p.safeX; p.y = p.safeY; p.vx = 0; p.vy = 0; p.invuln = 60; }
+function respawnAtSave() {
+  G.hp = G.maxHp; const form = player.form; player = makePlayer(form); player.invuln = 60;
+  buildGrid(); spawnEntities(); bossActive = null; state = 'play';
+  curRoom = roomAt(player.x + player.w / 2, player.y + player.h / 2); clampCam(true);
+}
+function evolveTo(form) { evo = { from: player.form, to: form, t: 0, shiny: Math.random() < SHINY_RATE }; state = 'evolving'; player.vx = 0; SFX.evolve(); }
+function say(text) { msg = { text, life: 180 }; }
 
 function updatePlayer() {
   const p = player, F = p.form;
+  if (p.switchCd > 0) p.switchCd--;
   const speedMul = F === 'jolteon' ? 1.6 : 1;
   const cx = Math.floor((p.x + p.w / 2) / T), cy = Math.floor((p.y + p.h / 2) / T);
   p.inWater = get(cx, cy) === '~' && F !== 'glaceon';
   const swimmer = F === 'vaporeon';
-
   let target = 0;
   if (left()) { target = -RUN * speedMul; p.facing = -1; }
   if (right()) { target = RUN * speedMul; p.facing = 1; }
@@ -352,15 +324,11 @@ function updatePlayer() {
   const accel = p.onGround ? 0.32 : 0.2;
   if (target !== 0) p.vx += Math.sign(target - p.vx) * Math.min(accel, Math.abs(target - p.vx));
   else p.vx += Math.sign(-p.vx) * Math.min(p.onGround ? 0.28 : 0.1, Math.abs(p.vx));
-
   p.gliding = false;
   if (p.inWater) {
     if (swimmer) {
-      p.vy += 0.072;
-      if (upHeld()) p.vy -= 0.18;
-      if (keys.ArrowDown || keys.s || keys.S) p.vy += 0.12;
-      p.vy = Math.max(-1.6, Math.min(1.2, p.vy)) * 0.96;
-      p.breath = 1;
+      p.vy += 0.072; if (upHeld()) p.vy -= 0.18; if (keys.ArrowDown || keys.s || keys.S) p.vy += 0.12;
+      p.vy = Math.max(-1.6, Math.min(1.2, p.vy)) * 0.96; p.breath = 1;
       const atSurface = get(cx, cy - 1) !== '~';
       if (jumpQueued && atSurface) { p.vy = -3.6; SFX.jump(); }
       else if (atSurface && upHeld() && p.vy > -0.4 && solidFor(Math.floor((p.x + (p.facing > 0 ? p.w + 1 : -1)) / T), cy, null)) p.vy = -3.2;
@@ -368,8 +336,8 @@ function updatePlayer() {
     } else {
       p.vy += 0.06; p.vy = Math.min(p.vy, 0.64);
       if (jumpQueued) { p.vy = -1.8; SFX.jump(); }
-      p.breath -= 1 / 120;
-      if (p.breath <= 0) die(true);
+      p.breath -= 1 / 150;
+      if (p.breath <= 0) { p.breath = 1; damage(1, false); if (state === 'play') respawnAtSafe(); }
     }
     p.jumpsLeft = F === 'leafeon' ? 1 : 0;
   } else {
@@ -384,85 +352,102 @@ function updatePlayer() {
     p.vy = Math.min(p.vy, 5.6);
   }
   jumpQueued = false;
-
   collide(p, p);
   if (p.onGround) p.jumpsLeft = F === 'leafeon' ? 1 : 0;
-  if (p.x < 0) p.x = 0;
-  if (p.x > LW * T - p.w) p.x = LW * T - p.w;
-
+  p.x = Math.max(0, Math.min(TWd * T - p.w, p.x));
   const tiles = [];
   for (let ty = Math.floor(p.y / T); ty <= Math.floor((p.y + p.h - 0.01) / T); ty++)
     for (let tx = Math.floor(p.x / T); tx <= Math.floor((p.x + p.w - 0.01) / T); tx++) tiles.push(get(tx, ty));
-  if (tiles.includes('E') && F !== 'jolteon') {
-    hurt();
-    if (state === 'play') { p.vx = -p.facing * 2.8; p.vy = -2; p.x -= p.facing * 4; }
-    spark(p.x + p.w / 2, p.y + p.h / 2, 6, ['#ffe94a', '#fff'], 2, 12);
-  }
-  // 尖刺：脚踩进尖刺上半部分才受伤
+  if (tiles.includes('E') && F !== 'jolteon') { damage(1); if (state === 'play') { p.vx = -p.facing * 2.8; p.vy = -2; p.x -= p.facing * 4; } spark(p.x + p.w / 2, p.y + p.h / 2, 6, ['#ffe94a', '#fff'], 2, 12); }
   const footTy = Math.floor((p.y + p.h - 0.01) / T);
-  for (let tx = Math.floor(p.x / T); tx <= Math.floor((p.x + p.w - 0.01) / T); tx++) if (get(tx, footTy) === '^' && (p.y + p.h) > footTy * T + 4) { hurt(); if (state === 'play') p.vy = -3; break; }
-  if (p.y > H * T + 24) die(true);
-
-  for (const c of coins) {
-    if (!c.taken && Math.abs(c.x - (p.x + p.w / 2)) < 10 && Math.abs(c.y - (p.y + p.h / 2)) < 12) {
-      c.taken = true; coinCount++; score += 10; SFX.coin();
-      floaters.push({ x: c.x, y: c.y, text: '+10', life: 40, color: '#ffd84a' });
-      if (coinCount % 20 === 0) { lives = Math.min(5, lives + 1); floaters.push({ x: c.x, y: c.y - 8, text: '生命 +1', life: 70, color: '#ff6b8a' }); }
+  let onSpike = false;
+  for (let tx = Math.floor(p.x / T); tx <= Math.floor((p.x + p.w - 0.01) / T); tx++) if (get(tx, footTy) === '^' && (p.y + p.h) > footTy * T + 4) onSpike = true;
+  if (onSpike) { damage(1); if (state === 'play') p.vy = -3; }
+  if (tiles.includes('L') || tiles.includes('_') || p.y > THt * T + 24) { damage(1, false); if (state === 'play') respawnAtSafe(); }
+  if (p.onGround && !p.inWater && !tiles.includes('^') && !tiles.includes('E')) {
+    const below = get(Math.floor((p.x + p.w / 2) / T), footTy + 1);
+    if ('#=rbB-'.includes(below)) { p.safeX = p.x; p.safeY = p.y; }
+  }
+  for (const it of items) {
+    if (it.taken) continue;
+    if (Math.abs(it.x - (p.x + p.w / 2)) < 11 && Math.abs(it.y - (p.y + p.h / 2)) < 14) {
+      it.taken = true; G.collected[it.id] = true;
+      if (it.type === 'c') { G.coins++; SFX.coin(); floaters.push({ x: it.x, y: it.y, text: '+1', life: 30, color: '#ffd84a' }); }
+      else if (it.type === 'h') { G.hearts++; SFX.heart(); if (G.hearts % 4 === 0 && G.maxHp < 9) { G.maxHp++; G.hp = G.maxHp; say('心之碎片集齐 4 片，血量上限 +1！'); } else say('得到心之碎片（' + (G.hearts % 4) + ' / 4）'); }
+      else if (it.type === '*') { const f = (curRoom && REGION[curRoom.region] && REGION[curRoom.region].shinyForm) || 'eevee'; G.shiny[f] = true; if (p.form === f) p.shiny = true; SFX.shiny(); shinyFx = { x: p.x + p.w / 2, y: p.y + p.h / 2, t: 0 }; say('闪光石！' + FORMS[f].name + '永久变成闪光形态'); }
+      else if (FOODS[it.type]) { const form = FOODS[it.type].form; SFX.eat(); floaters.push({ x: it.x, y: it.y - 4, text: '吃掉了' + FOODS[it.type].name + '！', life: 60, color: '#fff' }); G.unlocked[form] = true; evolveTo(form); }
     }
   }
-  for (const f of foods) {
-    if (!f.taken && Math.abs(f.x - (p.x + p.w / 2)) < 11 && Math.abs(f.y - (p.y + p.h / 2)) < 14) {
-      f.taken = true; score += 100; SFX.eat();
-      checkpoint = { x: f.x - p.w / 2, y: p.y };
-      const form = FOODS[f.type].form;
-      floaters.push({ x: f.x, y: f.y - 4, text: '吃掉了' + FOODS[f.type].name + '！', life: 60, color: '#fff' });
-      if (form !== p.form) evolveTo(form);
+  for (const s of saveStones) {
+    if (s.cd > 0) s.cd--;
+    if (s.cd === 0 && Math.abs(s.x + 8 - (p.x + p.w / 2)) < 12 && Math.abs(s.y + 8 - (p.y + p.h / 2)) < 16) {
+      s.cd = 120; G.hp = G.maxHp; G.respawn = { x: s.x + 2, y: s.y + T - PH }; saveGame(); SFX.save();
+      spark(s.x + 8, s.y + 4, 12, ['#7fe8ff', '#fff'], 0.8, 30); say('已存档，体力全满。');
     }
   }
-  for (const s of signs) if (Math.abs(s.x * T - p.x) < 8 && checkpoint.x < s.x * T) checkpoint = { x: s.x * T, y: 10 * T - PH };
-
+  dialog = null;
+  for (const n of npcs) { if (Math.abs(n.x + 8 - (p.x + p.w / 2)) < 18 && Math.abs(n.y + 8 - (p.y + p.h / 2)) < 20) { dialog = n.text; n.facing = p.x > n.x ? 1 : -1; } }
   for (const e of enemies) {
-    if (!e.alive) continue;
-    if (overlap(p, e)) {
-      if (F === 'sylveon') {
-        e.alive = false; score += 50; SFX.charm();
-        for (let i = 0; i < 8; i++) particles.push({ x: e.x + e.w / 2, y: e.y + e.h / 2, vx: (Math.random() - .5) * 1.2, vy: -Math.random() * 1.2 - 0.4, life: 50, color: '#ff6b8a', heart: true });
-        floaters.push({ x: e.x + e.w / 2, y: e.y, text: '被魅惑了 ♥', life: 60, color: '#ff8fb0' });
-      } else if (p.vy > 0 && p.y + p.h - e.y < 6) {
-        e.alive = false; score += 50; SFX.stomp(); p.vy = -3.2;
-        floaters.push({ x: e.x + e.w / 2, y: e.y, text: '+50', life: 40, color: '#fff' });
-        spark(e.x + e.w / 2, e.y + e.h / 2, 8, e.type === 'bat' ? ['#7a66b8', '#4a3a7a'] : ['#c9a3ff', '#8e5bd3'], 1.2, 20);
-      } else hurt();
-    }
+    if (!e.alive || !overlap(p, e)) continue;
+    const stomp = p.vy > 0 && p.y + p.h - e.y < 7 && !p.inWater;
+    if (e.type === 'puffer') { if (swimmer && p.inWater) killEnemy(e); else damage(1); continue; }
+    if (e.type === 'clam') { if (e.open) { if (swimmer && p.inWater) bossHit(e, 1); } else damage(2); continue; }
+    if (F === 'sylveon' && !e.boss) { e.alive = false; G.coins += 2; SFX.charm(); for (let i = 0; i < 8; i++) particles.push({ x: e.x + e.w / 2, y: e.y + e.h / 2, vx: (Math.random() - .5) * 1.2, vy: -Math.random() * 1.2 - 0.4, life: 50, color: '#ff6b8a', heart: true }); floaters.push({ x: e.x + e.w / 2, y: e.y, text: '被魅惑了 ♥', life: 60, color: '#ff8fb0' }); continue; }
+    if (stomp) { p.vy = -3.2; if (e.boss) bossHit(e, 1); else killEnemy(e); }
+    else damage(e.boss ? 2 : 1);
   }
-  if (p.x + p.w > flag.x + 4 && p.x < flag.x + 12 && p.y + p.h > flag.y) { state = 'win'; timeEnd = performance.now(); SFX.win(); score += lives * 200; }
   if (p.invuln > 0) p.invuln--;
   p.anim += Math.abs(p.vx) * 0.6;
+  const r = roomAt(p.x + p.w / 2, p.y + p.h / 2);
+  if (r && r !== curRoom) { curRoom = r; G.visited[r.id] = true; msg = { text: (REGION[r.region] && !r.name.includes('·') ? REGION[r.region].name + ' · ' : '') + r.name, life: 120 }; }
+  G.time++;
+}
+function killEnemy(e) { e.alive = false; G.coins += 1; SFX.stomp(); spark(e.x + e.w / 2, e.y + e.h / 2, 8, ['#c9a3ff', '#8e5bd3'], 1.2, 20); floaters.push({ x: e.x + e.w / 2, y: e.y, text: '+1', life: 30, color: '#fff' }); }
+function bossHit(e, n) {
+  if (e.inv > 0) return;
+  e.hp -= n; e.inv = 45; SFX.bosshit(); spark(e.x + e.w / 2, e.y + e.h / 2, 12, ['#fff', '#ffe96a'], 1.5, 20);
+  if (e.type === 'bigslime' && e.hp > 0) enemies.push({ type: 'slime', id: 'spawn' + frame, x: e.x + e.w / 2 - 7, y: e.y, w: 14, h: 12, vx: (Math.random() < .5 ? -1 : 1) * 0.6, vy: -2, alive: true, t: 0, hp: 1, inv: 0 });
+  if (e.hp <= 0) { e.alive = false; G.bossDead[e.id] = true; bossActive = null; G.coins += 20; SFX.win(); say(e.name + ' 被打倒了！金币 +20'); spark(e.x + e.w / 2, e.y + e.h / 2, 30, ['#fff', '#ffe96a', '#c9a3ff'], 2, 40); }
 }
 function updateEnemies() {
+  const p = player;
   for (const e of enemies) {
-    if (!e.alive || Math.abs(e.x - player.x) > CW) continue;
-    e.t++;
+    if (!e.alive) continue;
+    if (Math.abs(e.x - p.x) > CW * 1.2 || Math.abs(e.y - p.y) > CH * 1.5) continue;
+    e.t++; if (e.inv > 0) e.inv--;
+    if (e.boss && !bossActive && curRoom && roomAt(e.x + e.w / 2, e.y + e.h / 2) === curRoom) { bossActive = e; SFX.boss(); say(e.name + '出现了！'); }
     if (e.type === 'bat') {
-      e.x += e.vx;
-      if (e.x < e.x0) { e.x = e.x0; e.vx = Math.abs(e.vx); } else if (e.x > e.x1) { e.x = e.x1; e.vx = -Math.abs(e.vx); }
-      e.y = e.baseY + Math.sin(e.t / 12) * 6;
+      e.x += e.vx; if (e.x < e.x0) { e.x = e.x0; e.vx = Math.abs(e.vx); } else if (e.x > e.x1) { e.x = e.x1; e.vx = -Math.abs(e.vx); }
+      e.y = e.baseY + Math.sin(e.t / 12) * 6; continue;
+    }
+    if (e.type === 'puffer') {
+      const near = Math.abs(p.x - e.x) < 48 && Math.abs(p.y - e.y) < 40;
+      e.puff = Math.max(0, Math.min(20, e.puff + (near ? 2 : -1)));
+      const big = e.puff > 10; e.w = big ? 16 : 14; e.h = big ? 16 : 12;
+      if (!big) { e.x += e.vx; const ax = Math.floor((e.x + (e.vx > 0 ? e.w + 1 : -1)) / T), ay = Math.floor((e.y + e.h / 2) / T); if (get(ax, ay) !== '~') e.vx = -e.vx; }
       continue;
     }
-    e.vy = Math.min(e.vy + GRAVITY, 4.8);
-    e.hitWall = false;
+    if (e.type === 'clam') { e.open = (e.t % 200) >= 110; continue; }
+    if (e.type === 'frog') {
+      e.vy = Math.min(e.vy + GRAVITY, 4.8); e.hitWall = false; collide(e, null);
+      if (e.onGround) { e.vx = 0; if (e.cd > 0) e.cd--; else if (Math.abs(p.x - e.x) < 100 && Math.abs(p.y - e.y) < 60) { e.vy = -4; e.vx = Math.sign(p.x - e.x) * 1.1; e.cd = 70; } }
+      continue;
+    }
+    if (e.type === 'bigslime') {
+      e.vy = Math.min(e.vy + GRAVITY, 4.8); e.hitWall = false; collide(e, null);
+      if (e.onGround) { e.vx *= 0.6; if (e.cd > 0) e.cd--; else if (bossActive === e) { e.vy = -3.6; e.vx = Math.sign(p.x - e.x) * 1.0; e.cd = 55; } }
+      continue;
+    }
+    e.vy = Math.min(e.vy + GRAVITY, 4.8); e.hitWall = false;
     const dir = Math.sign(e.vx) || -1, vx = e.vx;
     collide(e, null);
     e.vx = e.hitWall ? -dir * Math.abs(vx || 0.4) : vx;
-    if (e.onGround) {
-      const aheadX = Math.floor((e.x + (e.vx > 0 ? e.w + 1 : -1)) / T), belowY = Math.floor((e.y + e.h + 1) / T);
-      if (!solidFor(aheadX, belowY, null) && get(aheadX, belowY) !== '-') e.vx = -e.vx;
-    }
-    if (e.y > H * T + 40) e.alive = false;
+    if (e.onGround) { const aheadX = Math.floor((e.x + (e.vx > 0 ? e.w + 1 : -1)) / T), belowY = Math.floor((e.y + e.h + 1) / T); if (!solidFor(aheadX, belowY, null) && get(aheadX, belowY) !== '-') e.vx = -e.vx; }
+    if (e.y > THt * T + 40) e.alive = false;
   }
 }
 function updateBurning() {
-  for (const b of burnQueue) { b.delay--; if (b.delay <= 0) burnCrate(b.tx, b.ty); }
+  for (const b of burnQueue) { b.delay--; if (b.delay <= 0) (b.wall ? breakWall : burnCrate)(b.tx, b.ty); }
   burnQueue = burnQueue.filter(b => b.delay > 0);
 }
 function updateShinyFx() {
@@ -477,6 +462,15 @@ function updateParticles() {
   particles = particles.filter(q => q.life > 0);
   for (const f of floaters) { f.y -= 0.3; f.life--; }
   floaters = floaters.filter(f => f.life > 0);
+  if (msg && --msg.life <= 0) msg = null;
+}
+function clampCam(snap) {
+  const p = player;
+  let tx = p.x + p.w / 2 - CW / 2 + p.facing * 20, ty = p.y + p.h / 2 - CH / 2;
+  const r = curRoom;
+  if (r) { tx = Math.max(r.x * T, Math.min(r.x * T + r.w * T - CW, tx)); ty = Math.max(r.y * T, Math.min(r.y * T + r.h * T - CH, ty)); }
+  tx = Math.max(0, Math.min(TWd * T - CW, tx)); ty = Math.max(0, Math.min(THt * T - CH, ty));
+  if (snap) { camX = tx; camY = ty; } else { camX += (tx - camX) * 0.12; camY += (ty - camY) * 0.15; }
 }
 
 // ---------------- 绘制 ----------------
@@ -485,74 +479,83 @@ const px = (x, y, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(R(x), R(y), 
 const blit = (k, x, y) => { const im = IMG[k]; if (im) ctx.drawImage(im, R(x), R(y)); };
 function tileImage(t, tx, ty) {
   switch (t) {
-    case '=': return 'tiles/grass_top';
-    case '#': return 'tiles/dirt';
-    case 'b': return 'tiles/brick';
-    case 'W': return 'tiles/crate';
-    case 'E': return 'tiles/fence_' + ((frame >> 3) & 1);
-    case 'S': return 'tiles/shadow_' + ((frame >> 4) & 1);
-    case '^': return 'tiles/spikes';
-    case '-': return 'tiles/platform';
-    case '~': return get(tx, ty - 1) === '~' ? 'tiles/water_body' : (player && player.form === 'glaceon' && state !== 'title' ? 'tiles/ice_surface' : 'tiles/water_surface_' + ((frame >> 4) & 1));
+    case '=': return 'tiles/grass_top'; case '#': return 'tiles/dirt'; case 'r': return 'tiles/rock'; case 'b': return 'tiles/brick'; case 'B': return 'tiles/stone';
+    case 'W': return 'tiles/crate'; case 'K': return 'tiles/cracked'; case 'D': return 'tiles/door';
+    case 'E': return 'tiles/fence_' + ((frame >> 3) & 1); case 'S': return 'tiles/shadow_' + ((frame >> 4) & 1); case 'L': return 'tiles/lava_' + ((frame >> 4) & 1);
+    case '^': return 'tiles/spikes'; case '-': return 'tiles/platform';
+    case '~': return get(tx, ty - 1) === '~' ? 'tiles/water_body' : (player && player.form === 'glaceon' ? 'tiles/ice_surface' : 'tiles/water_surface_' + ((frame >> 4) & 1));
   }
   return null;
 }
 function drawBackground() {
-  px(0, 0, CW, CH, '#6fbfff');
-  px(0, 100, CW, CH - 100, '#8fd0ff');
-  for (const c of clouds) { const x = R(c.x - camX * 0.5); if (x > -40 && x < CW + 40) blit(c.big ? 'deco/cloud_big' : 'deco/cloud_small', x, c.y); }
-  ctx.fillStyle = '#9fd3a0';
-  for (let i = -1; i < 6; i++) {
-    const bx = R(i * 120 - (camX * 0.2) % 120);
-    for (let s = 0; s < 6; s++) ctx.fillRect(bx + s * 4, 176 - s * 6, 120 - s * 8, 6 + s * 6);
-  }
-  ctx.fillStyle = '#7fc27f';
-  for (let i = -1; i < 6; i++) {
-    const bx = R(i * 90 + 40 - (camX * 0.35) % 90);
-    for (let s = 0; s < 5; s++) ctx.fillRect(bx + s * 4, 184 - s * 5, 80 - s * 8, 5 + s * 5);
-  }
+  const reg = (curRoom && REGION[curRoom.region]) || REGION.plains;
+  px(0, 0, CW, CH, reg.sky[0]); px(0, 100, CW, CH - 100, reg.sky[1]);
+  if (!reg.outdoor) return;
+  for (let i = 0; i < 10; i++) { let x = ((i * 97 + 30) - camX * 0.4) % (CW + 80); if (x < -40) x += CW + 80; blit(i % 2 ? 'deco/cloud_big' : 'deco/cloud_small', R(x), 10 + (i * 37) % 70 - R(camY * 0.1)); }
+  const hy = CH - 24 + R(Math.max(0, 60 - camY) * 0.3);   // 越往高处远山越往下沉
+  ctx.fillStyle = '#9fd3a0'; for (let i = -1; i < 6; i++) { const bx = R(i * 120 - (camX * 0.2) % 120); for (let s = 0; s < 6; s++) ctx.fillRect(bx + s * 4, hy - 30 + s * 6, 120 - s * 8, 6); }
+  ctx.fillStyle = '#9fd3a0'; ctx.fillRect(0, hy + 6, CW, CH);
+  ctx.fillStyle = '#7fc27f'; for (let i = -1; i < 6; i++) { const bx = R(i * 90 + 40 - (camX * 0.35) % 90); for (let s = 0; s < 5; s++) ctx.fillRect(bx + s * 4, hy - 10 + s * 5, 80 - s * 8, 5); }
+  ctx.fillStyle = '#7fc27f'; ctx.fillRect(0, hy + 15, CW, CH);
 }
 function drawLevel() {
-  const x0 = Math.max(0, Math.floor(camX / T)), x1 = Math.min(LW - 1, Math.floor((camX + CW) / T) + 1);
-  for (const d of deco) { const x = R(d.x - camX); if (x > -40 && x < CW + 40) blit(d.img, x, d.y); }
-  for (let y = 0; y < H; y++) for (let x = x0; x <= x1; x++) {
+  const x0 = Math.max(0, Math.floor(camX / T)), x1 = Math.min(TWd - 1, Math.floor((camX + CW) / T) + 1);
+  const y0 = Math.max(0, Math.floor(camY / T)), y1 = Math.min(THt - 1, Math.floor((camY + CH) / T) + 1);
+  for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
     const t = grid[y][x]; if (t === ' ' || t === '~') continue;
-    blit(tileImage(t, x, y), x * T - camX, y * T);
-    if (t === 'S' && player && player.form === 'umbreon' && state !== 'title') { ctx.globalAlpha = 0.25; px(x * T - camX, y * T, 16, 16, '#f5d442'); ctx.globalAlpha = 1; }
+    if (t === '_') { px(x * T - camX, y * T - camY, 16, 16, '#0a0818'); continue; }
+    blit(tileImage(t, x, y), x * T - camX, y * T - camY);
+    if (t === 'S' && player.form === 'umbreon') { ctx.globalAlpha = 0.25; px(x * T - camX, y * T - camY, 16, 16, '#f5d442'); ctx.globalAlpha = 1; }
+    if (t === 'D' && allEvos()) { ctx.globalAlpha = 0.5; px(x * T - camX, y * T - camY, 16, 16, '#fff'); ctx.globalAlpha = 1; }
   }
-  for (const s of signs) { const sx = R(s.x * T - camX + 1); if (sx > -20 && sx < CW + 20) blit('ui/sign', sx, 10 * T - 14); }
-  const fx = R(flag.x - camX);
-  if (fx > -30 && fx < CW + 30) blit('ui/flag', fx, 10 * T - 32);
-  for (const c of coins) {
-    if (c.taken) continue; const cx = R(c.x - camX); if (cx < -10 || cx > CW + 10) continue;
-    const f = ((frame >> 3) + Math.floor(c.x / 16)) & 3;
-    blit('ui/coin_' + f, cx - 4, R(c.y - 4 + Math.sin(frame / 15 + c.x) * 1));
+  const vis = (x, y, m = 40) => x - camX > -m && x - camX < CW + m && y - camY > -m && y - camY < CH + m;
+  for (const s of saveStones) if (vis(s.x, s.y)) blit('ui/save_stone_' + ((frame >> 4) & 1), s.x - camX, s.y - camY);
+  for (const n of npcs) {
+    if (!vis(n.x, n.y)) continue;
+    if (n.type === '!') blit('ui/sign', n.x + 1 - camX, n.y + 2 - camY);
+    else { const im = charSprite('eevee', false, n.facing); if (im) ctx.drawImage(im, R(n.x + 8 - im.width / 2 - camX), R(n.y + 16 - im.height - camY)); if (dialog !== n.text) blit('ui/bubble', n.x + 4 - camX, n.y - 10 - camY + R(Math.sin((frame + n.bob) / 15))); }
   }
-  for (const f of foods) { if (f.taken) continue; const fx2 = R(f.x - camX); if (fx2 < -16 || fx2 > CW + 16) continue; blit(FOODS[f.type].img, fx2 - 7, R(f.y - 7 + Math.sin(frame / 14 + f.x) * 2)); }
+  for (const it of items) {
+    if (it.taken || !vis(it.x, it.y)) continue;
+    const bob = Math.sin(frame / 14 + it.x) * 2;
+    if (it.type === 'c') blit('ui/coin_' + (((frame >> 3) + Math.floor(it.x / 16)) & 3), it.x - 4 - camX, it.y - 4 - camY + bob / 2);
+    else if (it.type === 'h') blit('items/heart_piece', it.x - 4 - camX, it.y - 4 - camY + bob);
+    else if (it.type === '*') { blit('items/shiny_stone', it.x - 5 - camX, it.y - 5 - camY + bob); if (frame % 8 === 0) particles.push({ x: it.x + (Math.random() - .5) * 10, y: it.y + 4, vx: 0, vy: -0.3, life: 20, color: '#ffe96a', star: true }); }
+    else blit(FOODS[it.type].img, it.x - 7 - camX, it.y - 7 - camY + bob);
+  }
   for (const e of enemies) {
-    if (!e.alive) continue; const ex = R(e.x - camX); if (ex < -20 || ex > CW + 20) continue;
-    const k = (e.type === 'bat' ? 'enemies/bat_' : 'enemies/slime_') + ((e.t >> 3) & 1);
+    if (!e.alive || !vis(e.x, e.y)) continue;
+    if (e.inv > 0 && (frame >> 1) & 1) continue;
+    let k;
+    if (e.type === 'bat') k = 'enemies/bat_' + ((e.t >> 3) & 1);
+    else if (e.type === 'puffer') k = 'enemies/puffer_' + (e.puff > 10 ? 1 : 0);
+    else if (e.type === 'frog') k = 'enemies/frog_' + (e.onGround ? 0 : 1);
+    else if (e.type === 'bigslime') k = 'enemies/bigslime_' + (e.onGround ? 0 : 1);
+    else if (e.type === 'clam') k = 'enemies/clam_' + (e.open ? 1 : 0);
+    else k = 'enemies/slime_' + ((e.t >> 3) & 1);
     const im = e.vx > 0 ? IMGF[k] : IMG[k];
-    if (im) ctx.drawImage(im, ex - 1, R(e.y) + e.h - im.height);
+    if (im) ctx.drawImage(im, R(e.x + e.w / 2 - im.width / 2 - camX), R(e.y + e.h - im.height - camY));
   }
 }
 function drawWater() {
-  const x0 = Math.max(0, Math.floor(camX / T)), x1 = Math.min(LW - 1, Math.floor((camX + CW) / T) + 1);
+  const x0 = Math.max(0, Math.floor(camX / T)), x1 = Math.min(TWd - 1, Math.floor((camX + CW) / T) + 1);
+  const y0 = Math.max(0, Math.floor(camY / T)), y1 = Math.min(THt - 1, Math.floor((camY + CH) / T) + 1);
   ctx.globalAlpha = 0.65;
-  for (let y = 0; y < H; y++) for (let x = x0; x <= x1; x++) if (grid[y][x] === '~') blit(tileImage('~', x, y), x * T - camX, y * T);
+  for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) if (grid[y][x] === '~') blit(tileImage('~', x, y), x * T - camX, y * T - camY);
   ctx.globalAlpha = 1;
 }
 function drawParticles() {
   for (const q of particles) {
-    if (q.heart) { px(q.x - camX - 1, q.y, 1, 1, q.color); px(q.x - camX + 1, q.y, 1, 1, q.color); px(q.x - camX - 1, q.y + 1, 3, 1, q.color); px(q.x - camX, q.y + 2, 1, 1, q.color); }
+    const x = q.x - camX, y = q.y - camY;
+    if (q.heart) { px(x - 1, y, 1, 1, q.color); px(x + 1, y, 1, 1, q.color); px(x - 1, y + 1, 3, 1, q.color); px(x, y + 2, 1, 1, q.color); }
     else if (q.star) {
-      const tw = (q.life >> 2) & 1, x = q.x - camX, y = q.y;
+      const tw = (q.life >> 2) & 1;
       if (q.big && !tw) { px(x, y - 3, 1, 7, q.color); px(x - 3, y, 7, 1, q.color); px(x - 1, y - 1, 3, 3, '#fff'); px(x - 2, y - 2, 1, 1, q.color); px(x + 2, y - 2, 1, 1, q.color); px(x - 2, y + 2, 1, 1, q.color); px(x + 2, y + 2, 1, 1, q.color); }
       else if (q.big) { px(x, y - 2, 1, 5, q.color); px(x - 2, y, 5, 1, q.color); }
       else if (!tw) { px(x, y - 1, 1, 3, q.color); px(x - 1, y, 3, 1, q.color); }
       else px(x, y, 1, 1, q.color);
     }
-    else px(q.x - camX, q.y, q.life > 10 ? 2 : 1, q.life > 10 ? 2 : 1, q.color);
+    else px(x, y, q.life > 10 ? 2 : 1, q.life > 10 ? 2 : 1, q.color);
   }
 }
 function drawPlayer() {
@@ -560,141 +563,125 @@ function drawPlayer() {
   if (p.invuln > 0 && (frame >> 2) & 1 && state === 'play') return;
   const im = charSprite(p.form, p.shiny, p.facing); if (!im) return;
   const walk = p.onGround && Math.abs(p.vx) > 0.2 ? (Math.floor(p.anim / 4) & 1) : 0;
-  const sx = R(p.x + p.w / 2 - im.width / 2 - camX), sy = R(p.y + p.h - im.height) - walk;
+  const sx = R(p.x + p.w / 2 - im.width / 2 - camX), sy = R(p.y + p.h - im.height - camY) - walk;
   if (p.form === 'umbreon') { ctx.globalAlpha = 0.15; px(sx - 6, sy - 4, im.width + 12, im.height + 6, '#f5d442'); ctx.globalAlpha = 1; }
   if (p.form === 'espeon' && p.gliding) { ctx.globalAlpha = 0.4; px(sx - 2, sy - 2 + ((frame >> 2) & 1), im.width + 4, 1, '#f2c8ff'); px(sx - 2, sy + im.height, im.width + 4, 1, '#f2c8ff'); ctx.globalAlpha = 1; }
   ctx.drawImage(im, sx, sy);
   if (p.shiny && frame % 6 === 0) particles.push({ x: p.x + p.w / 2 + (Math.random() - .5) * im.width, y: p.y + p.h - Math.random() * im.height, vx: 0, vy: -0.25, life: 22, color: ['#fff', '#ffe96a'][frame % 2], star: true });
   if (p.form === 'jolteon' && Math.abs(p.vx) > 1.7 && frame % 3 === 0) particles.push({ x: p.x + p.w / 2 - p.facing * 6, y: p.y + p.h - 3, vx: -p.facing * 0.8, vy: -0.4, life: 12, color: '#ffe94a' });
-  if (p.inWater && p.form !== 'vaporeon') {
-    const bx = R(p.x + p.w / 2 - camX - 8), by = R(p.y - 8);
-    px(bx, by, 16, 3, '#1a1a2a'); px(bx + 1, by + 1, R(14 * Math.max(0, p.breath)), 1, p.breath > .3 ? '#4ad0ff' : '#ff4a4a');
-  }
+  if (p.inWater && p.form !== 'vaporeon') { const bx = R(p.x + p.w / 2 - camX - 8), by = R(p.y - 8 - camY); px(bx, by, 16, 3, '#1a1a2a'); px(bx + 1, by + 1, R(14 * Math.max(0, p.breath)), 1, p.breath > .3 ? '#4ad0ff' : '#ff4a4a'); }
 }
-// 文字（高清叠加层，带描边）
 function text(str, x, y, size, color, align = 'left', outline = '#1a1020') {
   const S = UIS;
   uctx.font = `bold ${Math.round(size * S)}px sans-serif`; uctx.textAlign = align; uctx.textBaseline = 'top';
   const X = Math.round(x * S), Y = Math.round(y * S), o = Math.max(1, Math.round(S * 0.4));
   uctx.globalAlpha = ctx.globalAlpha;
   if (outline) { uctx.fillStyle = outline; uctx.fillText(str, X + o, Y); uctx.fillText(str, X - o, Y); uctx.fillText(str, X, Y + o); uctx.fillText(str, X, Y - o); }
-  uctx.fillStyle = color; uctx.fillText(str, X, Y);
-  uctx.globalAlpha = 1;
+  uctx.fillStyle = color; uctx.fillText(str, X, Y); uctx.globalAlpha = 1;
 }
 function textWidth(str, size) { uctx.font = `bold ${Math.round(size * UIS)}px sans-serif`; return uctx.measureText(str).width / UIS; }
-function panel(x, y, w, h) { px(x, y, w, h, '#1a1030'); px(x + 1, y + 1, w - 2, h - 2, '#2c2050'); px(x + 1, y + 1, w - 2, 1, '#5a4a8a'); }
+function wrap(str, size, maxW) { const lines = []; let cur = ''; for (const ch of str) { if (textWidth(cur + ch, size) > maxW) { lines.push(cur); cur = ch; } else cur += ch; } if (cur) lines.push(cur); return lines; }
+function panel(x, y, w, h, fill = '#2c2050') { px(x, y, w, h, '#1a1030'); px(x + 1, y + 1, w - 2, h - 2, fill); px(x + 1, y + 1, w - 2, 1, '#5a4a8a'); }
 function drawHUD() {
-  panel(3, 3, 132, 30);
-  for (let i = 0; i < 5; i++) blit(i < lives ? 'ui/heart_full' : 'ui/heart_empty', 7 + i * 9, 7);
-  blit('ui/coin_0', 56, 6); text('' + coinCount, 66, 5, 9, '#ffd84a', 'left', null);
-  text('分数 ' + score, 88, 5, 9, '#fff', 'left', null);
+  panel(3, 3, 150, 30);
+  for (let i = 0; i < G.maxHp; i++) blit(i < G.hp ? 'ui/heart_full' : 'ui/heart_empty', 7 + i * 9, 7);
+  blit('ui/coin_0', 92, 6); text('' + G.coins, 102, 5, 9, '#ffd84a', 'left', null);
   px(7, 18, 8, 8, FORMS[player.form].color);
   text(FORMS[player.form].name + (player.shiny ? ' ✨' : ''), 18, 17, 9, player.shiny ? '#ffe96a' : '#fff', 'left', null);
-  text(FORMS[player.form].ability, 56, 18, 7, '#cfd8ff', 'left', null);
-  panel(CW - 3 - 8 * 15 - 6, 3, 8 * 15 + 6, 22);
+  text(FORMS[player.form].ability, 62, 18, 7, '#cfd8ff', 'left', null);
+  const n = FORM_ORDER.length, w0 = n * 13 + 6;
+  panel(CW - 3 - w0, 3, w0, 22);
   FORM_ORDER.forEach((f, i) => {
-    const x = CW - 3 - 8 * 15 - 6 + 4 + i * 15, got = discovered[f];
+    const x = CW - 3 - w0 + 4 + i * 13, got = G.unlocked[f];
     px(x, 6, 10, 8, got ? FORMS[f].color : '#3a3050');
     if (player.form === f) { px(x - 1, 5, 12, 1, '#fff'); px(x - 1, 14, 12, 1, '#fff'); px(x - 1, 5, 1, 10, '#fff'); px(x + 10, 5, 1, 10, '#fff'); }
-    text(got ? FORMS[f].name.replace('伊布', '') : '?', x + 5, 15, 7, got ? '#fff' : '#8a80a0', 'center', null);
-    if (discoveredShiny[f]) text('✦', x + 10, 2, 6, '#ffe96a', 'center', null);
+    text(got ? '' + (i + 1) : '?', x + 5, 15, 6, got ? '#fff' : '#8a80a0', 'center', null);
+    if (G.shiny[f]) text('✦', x + 10, 2, 6, '#ffe96a', 'center', null);
   });
-  for (const s of signs) {
-    if (Math.abs(s.x * T + 8 - (player.x + player.w / 2)) < 44) {
-      const w = Math.ceil(textWidth(s.text, 9)) + 12;
-      const bx = Math.max(4, Math.min(CW - w - 4, R(s.x * T + 8 - camX - w / 2))), by = 10 * T - 40;
-      px(bx, by, w, 16, '#4a2a10'); px(bx + 1, by + 1, w - 2, 14, '#fff4d8');
-      text(s.text, bx + 6, by + 3, 9, '#4a2a10', 'left', null);
-    }
+  if (bossActive && bossActive.alive) { panel(CW / 2 - 60, 30, 120, 12); text(bossActive.name, CW / 2 - 56, 31, 7, '#fff', 'left', null); for (let i = 0; i < 3; i++) px(CW / 2 + 10 + i * 14, 33, 12, 6, i < bossActive.hp ? '#ff4a6a' : '#3a2030'); }
+  if (msg) { ctx.globalAlpha = Math.min(1, msg.life / 20); text(msg.text, CW / 2, 44, 9, '#fff', 'center'); ctx.globalAlpha = 1; }
+  if (dialog) {
+    const lines = wrap(dialog, 9, CW - 40);
+    const h = lines.length * 12 + 10; panel(10, CH - h - 8, CW - 20, h, '#fff4d8');
+    lines.forEach((l, i) => text(l, 18, CH - h - 3 + i * 12, 9, '#4a2a10', 'left', null));
   }
-  for (const f of floaters) { ctx.globalAlpha = Math.min(1, f.life / 15); text(f.text, f.x - camX, f.y - 8, 8, f.color, 'center'); }
+  for (const f of floaters) { ctx.globalAlpha = Math.min(1, f.life / 15); text(f.text, f.x - camX, f.y - 8 - camY, 8, f.color, 'center'); }
   ctx.globalAlpha = 1;
 }
-function drawOverlay(title, lines, sub) {
-  ctx.globalAlpha = 0.75; px(0, 0, CW, CH, '#0a0a28'); ctx.globalAlpha = 1;
-  text(title, CW / 2, 40, 24, '#fff', 'center');
-  lines.forEach((l, i) => text(l, CW / 2, 80 + i * 16, 10, '#fff', 'center'));
-  if (sub) text(sub, CW / 2, CH - 30, 10, (frame >> 4) & 1 ? '#ffd23c' : '#fff', 'center');
+function drawMap() {
+  ctx.globalAlpha = 0.85; px(0, 0, CW, CH, '#0a0a28'); ctx.globalAlpha = 1;
+  text('地图（M 关闭）', CW / 2, 6, 10, '#fff', 'center');
+  const sc = Math.min((CW - 40) / TWd, (CH - 60) / THt);
+  const ox = R((CW - TWd * sc) / 2), oy = 28;
+  for (const r of WORLD.rooms) {
+    const v = G.visited[r.id];
+    const near = !v && WORLD.rooms.some(o => G.visited[o.id] && o.x < r.x + r.w + 1 && o.x + o.w + 1 > r.x && o.y < r.y + r.h + 1 && o.y + o.h + 1 > r.y);
+    if (!v && !near) continue;
+    const x = ox + r.x * sc, y = oy + r.y * sc, w = r.w * sc, h = r.h * sc;
+    const col = REGION[r.region] ? REGION[r.region].color : '#888';
+    if (v) px(x, y, Math.max(2, R(w) - 1), Math.max(2, R(h) - 1), col);
+    else { ctx.strokeStyle = '#8a80a0'; ctx.lineWidth = 1; ctx.strokeRect(R(x) + 0.5, R(y) + 0.5, R(w) - 2, R(h) - 2); }
+    if (r === curRoom) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.strokeRect(R(x) - 0.5, R(y) - 0.5, R(w), R(h)); }
+  }
+  for (const s of saveStones) { const r = roomAt(s.x, s.y); if (r && G.visited[r.id]) px(ox + s.x / T * sc - 1, oy + s.y / T * sc - 1, 3, 3, '#7fe8ff'); }
+  if ((frame >> 3) & 1) px(ox + (player.x + player.w / 2) / T * sc - 1, oy + (player.y + player.h / 2) / T * sc - 1, 3, 3, '#ffffff');
+  const got = FORM_ORDER.filter(f => G.unlocked[f]).length;
+  text(`形态 ${got} / 9   心之碎片 ${G.hearts}   金币 ${G.coins}   游玩 ${Math.floor(G.time / 3600)} 分钟`, CW / 2, CH - 16, 8, '#dfe7ff', 'center');
 }
 
 // ---------------- 主循环 ----------------
 function update() {
   frame++;
+  if (mapToggle) { mapToggle = false; if (state === 'play') state = 'map'; else if (state === 'map') state = 'play'; }
+  if (formNext) { formNext = false; cycleForm(); }
   if (state === 'play') { updatePlayer(); updateEnemies(); }
   else if (state === 'evolving') {
     evo.t++;
     if (evo.t === 50) {
-      player.form = evo.to; player.shiny = evo.shiny; discovered[evo.to] = true;
-      if (evo.shiny) {
-        discoveredShiny[evo.to] = true; score += 300; SFX.shiny();
-        shinyFx = { x: player.x + player.w / 2, y: player.y + player.h / 2 - 4, t: 0 };
-        floaters.push({ x: player.x + player.w / 2, y: player.y - 14, text: '✨ 闪光！+300', life: 90, color: '#ffe96a' });
-      }
+      player.form = evo.to; if (evo.shiny) G.shiny[evo.to] = true; player.shiny = !!G.shiny[evo.to];
+      if (evo.shiny) { SFX.shiny(); shinyFx = { x: player.x + player.w / 2, y: player.y + player.h / 2 - 4, t: 0 }; floaters.push({ x: player.x + player.w / 2, y: player.y - 14, text: '✨ 闪光！', life: 90, color: '#ffe96a' }); }
     }
     if (evo.t % 3 === 0) particles.push({ x: player.x + player.w / 2 + (Math.random() - .5) * 24, y: player.y + player.h - Math.random() * 24, vx: (Math.random() - .5) * 0.4, vy: -0.4 - Math.random() * 0.8, life: 40, color: ['#fff', '#ffe14a', FORMS[evo.to].color][evo.t % 3] });
-    if (evo.shiny && evo.t > 50 && evo.t % 2 === 0) particles.push({ x: player.x + player.w / 2 + (Math.random() - .5) * 36, y: player.y + player.h - Math.random() * 30, vx: (Math.random() - .5) * 0.4, vy: -0.3 - Math.random() * 0.6, life: 30, color: ['#fff', '#ffe96a', '#9fe8ff'][evo.t % 3], star: true });
     if (evo.t > 120) { state = 'play'; jumpQueued = false; }
   } else if (state === 'dead') {
-    deathTimer++;
-    player.vy += GRAVITY; player.y += player.vy;
-    if (deathTimer > 70) { if (lives > 0) respawn(); else state = 'over'; }
+    deathTimer++; player.vy += GRAVITY; player.y += player.vy;
+    if (deathTimer > 70) respawnAtSave();
   }
-  updateBurning();
-  updateShinyFx();
-  updateParticles();
-  const targetCam = player.x + player.w / 2 - CW * 0.4;
-  camX += (targetCam - camX) * 0.12;
-  camX = Math.max(0, Math.min(LW * T - CW, camX));
+  if (state !== 'title' && state !== 'loading') { updateBurning(); updateShinyFx(); updateParticles(); if (state !== 'map') clampCam(false); }
 }
-let titleAnim = 0;
 function draw() {
   uctx.clearRect(0, 0, ui.width, ui.height);
   if (state === 'loading') { px(0, 0, CW, CH, '#0f1024'); text('加载中…', CW / 2, CH / 2 - 6, 10, '#fff', 'center'); return; }
   if (state === 'title') {
-    titleAnim += 0.08; camX = 0;
-    drawBackground();
-    for (let x = 0; x < CW; x += 16) { blit('tiles/grass_top', x, 10 * T); for (let y = 11; y < H; y++) blit('tiles/dirt', x, y * T); }
-    blit('deco/bush', 300, 10 * T - 10); blit('deco/tree', 30, 10 * T - 22);
-    ['eevee', ...FORM_ORDER].forEach((f, i) => {
-      const x = 22 + i * 42, y = 10 * T - Math.round(Math.abs(Math.sin(titleAnim + i * 0.5)) * 6);
-      const im = charSprite(f, false, 1); if (im) ctx.drawImage(im, x - Math.floor(im.width / 2), y - im.height);
-      text(FORMS[f].name, x, 10 * T + 8, 7, '#fff', 'center');
-    });
-    text('伊布马里奥', CW / 2, 30, 28, '#ffd23c', 'center');
-    text('进化大冒险', CW / 2, 64, 12, '#fff', 'center');
-    text('吃下不同的食物，伊布会进化成不同的形态', CW / 2, 92, 9, '#fff', 'center');
-    text('← → / A D 移动   空格 / ↑ / W 跳跃   R 重新开始', CW / 2, 106, 8, '#dfe7ff', 'center');
-    text('按任意键 / 点击屏幕开始', CW / 2, 128, 10, (frame >> 4) & 1 ? '#fff' : '#ffd23c', 'center');
+    titleAnim += 0.08; frame++;
+    px(0, 0, CW, CH, '#6fbfff'); px(0, 100, CW, CH - 100, '#8fd0ff');
+    for (let x = 0; x < CW; x += 16) { blit('tiles/grass_top', x, 10 * T); for (let y = 11; y < 14; y++) blit('tiles/dirt', x, y * T); }
+    blit('deco/bush', 300, 10 * T - 10); blit('deco/tree', 30, 10 * T - 22); blit('deco/cloud_big', 60, 20); blit('deco/cloud_small', 260, 40);
+    FORM_ORDER.forEach((f, i) => { const x = 22 + i * 42, y = 10 * T - Math.round(Math.abs(Math.sin(titleAnim + i * 0.5)) * 6); const im = charSprite(f, false, 1); if (im) ctx.drawImage(im, x - Math.floor(im.width / 2), y - im.height); text(FORMS[f].name, x, 10 * T + 8, 7, '#fff', 'center'); });
+    text('伊布 · 进化大冒险', CW / 2, 26, 24, '#ffd23c', 'center');
+    text('银河恶魔城版 · 开发中', CW / 2, 58, 10, '#fff', 'center');
+    text('← → 移动  空格 跳跃  1～9 / Tab 切换形态  M 地图', CW / 2, 86, 8, '#dfe7ff', 'center');
+    if (hasSave()) { text('按任意键 / 点击屏幕：继续', CW / 2, 112, 10, (frame >> 4) & 1 ? '#fff' : '#ffd23c', 'center'); text('按 N：新游戏（会覆盖存档）', CW / 2, 128, 8, '#dfe7ff', 'center'); }
+    else text('按任意键 / 点击屏幕开始', CW / 2, 118, 10, (frame >> 4) & 1 ? '#fff' : '#ffd23c', 'center');
     return;
   }
-  drawBackground();
-  drawLevel();
-  drawPlayer();
-  drawWater();
+  drawBackground(); drawLevel(); drawPlayer(); drawWater();
   if (shinyFx) {
-    const f = shinyFx, cx = R(f.x - camX), cy = R(f.y);
+    const f = shinyFx, cx = R(f.x - camX), cy = R(f.y - camY);
     if (f.t < 6) { ctx.globalAlpha = 0.8 - f.t * 0.13; px(0, 0, CW, CH, '#fff'); }
-    ctx.globalAlpha = Math.max(0, 1 - f.t / 45) * 0.9; ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.arc(cx, cy, 4 + f.t * 1.6, 0, Math.PI * 2); ctx.stroke();
-    ctx.strokeStyle = '#ffe96a'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(cx, cy, 2 + f.t * 1.1, 0, Math.PI * 2); ctx.stroke();
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha = Math.max(0, 1 - f.t / 45) * 0.9; ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx, cy, 4 + f.t * 1.6, 0, Math.PI * 2); ctx.stroke();
+    ctx.strokeStyle = '#ffe96a'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(cx, cy, 2 + f.t * 1.1, 0, Math.PI * 2); ctx.stroke(); ctx.globalAlpha = 1;
   }
-  drawParticles();
-  drawHUD();
+  drawParticles(); drawHUD();
   if (state === 'evolving') {
-    const t = evo.t;
-    const flash = t > 40 && t < 60 ? 1 - Math.abs(t - 50) / 10 : 0;
+    const t = evo.t, flash = t > 40 && t < 60 ? 1 - Math.abs(t - 50) / 10 : 0;
     ctx.globalAlpha = flash * 0.9; px(0, 0, CW, CH, '#fff'); ctx.globalAlpha = 1;
-    const msg = t < 50 ? '咦？伊布的样子……' : `${FORMS[evo.from].name} 进化成了 ${FORMS[evo.to].name}！`;
-    text(msg, CW / 2, 44, 14, t < 50 ? '#fff' : '#ffd23c', 'center');
-    if (t >= 50) text('新能力：' + FORMS[evo.to].ability, CW / 2, 64, 9, '#fff', 'center');
+    const m = t < 50 ? '咦？伊布的样子……' : `${FORMS[evo.from].name} 进化成了 ${FORMS[evo.to].name}！`;
+    text(m, CW / 2, 60, 14, t < 50 ? '#fff' : '#ffd23c', 'center');
+    if (t >= 50) text('新能力：' + FORMS[evo.to].ability + '   （按 ' + (FORM_ORDER.indexOf(evo.to) + 1) + ' 随时切换）', CW / 2, 80, 9, '#fff', 'center');
   }
-  if (state === 'over') drawOverlay('游戏结束', ['分数 ' + score, '发现了 ' + Object.keys(discovered).length + ' / 9 种伊布'], '按任意键回到标题');
-  if (state === 'win') {
-    const secs = Math.round((timeEnd - timeStart) / 1000);
-    drawOverlay('通关！', ['分数 ' + score + '   用时 ' + secs + ' 秒', '金币 ' + coinCount + '   发现了 ' + Object.keys(discovered).length + ' / 9 种伊布   闪光 ' + Object.keys(discoveredShiny).length + ' 只', '伊布和它的所有进化形态一起抵达了终点！'], '按任意键回到标题');
-    ['eevee', ...FORM_ORDER].forEach((f, i) => { if (discovered[f]) { const im = charSprite(f, !!discoveredShiny[f], 1); if (im) ctx.drawImage(im, 22 + i * 42 - Math.floor(im.width / 2), 164 - im.height - ((frame >> 3) + i) % 2); } });
-  }
+  if (state === 'map') drawMap();
+  if (state === 'dead' && deathTimer > 30) { ctx.globalAlpha = Math.min(0.7, (deathTimer - 30) / 40); px(0, 0, CW, CH, '#0a0a28'); ctx.globalAlpha = 1; text('回到存档石……', CW / 2, CH / 2 - 8, 12, '#fff', 'center'); }
 }
 let last = 0, acc = 0;
 function loop(ts) {
@@ -708,14 +695,12 @@ function fit() {
   const raw = Math.min(window.innerWidth / CW, window.innerHeight / CH);
   const s = raw >= 2 ? Math.floor(raw) : raw;
   const w = Math.floor(CW * s), h = Math.floor(CH * s);
-  canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-  ui.style.width = w + 'px'; ui.style.height = h + 'px';
+  canvas.style.width = w + 'px'; canvas.style.height = h + 'px'; ui.style.width = w + 'px'; ui.style.height = h + 'px';
   const dpr = Math.min(3, window.devicePixelRatio || 1);
-  ui.width = Math.round(w * dpr); ui.height = Math.round(h * dpr);
-  UIS = ui.width / CW;
+  ui.width = Math.round(w * dpr); ui.height = Math.round(h * dpr); UIS = ui.width / CW;
 }
 window.addEventListener('resize', fit); window.addEventListener('orientationchange', () => setTimeout(fit, 100)); fit();
-resetGame();
+G = newProgress(); buildGrid();
 loadAssets(() => { state = 'title'; });
 requestAnimationFrame(loop);
 </script>

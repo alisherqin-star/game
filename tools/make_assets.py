@@ -566,6 +566,60 @@ A('deco/flower', dict(o='#3a7a2a', g='#4fb043', p='#ff8ab0', w='#ffffff', y='#ff
 '..g..',
 '.ggg.'])
 
+
+# ---------------- 银河恶魔城新增 ----------------
+T_ROCK = dict(R='#6e6a7a', r='#5a566a', d='#46425a', h='#8a86a0', k='#36324a')
+A('tiles/rock', T_ROCK, [
+'RRhRRRRRrRRRRRhR', 'RRRRRRRRRRRRRRRR', 'RrRRRRdRRRRrRRRR', 'RRRRRRRRRRRRRRRR', 'RRRRhRRRRRRRRdRR', 'RRRRRRRRRRkRRRRR', 'RdRRRRRRrRRRRRRR', 'RRRRRRRRRRRRRRhR',
+'RRRRrRRRRRRRRRRR', 'RRRRRRRRdRRRRRRR', 'RhRRRRRRRRRRrRRR', 'RRRRRRkRRRRRRRRR', 'RRRRRRRRRRRRRdRR', 'RRdRRRRRRhRRRRRR', 'RRRRRRRRRRRRRRRR', 'RRRRrRRRRRRRkRRR'])
+T_STONE = dict(m='#2e2a44', B='#5c5878', H='#7e7a9c', S='#44405e')
+A('tiles/stone', T_STONE, [
+'mmmmmmmmmmmmmmmm', 'mHHHHHHmmHHHHHHm', 'mHBBBBSmmHBBBBSm', 'mHBBBBSmmHBBBBSm', 'mHBBBBSmmHBBBBSm', 'mSSSSSSmmSSSSSSm', 'mmmmmmmmmmmmmmmm', 'mHHmmHHHHHHmmHHm',
+'mHSmmHBBBBSmmHSm', 'mHSmmHBBBBSmmHSm', 'mHSmmHBBBBSmmHSm', 'mSSmmSSSSSSmmSSm', 'mmmmmmmmmmmmmmmm', 'mHHHHHHmmHHHHHHm', 'mHBBBBSmmHBBBBSm', 'mSSSSSSmmSSSSSSm'])
+T_LAVA = dict(L='#ff7a2a', l='#e04a14', H='#ffd24a', k='#b02a08')
+A('tiles/lava_0', T_LAVA, ['HHLLHHHHLLLHHHLL', 'LLLLLLLLLLLLLLLL', 'LLlLLLLLLLLlLLLL', 'LLLLLLllLLLLLLLL', 'lLLLLLLLLLLLllLL', 'LLLLLLLLLLLLLLLL', 'LLLllLLLLLLLLLLL', 'LLLLLLLLLLlLLLLL', 'llLLLLLLLLLLLLlL', 'LLLLLLLLllLLLLLL', 'LLLLLLLLLLLLLLLL', 'LLkLLLLLLLLLkLLL', 'LLLLLLLkkLLLLLLL', 'LLLLLLLLLLLLLLLL', 'LkLLLLLLLLLLkLLL', 'LLLLLLLLLLLLLLLL'])
+A('tiles/lava_1', T_LAVA, ['LLHHLLLHHLLLHHLL', 'LLLLLLLLLLLLLLLL', 'LLLLLlLLLLLLLlLL', 'LLllLLLLLLllLLLL', 'LLLLLLLLLLLLLLLL', 'LLLLLLLlLLLLLLLL', 'LLLLLLLLLLLLLLLL', 'LLLLLLllLLLLLlLL', 'LLlLLLLLLLLLLLLL', 'LLLLLLLLLLLLLLLL', 'LLLLllLLLLLLllLL', 'LLLLLLLLLkLLLLLL', 'LLkLLLLLLLLLLLLL', 'LLLLLLLLLLLLkLLL', 'LLLLLLLLLLLLLLLL', 'LLLLLLkLLLLLLLLL'])
+A('tiles/cracked', dict(R='#6e6a7a', r='#5a566a', d='#46425a', k='#221e30', h='#8a86a0'), [
+'RRRRRRRRRRRRRRRR', 'RRRRRRRkRRRRRRRR', 'RRRRRRkRRRRRRRRR', 'RRRRRkRRRkkRRRRR', 'RRkkkRRRRRRkRRRR', 'RkRRRRRRRRRRkRRR', 'RRRRRRRRdRRRRkRR', 'RRRRkRRRRRRRkRRR',
+'RRRkRRRRRRRkRRRR', 'RRkRRRkkRRkRRRRR', 'RRRRkkRRkkRRRRRR', 'RRRkRRRRRRkRRRRR', 'RRkRRRRRRRRkRRRR', 'RRRRRRRRRRRRkRRR', 'RRRRRRRRRRRRRkRR', 'RRRRRRRRRRRRRRRR'])
+A('tiles/door', dict(o='#2a1a40', D='#5a3a8a', H='#8a6ac0', y='#ffd84a', k='#3a2460'), [
+'oooooooooooooooo', 'oHHHHHHHHHHHHHHo', 'oHDDDDDDDDDDDDko', 'oHDDDDDDDDDDDDko', 'oHDDDDyyyyDDDDko', 'oHDDDyDDDDyDDDko', 'oHDDyDDDDDDyDDko', 'oHDDyDDyyDDyDDko',
+'oHDDyDDyyDDyDDko', 'oHDDyDDDDDDyDDko', 'oHDDDyDDDDyDDDko', 'oHDDDDyyyyDDDDko', 'oHDDDDDDDDDDDDko', 'oHDDDDDDDDDDDDko', 'okkkkkkkkkkkkkko', 'oooooooooooooooo'])
+A('ui/save_stone_0', dict(o='#2a2a40', S='#9a9ab8', s='#6e6e90', c='#7fe8ff', C='#ffffff', g='#4a4a66'), [
+'......oooo......', '.....oSSSSo.....', '....oSSccSSo....', '....oScCCcSo....', '...oSScCCcSSo...', '...oSSScCSSSo...', '...oSSSccSSSo...', '...oSSSSSSSSo...',
+'...oSSSSSSSSo...', '...osSSSSSSso...', '...osssSSssso...', '..oggssssssggo..', '.oggggggggggggo.', 'oggggggggggggggo', 'oooooooooooooooo', '................'])
+A('ui/save_stone_1', dict(o='#2a2a40', S='#9a9ab8', s='#6e6e90', c='#7fe8ff', C='#ffffff', g='#4a4a66'), [
+'......oooo......', '.....oSSSSo.....', '....oSSCCSSo....', '....oSCCCCSo....', '...oSSCCCCSSo...', '...oSSSCCSSSo...', '...oSSScCSSSo...', '...oSSSSSSSSo...',
+'...oSSSSSSSSo...', '...osSSSSSSso...', '...osssSSssso...', '..oggssssssggo..', '.oggggggggggggo.', 'oggggggggggggggo', 'oooooooooooooooo', '................'])
+A('items/heart_piece', dict(o='#5a1020', R='#ff4a6a', H='#ff9ab0', d='#c02848'), ['.oo.oo..', 'oRHoRHo.', 'oRRRRRo.', 'oRRRRdo.', '.oRRdo..', '..oRo...', '...o....', '........'])
+A('items/shiny_stone', dict(o='#4a3a10', Y='#ffe96a', H='#ffffff', d='#d9a822', s='#fff4c0'), ['....o.....', '...oYo....', '..oYHYo...', '.oYHHHYo..', 'oYYHHHYYo.', '.oYYHYYo..', '..oYYYo...', '...oYo....', '....o.....', '..........'])
+A('ui/bubble', dict(o='#2a2040', W='#ffffff', k='#5a4a7a'), ['.oooooo.', 'oWWWWWWo', 'oWkWkWko', 'oWWWWWWo', '.oooooo.', '...oo...', '...o....', '........'])
+# 大史莱姆 Boss 24x20
+P_BIG = dict(o='#2a1040', B='#8e5bd3', H='#c9a3ff', d='#5e36a0', w='#ffffff', e='#1a1020', m='#4a2480', t='#ff8aa8')
+A('enemies/bigslime_0', P_BIG, [
+'........oooooooo........', '......ooHHHHHHHHoo......', '....ooHHBBBBBBBBHHoo....', '...oHHBBBBBBBBBBBBHHo...', '..oHBBBBBBBBBBBBBBBBHo..', '..oBBBwwwBBBBBBwwwBBBo..', '.oBBBBweeBBBBBBweeBBBBo.', '.oBBBBwwwBBBBBBwwwBBBBo.',
+'.oBBBBBBBBBBBBBBBBBBBBo.', '.oBBBBBBBmmmmmmBBBBBBBo.', '.oBBBBBBBmttttmBBBBBBBo.', '.oBBBBBBBBmmmmBBBBBBBBo.', '.oBBBBBBBBBBBBBBBBBBBBo.', '.oBdBBBBBBBBBBBBBBBBdBo.', '..odddBBBBBBBBBBBBdddo..', '..oddddddBBBBBBdddddddo.'[:24],
+'...odddddddddddddddddo..', '....oddddddddddddddddo..'[:24], '.....oooooooooooooooo...', '........................'])
+A('enemies/bigslime_1', P_BIG, [
+'........................', '.........oooooo.........', '......oooHHHHHHooo......', '....ooHHHBBBBBBHHHoo....', '..ooHBBBBBBBBBBBBBBHoo..', '.oHBBBwwwBBBBBBwwwBBBHo.', 'oBBBBBweeBBBBBBweeBBBBBo', 'oBBBBBwwwBBBBBBwwwBBBBBo',
+'oBBBBBBBBBBBBBBBBBBBBBBo', 'oBBBBBBBBmmmmmmBBBBBBBBo', 'oBBBBBBBBmttttmBBBBBBBBo', 'oBBBBBBBBBmmmmBBBBBBBBBo', 'oBdBBBBBBBBBBBBBBBBBBdBo', 'odddBBBBBBBBBBBBBBBBdddo', 'oddddddBBBBBBBBBBddddddo', '.oddddddddddddddddddddo.',
+'..oddddddddddddddddddo..', '...oooooooooooooooooo...', '........................', '........................'])
+# 刺河豚 14x12 / 鼓起 16x16
+P_PUF = dict(o='#3a2a10', Y='#f0c24a', H='#fff0a0', d='#c08a20', w='#ffffff', e='#1a1020', s='#e8e8e8', f='#8ac8ff')
+A('enemies/puffer_0', P_PUF, ['....oooooo....', '...oYYYYYYo...', '..oYHYYYYYYo..', '.oYHYYwwYYYYo.', 'oYYYYYweYYYYfo', 'oYYYYYwwYYYYfo', 'oYYYYYYYYYYYfo', '.oYYYYYYYYYYo.', '.oYdYYYYYYdYo.', '..oddYYYYddo..', '...oddddddo...', '....oooooo....'])
+A('enemies/puffer_1', P_PUF, ['..s..oooooo..s..', '...oYYYYYYYYo...', '.soYHYYYYYYYYos.', '.oYHYYYwwYYYYYo.', 'soYYYYYweYYYYYos', 'oYYYYYYwwYYYYYfo', 'oYYYYYYYYYYYYYfo', 'soYYYYYYYYYYYYos', 'oYYYYYYYYYYYYYYo', 'soYYYYYYYYYYYYos', '.oYdYYYYYYYYdYo.', '.soddYYYYYYddos.', '..oddddddddddo..', '...oddddddddo...', '..s..oooooo..s..', '................'])
+# 跳跳蛙 16x14
+P_FROG = dict(o='#1e4a14', G='#5fc14a', H='#9ce87a', d='#3a8a2a', w='#ffffff', e='#1a1020', b='#e8f0a0')
+A('enemies/frog_0', P_FROG, ['...oo......oo...', '..oweo....oweo..', '..owwo....owwo..', '.ooGGooooooGGoo.', 'oGGGGGGGGGGGGGGo', 'oGHGGGGGGGGGGGGo', 'oGGGGGGGGGGGGGGo', 'oGGbbbbbbbbbbGGo', '.oGbbbbbbbbbbGo.', '.oGGGGGGGGGGGGo.', '..oGdGGGGGGdGo..', '.oGGo.oGGo.oGGo.', 'oGGo...oo...oGGo', 'oooo........oooo'])
+A('enemies/frog_1', P_FROG, ['................', '................', '...oo......oo...', '..oweo....oweo..', '..owwo....owwo..', '.ooGGooooooGGoo.', 'oGGGGGGGGGGGGGGo', 'oGHGGGGGGGGGGGGo', 'oGGbbbbbbbbbbGGo', '.oGbbbbbbbbbbGo.', '..oGGGGGGGGGGo..', '.oGGGGGGGGGGGGo.', 'oGGGo......oGGGo', 'oooo........oooo'])
+# 湖蚌 Boss 24x16（闭合 / 张开）
+P_CLAM = dict(o='#2a2a40', S='#9aa0c0', H='#d8dcf0', s='#6a7098', p='#ffb6d5', P='#ffffff', m='#e86a8a', e='#1a1020')
+A('enemies/clam_0', P_CLAM, ['........oooooooo........', '.....oooHHHHHHHHooo.....', '...ooHHHSSSSSSSSHHHoo...', '..oHHSSSSSSSSSSSSSSHHo..', '.oHSSSSSSSSSSSSSSSSSSHo.', '.oSSSSSSSSSSSSSSSSSSSSo.', 'oSSSSSSSSSSSSSSSSSSSSSSo', 'oooooooooooooooooooooooo',
+'oSSSSSSSSSSSSSSSSSSSSSSo', '.oSSSSSSSSSSSSSSSSSSSSo.', '.osSSSSSSSSSSSSSSSSSSso.', '..ossSSSSSSSSSSSSSSsso..', '...oosssssssssssssoo....'[:24], '.....oooosssssoooo......', '........oooooo..........', '........................'])
+A('enemies/clam_1', P_CLAM, ['..oooooooooooooooooooo..', '.oHHHHHHHHHHHHHHHHHHHHo.', '.oHSSSSSSSSSSSSSSSSSSHo.', '..oSSSSSSSSSSSSSSSSSSo..', '...ooSSSSSSSSSSSSSSoo...', '.....oooooooooooooo.....', '.......oppPPPPppo.......', '......opPPPPPPPPpo......',
+'......opPPmPPmPPpo......', '......opPPPeePPPpo......', '.......oppPPPPppo.......', 'oSSSSSSSoooooooSSSSSSSSo', '.oSSSSSSSSSSSSSSSSSSSSo.', '..ossSSSSSSSSSSSSSSsso..', '....oosssssssssssssoo...', '.......oooooooooo.......'])
+# 村民伊布用角色图；对话用 ui/bubble
+
 # ---------------- 输出 ----------------
 def render(rows, pal):
     w, h = len(rows[0]), len(rows)
@@ -573,7 +627,7 @@ def render(rows, pal):
     for y in range(h):
         for x in range(w):
             ch = rows[y][x]
-            if ch == '.': continue
+            if ch == '.' or ch == ' ': continue
             c = pal[ch]; img.putpixel((x, y), (int(c[1:3], 16), int(c[3:5], 16), int(c[5:7], 16), 255))
     return img
 
