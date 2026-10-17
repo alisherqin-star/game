@@ -97,6 +97,27 @@ A('items/ribbon', dict(o='#6a1a3a', P='#f6a8c8', H='#ffffff', K='#e0608a', B='#7
 '.oBBo....oBBo.',
 '.ooo......ooo.'])
 
+# ---------------- 古代石板 14x18（彩蛋：刻着进化线索的谜语） ----------------
+A('props/tablet', dict(o='#22263a', S='#8f93a8', H='#c2c6d6', d='#5f6378', g='#7fe8ff', G='#c8f8ff', m='#4f8a3a'), [
+'....oooooo....',
+'..ooHHHHSSoo..',
+'.oHHSSSSSSSdo.',
+'.oHSSSSSSSSdo.',
+'oHSSgGgSgGSSdo',
+'oHSSSSSSSSSSdo',
+'oHSgSSgGgSSSdo',
+'oHSSSSSSSSSSdo',
+'oHSSGgSSgSSSdo',
+'oHSSSSSSSSSSdo',
+'oHSgGgSSGgSSdo',
+'oHSSSSSSSSSSdo',
+'oHSSSgSSSSSSdo',
+'oSSSSSSSSSSSdo',
+'oSdSSSSSSSSddo',
+'ommdddddddddmo',
+'oommmmmmmmmmoo',
+'.oooooooooooo.'])
+
 # ---------------- 迷路的小史莱姆 12x10，两帧（比敌人史莱姆小、颜色更浅、腮红） ----------------
 P_BABY = dict(o='#3a1a5a', B='#c9a3ff', H='#ece0ff', d='#9a73d8', w='#ffffff', e='#1a1020', m='#7a3a9a', t='#ff9ac0')
 A('npcs/baby_slime_0', P_BABY, [
