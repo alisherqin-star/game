@@ -365,7 +365,7 @@ function drawShop() {
 const VILLAGERS = {
   grandma: { name: '园丁菇奶奶', look: 'gardener', shiny: true, lost: '园丁菇奶奶：风暴那天我出来采蘑菇，被吹到这片树林里……蝙蝠扑来扑去，我这把老骨头可不敢乱走。好孩子，我这就跟着你的脚印回村。', home: '园丁菇奶奶：多亏你了。村口的蘑菇汤随时给你留着，累了就回来喝一碗。' },
   scholar: { name: '学者书签', look: 'scholar', lost: '学者书签：嘘……我在记录塔顶的电流。风暴那晚，所有的闪电都指向同一个方向：东边的古代遗迹。我这就回村把笔记整理好。', home: '学者书签：我的笔记说，风暴的中心在进化祭坛的方向。石板上那幅画……恐怕不是巧合。' },
-  trainer: { name: '训练家跳跳', look: 'guard', lost: '训练家跳跳：哈！我在岩顶上练平衡，结果湖水涨了起来，游不回去了……谢啦！回村后我就把训练场重新开起来。', home: null },
+  trainer: { name: '训练家跳跳', look: 'guard', lost: '训练家跳跳：我在岩顶上练平衡，结果湖水涨了起来，游不回去了……谢啦！回村后我就把训练场重新开起来。', home: null },
 };
 function trainerText() {
   const pct = Math.round((1 - cdMul()) * 100), sec = (hurtGuard() / 60).toFixed(1);
@@ -1189,7 +1189,28 @@ function panel(x, y, w, h, fill = '#2c2050') { px(x, y, w, h, '#1a1030'); px(x +
 // ================= 泰拉瑞亚风格界面 =================
 // 画在高清层 uctx 上，坐标仍然使用 384x224 的逻辑单位。
 let chat = [];
-function say(text, color = '#ffffff') { chat.push({ text, color, t: 0 }); if (chat.length > 5) chat.shift(); }
+function say(text, color = '#ffffff') { chat.push({ text: ticify(text), color, t: 0 }); if (chat.length > 5) chat.shift(); }
+// ---- NPC 口癖：显示对话框和消息时按说话人自动加上，台词本身不用改，新台词也会自动带上 ----
+// start：开口先说；end：句尾加（join 时把结尾的句号换成逗号再接）；inner：插在最后的标点前面，句号变「～」
+const TICS = {
+  '村长老橡':     { end: '沙沙～', join: '，' },   // 橡树叶子沙沙响
+  '商人栗栗':     { inner: '栗' },               // 看看货栗～
+  '见习向导绒绒': { end: '叮铃～' },              // 胆小时就摇一下小铃铛
+  '园丁菇奶奶':   { start: '哎哟哟，' },
+  '学者书签':     { end: '记下来记下来～' },
+  '训练家跳跳':   { start: '嘿哈！' },
+  '史莱姆妈妈':   { end: '噗噜～', join: '，' },   // 果冻一样晃一晃
+  '小史莱姆啵啵': { inner: '啵' },
+};
+function ticBody(name, body) {
+  const t = TICS[name]; if (!t || !body) return body;
+  if (t.start) return body.startsWith(t.start) ? body : t.start + body;
+  let tail = ''; const m = body.match(/（[^（）]*）$/); if (m) { tail = m[0]; body = body.slice(0, -tail.length); }   // 句尾的括号旁白留在最后
+  if (t.inner) { const mm = body.match(/^([\s\S]*?)([。！？…～]*)$/); const p = !mm[2] || mm[2] === '。' ? '～' : mm[2]; return mm[1] + t.inner + p + tail; }
+  if (t.join && body.endsWith('。')) return body.slice(0, -1) + t.join + t.end + tail;
+  return body + t.end + tail;
+}
+function ticify(str) { const i = str.indexOf('：'); if (i <= 0 || i >= 8) return str; const n = str.slice(0, i); return TICS[n] ? n + '：' + ticBody(n, str.slice(i + 1)) : str; }
 const menu = { idx: 0, help: false };
 const MENU_Y = 78;
 const mapView = { cx: 0, cy: 0, zoom: 3 };
@@ -1339,7 +1360,7 @@ function drawBossBar() {
 // ---- NPC 对话 ----
 function drawDialog() {
   if (!dialog) return;
-  const i = dialog.indexOf('：'), name = i > 0 && i < 8 ? dialog.slice(0, i) : '', body = i > 0 && i < 8 ? dialog.slice(i + 1) : dialog;
+  const i = dialog.indexOf('：'), name = i > 0 && i < 8 ? dialog.slice(0, i) : '', body = i > 0 && i < 8 ? ticBody(name, dialog.slice(i + 1)) : dialog;
   const w = 250, x = CW / 2 - w / 2, y = 100, lines = wrap(body, 8, w - 16), h = lines.length * 11 + (name ? 24 : 14);
   DIALOG_RECT = { x, y, w, h };
   U.box(x, y, w, h, 4, 'rgba(46,58,140,0.88)', 'rgba(12,16,48,0.95)', 1.2);
