@@ -1,0 +1,148 @@
+{
+  "version": 3,
+  "variant": "identity-B",
+  "fit": "native oblique face; curved ruff; ears and eyes preserved",
+  "base": "sprites/characters/eevee.png",
+  "assets": [
+    {
+      "id": "npcs/elder",
+      "path": "sprites/npcs/elder.png",
+      "role": "村长",
+      "trait": "叶帽＋圆眼镜",
+      "width": 32,
+      "height": 28,
+      "anchor": [
+        16,
+        28
+      ],
+      "accent": "#739747",
+      "sha256": "555a8c2c6dccbca7660d965f4c2a20547d3c7db4a3bec0dec004297d28937987"
+    },
+    {
+      "id": "npcs/guide",
+      "path": "sprites/npcs/guide.png",
+      "role": "向导",
+      "trait": "斜蝴蝶结＋金铃铛",
+      "width": 32,
+      "height": 28,
+      "anchor": [
+        16,
+        28
+      ],
+      "accent": "#49a9c9",
+      "sha256": "f46ba33ee335e7ac0ea49dd11aab32b74938bd6f9a7e78215bf7015b5cf357f6"
+    },
+    {
+      "id": "npcs/merchant",
+      "path": "sprites/npcs/merchant.png",
+      "role": "商人",
+      "trait": "宽围巾＋皮挎包",
+      "width": 32,
+      "height": 28,
+      "anchor": [
+        16,
+        28
+      ],
+      "accent": "#be627e",
+      "sha256": "fa8bfa68ce42efa152222e02f7cb42bd84b40f5fb52ffce627d690d9afa46aef"
+    },
+    {
+      "id": "npcs/healer",
+      "path": "sprites/npcs/healer.png",
+      "role": "医师",
+      "trait": "白头巾＋绿叶刺绣",
+      "width": 32,
+      "height": 28,
+      "anchor": [
+        16,
+        28
+      ],
+      "accent": "#59a98f",
+      "sha256": "a69df345f0ca9bb869024a8d1bc398b2493329ab4427be223865a4439e76a232"
+    },
+    {
+      "id": "npcs/explorer",
+      "path": "sprites/npcs/explorer.png",
+      "role": "探险家",
+      "trait": "护目镜＋橘色背包",
+      "width": 32,
+      "height": 28,
+      "anchor": [
+        16,
+        28
+      ],
+      "accent": "#c77847",
+      "sha256": "1698503d13bd2a624dc5ba31ad09c6cafd6b1e147ea2415ee640a1dd898a62c5"
+    },
+    {
+      "id": "npcs/gardener",
+      "path": "sprites/npcs/gardener.png",
+      "role": "园丁",
+      "trait": "小草帽＋绿围裙",
+      "width": 32,
+      "height": 28,
+      "anchor": [
+        16,
+        28
+      ],
+      "accent": "#8ab85b",
+      "sha256": "cc495ffefc55b36574e4e2826688795485860139e1e3e7141dfebc091d88d714"
+    },
+    {
+      "id": "npcs/miner",
+      "path": "sprites/npcs/miner.png",
+      "role": "矿工",
+      "trait": "黄矿帽＋亮头灯",
+      "width": 32,
+      "height": 28,
+      "anchor": [
+        16,
+        28
+      ],
+      "accent": "#d8ad49",
+      "sha256": "2e38e01b0857af450ae775dd98b01adeceeaa09e30133c2b960cc1e22e05009f"
+    },
+    {
+      "id": "npcs/baker",
+      "path": "sprites/npcs/baker.png",
+      "role": "糕点师",
+      "trait": "蓬松厨帽＋粉领结",
+      "width": 32,
+      "height": 28,
+      "anchor": [
+        16,
+        28
+      ],
+      "accent": "#d18fa6",
+      "sha256": "b580d97af74569ebbc049cdb017c6208bd6e90ada832f57f72c0f8a135a171b2"
+    },
+    {
+      "id": "npcs/scholar",
+      "path": "sprites/npcs/scholar.png",
+      "role": "学者",
+      "trait": "紫围巾＋随身书本",
+      "width": 32,
+      "height": 28,
+      "anchor": [
+        16,
+        28
+      ],
+      "accent": "#9473bb",
+      "sha256": "8102267e11481fd4c2e52533ad9b5ddb3b955961c09dde301cf75306a6b2855f"
+    },
+    {
+      "id": "npcs/guard",
+      "path": "sprites/npcs/guard.png",
+      "role": "守卫",
+      "trait": "蓝头带＋小盾徽",
+      "width": 32,
+      "height": 28,
+      "anchor": [
+        16,
+        28
+      ],
+      "accent": "#5d7fae",
+      "sha256": "dfaedd637e54aae38189ac72f6ad4e651fef1c2ba8ca40df68b20e9a3ef49e7d"
+    }
+  ]
+}

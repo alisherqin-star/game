@@ -5,6 +5,9 @@ Only writes env_* PNGs. Does not touch characters, world, UI or index.html.
 from pathlib import Path
 import random
 from PIL import Image, ImageDraw
+from pixel_nature import Painter, blend, curve, natural_background, soften
+from pixel_craft import craft_prop
+from village_style import cottage,title_board
 ROOT=Path(__file__).resolve().parents[1]/'sprites'
 for cat in ['deco','tiles','backgrounds']: (ROOT/cat).mkdir(exist_ok=True)
 I=None; D=None
@@ -17,7 +20,17 @@ def line(points,c,w=1):D.line(points,fill=c,width=w)
 def poly(points,c,edge=None):
  D.polygon(points,fill=c)
  if edge:D.line(points+[points[0]],fill=edge,width=1)
-def save(name,cat='deco'):I.save(ROOT/cat/('env_'+name+'.png'))
+def save(name,cat='deco'):
+ picture=I
+ if cat=='deco' and name=='village_cottage':picture=cottage('elder')
+ revisions={'pier':('lake','pier',(48,40)),'canoe':('lake','canoe',(64,24)),
+            'crystal_cluster':('cave','crystal',(48,64)),
+            'gear':('tower','gear',(48,48)),'grate':('tower','grate',(48,48)),
+            'coil':('tower','coil',(48,48)),'lever':('tower','lever',(48,48))}
+ if cat=='deco' and name in revisions:
+  theme,kind,size=revisions[name];picture=craft_prop(theme,kind,size)
+  if picture.size!=I.size:picture=picture.resize(I.size,Image.Resampling.NEAREST)
+ picture.save(ROOT/cat/('env_'+name+'.png'))
 def plank(box):
  x,y,w,h=box;rect((x,y,x+w-1,y+h-1),WOOD);line((x,y,x+w-1,y),LIGHT);line((x,y+h-1,x+w-1,y+h-1),DARK)
  for xx in range(x+5,x+w,8):line((xx,y+1,xx,y+h-2),DARK)
@@ -77,8 +90,9 @@ for frame in range(3):
  else:rect((13,3,16,7),'#e3c4b5')
  save(f'lily_{frame}')
 new(32,40)
-for x,y in [(5,18),(12,6),(21,12),(27,2)]:
- line([(x,39),(x-2,y+7),(x+1,y)],'#4a7e72',2);line((x,37,x-1,y+10),'#79a793')
+for x,y,lean in [(5,18,-3),(12,6,4),(21,12,-3),(27,2,3)]:
+ curve(D,[(x,39),(x+lean,29),(x-lean,16),(x+lean,y)],'#4a7e72',2)
+ curve(D,[(x-1,37),(x+lean-1,29),(x-lean-1,16),(x+lean-1,y)],'#85afa0')
 save('waterweed')
 new(32,16);D.ellipse((3,8,28,14),fill='#516e6c')
 for x,y in [(5,5),(12,2),(20,6)]:D.ellipse((x,y,x+8,y+7),fill='#90a59a');line((x+2,y+1,x+5,y+1),'#c1c7ac')
@@ -91,15 +105,23 @@ for x,y,w in [(3,28,14),(16,3,17),(31,19,14)]:
  line((x+w//2,y+4,x+w//2,57),'#a9d4ca')
  line((x+3,y+13,x+3,54),'#467c89')
 save('crystal_cluster')
-new(32,48);poly([(1,47),(8,21),(12,12),(16,33),(21,1),(27,14),(30,47)],'#314657',O);line([(9,24),(12,16),(14,34)],'#66818b');line([(22,5),(24,19),(24,40)],'#577480');save('stalagmite')
+new(32,48)
+cave_colors=['#435667','#23394b','#71828e','#a0b9b5','#8caab9','#ccddd1']
+rock=Painter(I,cave_colors,'eroded-stalagmite')
+poly(soften([(1,47),(5,35),(8,24),(12,12),(17,32),(21,2),(26,12),(28,34),(31,47)],2,True),cave_colors[0],cave_colors[1])
+curve(D,[(7,39),(10,29),(12,21),(15,38)],cave_colors[2]);curve(D,[(22,8),(24,20),(23,37)],'#78849b');rock.grain(45)
+save('stalagmite')
 # Vertical flip is generated from authored geometry to match ceiling placement.
 I=I.transpose(Image.Transpose.FLIP_TOP_BOTTOM);save('stalactite')
 new(32,24)
-for x,y,r in [(4,14,4),(14,4,6),(25,11,5)]:
- rect((x,y+3,x+1,23),'#4e777d');D.ellipse((x-r,y,x+r,y+5),fill='#294957');D.arc((x-r,y,x+r,y+5),180,355,fill='#8ac6bc');line((x-1,y+2,x+2,y+2),'#c1e1cc')
+for x,y,r,cap,edge in [(4,14,4,'#7da9a1','#b7d2b6'),(14,4,6,'#9e8fb2','#d2b6d1'),(25,11,5,'#6e9aa3','#afcace')]:
+ curve(D,[(x,23),(x-1,y+9),(x,y+3)],'#668a89')
+ D.ellipse((x-r,y,x+r,y+5),fill='#34465c');D.arc((x-r,y,x+r,y+5),180,355,fill=cap)
+ line((x-1,y+2,x+2,y+2),edge)
 save('glow_mushrooms')
-new(48,24);poly([(1,23),(4,14),(13,11),(17,6),(29,5),(36,11),(44,16),(46,23)],'#334d5a',O)
-line([(5,15),(14,13),(18,8),(29,7)],'#6f9292');line([(28,9),(25,16),(31,20)],'#1b3345');save('boulder')
+new(48,24)
+Painter(I,['#455867','#293e50','#7b8c91','#b4b4ad','#759e9a','#d1d4bd'],'lake-boulder').rock((0,2,48,27))
+save('boulder')
 # Tower: machinery imagery only; Claude chooses any future mechanics.
 new(32,32)
 poly([(10,1),(21,1),(21,5),(26,6),(30,11),(27,14),(30,20),(25,25),(22,23),(20,30),(11,30),(11,26),(6,25),(1,20),(5,17),(2,11),(7,6),(10,8)],'#797580','#323344')
@@ -127,6 +149,12 @@ for name,color,edge,highlight in [('wood','#6b5140','#433e35','#b39162'),('stone
 # Layers can repeat horizontally at native width=384, with nearest filtering.
 for theme in ['forest','lake','cave','tower']:
  for layer in range(3):
+  if theme!='forest':
+   sky={'lake':['#719ca7','#c4dbcd'],'cave':['#152c40','#3d5467'],'tower':['#34374e','#676376']}[theme]
+   palette={'lake':['#647b72','#34545e','#97ad94','#d2c69d','#80a99c','#e3d6b3'],'cave':['#44566d','#25394d','#7d8196','#a6bfba','#78b8ad','#d1d5c9'],'tower':['#696170','#35364f','#9b8c91','#c5b999','#c7a675','#efdbb0']}[theme]
+   I=natural_background(theme,sky,palette,layer);D=ImageDraw.Draw(I)
+   save(f'{theme}_layer_{layer}','backgrounds')
+   continue
   new(384,224);rng=random.Random(400+layer)
   color={'forest':['#8da99c','#628a7e','#3d655e'],'lake':['#91b0ac','#6c9794','#4f7c7b'],'cave':['#182f42','#203d50','#2a4b5b'],'tower':['#252838','#303446','#404153']}[theme][layer]
   for i in range(6):
@@ -152,3 +180,8 @@ for theme in ['forest','lake','cave','tower']:
      rect((x+26,31,x+28,114),color);rect((x+14,70,x+39,72),color);rect((x+4,123,x+49,127),'#555467')
   save(f'{theme}_layer_{layer}','backgrounds')
 print('Generated environment props, animation frames and 12 repeatable parallax layers.')
+I=craft_prop('lake','willow',(96,112));D=ImageDraw.Draw(I);save('lake_willow')
+
+# Matching role homes / title board; same foot anchors and no new collision.
+for role in ('elder','guide','merchant'):cottage(role).save(ROOT/'deco'/f'env_village_home_{role}.png')
+title_board().save(ROOT/'ui/env_village_title_board.png')

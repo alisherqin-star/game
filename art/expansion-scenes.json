@@ -1,0 +1,5579 @@
+{
+  "version": 1,
+  "regions": {
+    "sewer": {
+      "name": "地下水道",
+      "description": "青苔砖拱、铜管和污水闸门；潮湿的村庄地下通道。",
+      "sky": [
+        "#263c49",
+        "#70816a"
+      ],
+      "palette": [
+        "#455d54",
+        "#293d3c",
+        "#71816a",
+        "#a1ae78",
+        "#87b7a0",
+        "#d4dfab"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_sewer_sluice",
+          "x": 160,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_pipe",
+          "x": 321,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_wheel",
+          "x": 81,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_grate",
+          "x": 258,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_moss",
+          "x": 42,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_bottle",
+          "x": 345,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sewer_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_sewer_drip",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_sewer_layer_",
+      "surface": "tiles/exp_sewer_top_",
+      "fill": "tiles/exp_sewer_fill_",
+      "platform": "tiles/exp_sewer_platform",
+      "atmosphere": {
+        "distance": "#405f6c",
+        "material": "#7c7654",
+        "light": "#bcbb79",
+        "mist": "#8ba797"
+      },
+      "playerX": 111,
+      "liquid": {
+        "body": "tiles/exp_sewer_liquid",
+        "animation": "exp_sewer_liquid",
+        "x": 176,
+        "y": 200,
+        "w": 48,
+        "h": 24,
+        "overlay": false
+      }
+    },
+    "volcano": {
+      "name": "火山洞",
+      "description": "冷黑玄武岩衬托橙红熔流，烧焦的木梁与矿车留下探险痕迹。",
+      "sky": [
+        "#302539",
+        "#9b6751"
+      ],
+      "palette": [
+        "#534443",
+        "#2b2933",
+        "#77605a",
+        "#a1846b",
+        "#ed7d43",
+        "#ffe4a0"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_volcano_basalt",
+          "x": 44,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_charred",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_minecart",
+          "x": 124,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_vent",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_ore",
+          "x": 343,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_chain",
+          "x": 205,
+          "y": 0
+        },
+        {
+          "id": "deco/exp_volcano_lavafall",
+          "x": 220,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_volcano_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_volcano_flame",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_volcano_layer_",
+      "surface": "tiles/exp_volcano_top_",
+      "fill": "tiles/exp_volcano_fill_",
+      "platform": "tiles/exp_volcano_platform",
+      "atmosphere": {
+        "distance": "#4a405d",
+        "material": "#89615b",
+        "light": "#e4a15f",
+        "mist": "#9f7d8c"
+      },
+      "playerX": 83,
+      "liquid": {
+        "body": "tiles/exp_volcano_liquid",
+        "animation": "exp_volcano_liquid",
+        "x": 176,
+        "y": 200,
+        "w": 48,
+        "h": 24,
+        "overlay": false
+      }
+    },
+    "canopy": {
+      "name": "森林高台",
+      "description": "祖母绿树冠、悬空木棚与藤桥，明亮叶缘标示可行走的层次。",
+      "sky": [
+        "#508794",
+        "#c1c9a1"
+      ],
+      "palette": [
+        "#65533d",
+        "#303c33",
+        "#8d7750",
+        "#91ad5c",
+        "#65ad7b",
+        "#d6df91"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_canopy_treehouse",
+          "x": 74,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_canopy_branch",
+          "x": 270,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_canopy_fern",
+          "x": 130,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_canopy_rope",
+          "x": 164,
+          "y": 0
+        },
+        {
+          "id": "deco/exp_canopy_flowers",
+          "x": 337,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_canopy_basket",
+          "x": 225,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_canopy_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_canopy_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_canopy_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_canopy_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_canopy_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_canopy_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_canopy_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_canopy_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_canopy_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_canopy_firefly",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_canopy_layer_",
+      "surface": "tiles/exp_canopy_top_",
+      "fill": "tiles/exp_canopy_fill_",
+      "platform": "tiles/exp_canopy_platform",
+      "atmosphere": {
+        "distance": "#486e80",
+        "material": "#617f59",
+        "light": "#d7bc79",
+        "mist": "#a9c8a9"
+      },
+      "playerX": 159
+    },
+    "heartwood": {
+      "name": "古树之心",
+      "description": "中空巨树、环形年轮和琥珀树液，暖金光聚在树心祭台。",
+      "sky": [
+        "#304947",
+        "#94805b"
+      ],
+      "palette": [
+        "#69503e",
+        "#352f32",
+        "#92704a",
+        "#b49b60",
+        "#e4b766",
+        "#ffdf9b"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_heartwood_hearttree",
+          "x": 200,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_heartwood_root",
+          "x": 56,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_heartwood_sap",
+          "x": 285,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_heartwood_mushrooms",
+          "x": 331,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_heartwood_totem",
+          "x": 100,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_heartwood_vine",
+          "x": 90,
+          "y": 0
+        },
+        {
+          "id": "deco/exp_heartwood_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_heartwood_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_heartwood_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_heartwood_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_heartwood_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_heartwood_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_heartwood_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_heartwood_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_heartwood_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_heartwood_saplight",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_heartwood_layer_",
+      "surface": "tiles/exp_heartwood_top_",
+      "fill": "tiles/exp_heartwood_fill_",
+      "platform": "tiles/exp_heartwood_platform",
+      "atmosphere": {
+        "distance": "#3b6663",
+        "material": "#8c6650",
+        "light": "#d9b871",
+        "mist": "#a5b18a"
+      },
+      "playerX": 133
+    },
+    "snow": {
+      "name": "雪峰",
+      "description": "覆雪冷杉、层叠雪山与登山营地；雪沿柔和，岩壁保持深色轮廓。",
+      "sky": [
+        "#718fb5",
+        "#d4c5b6"
+      ],
+      "palette": [
+        "#677c94",
+        "#35475f",
+        "#9bafbd",
+        "#dce9e2",
+        "#8fc8d2",
+        "#f8f6df"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_snow_fir",
+          "x": 64,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_cairn",
+          "x": 312,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_tent",
+          "x": 158,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_sign",
+          "x": 227,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_snowbush",
+          "x": 351,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_fence",
+          "x": 270,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_snow_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_snow_snowdust",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_snow_layer_",
+      "surface": "tiles/exp_snow_top_",
+      "fill": "tiles/exp_snow_fill_",
+      "platform": "tiles/exp_snow_platform",
+      "atmosphere": {
+        "distance": "#657baf",
+        "material": "#a29daf",
+        "light": "#e9cead",
+        "mist": "#e3e5e7"
+      },
+      "playerX": 111
+    },
+    "ice": {
+      "name": "冰窟",
+      "description": "蓝青冰棱、冻结瀑布和霜花；深蓝裂隙区分前景冰面。",
+      "sky": [
+        "#41395e",
+        "#6e9fa9"
+      ],
+      "palette": [
+        "#426d8c",
+        "#26394f",
+        "#6aafc2",
+        "#b8e3de",
+        "#85d5e4",
+        "#edffed"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_ice_icefall",
+          "x": 70,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_ice_icecluster",
+          "x": 290,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_ice_icicle",
+          "x": 186,
+          "y": 0
+        },
+        {
+          "id": "deco/exp_ice_frostflower",
+          "x": 134,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_ice_frozenarch",
+          "x": 221,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_ice_snowrock",
+          "x": 343,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_ice_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_ice_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_ice_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_ice_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_ice_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_ice_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_ice_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_ice_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_ice_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_ice_icespark",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_ice_layer_",
+      "surface": "tiles/exp_ice_top_",
+      "fill": "tiles/exp_ice_fill_",
+      "platform": "tiles/exp_ice_platform",
+      "atmosphere": {
+        "distance": "#5a6390",
+        "material": "#718baf",
+        "light": "#d7c0df",
+        "mist": "#b9dddb"
+      },
+      "playerX": 111
+    },
+    "sky": {
+      "name": "天空遗迹",
+      "description": "象牙石、失落拱门与浮岛，淡金纹样和青绿风化铜作点缀。",
+      "sky": [
+        "#649da9",
+        "#e5d2ad"
+      ],
+      "palette": [
+        "#9a9b89",
+        "#535f68",
+        "#c1bd9e",
+        "#e9dcad",
+        "#83c6bf",
+        "#fff2ca"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_sky_arch",
+          "x": 200,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_column",
+          "x": 55,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_sundial",
+          "x": 113,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_urn",
+          "x": 281,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_ivy",
+          "x": 334,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_obelisk",
+          "x": 353,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_sky_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_sky_mote",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_sky_layer_",
+      "surface": "tiles/exp_sky_top_",
+      "fill": "tiles/exp_sky_fill_",
+      "platform": "tiles/exp_sky_platform",
+      "atmosphere": {
+        "distance": "#668aa3",
+        "material": "#8c9b88",
+        "light": "#dfbe87",
+        "mist": "#e9e0c5"
+      },
+      "playerX": 149
+    },
+    "wind": {
+      "name": "风之塔",
+      "description": "细长塔身、风向旗与铜制风轮，开放窗洞露出高空云层。",
+      "sky": [
+        "#7489ab",
+        "#dcbf9e"
+      ],
+      "palette": [
+        "#747986",
+        "#3d4b61",
+        "#a5a8ab",
+        "#d4c7a1",
+        "#cea373",
+        "#f4e2b4"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_wind_windmill",
+          "x": 113,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_wind_weathercock",
+          "x": 264,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_wind_pennant",
+          "x": 311,
+          "y": 0
+        },
+        {
+          "id": "deco/exp_wind_bell",
+          "x": 216,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_wind_telescope",
+          "x": 340,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_wind_chain",
+          "x": 52,
+          "y": 0
+        },
+        {
+          "id": "deco/exp_wind_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_wind_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_wind_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_wind_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_wind_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_wind_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_wind_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_wind_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_wind_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_wind_ribbon",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_wind_layer_",
+      "surface": "tiles/exp_wind_top_",
+      "fill": "tiles/exp_wind_fill_",
+      "platform": "tiles/exp_wind_platform",
+      "atmosphere": {
+        "distance": "#6d7d9d",
+        "material": "#9d9b8d",
+        "light": "#dcad8e",
+        "mist": "#ddd9d1"
+      },
+      "playerX": 174
+    },
+    "grave": {
+      "name": "夜之墓地",
+      "description": "蓝紫月雾、扭曲枯树、碑石和铁栅，灯火引导墓园小径。",
+      "sky": [
+        "#2c2d50",
+        "#7c6c86"
+      ],
+      "palette": [
+        "#505267",
+        "#2b2e46",
+        "#79758b",
+        "#9995b3",
+        "#a9b5cd",
+        "#e4dcbe"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_grave_dead_tree",
+          "x": 47,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_tomb",
+          "x": 135,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_mausoleum",
+          "x": 275,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_ironfence",
+          "x": 354,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_wilted",
+          "x": 185,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_lantern",
+          "x": 218,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_grave_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_grave_ghostflame",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_grave_layer_",
+      "surface": "tiles/exp_grave_top_",
+      "fill": "tiles/exp_grave_fill_",
+      "platform": "tiles/exp_grave_platform",
+      "atmosphere": {
+        "distance": "#4a4e76",
+        "material": "#697986",
+        "light": "#d8ae7d",
+        "mist": "#a9a2bf"
+      },
+      "playerX": 95
+    },
+    "shadow": {
+      "name": "影之祭坛",
+      "description": "黑紫圣所、尖拱与蚀月石环；紫晶烛光集中在仪式中心。",
+      "sky": [
+        "#292940",
+        "#75506a"
+      ],
+      "palette": [
+        "#4a3e60",
+        "#231f38",
+        "#726085",
+        "#a58bb4",
+        "#c393d5",
+        "#ecd6ef"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_shadow_eclipse",
+          "x": 200,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_shadow_gothicarch",
+          "x": 65,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_shadow_candles",
+          "x": 315,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_shadow_rune",
+          "x": 118,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_shadow_banner",
+          "x": 307,
+          "y": 0
+        },
+        {
+          "id": "deco/exp_shadow_thorn",
+          "x": 361,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_shadow_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_shadow_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_shadow_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_shadow_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_shadow_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_shadow_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_shadow_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_shadow_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_shadow_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_shadow_shadowflame",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_shadow_layer_",
+      "surface": "tiles/exp_shadow_top_",
+      "fill": "tiles/exp_shadow_fill_",
+      "platform": "tiles/exp_shadow_platform",
+      "atmosphere": {
+        "distance": "#494d79",
+        "material": "#76546e",
+        "light": "#cd9ea7",
+        "mist": "#aaa3c8"
+      },
+      "playerX": 111
+    },
+    "candy": {
+      "name": "糖果花园",
+      "description": "草莓奶油屋、香草门窗、心形饼干与蝴蝶结糖果，搭配柔和薄荷色花丛。",
+      "sky": [
+        "#b9e4ed",
+        "#fff0da"
+      ],
+      "palette": [
+        "#d1a26d",
+        "#a47e83",
+        "#efd2a0",
+        "#f6bfd3",
+        "#a1d9ba",
+        "#fff2cd"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_candy_candyhouse",
+          "x": 200,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_lollipop",
+          "x": 58,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_candycane",
+          "x": 119,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_cupcake",
+          "x": 274,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_mintbush",
+          "x": 327,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_wafer",
+          "x": 364,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_candy_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_candy_sugar",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_candy_layer_",
+      "surface": "tiles/exp_candy_top_",
+      "fill": "tiles/exp_candy_fill_",
+      "platform": "tiles/exp_candy_platform",
+      "atmosphere": {
+        "distance": "#cfb9df",
+        "material": "#a5d3b5",
+        "light": "#ffe0a9",
+        "mist": "#fff1e5"
+      },
+      "playerX": 151
+    },
+    "abyss": {
+      "name": "深渊海沟",
+      "description": "深青海水、沉船肋骨与珊瑚，稀疏生物荧光照出遗迹轮廓。",
+      "sky": [
+        "#26354e",
+        "#326e73"
+      ],
+      "palette": [
+        "#36586b",
+        "#152d44",
+        "#527d89",
+        "#80a8a4",
+        "#69c6bc",
+        "#c2f0d7"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_abyss_shipwreck",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_coral",
+          "x": 29,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_kelp",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_anemone",
+          "x": 244,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_anchor",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_shell",
+          "x": 210,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_coral_arch",
+          "x": 291,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_abyss_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_abyss_jelly",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_abyss_layer_",
+      "surface": "tiles/exp_abyss_top_",
+      "fill": "tiles/exp_abyss_fill_",
+      "platform": "tiles/exp_abyss_platform",
+      "atmosphere": {
+        "distance": "#345772",
+        "material": "#527b77",
+        "light": "#b2a4cf",
+        "mist": "#88bfb8"
+      },
+      "playerX": 185,
+      "liquid": {
+        "body": "tiles/exp_abyss_liquid",
+        "animation": "exp_abyss_liquid",
+        "x": 176,
+        "y": 200,
+        "w": 48,
+        "h": 24,
+        "overlay": true
+      }
+    },
+    "core": {
+      "name": "熔岩核心",
+      "description": "暗红黑曜石、悬链与巨炉；比火山洞更工业化、光源更集中。",
+      "sky": [
+        "#30243c",
+        "#855442"
+      ],
+      "palette": [
+        "#56383c",
+        "#281f2c",
+        "#81504b",
+        "#b97653",
+        "#f49d4e",
+        "#fff0b4"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_core_furnace",
+          "x": 127,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_core_crucible",
+          "x": 224,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_core_chain",
+          "x": 273,
+          "y": 0
+        },
+        {
+          "id": "deco/exp_core_anvil",
+          "x": 331,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_core_slag",
+          "x": 49,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_core_pressurepipe",
+          "x": 286,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_core_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_core_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_core_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_core_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_core_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_core_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_core_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_core_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_core_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_core_coreflame",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_core_layer_",
+      "surface": "tiles/exp_core_top_",
+      "fill": "tiles/exp_core_fill_",
+      "platform": "tiles/exp_core_platform",
+      "atmosphere": {
+        "distance": "#4d3856",
+        "material": "#8c5b55",
+        "light": "#e3b165",
+        "mist": "#b18c8e"
+      },
+      "playerX": 183,
+      "liquid": {
+        "body": "tiles/exp_core_liquid",
+        "animation": "exp_core_liquid",
+        "x": 176,
+        "y": 200,
+        "w": 48,
+        "h": 24,
+        "overlay": false
+      }
+    },
+    "altar": {
+      "name": "进化祭坛",
+      "description": "珠白石阶、八色元素宝石与天球仪，中央光环作为旅程终点。",
+      "sky": [
+        "#4e537e",
+        "#b8aeb9"
+      ],
+      "palette": [
+        "#8b8a9c",
+        "#474761",
+        "#b5b3bd",
+        "#e1d9bc",
+        "#b9b0df",
+        "#fff3d3"
+      ],
+      "ground": 192,
+      "props": [
+        {
+          "id": "deco/exp_altar_portal",
+          "x": 200,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_altar_orrery",
+          "x": 64,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_altar_gemstand",
+          "x": 288,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_altar_obelisk",
+          "x": 340,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_altar_brazier",
+          "x": 112,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_altar_banner",
+          "x": 312,
+          "y": 16
+        },
+        {
+          "id": "deco/exp_altar_groundcover_0",
+          "x": 8,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_altar_groundcover_1",
+          "x": 35,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_altar_groundcover_2",
+          "x": 89,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_altar_groundcover_0",
+          "x": 129,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_altar_groundcover_1",
+          "x": 163,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_altar_groundcover_2",
+          "x": 247,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_altar_groundcover_0",
+          "x": 301,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_altar_groundcover_1",
+          "x": 352,
+          "y": 192
+        },
+        {
+          "id": "deco/exp_altar_groundcover_2",
+          "x": 377,
+          "y": 192
+        }
+      ],
+      "platforms": [],
+      "effect": {
+        "animation": "exp_altar_prism",
+        "x": 180,
+        "y": 188
+      },
+      "background": "backgrounds/exp_altar_layer_",
+      "surface": "tiles/exp_altar_top_",
+      "fill": "tiles/exp_altar_fill_",
+      "platform": "tiles/exp_altar_platform",
+      "atmosphere": {
+        "distance": "#666c98",
+        "material": "#a49d8e",
+        "light": "#e4c995",
+        "mist": "#c8c2da"
+      },
+      "playerX": 143
+    }
+  },
+  "assets": [
+    {
+      "id": "tiles/exp_sewer_fill_0",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_top_0",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_wall_0",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_fill_1",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_top_1",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_wall_1",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_fill_2",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_top_2",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_wall_2",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_fill_3",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_top_3",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_wall_3",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_platform",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_sewer_groundcover_0",
+      "region": "sewer",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_sewer_groundcover_1",
+      "region": "sewer",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_sewer_groundcover_2",
+      "region": "sewer",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_liquid",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_liquid_surface_0",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sewer_liquid_surface_1",
+      "region": "sewer",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_sewer_layer_0",
+      "region": "sewer",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_sewer_layer_1",
+      "region": "sewer",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_sewer_layer_2",
+      "region": "sewer",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_sewer_sluice",
+      "region": "sewer",
+      "category": "deco",
+      "anchor": [
+        40,
+        80
+      ]
+    },
+    {
+      "id": "deco/exp_sewer_pipe",
+      "region": "sewer",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_sewer_wheel",
+      "region": "sewer",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_sewer_grate",
+      "region": "sewer",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_sewer_moss",
+      "region": "sewer",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_sewer_bottle",
+      "region": "sewer",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_sewer_drip_0",
+      "region": "sewer",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_sewer_drip_1",
+      "region": "sewer",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_sewer_drip_2",
+      "region": "sewer",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_sewer_drip_3",
+      "region": "sewer",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_fill_0",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_top_0",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_wall_0",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_fill_1",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_top_1",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_wall_1",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_fill_2",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_top_2",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_wall_2",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_fill_3",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_top_3",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_wall_3",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_platform",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_groundcover_0",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_groundcover_1",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_groundcover_2",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_liquid",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_liquid_surface_0",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_volcano_liquid_surface_1",
+      "region": "volcano",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_volcano_layer_0",
+      "region": "volcano",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_volcano_layer_1",
+      "region": "volcano",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_volcano_layer_2",
+      "region": "volcano",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_basalt",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_charred",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_minecart",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_vent",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_ore",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_chain",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        16,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_lavafall",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        32,
+        144
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_flame_0",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_flame_1",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_flame_2",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_volcano_flame_3",
+      "region": "volcano",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "tiles/exp_canopy_fill_0",
+      "region": "canopy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_canopy_top_0",
+      "region": "canopy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_canopy_wall_0",
+      "region": "canopy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_canopy_fill_1",
+      "region": "canopy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_canopy_top_1",
+      "region": "canopy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_canopy_wall_1",
+      "region": "canopy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_canopy_fill_2",
+      "region": "canopy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_canopy_top_2",
+      "region": "canopy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_canopy_wall_2",
+      "region": "canopy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_canopy_fill_3",
+      "region": "canopy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_canopy_top_3",
+      "region": "canopy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_canopy_wall_3",
+      "region": "canopy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_canopy_platform",
+      "region": "canopy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_canopy_groundcover_0",
+      "region": "canopy",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_canopy_groundcover_1",
+      "region": "canopy",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_canopy_groundcover_2",
+      "region": "canopy",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "backgrounds/exp_canopy_layer_0",
+      "region": "canopy",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_canopy_layer_1",
+      "region": "canopy",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_canopy_layer_2",
+      "region": "canopy",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_canopy_treehouse",
+      "region": "canopy",
+      "category": "deco",
+      "anchor": [
+        48,
+        112
+      ]
+    },
+    {
+      "id": "deco/exp_canopy_branch",
+      "region": "canopy",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_canopy_fern",
+      "region": "canopy",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_canopy_rope",
+      "region": "canopy",
+      "category": "deco",
+      "anchor": [
+        16,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_canopy_flowers",
+      "region": "canopy",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_canopy_basket",
+      "region": "canopy",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_canopy_firefly_0",
+      "region": "canopy",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_canopy_firefly_1",
+      "region": "canopy",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_canopy_firefly_2",
+      "region": "canopy",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_canopy_firefly_3",
+      "region": "canopy",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "tiles/exp_heartwood_fill_0",
+      "region": "heartwood",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_heartwood_top_0",
+      "region": "heartwood",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_heartwood_wall_0",
+      "region": "heartwood",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_heartwood_fill_1",
+      "region": "heartwood",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_heartwood_top_1",
+      "region": "heartwood",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_heartwood_wall_1",
+      "region": "heartwood",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_heartwood_fill_2",
+      "region": "heartwood",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_heartwood_top_2",
+      "region": "heartwood",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_heartwood_wall_2",
+      "region": "heartwood",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_heartwood_fill_3",
+      "region": "heartwood",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_heartwood_top_3",
+      "region": "heartwood",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_heartwood_wall_3",
+      "region": "heartwood",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_heartwood_platform",
+      "region": "heartwood",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_heartwood_groundcover_0",
+      "region": "heartwood",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_heartwood_groundcover_1",
+      "region": "heartwood",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_heartwood_groundcover_2",
+      "region": "heartwood",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "backgrounds/exp_heartwood_layer_0",
+      "region": "heartwood",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_heartwood_layer_1",
+      "region": "heartwood",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_heartwood_layer_2",
+      "region": "heartwood",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_heartwood_hearttree",
+      "region": "heartwood",
+      "category": "deco",
+      "anchor": [
+        48,
+        128
+      ]
+    },
+    {
+      "id": "deco/exp_heartwood_root",
+      "region": "heartwood",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_heartwood_sap",
+      "region": "heartwood",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_heartwood_mushrooms",
+      "region": "heartwood",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_heartwood_totem",
+      "region": "heartwood",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_heartwood_vine",
+      "region": "heartwood",
+      "category": "deco",
+      "anchor": [
+        16,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_heartwood_saplight_0",
+      "region": "heartwood",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_heartwood_saplight_1",
+      "region": "heartwood",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_heartwood_saplight_2",
+      "region": "heartwood",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_heartwood_saplight_3",
+      "region": "heartwood",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "tiles/exp_snow_fill_0",
+      "region": "snow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_snow_top_0",
+      "region": "snow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_snow_wall_0",
+      "region": "snow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_snow_fill_1",
+      "region": "snow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_snow_top_1",
+      "region": "snow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_snow_wall_1",
+      "region": "snow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_snow_fill_2",
+      "region": "snow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_snow_top_2",
+      "region": "snow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_snow_wall_2",
+      "region": "snow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_snow_fill_3",
+      "region": "snow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_snow_top_3",
+      "region": "snow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_snow_wall_3",
+      "region": "snow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_snow_platform",
+      "region": "snow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_snow_groundcover_0",
+      "region": "snow",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_snow_groundcover_1",
+      "region": "snow",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_snow_groundcover_2",
+      "region": "snow",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "backgrounds/exp_snow_layer_0",
+      "region": "snow",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_snow_layer_1",
+      "region": "snow",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_snow_layer_2",
+      "region": "snow",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_snow_fir",
+      "region": "snow",
+      "category": "deco",
+      "anchor": [
+        32,
+        96
+      ]
+    },
+    {
+      "id": "deco/exp_snow_cairn",
+      "region": "snow",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_snow_tent",
+      "region": "snow",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_snow_sign",
+      "region": "snow",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_snow_snowbush",
+      "region": "snow",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_snow_fence",
+      "region": "snow",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_snow_snowdust_0",
+      "region": "snow",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_snow_snowdust_1",
+      "region": "snow",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_snow_snowdust_2",
+      "region": "snow",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_snow_snowdust_3",
+      "region": "snow",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "tiles/exp_ice_fill_0",
+      "region": "ice",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_ice_top_0",
+      "region": "ice",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_ice_wall_0",
+      "region": "ice",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_ice_fill_1",
+      "region": "ice",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_ice_top_1",
+      "region": "ice",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_ice_wall_1",
+      "region": "ice",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_ice_fill_2",
+      "region": "ice",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_ice_top_2",
+      "region": "ice",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_ice_wall_2",
+      "region": "ice",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_ice_fill_3",
+      "region": "ice",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_ice_top_3",
+      "region": "ice",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_ice_wall_3",
+      "region": "ice",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_ice_platform",
+      "region": "ice",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_ice_groundcover_0",
+      "region": "ice",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_ice_groundcover_1",
+      "region": "ice",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_ice_groundcover_2",
+      "region": "ice",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "backgrounds/exp_ice_layer_0",
+      "region": "ice",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_ice_layer_1",
+      "region": "ice",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_ice_layer_2",
+      "region": "ice",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_ice_icefall",
+      "region": "ice",
+      "category": "deco",
+      "anchor": [
+        32,
+        112
+      ]
+    },
+    {
+      "id": "deco/exp_ice_icecluster",
+      "region": "ice",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_ice_icicle",
+      "region": "ice",
+      "category": "deco",
+      "anchor": [
+        16,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_ice_frostflower",
+      "region": "ice",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_ice_frozenarch",
+      "region": "ice",
+      "category": "deco",
+      "anchor": [
+        40,
+        80
+      ]
+    },
+    {
+      "id": "deco/exp_ice_snowrock",
+      "region": "ice",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_ice_icespark_0",
+      "region": "ice",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_ice_icespark_1",
+      "region": "ice",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_ice_icespark_2",
+      "region": "ice",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_ice_icespark_3",
+      "region": "ice",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "tiles/exp_sky_fill_0",
+      "region": "sky",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sky_top_0",
+      "region": "sky",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sky_wall_0",
+      "region": "sky",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sky_fill_1",
+      "region": "sky",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sky_top_1",
+      "region": "sky",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sky_wall_1",
+      "region": "sky",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sky_fill_2",
+      "region": "sky",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sky_top_2",
+      "region": "sky",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sky_wall_2",
+      "region": "sky",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sky_fill_3",
+      "region": "sky",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sky_top_3",
+      "region": "sky",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sky_wall_3",
+      "region": "sky",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_sky_platform",
+      "region": "sky",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_sky_groundcover_0",
+      "region": "sky",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_sky_groundcover_1",
+      "region": "sky",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_sky_groundcover_2",
+      "region": "sky",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "backgrounds/exp_sky_layer_0",
+      "region": "sky",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_sky_layer_1",
+      "region": "sky",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_sky_layer_2",
+      "region": "sky",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_sky_arch",
+      "region": "sky",
+      "category": "deco",
+      "anchor": [
+        40,
+        80
+      ]
+    },
+    {
+      "id": "deco/exp_sky_column",
+      "region": "sky",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_sky_sundial",
+      "region": "sky",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_sky_urn",
+      "region": "sky",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_sky_ivy",
+      "region": "sky",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_sky_obelisk",
+      "region": "sky",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_sky_mote_0",
+      "region": "sky",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_sky_mote_1",
+      "region": "sky",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_sky_mote_2",
+      "region": "sky",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_sky_mote_3",
+      "region": "sky",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "tiles/exp_wind_fill_0",
+      "region": "wind",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_wind_top_0",
+      "region": "wind",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_wind_wall_0",
+      "region": "wind",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_wind_fill_1",
+      "region": "wind",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_wind_top_1",
+      "region": "wind",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_wind_wall_1",
+      "region": "wind",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_wind_fill_2",
+      "region": "wind",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_wind_top_2",
+      "region": "wind",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_wind_wall_2",
+      "region": "wind",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_wind_fill_3",
+      "region": "wind",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_wind_top_3",
+      "region": "wind",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_wind_wall_3",
+      "region": "wind",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_wind_platform",
+      "region": "wind",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_wind_groundcover_0",
+      "region": "wind",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_wind_groundcover_1",
+      "region": "wind",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_wind_groundcover_2",
+      "region": "wind",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "backgrounds/exp_wind_layer_0",
+      "region": "wind",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_wind_layer_1",
+      "region": "wind",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_wind_layer_2",
+      "region": "wind",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_wind_windmill",
+      "region": "wind",
+      "category": "deco",
+      "anchor": [
+        40,
+        112
+      ]
+    },
+    {
+      "id": "deco/exp_wind_weathercock",
+      "region": "wind",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_wind_pennant",
+      "region": "wind",
+      "category": "deco",
+      "anchor": [
+        16,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_wind_bell",
+      "region": "wind",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_wind_telescope",
+      "region": "wind",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_wind_chain",
+      "region": "wind",
+      "category": "deco",
+      "anchor": [
+        16,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_wind_ribbon_0",
+      "region": "wind",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_wind_ribbon_1",
+      "region": "wind",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_wind_ribbon_2",
+      "region": "wind",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_wind_ribbon_3",
+      "region": "wind",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "tiles/exp_grave_fill_0",
+      "region": "grave",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_grave_top_0",
+      "region": "grave",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_grave_wall_0",
+      "region": "grave",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_grave_fill_1",
+      "region": "grave",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_grave_top_1",
+      "region": "grave",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_grave_wall_1",
+      "region": "grave",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_grave_fill_2",
+      "region": "grave",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_grave_top_2",
+      "region": "grave",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_grave_wall_2",
+      "region": "grave",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_grave_fill_3",
+      "region": "grave",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_grave_top_3",
+      "region": "grave",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_grave_wall_3",
+      "region": "grave",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_grave_platform",
+      "region": "grave",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_grave_groundcover_0",
+      "region": "grave",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_grave_groundcover_1",
+      "region": "grave",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_grave_groundcover_2",
+      "region": "grave",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "backgrounds/exp_grave_layer_0",
+      "region": "grave",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_grave_layer_1",
+      "region": "grave",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_grave_layer_2",
+      "region": "grave",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_grave_dead_tree",
+      "region": "grave",
+      "category": "deco",
+      "anchor": [
+        40,
+        96
+      ]
+    },
+    {
+      "id": "deco/exp_grave_tomb",
+      "region": "grave",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_grave_mausoleum",
+      "region": "grave",
+      "category": "deco",
+      "anchor": [
+        40,
+        80
+      ]
+    },
+    {
+      "id": "deco/exp_grave_ironfence",
+      "region": "grave",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_grave_wilted",
+      "region": "grave",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_grave_lantern",
+      "region": "grave",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_grave_ghostflame_0",
+      "region": "grave",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_grave_ghostflame_1",
+      "region": "grave",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_grave_ghostflame_2",
+      "region": "grave",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_grave_ghostflame_3",
+      "region": "grave",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "tiles/exp_shadow_fill_0",
+      "region": "shadow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_shadow_top_0",
+      "region": "shadow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_shadow_wall_0",
+      "region": "shadow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_shadow_fill_1",
+      "region": "shadow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_shadow_top_1",
+      "region": "shadow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_shadow_wall_1",
+      "region": "shadow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_shadow_fill_2",
+      "region": "shadow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_shadow_top_2",
+      "region": "shadow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_shadow_wall_2",
+      "region": "shadow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_shadow_fill_3",
+      "region": "shadow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_shadow_top_3",
+      "region": "shadow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_shadow_wall_3",
+      "region": "shadow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_shadow_platform",
+      "region": "shadow",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_shadow_groundcover_0",
+      "region": "shadow",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_shadow_groundcover_1",
+      "region": "shadow",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_shadow_groundcover_2",
+      "region": "shadow",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "backgrounds/exp_shadow_layer_0",
+      "region": "shadow",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_shadow_layer_1",
+      "region": "shadow",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_shadow_layer_2",
+      "region": "shadow",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_shadow_eclipse",
+      "region": "shadow",
+      "category": "deco",
+      "anchor": [
+        40,
+        96
+      ]
+    },
+    {
+      "id": "deco/exp_shadow_gothicarch",
+      "region": "shadow",
+      "category": "deco",
+      "anchor": [
+        32,
+        96
+      ]
+    },
+    {
+      "id": "deco/exp_shadow_candles",
+      "region": "shadow",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_shadow_rune",
+      "region": "shadow",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_shadow_banner",
+      "region": "shadow",
+      "category": "deco",
+      "anchor": [
+        16,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_shadow_thorn",
+      "region": "shadow",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_shadow_shadowflame_0",
+      "region": "shadow",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_shadow_shadowflame_1",
+      "region": "shadow",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_shadow_shadowflame_2",
+      "region": "shadow",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_shadow_shadowflame_3",
+      "region": "shadow",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "tiles/exp_candy_fill_0",
+      "region": "candy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_candy_top_0",
+      "region": "candy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_candy_wall_0",
+      "region": "candy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_candy_fill_1",
+      "region": "candy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_candy_top_1",
+      "region": "candy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_candy_wall_1",
+      "region": "candy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_candy_fill_2",
+      "region": "candy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_candy_top_2",
+      "region": "candy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_candy_wall_2",
+      "region": "candy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_candy_fill_3",
+      "region": "candy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_candy_top_3",
+      "region": "candy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_candy_wall_3",
+      "region": "candy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_candy_platform",
+      "region": "candy",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_candy_groundcover_0",
+      "region": "candy",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_candy_groundcover_1",
+      "region": "candy",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_candy_groundcover_2",
+      "region": "candy",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "backgrounds/exp_candy_layer_0",
+      "region": "candy",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_candy_layer_1",
+      "region": "candy",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_candy_layer_2",
+      "region": "candy",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_candy_candyhouse",
+      "region": "candy",
+      "category": "deco",
+      "anchor": [
+        48,
+        96
+      ]
+    },
+    {
+      "id": "deco/exp_candy_lollipop",
+      "region": "candy",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_candy_candycane",
+      "region": "candy",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_candy_cupcake",
+      "region": "candy",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_candy_mintbush",
+      "region": "candy",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_candy_wafer",
+      "region": "candy",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_candy_sugar_0",
+      "region": "candy",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_candy_sugar_1",
+      "region": "candy",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_candy_sugar_2",
+      "region": "candy",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_candy_sugar_3",
+      "region": "candy",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_fill_0",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_top_0",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_wall_0",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_fill_1",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_top_1",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_wall_1",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_fill_2",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_top_2",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_wall_2",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_fill_3",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_top_3",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_wall_3",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_platform",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_groundcover_0",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_groundcover_1",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_groundcover_2",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_liquid",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_liquid_surface_0",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_abyss_liquid_surface_1",
+      "region": "abyss",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_abyss_layer_0",
+      "region": "abyss",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_abyss_layer_1",
+      "region": "abyss",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_abyss_layer_2",
+      "region": "abyss",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_shipwreck",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        48,
+        64
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_coral",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_kelp",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_anemone",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_anchor",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_shell",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_coral_arch",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        56,
+        96
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_jelly_0",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_jelly_1",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_jelly_2",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_abyss_jelly_3",
+      "region": "abyss",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "tiles/exp_core_fill_0",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_top_0",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_wall_0",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_fill_1",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_top_1",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_wall_1",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_fill_2",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_top_2",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_wall_2",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_fill_3",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_top_3",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_wall_3",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_platform",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_core_groundcover_0",
+      "region": "core",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_core_groundcover_1",
+      "region": "core",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_core_groundcover_2",
+      "region": "core",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "tiles/exp_core_liquid",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_liquid_surface_0",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_core_liquid_surface_1",
+      "region": "core",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_core_layer_0",
+      "region": "core",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_core_layer_1",
+      "region": "core",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_core_layer_2",
+      "region": "core",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_core_furnace",
+      "region": "core",
+      "category": "deco",
+      "anchor": [
+        40,
+        96
+      ]
+    },
+    {
+      "id": "deco/exp_core_crucible",
+      "region": "core",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_core_chain",
+      "region": "core",
+      "category": "deco",
+      "anchor": [
+        16,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_core_anvil",
+      "region": "core",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_core_slag",
+      "region": "core",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_core_pressurepipe",
+      "region": "core",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_core_coreflame_0",
+      "region": "core",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_core_coreflame_1",
+      "region": "core",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_core_coreflame_2",
+      "region": "core",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_core_coreflame_3",
+      "region": "core",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "tiles/exp_altar_fill_0",
+      "region": "altar",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_altar_top_0",
+      "region": "altar",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_altar_wall_0",
+      "region": "altar",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_altar_fill_1",
+      "region": "altar",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_altar_top_1",
+      "region": "altar",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_altar_wall_1",
+      "region": "altar",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_altar_fill_2",
+      "region": "altar",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_altar_top_2",
+      "region": "altar",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_altar_wall_2",
+      "region": "altar",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_altar_fill_3",
+      "region": "altar",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_altar_top_3",
+      "region": "altar",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_altar_wall_3",
+      "region": "altar",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/exp_altar_platform",
+      "region": "altar",
+      "category": "tiles",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_altar_groundcover_0",
+      "region": "altar",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_altar_groundcover_1",
+      "region": "altar",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "deco/exp_altar_groundcover_2",
+      "region": "altar",
+      "category": "deco",
+      "anchor": [
+        8,
+        16
+      ]
+    },
+    {
+      "id": "backgrounds/exp_altar_layer_0",
+      "region": "altar",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_altar_layer_1",
+      "region": "altar",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "backgrounds/exp_altar_layer_2",
+      "region": "altar",
+      "category": "backgrounds",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_altar_portal",
+      "region": "altar",
+      "category": "deco",
+      "anchor": [
+        48,
+        112
+      ]
+    },
+    {
+      "id": "deco/exp_altar_orrery",
+      "region": "altar",
+      "category": "deco",
+      "anchor": [
+        32,
+        80
+      ]
+    },
+    {
+      "id": "deco/exp_altar_gemstand",
+      "region": "altar",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_altar_obelisk",
+      "region": "altar",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_altar_brazier",
+      "region": "altar",
+      "category": "deco",
+      "anchor": [
+        24,
+        48
+      ]
+    },
+    {
+      "id": "deco/exp_altar_banner",
+      "region": "altar",
+      "category": "deco",
+      "anchor": [
+        16,
+        0
+      ]
+    },
+    {
+      "id": "deco/exp_altar_prism_0",
+      "region": "altar",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_altar_prism_1",
+      "region": "altar",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_altar_prism_2",
+      "region": "altar",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    },
+    {
+      "id": "deco/exp_altar_prism_3",
+      "region": "altar",
+      "category": "deco",
+      "anchor": [
+        16,
+        32
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "id": "exp_sewer_liquid",
+      "frames": [
+        "tiles/exp_sewer_liquid_surface_0",
+        "tiles/exp_sewer_liquid_surface_1"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "exp_sewer_drip",
+      "frames": [
+        "deco/exp_sewer_drip_0",
+        "deco/exp_sewer_drip_1",
+        "deco/exp_sewer_drip_2",
+        "deco/exp_sewer_drip_3"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "exp_volcano_liquid",
+      "frames": [
+        "tiles/exp_volcano_liquid_surface_0",
+        "tiles/exp_volcano_liquid_surface_1"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "exp_volcano_flame",
+      "frames": [
+        "deco/exp_volcano_flame_0",
+        "deco/exp_volcano_flame_1",
+        "deco/exp_volcano_flame_2",
+        "deco/exp_volcano_flame_3"
+      ],
+      "fps": 6,
+      "loop": true
+    },
+    {
+      "id": "exp_canopy_firefly",
+      "frames": [
+        "deco/exp_canopy_firefly_0",
+        "deco/exp_canopy_firefly_1",
+        "deco/exp_canopy_firefly_2",
+        "deco/exp_canopy_firefly_3"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "exp_heartwood_saplight",
+      "frames": [
+        "deco/exp_heartwood_saplight_0",
+        "deco/exp_heartwood_saplight_1",
+        "deco/exp_heartwood_saplight_2",
+        "deco/exp_heartwood_saplight_3"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "exp_snow_snowdust",
+      "frames": [
+        "deco/exp_snow_snowdust_0",
+        "deco/exp_snow_snowdust_1",
+        "deco/exp_snow_snowdust_2",
+        "deco/exp_snow_snowdust_3"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "exp_ice_icespark",
+      "frames": [
+        "deco/exp_ice_icespark_0",
+        "deco/exp_ice_icespark_1",
+        "deco/exp_ice_icespark_2",
+        "deco/exp_ice_icespark_3"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "exp_sky_mote",
+      "frames": [
+        "deco/exp_sky_mote_0",
+        "deco/exp_sky_mote_1",
+        "deco/exp_sky_mote_2",
+        "deco/exp_sky_mote_3"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "exp_wind_ribbon",
+      "frames": [
+        "deco/exp_wind_ribbon_0",
+        "deco/exp_wind_ribbon_1",
+        "deco/exp_wind_ribbon_2",
+        "deco/exp_wind_ribbon_3"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "exp_grave_ghostflame",
+      "frames": [
+        "deco/exp_grave_ghostflame_0",
+        "deco/exp_grave_ghostflame_1",
+        "deco/exp_grave_ghostflame_2",
+        "deco/exp_grave_ghostflame_3"
+      ],
+      "fps": 6,
+      "loop": true
+    },
+    {
+      "id": "exp_shadow_shadowflame",
+      "frames": [
+        "deco/exp_shadow_shadowflame_0",
+        "deco/exp_shadow_shadowflame_1",
+        "deco/exp_shadow_shadowflame_2",
+        "deco/exp_shadow_shadowflame_3"
+      ],
+      "fps": 6,
+      "loop": true
+    },
+    {
+      "id": "exp_candy_sugar",
+      "frames": [
+        "deco/exp_candy_sugar_0",
+        "deco/exp_candy_sugar_1",
+        "deco/exp_candy_sugar_2",
+        "deco/exp_candy_sugar_3"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "exp_abyss_liquid",
+      "frames": [
+        "tiles/exp_abyss_liquid_surface_0",
+        "tiles/exp_abyss_liquid_surface_1"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "exp_abyss_jelly",
+      "frames": [
+        "deco/exp_abyss_jelly_0",
+        "deco/exp_abyss_jelly_1",
+        "deco/exp_abyss_jelly_2",
+        "deco/exp_abyss_jelly_3"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "exp_core_liquid",
+      "frames": [
+        "tiles/exp_core_liquid_surface_0",
+        "tiles/exp_core_liquid_surface_1"
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    {
+      "id": "exp_core_coreflame",
+      "frames": [
+        "deco/exp_core_coreflame_0",
+        "deco/exp_core_coreflame_1",
+        "deco/exp_core_coreflame_2",
+        "deco/exp_core_coreflame_3"
+      ],
+      "fps": 6,
+      "loop": true
+    },
+    {
+      "id": "exp_altar_prism",
+      "frames": [
+        "deco/exp_altar_prism_0",
+        "deco/exp_altar_prism_1",
+        "deco/exp_altar_prism_2",
+        "deco/exp_altar_prism_3"
+      ],
+      "fps": 4,
+      "loop": true
+    }
+  ]
+}

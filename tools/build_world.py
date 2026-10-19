@@ -29,7 +29,7 @@ def room(pos, name, region, rows, texts=(), size=(1, 1), deco=(), notes=()):
     w, h = RW * size[0], RH * size[1]
     assert len(rows) == h, (name, len(rows))
     for i, r in enumerate(rows): assert len(r) == w, (name, i, len(r), r)
-    for d in deco: assert 0 <= d[1] < w and 0 < d[2] <= h, (name, d)
+    for d in deco: assert 0 <= d[1] < w and 0 <= d[2] <= h, (name, d)
     ROOMS.append(dict(pos=pos, name=name, region=region, rows=rows, texts=list(texts), size=size, deco=list(deco), notes=list(notes)))
 
 # ================= 起点村 =================
@@ -52,7 +52,7 @@ room((7, 2), '起点村', 'village', [
 '见习向导绒绒：我叫绒绒！听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换学会的形态，按 X 用技能……我、我想去糖果花园的星光野餐，可是风暴把路吹断了，我一个人不敢去。你会等我一起去吗？',
 '路牌：← 湖泊（需要游泳）　　草原 →',
 '商人栗栗：风暴把我的货吹得满地都是……收集金币和徽章吧，等路修好了，我这里会有好东西卖。',
-], notes=['古代石板（其五）：「冷风从湖北的冰缝里吹出。霜雪覆盖的巨石，在那里等待伊布。」', '古代石板（其一）：「蔚蓝之石，映着池水的光。触碰它的伊布，会生出鱼鳍与长尾。」', 'grandma|home', 'scholar|home', 'trainer|home'], size=(2, 1), deco=[('forest_tree_0', 2, 11), ('env_village_cottage', 8, 11), ('env_planter', 14, 11), ('forest_tree_1', 19, 11), ('env_fence', 22, 11), ('env_village_cottage', 28, 11), ('env_bench', 35, 11), ('env_berry_bush', 38, 11), ('env_stump', 40, 11), ('forest_tree_2', 46, 11)])
+], notes=['古代石板（其五）：「冷风从湖北的冰缝里吹出。霜雪覆盖的巨石，在那里等待伊布。」', '古代石板（其一）：「蔚蓝之石，映着池水的光。触碰它的伊布，会生出鱼鳍与长尾。」', 'grandma|home', 'scholar|home', 'trainer|home'], size=(2, 1), deco=[('forest_tree_0', 2, 11), ('env_village_home_elder', 8, 11), ('env_planter', 14, 11), ('forest_tree_1', 19, 11), ('env_fence', 22, 11), ('env_village_home_guide', 28, 11), ('env_bench', 35, 11), ('env_berry_bush', 37, 11), ('env_village_home_merchant', 41.5, 11), ('forest_tree_2', 46, 11)])
 
 # ================= 草原 =================
 room((9, 2), '草原·入口', 'plains', [
@@ -159,7 +159,7 @@ room((13, 1), '雷电塔·门口', 'tower', [
 'BB  W                   ',
 'BBT W                   ',
 'BBBBBBBBB      BBBBBBBBB',
-'BBBBBBBBB      BBBBBBBBB'], texts=['石碑：这里是雷电塔的门厅。从地板的缺口跳下去就是草原的池塘，往东回到中庭继续向上。'], notes=['bell', '古代石板（其三）：「赤红之石，供奉在高塔之巅。电网之后，火焰之前。」', '古代石板（其四）：「荆棘烧尽之处，青苔覆着巨石。伊布在它身旁醒来，耳尖冒出了嫩叶。」'])
+'BBBBBBBBB      BBBBBBBBB'], texts=['石碑：这里是雷电塔的门厅。从地板的缺口跳下去就是草原的池塘，往东回到中庭继续向上。'], notes=['bell', '古代石板（其三）：「赤红之石，供奉在高塔之巅。电网之后，火焰之前。」', '古代石板（其四）：「荆棘烧尽之处，青苔覆着巨石。伊布在它身旁醒来，耳尖冒出了嫩叶。」'], deco=[('biome_banner', 4, 2), ('biome_banner', 19, 2), ('biome_lamp', 2, 5, 6), ('biome_lamp', 21, 5, -6), ('env_torch_0', 7, 10), ('env_torch_0', 16, 10), ('biome_pillar', 3, 12), ('biome_pillar', 20, 12), ('env_gear', 5, 11), ('env_coil', 18, 12)])
 
 
 # ================= 湖泊 =================
@@ -177,7 +177,7 @@ room((6, 2), '湖畔', 'lake', [
 '   f           s   !    ',
 '###~~~~~~~~~~###########',
 '###~~~~~~~~~~###########',
-'###~~c~c~c~c~###########'], texts=['路牌：湖水又深又宽，没有水伊布过不去。'])
+'###~~c~c~c~c~###########'], texts=['路牌：湖水又深又宽，没有水伊布过不去。'], deco=[('biome_reeds', 1, 11), ('env_river_stones', 14, 11), ('biome_reeds', 17, 11), ('env_lake_willow', 21, 11), ('env_bench', 21, 11), ('env_fern', 23, 11), ('env_mooring_post', 13, 11), ('env_canoe', 10, 11, 0, 4), ('env_lily_0', 5, 11, 0, 5), ('env_waterweed', 3, 14), ('env_waterweed', 11, 14)])
 room((5, 2), '湖面', 'lake', [
 '                        ',
 '                        ',
@@ -192,7 +192,7 @@ room((5, 2), '湖面', 'lake', [
 '                        ',
 '~~~~~~~~~~~~~~~~~~~~~~~~',
 '~~~~~~~~~~~~~~~~~~~~~~~~',
-'~~~~p~~~~~~~~~~~~~~~~p~~'])
+'~~~~p~~~~~~~~~~~~~~~~p~~'], deco=[('env_lily_0', 2, 11, 0, 5), ('env_lily_0', 18, 11, 0, 5), ('env_lily_0', 22, 11, 0, 5), ('env_waterweed', 1, 14), ('env_waterweed', 22, 14)])
 room((5, 3), '湖底洞穴', 'lakecave', [
 'rrrr~~~~~~~~~~~~~~~~rrrr',
 'rrr~~~~~~~~~~~~~~~~~~rrr',
@@ -207,7 +207,7 @@ room((5, 3), '湖底洞穴', 'lakecave', [
 'rrrr~~~~~~~~~~~~~~~~rrrr',
 'rrrrrr~~~~~~~~~~~~rrrrrr',
 'rrrrrrrr~~~~*~~~rrrrrrrr',
-'rrrrrrrrrrrrrrrrrrrrrrrr'])
+'rrrrrrrrrrrrrrrrrrrrrrrr'], deco=[('env_stalactite', 3, 1), ('env_stalactite', 20, 1), ('biome_vine', 10, 0), ('biome_vine', 16, 0), ('biome_crystal_0', 10, 4), ('env_glow_mushrooms', 5, 5), ('biome_crystal_1', 18, 5), ('env_stalagmite', 3, 9), ('env_stalagmite', 20, 9), ('env_crystal_cluster', 8, 12), ('biome_crystal_1', 16, 12), ('env_glow_mushrooms', 14, 13), ('env_waterweed', 10, 13)])
 room((4, 2), '湖心', 'lake', [
 '                        ',
 '                        ',
@@ -222,7 +222,7 @@ room((4, 2), '湖心', 'lake', [
 '   f                    ',
 '~~~~~~~~~~~~~~~~~~~~~~~~',
 '~~~~p~~~~~~~~~~~~~p~~~~~',
-'~~~~~~~~~~h~~~~~~~~~~~~~'])
+'~~~~~~~~~~h~~~~~~~~~~~~~'], deco=[('env_lily_0', 5, 11, 0, 5), ('env_lily_0', 20, 11, 0, 5), ('env_waterweed', 2, 14), ('env_waterweed', 15, 14), ('env_river_stones', 21, 14)])
 room((3, 2), '湖蚌洞', 'lake', [
 '                        ',
 '                        ',
@@ -237,7 +237,7 @@ room((3, 2), '湖蚌洞', 'lake', [
 '                        ',
 '~~~~~~~~~~~~~~~~~~~~~~~~',
 '~~~~~~~~~~M~~~~~~~~~~~~~',
-'~~~~~~~~~~~~~~~~~~~~~~~~'])
+'~~~~~~~~~~~~~~~~~~~~~~~~'], deco=[('env_lily_0', 1, 11, 0, 5), ('env_lily_0', 22, 11, 0, 5), ('env_waterweed', 3, 14), ('env_waterweed', 20, 14), ('biome_crystal_0', 5, 14), ('biome_crystal_1', 18, 14)])
 room((2, 2), '柠檬岩', 'lake', [
 '                        ',
 '                        ',
@@ -252,7 +252,7 @@ room((2, 2), '柠檬岩', 'lake', [
 '  ! ######   s          ',
 '####################~~~~',
 '####################~~~~',
-'####################~~~~'], texts=['路牌：岩缝里嵌着雷之石！伊布碰到它就会进化成雷伊布，冲过草原尽头的电网。'], notes=['trainer|lost'])
+'####################~~~~'], texts=['路牌：岩缝里嵌着雷之石！伊布碰到它就会进化成雷伊布，冲过草原尽头的电网。'], notes=['trainer|lost'], deco=[('biome_reeds', 18, 11), ('env_mooring_post', 19, 11), ('env_lily_0', 22, 11, 0, 5), ('env_waterweed', 23, 14), ('env_boulder', 8, 11), ('env_river_stones', 15, 11), ('env_fern', 0, 11), ('biome_reeds', 3, 11), ('biome_pebbles', 9, 9), ('env_lake_willow', 11, 11)])
 
 # ================= 雷电塔内部（新房间放在最后，已有房间和实体的编号不变，旧存档仍然有效） =================
 # 中庭：三屏高的竖井，一路往上爬不换页。塔基西墙是电网门（只有雷伊布能穿过），东墙裂墙后藏着心之碎片。
@@ -348,7 +348,7 @@ def build():
         rooms_out.append(dict(id=i, name=r['name'], region=r['region'], x=x0, y=y0, w=sw * RW, h=sh * RH))
         for d in r['deco']:
             assert os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'sprites', 'deco', d[0] + '.png')), ('装饰素材不存在', d[0])
-            decos.append(dict(k=d[0], x=(x0 + d[1]) * T + T // 2 + (d[3] if len(d) > 3 else 0), y=(y0 + d[2]) * T))
+            decos.append(dict(k=d[0], x=(x0 + d[1]) * T + T // 2 + (d[3] if len(d) > 3 else 0), y=(y0 + d[2]) * T + (d[4] if len(d) > 4 else 0)))
     # 自动草地：泥土上方是空气 → '='
     for y in range(TH):
         for x in range(TW):

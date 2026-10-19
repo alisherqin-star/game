@@ -1,0 +1,130 @@
+{
+  "assets": [
+    {
+      "id": "tiles/stone",
+      "path": "sprites/tiles/stone.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/rock",
+      "path": "sprites/tiles/rock.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/brick",
+      "path": "sprites/tiles/brick.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/cracked",
+      "path": "sprites/tiles/cracked.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/platform",
+      "path": "sprites/tiles/platform.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/crate",
+      "path": "sprites/tiles/crate.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/door",
+      "path": "sprites/tiles/door.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/spikes",
+      "path": "sprites/tiles/spikes.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/fence_0",
+      "path": "sprites/tiles/fence_0.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/fence_1",
+      "path": "sprites/tiles/fence_1.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/shadow_0",
+      "path": "sprites/tiles/shadow_0.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/shadow_1",
+      "path": "sprites/tiles/shadow_1.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/lava_0",
+      "path": "sprites/tiles/lava_0.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tiles/lava_1",
+      "path": "sprites/tiles/lava_1.png",
+      "region": "shared",
+      "anchor": [
+        0,
+        0
+      ]
+    }
+  ]
+}

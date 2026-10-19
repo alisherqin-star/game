@@ -1,17 +1,56 @@
 <!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>伊布冒险 · 场景美术库</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#101b20;color:#e8e7d9;font:14px/1.6 system-ui,sans-serif}main{max-width:1200px;margin:auto;padding:32px 24px}header{display:flex;justify-content:space-between;gap:24px;align-items:center;border-bottom:1px solid #314147;padding-bottom:22px}h1{font-size:30px;letter-spacing:.04em;margin:4px 0}small,.muted{color:#a2b3ae}label{cursor:pointer}.tag{font-size:11px;color:#c2cf9b;letter-spacing:.18em}nav{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 16px}button{border:1px solid #41554e;border-radius:6px;background:#1a2c30;color:#dbe4d9;padding:9px 18px;cursor:pointer;font:inherit}button.active{color:#12251f;background:#c1cd9e;border-color:#c1cd9e}button:focus-visible{outline:3px solid #f7d599}#scene{display:block;width:100%;max-height:600px;object-fit:contain;image-rendering:pixelated;border:1px solid #48605b;border-radius:8px;background:#182e37}#description{margin:12px 0 26px;color:#b9c7c0}h2{font-size:18px;margin:24px 0 12px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px}.card{border:1px solid #34474a;border-radius:8px;overflow:hidden;background:#19292f}.image{height:145px;display:flex;align-items:center;justify-content:center;background-color:#23383d;background-image:linear-gradient(45deg,#2c4145 25%,transparent 25%),linear-gradient(-45deg,#2c4145 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#2c4145 75%),linear-gradient(-45deg,transparent 75%,#2c4145 75%);background-size:16px 16px;background-position:0 0,0 8px,8px -8px,-8px 0}.image img{image-rendering:pixelated;max-width:100%;object-fit:contain}.card p{margin:10px 12px;font-size:11px;word-break:break-all}.card span{color:#a9bdb5}body.light .image{background-color:#c9cfbc;background-image:none}footer{border-top:1px solid #314147;margin-top:32px;padding-top:18px;color:#9bafaa}@media(max-width:600px){main{padding:16px}header{display:block}h1{font-size:23px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.image{height:115px}}
-</style><main><header><div><div class="tag">ENVIRONMENT ART / 01</div><h1>伊布冒险 · 场景美术库</h1><small>原始角色保持不变 · 16px 瓦片 · 可复现像素素材</small></div><div class="muted" id="stats"></div></header>
+</style><main><header><div><div class="tag">ENVIRONMENT ART / 04</div><h1>伊布冒险 · 场景美术库</h1><small>原始角色保持不变 · 16px 瓦片 · 可复现像素素材</small></div><div class="muted" id="stats"></div></header>
 <nav aria-label="区域选择" id="tabs"></nav><canvas id="scene" width="768" height="448" aria-label="场景构图预览"></canvas><p id="description"></p>
-<div class="toolbar"><h2>素材目录</h2><label><input id="light" type="checkbox"> 浅色底检查透明边缘</label></div><div id="catalog"></div><footer>这是美术预览，不是游戏关卡。建筑、道具与机关均为视觉素材，碰撞和玩法由系统接入时定义。接入参数见 manifest.json；说明见 CLAUDE_HANDOFF.md。</footer></main>
+<label id="compare-wrap" hidden><input id="compare" type="checkbox"> 查看优化前的同一区域（取消勾选回到新版）</label>
+<div class="toolbar"><h2>素材目录</h2><label><input id="light" type="checkbox"> 浅色底检查透明边缘</label></div><div id="catalog"></div><footer>这是美术预览，不是游戏关卡。建筑、道具与机关均为视觉素材，碰撞和玩法由系统接入时定义。接入参数见 manifest.json；原有素材说明见 CLAUDE_HANDOFF.md，新增区域见 EXPANSION.md。</footer></main>
 <script>
 const manifest=/* MANIFEST */;const data=/* DATA */;
 const imgs={};let region='forest',tick=0;const canvas=document.getElementById('scene'),ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;
-const names={forest:'森林村庄',lake:'湖岸与码头',cave:'水晶洞穴',tower:'雷电遗迹',shared:'通用构件'};
-const descriptions={forest:'苔绿色树冠、木屋和草木细节，营造可停留的村庄空间。',lake:'青绿远岸、木码头、系船桩、独木舟与睡莲，保持清晰的岸线。',cave:'冷色岩层、水晶与发光蘑菇，前景边缘清楚，背景保持低对比。',tower:'灰紫砖石配黄铜机械、雷纹旗帜与暖色火光，机关外观等待系统接入。',shared:'16×16 木质与石质边条，可用于平台、建筑边框或场景接缝。'};
+const names={forest:'森林村庄',lake:'湖岸与码头',cave:'水晶洞穴',tower:'雷电遗迹',shared:'通用构件',npc:'NPC伊布'};
+const descriptions={forest:'苔绿色树冠、木屋和草木细节，营造可停留的村庄空间。',lake:'青绿远岸、木码头、系船桩、独木舟与睡莲，保持清晰的岸线。',cave:'冷色岩层、水晶与发光蘑菇，前景边缘清楚，背景保持低对比。',tower:'灰紫砖石配黄铜机械、雷纹旗帜与暖色火光，机关外观等待系统接入。',shared:'统一木纹、石材、矿物与光效；尖刺、电网和熔岩保留清晰的危险提示。',npc:'3 位现有 NPC 已接入游戏：村长·老橡、向导·小铃、商人·栗栗。采用已确认的辨识加强版：苔绿叶帽、湖蓝蝴蝶结、莓红围巾。另备 7 种职业配饰；原伊布的身体与表情保持不变。'};
+for(const [key,info] of Object.entries(manifest.regions||{})){names[key]=info.name;descriptions[key]=info.description}
+const assetsById=Object.fromEntries(manifest.assets.map(a=>[a.id,a]));
+const animationsById=Object.fromEntries(manifest.animations.map(a=>[a.id,a]));
+function anchored(k,x,y){const a=assetsById[k];if(a)blit(k,x-a.anchor[0],y-a.anchor[1])}
+function drawExpansion(r){
+ const s=manifest.regions[r];ctx.save();ctx.scale(2,2);
+ const gradient=ctx.createLinearGradient(0,0,0,224);gradient.addColorStop(0,s.sky[0]);gradient.addColorStop(1,s.sky[1]);ctx.fillStyle=gradient;ctx.fillRect(0,0,384,224);
+ for(let l=0;l<3;l++){const offset=Math.floor(tick*.025*[.12,.23,.38][l])%384;blit(s.background+l,-offset,0);blit(s.background+l,384-offset,0)}
+ for(const p of s.props)anchored(p.id,p.x,p.y);
+ for(const p of s.platforms)for(let i=0;i<p.w;i++)blit(s.platform,p.x+i*16,p.y);
+ const liquid=s.liquid;
+ for(let y=s.ground;y<224;y+=16)for(let x=0;x<384;x+=16){if(liquid&&!liquid.overlay&&x>=liquid.x&&x<liquid.x+liquid.w)continue;blit((y===s.ground?s.surface:s.fill)+((x/16*7+y/16)%4),x,y)}
+ const a=animationsById[s.effect.animation];anchored(a.frames[Math.floor(tick/60*a.fps)%a.frames.length],s.effect.x,s.effect.y);
+ const eevee=imgs['reference/eevee'];if(eevee)blit('reference/eevee',(s.playerX||111)-Math.floor(eevee.width/2),s.ground-eevee.height);
+ if(liquid){const anim=animationsById[liquid.animation];for(let y=liquid.overlay?0:liquid.y;y<224;y+=16)for(let x=liquid.overlay?0:liquid.x;x<(liquid.overlay?384:liquid.x+liquid.w);x+=16)blit(liquid.overlay||y>liquid.y?liquid.body:anim.frames[Math.floor(tick/60*anim.fps)%anim.frames.length],x,y)}
+ ctx.restore();
+}
 function blit(k,x,y,w,h){const im=imgs[k];if(im)ctx.drawImage(im,Math.round(x),Math.round(y),w||im.width,h||im.height)}
 function fill(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h)}
+function drawNPCPreview(){
+ ctx.save();ctx.scale(2,2);fill(0,0,384,224,'#233a3e');
+ manifest.assets.filter(a=>a.category==='npcs').forEach((a,i)=>{
+  const x=i%5*76+2,y=Math.floor(i/5)*108+4;
+  fill(x,y,72,104,'#30494b');blit(a.id,x+4,y+7,64,56);
+  ctx.font='10px system-ui';ctx.fillStyle=a.accent;ctx.textAlign='center';ctx.fillText(a.role,x+36,y+82);
+ });ctx.restore();
+}
+function drawSharedPreview(){
+ ctx.save();ctx.scale(2,2);fill(0,0,384,224,'#263a41');
+ const list=manifest.assets.filter(a=>a.region==='shared');list.forEach((a,i)=>{
+  const x=i%8*46+9,y=Math.floor(i/8)*65+18;
+  blit(a.id,x,y,32,32);ctx.font='7px system-ui';ctx.textAlign='center';ctx.fillStyle='#d8d7c3';ctx.fillText(a.id.split('/')[1].replace('env_trim_',''),x+16,y+45);
+ });ctx.restore();
+}
 function drawScene(which=region){
+ if(which==='npc')return drawNPCPreview();
+ if(which==='shared')return drawSharedPreview();
+ if(manifest.regions?.[which]&&document.getElementById('compare').checked&&imgs['review/before']){
+  const n=Object.keys(manifest.regions).indexOf(which);ctx.drawImage(imgs['review/before'],(n%2)*768,Math.floor(n/2)*486+38,768,448,0,0,768,448);return;
+ }
+ if(manifest.regions?.[which])return drawExpansion(which);
  const r=which==='shared'?'tower':which;ctx.save();ctx.scale(2,2);
  const gradient=ctx.createLinearGradient(0,0,0,224);gradient.addColorStop(0,{forest:'#708f97',lake:'#6f9da9',cave:'#112534',tower:'#242737'}[r]);gradient.addColorStop(1,{forest:'#c4cfaf',lake:'#c6d9bd',cave:'#294e60',tower:'#484354'}[r]);ctx.fillStyle=gradient;ctx.fillRect(0,0,384,224);
  for(let l=0;l<3;l++){const offset=Math.floor(tick*.025*[.12,.23,.38][l])%384;blit('backgrounds/env_'+r+'_layer_'+l,-offset,0);blit('backgrounds/env_'+r+'_layer_'+l,384-offset,0)}
@@ -20,12 +59,12 @@ function drawScene(which=region){
  for(let y=ground;y<224;y+=16)for(let x=0;x<384;x+=16){if(r==='lake'&&x>=96&&x<288)continue;blit('tiles/'+tile+((x/16+y/16)%4),x,y)}
  if(r==='forest'){
   for(let x=0;x<384;x+=16)blit('tiles/forest_grass_'+x/16%4,x,176);
-  blit('deco/forest_tree_0',8,64);blit('deco/forest_tree_1',294,64);blit('deco/env_village_cottage',104,96);
-  for(let x=212;x<280;x+=32)blit('deco/env_fence',x,160);
-  blit('deco/env_bench',238,144);blit('deco/env_planter',85,144);blit('deco/env_signpost',203,128);blit('deco/env_stump',37,144);blit('deco/env_fern',16,152);blit('deco/env_berry_bush',316,152);blit('reference/eevee',218,158);
+  blit('deco/forest_tree_0',8,64);blit('deco/forest_tree_1',324,64);blit('deco/env_village_home_elder',54,96);blit('deco/env_village_home_guide',166,96);blit('deco/env_village_home_merchant',270,96);
+  blit('deco/env_fence',145,160);
+  blit('deco/env_bench',158,144);blit('deco/env_planter',85,144);blit('deco/env_signpost',246,128);blit('deco/env_stump',37,144);blit('deco/env_fern',16,152);blit('deco/env_berry_bush',316,152);blit('reference/eevee',218,158);
  }else if(r==='lake'){
   for(let x=0;x<384;x+=16){if(x<96||x>=288)blit('tiles/forest_grass_'+x/16%4,x,176)}
-  blit('deco/biome_reeds',30,144);blit('deco/biome_reeds',320,144);blit('deco/env_pier',80,160);blit('deco/env_pier',128,160);blit('deco/env_mooring_post',90,145);blit('deco/env_canoe',176,155);blit('deco/env_waterweed',245,184);blit('deco/env_river_stones',292,160);
+  blit('deco/env_lake_willow',-5,64);blit('deco/env_lake_willow',292,64);blit('deco/biome_reeds',30,144);blit('deco/biome_reeds',320,144);blit('deco/env_pier',80,160);blit('deco/env_pier',128,160);blit('deco/env_mooring_post',90,145);blit('deco/env_canoe',176,155);blit('deco/env_waterweed',245,184);blit('deco/env_river_stones',292,160);
   for(let y=180;y<224;y+=16)for(let x=96;x<288;x+=16)blit('tiles/biome_lake_water',x,y);
   blit('deco/env_lily_'+Math.floor(tick/20)%3,240,171);blit('reference/vaporeon',131,150);
  }else if(r==='cave'){
@@ -38,9 +77,9 @@ function drawScene(which=region){
  }
  ctx.restore();
 }
-function show(next){region=next;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.region===next));document.getElementById('description').textContent=descriptions[next];const root=document.getElementById('catalog');root.replaceChildren();for(const [type,label]of [['deco','装饰与建筑'],['tiles','地形瓦片'],['backgrounds','视差背景层']]){const list=manifest.assets.filter(a=>a.region===region&&a.category===type);if(!list.length)continue;const h=document.createElement('h2');h.textContent=label;root.append(h);const grid=document.createElement('div');grid.className='grid';root.append(grid);for(const a of list){const card=document.createElement('div');card.className='card';const box=document.createElement('div');box.className='image';const img=imgs[a.id].cloneNode();img.alt=a.id;img.style.width=(a.width*(a.width>96?.43:a.height>48?1.5:3))+'px';box.append(img);const p=document.createElement('p');p.textContent=a.id;const br=document.createElement('br'),span=document.createElement('span');span.textContent=a.width+'×'+a.height+' · 锚点 '+a.anchor.join(',');p.append(br,span);card.append(box,p);grid.append(card)}}drawScene()}
-for(const [key,name]of Object.entries(names)){const b=document.createElement('button');b.textContent=name;b.dataset.region=key;b.onclick=()=>show(key);document.getElementById('tabs').append(b)}
+function show(next){region=next;document.getElementById('compare-wrap').hidden=!manifest.regions?.[next]||!imgs['review/before'];document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.region===next));document.getElementById('description').textContent=descriptions[next];const root=document.getElementById('catalog');root.replaceChildren();for(const [type,label]of [['npcs','角色特征'],['ui','界面构件'],['deco','装饰与建筑'],['tiles','地形瓦片'],['backgrounds','视差背景层']]){const list=manifest.assets.filter(a=>a.region===region&&a.category===type);if(!list.length)continue;const h=document.createElement('h2');h.textContent=label;root.append(h);const grid=document.createElement('div');grid.className='grid';root.append(grid);for(const a of list){const card=document.createElement('div');card.className='card';const box=document.createElement('div');box.className='image';const img=imgs[a.id].cloneNode();img.alt=a.id;img.style.width=(a.width*(a.width>96?.43:a.height>48?1.5:3))+'px';box.append(img);const p=document.createElement('p');p.textContent=(a.role?a.role+' · '+a.trait+' · ':'')+a.id;const br=document.createElement('br'),span=document.createElement('span');span.textContent=a.width+'×'+a.height+' · 锚点 '+a.anchor.join(',');p.append(br,span);card.append(box,p);grid.append(card)}}drawScene()}
+for(const [key,name]of Object.entries(names)){const b=document.createElement('button');b.textContent=name;b.dataset.region=key;b.onclick=()=>{show(key);location.hash=key};document.getElementById('tabs').append(b)}
 document.getElementById('light').onchange=e=>document.body.classList.toggle('light',e.target.checked);
-document.getElementById('stats').textContent=manifest.assets.length+' 张场景素材 / '+manifest.animations.length+' 组动画';
-Promise.all(Object.entries(data).map(([k,v])=>new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>{imgs[k]=im;resolve()};im.onerror=reject;im.src=v}))).then(()=>{show('forest');let last=0;function loop(t){if(t-last>1000/30){tick=t/1000*60;drawScene();last=t}requestAnimationFrame(loop)}requestAnimationFrame(loop)});
+document.getElementById('stats').textContent=manifest.assets.length+' 张美术素材 / '+manifest.animations.length+' 组动画';
+Promise.all(Object.entries(data).map(([k,v])=>new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>{imgs[k]=im;resolve()};im.onerror=reject;im.src=v}))).then(()=>{show(names[location.hash.slice(1)]?location.hash.slice(1):'forest');let last=0;function loop(t){if(t-last>1000/30){tick=t/1000*60;drawScene();last=t}requestAnimationFrame(loop)}requestAnimationFrame(loop)});
 </script></html>

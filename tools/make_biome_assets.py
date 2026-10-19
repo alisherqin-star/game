@@ -4,8 +4,16 @@ Run python3 tools/make_biome_assets.py then python3 tools/embed_assets.py.
 from pathlib import Path
 import random
 from PIL import Image, ImageDraw
+from pixel_nature import curve, terrain
+from pixel_craft import craft_prop
 ROOT=Path(__file__).resolve().parents[1]/'sprites'
-def save(im,cat,name): im.save(ROOT/cat/('biome_'+name+'.png'))
+def save(im,cat,name):
+ revisions={'pillar':('tower','column'),'banner':('tower','banner'),'lamp':('tower','hanginglamp'),
+            'crystal_0':('cave','crystal'),'crystal_1':('shadow','crystal')}
+ if cat=='deco' and name in revisions:
+  theme,kind=revisions[name];pic=craft_prop(theme,kind,(48,64) if kind=='crystal' else (48,48))
+  im=pic.resize(im.size,Image.Resampling.NEAREST)
+ im.save(ROOT/cat/('biome_'+name+'.png'))
 for theme,colors in {'shore':['#657c74','#82968a','#4b6666','#a7b39a'], 'cave':['#293b52','#3b5267','#1c2c43','#58747b'], 'tower':['#494858','#656071','#333344','#8c8291']}.items():
  for v in range(4):
   rng=random.Random(312+v);im=Image.new('RGBA',(16,16),colors[0]);d=ImageDraw.Draw(im)
@@ -16,11 +24,17 @@ for theme,colors in {'shore':['#657c74','#82968a','#4b6666','#a7b39a'], 'cave':[
   else:
    for _ in range(14):
     x,y=rng.randrange(16),rng.randrange(16);d.rectangle((x,y,x+rng.randrange(1,5),y+1),fill=rng.choice(colors))
-  d.point((3+v,4),fill=colors[3]);save(im,'tiles',f'{theme}_{v}')
+  # Quieter joins and warm/cool mineral flecks instead of heavy outlined blocks.
+  native_theme={'shore':'lake','cave':'cave','tower':'tower'}[theme]
+  palettes={'shore':['#6d8174','#3b555b','#9aab8c','#c5c3a0','#83a695','#e4d3ae'],
+            'cave':['#3e5267','#24374c','#738394','#a8bab5','#7dafa9','#d2d6c5'],
+            'tower':['#635c6d','#34354c','#95878b','#c1b59d','#bd9b72','#ead6a8']}
+  im=terrain(native_theme,palettes[theme],'brick' if theme=='tower' else 'soil',v)[0]
+  save(im,'tiles',f'{theme}_{v}')
 # Reeds anchored on shoreline soil.
 im=Image.new('RGBA',(24,32));d=ImageDraw.Draw(im)
 for x,y in [(5,8),(12,3),(19,11)]:
- d.line((x,31,x,y),fill='#698961');d.line((x+1,30,x+1,y),fill='#a7b77e')
+ curve(d,[(x,31),(x+2,23),(x-1,16),(x,y)],'#698961');curve(d,[(x+1,30),(x+3,23),(x,16),(x+1,y)],'#a7b77e')
  d.rectangle((x-1,y,x+1,y+7),fill='#70503e');d.line((x,y,x,y+5),fill='#ae8956')
  d.line([(x,28),(x-4,20),(x-5,17)],fill='#52785d',width=1)
 save(im,'deco','reeds')
@@ -51,7 +65,7 @@ d.line((1,1,22,1),fill='#a9987b',width=2);d.polygon([(5,3),(18,3),(18,35),(12,31
 
 # Transparent water lets submerged scenery remain readable instead of covering it
 # in a repeated dot texture. Surface highlights use the existing two-frame clock.
-for theme,color in [('lake',(50,128,151,145)),('cave',(30,91,123,112))]:
+for theme,color in [('lake',(58,132,147,122)),('cave',(39,85,118,82))]:
  im=Image.new('RGBA',(16,16),color)
  save(im,'tiles',f'{theme}_water')
  for phase in range(2):

@@ -1,0 +1,73 @@
+{
+  "status": "adopted as identity-B; live NPC sprites now use this design",
+  "nativeSize": [
+    32,
+    28
+  ],
+  "anchor": [
+    16,
+    28
+  ],
+  "profiles": {
+    "elder": {
+      "role": "村长",
+      "colorName": "苔绿",
+      "color": "#739747",
+      "trait": "叶帽＋圆眼镜"
+    },
+    "guide": {
+      "role": "向导",
+      "colorName": "湖蓝",
+      "color": "#49a9c9",
+      "trait": "斜蝴蝶结＋金铃铛"
+    },
+    "merchant": {
+      "role": "商人",
+      "colorName": "莓红",
+      "color": "#be627e",
+      "trait": "宽围巾＋皮挎包"
+    },
+    "healer": {
+      "role": "医师",
+      "colorName": "奶白青绿",
+      "color": "#59a98f",
+      "trait": "白头巾＋绿叶刺绣"
+    },
+    "explorer": {
+      "role": "探险家",
+      "colorName": "橘红",
+      "color": "#c77847",
+      "trait": "护目镜＋橘色背包"
+    },
+    "gardener": {
+      "role": "园丁",
+      "colorName": "嫩绿",
+      "color": "#8ab85b",
+      "trait": "小草帽＋绿围裙"
+    },
+    "miner": {
+      "role": "矿工",
+      "colorName": "蜂蜜黄",
+      "color": "#d8ad49",
+      "trait": "黄矿帽＋亮头灯"
+    },
+    "baker": {
+      "role": "糕点师",
+      "colorName": "奶油粉",
+      "color": "#d18fa6",
+      "trait": "蓬松厨帽＋粉领结"
+    },
+    "scholar": {
+      "role": "学者",
+      "colorName": "葡萄紫",
+      "color": "#9473bb",
+      "trait": "紫围巾＋随身书本"
+    },
+    "guard": {
+      "role": "守卫",
+      "colorName": "靛蓝",
+      "color": "#5d7fae",
+      "trait": "蓝头带＋小盾徽"
+    }
+  }
+}
