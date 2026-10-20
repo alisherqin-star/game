@@ -9,7 +9,7 @@ assets=[];data={}
 expansion_path=ART/'expansion-scenes.json'
 expansion=json.loads(expansion_path.read_text()) if expansion_path.exists() else {'assets':[], 'animations':[], 'regions':{}}
 extra={a['id']:a for a in expansion['assets']}
-for filename in ('npc-manifest.json','utility-manifest.json'):
+for filename in ('npc-manifest.json','utility-manifest.json','gameplay-manifest.json'):
  path=ART/filename
  if path.exists():
   for a in json.loads(path.read_text())['assets']:
@@ -19,7 +19,7 @@ for p in sorted((ROOT/'sprites').rglob('*.png')):
  key=str(p.relative_to(ROOT/'sprites').with_suffix(''))
  if not p.stem.startswith(('forest_','biome_','env_','exp_')) and key not in extra:continue
  im=Image.open(p);w,h=im.size; key=str(p.relative_to(ROOT/'sprites').with_suffix(''));raw=p.read_bytes()
- category=p.parent.name
+ category=extra.get(key,{}).get('category',p.parent.name)
  if 'forest_' in p.stem or any(n in p.stem for n in ['village','stump','bench','planter','fence','fern','berry','signpost']):region='forest'
  elif any(n in p.stem for n in ['shore','lake','reeds','pebbles','pier','mooring','canoe','lily','waterweed','river_stones']):region='lake'
  elif any(n in p.stem for n in ['cave','crystal','vine','stalag','stalact','mushroom','boulder']):region='cave'
@@ -48,6 +48,8 @@ for name in ['eevee','vaporeon']:
 before=ART/'previous-layout-overview.png'
 if not before.exists():before=ART/'expansion-before-natural.png'
 if before.exists():data['review/before']='data:image/png;base64,'+base64.b64encode(before.read_bytes()).decode()
+review=ROOT/'docs/gameplay-assets-unified.png'
+if review.exists():data['review/gameplay']='data:image/png;base64,'+base64.b64encode(review.read_bytes()).decode()
 template=(ART/'gallery-template.html').read_text()
 (ART/'index.html').write_text(template.replace('/* MANIFEST */',json.dumps(manifest,ensure_ascii=False)).replace('/* DATA */',json.dumps(data)))
 print(f'Built gallery and manifest: {len(assets)} art assets, {len(animations)} animation groups.')

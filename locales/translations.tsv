@@ -1,0 +1,626 @@
+设置	設定	Settings
+语言	言語	Language
+中文	简体中文	简体中文
+音乐音量	音楽の音量	Music volume
+静音	ミュート	Mute
+返回	戻る	Back
+已自动保存设置	設定は自動で保存されます	Settings are saved automatically
+继续游戏	つづきから	Continue
+开始游戏	はじめから	Start game
+新游戏	はじめから	New game
+操作说明	操作ガイド	How to play
+伊布	イーブイ	Eevee
+水伊布	シャワーズ	Vaporeon
+雷伊布	サンダース	Jolteon
+火伊布	ブースター	Flareon
+叶伊布	リーフィア	Leafeon
+冰伊布	グレイシア	Glaceon
+太阳伊布	エーフィ	Espeon
+月亮伊布	ブラッキー	Umbreon
+仙子伊布	ニンフィア	Sylveon
+归途的约定	帰り道の約束	A Promise to Return
+一场风暴吹断了回家的路	嵐が、帰り道を閉ざした	A storm swept away the road home
+森林里的每一次相遇，都是冒险的开始	森での出会いが、冒険のはじまり	Every forest encounter begins an adventure
+慢慢探索，也能走很远	ゆっくりでも、遠くへ行ける	Take your time. Adventure awaits.
+轻点菜单，出发吧	タップして、出発しよう	Tap a menu option to begin
+↑ ↓ 选择 · Enter 确认	↑ ↓ 選択 · Enter 決定	↑ ↓ Select · Enter Confirm
+出发前的小提示	冒険のヒント	Before you set out
+按任意键或轻点返回	キーを押すかタップで戻る	Press any key or tap to return
+移动	移動	Move
+空格 / ↑ / W	Space / ↑ / W	Space / ↑ / W
+跳跃（按住跳更高）	ジャンプ（長押しで高く）	Jump (hold to jump higher)
+使用当前形态的技能	今の姿のわざを使う	Use your current form's move
+1～9 / Tab / 点物品栏	1–9 / Tab / スロット	1–9 / Tab / Slots
+切换形态	姿を切り替える	Switch form
+背包	バッグ	Bag
+地图（方向键移动，+ - 缩放）	地図（矢印で移動、+ - 拡大縮小）	Map (arrows to pan, + - to zoom)
+N / 点小地图	N / ミニマップ	N / Minimap
+小地图：小 / 大 / 关	ミニマップ：小 / 大 / 非表示	Minimap: small / large / off
+V / 点提示	V / ヒントをタップ	V / Prompt
+感受到新的力量后确认进化（进化中按 B 暂停）	新しい力を感じたら進化（Bで中止）	Confirm evolution when ready (B to cancel)
+U / 点提示	U / ヒントをタップ	U / Prompt
+熟练度到了以后选技能强化	熟練度を上げてわざを強化	Choose a move upgrade when ready
+切换伊布的招式（学会圆瞳后）	イーブイのわざ切替（つぶらなひとみ習得後）	Switch Eevee's move (after Baby-Doll Eyes)
+Q / 点点心图标	Q / おやつ	Q / Snack icon
+吃点心（生命只剩 1 格时自动吃）	おやつ（HPが1で自動使用）	Eat a snack (automatic at 1 HP)
+↓ / 点对话框	↓ / 会話をタップ	↓ / Dialogue box
+打开商店、罗丝奶奶的厨房、训练场	お店・ローズの台所・訓練場を開く	Open shop, kitchen or training
+存档石	セーブの石	Save stone
+碰一下回满血并存档	触れて全回復＆セーブ	Touch to heal and save
+加载中…	読み込み中…	Loading…
+普通形态	通常の姿	Normal form
+游泳（↑ 上浮）	泳ぐ（↑で浮上）	Swim (↑ to rise)
+疾跑，免疫电网，撞碎裂墙和木箱	ダッシュ・電撃無効・壁や箱を破壊	Dash, resist electricity, break walls/crates
+烧掉木箱	木箱を燃やす	Burn wooden crates
+二段跳	2段ジャンプ	Double jump
+冻住水面	水面を凍らせる	Freeze water
+按住跳跃滑翔	ジャンプ長押しで滑空	Hold jump to glide
+穿过黑影墙	影の壁を通り抜ける	Pass through shadow walls
+魅惑小怪	敵を魅了する	Charm enemies
+撞击	たいあたり	Tackle
+水枪	みずでっぽう	Water Gun
+电击	でんきショック	Thunder Shock
+火花	ひのこ	Ember
+飞叶快刀	はっぱカッター	Razor Leaf
+冰冻光束	れいとうビーム	Ice Beam
+念力	ねんりき	Confusion
+暗影球	シャドーボール	Shadow Ball
+魅惑之声	チャームボイス	Disarming Voice
+圆瞳	つぶらなひとみ	Baby-Doll Eyes
+水之石	みずのいし	Water Stone
+雷之石	かみなりのいし	Thunder Stone
+火之石	ほのおのいし	Fire Stone
+苔藓岩	コケで覆われた岩	Moss Rock
+冰岩	こおりで覆われた岩	Ice Rock
+日光成长	日光のきずな	Sunlight bond
+月光成长	月光のきずな	Moonlight bond
+粉色缎带	ピンクのリボン	Pink Ribbon
+让伊布碰到水之石	イーブイでみずのいしに触れる	Touch a Water Stone as Eevee
+让伊布碰到雷之石	イーブイでかみなりのいしに触れる	Touch a Thunder Stone as Eevee
+让伊布碰到火之石	イーブイでほのおのいしに触れる	Touch a Fire Stone as Eevee
+用伊布的样子靠近藏起来的苔藓岩	イーブイで隠されたコケの岩に近づく	Approach the hidden Moss Rock as Eevee
+用伊布的样子靠近藏起来的冰岩	イーブイで隠された氷の岩に近づく	Approach the hidden Ice Rock as Eevee
+用伊布的样子在日照区域打倒怪物	イーブイで昼のエリアの敵を倒す	Defeat enemies in daytime areas as Eevee
+用伊布的样子在夜晚区域打倒怪物	イーブイで夜のエリアの敵を倒す	Defeat enemies in nighttime areas as Eevee
+学会妖精招式「圆瞳」，和贝儿完成「等你一起回家」的约定	つぶらなひとみを覚え、ベルと「一緒に帰ろう」の約束を果たす	Learn Baby-Doll Eyes and fulfill Belle's promise to return home together
+长满青苔的巨石，散发着森林清新的气息。	コケに覆われた岩。森のさわやかな香りがする。	A mossy boulder carries the fresh scent of the forest.
+覆满白霜的巨石，周围的空气冷得发亮。	霜に覆われた岩。空気まで冷たく輝いている。	A frost-covered boulder glitters in the icy air.
+起点村	はじまりの村	Hearth Village
+草原地下	草原の地下	Meadow Burrow
+草原	草原	Meadows
+湖底洞穴	湖底の洞窟	Lakebed Cavern
+湖泊	湖	Lake
+雷电塔	雷の塔	Thunder Tower
+大史莱姆	大きなスライム	Big Slime
+湖蚌	湖の貝	Lake Clam
+雷云	雷雲	Thundercloud
+刺猬头领	ハリネズミのリーダー	Hedgehog Chief
+跳跳蛙老大	カエルの親分	Frog Chief
+跳鱼王	跳ね魚の王	Leaping Fish King
+重型电球炮台	大型電球砲台	Heavy Spark Turret
+大眼史莱姆	大目玉スライム	Wide-Eyed Slime
+史莱姆妈妈	スライムのお母さん	Mama Slime
+小史莱姆波比	スライムのポピー	Poppy the Slime
+村长奥斯卡	村長オスカー	Mayor Oscar
+商人玛姬	商人マギー	Maggie the Merchant
+见习向导贝儿	見習いガイドのベル	Belle the Guide
+园丁罗丝奶奶	庭師のローズおばあちゃん	Grandma Rose
+学者艾达	学者エイダ	Ada the Scholar
+训练家麦克斯	トレーナーのマックス	Trainer Max
+邮差皮普	郵便屋のピップ	Pip the Postman
+商人玛姬的商店	マギーのお店	Maggie's Shop
+罗丝奶奶的厨房	ローズの台所	Grandma Rose's Kitchen
+训练场：免费重选技能强化	訓練場：無料でわざ強化を変更	Training: change upgrades for free
+奥克利橡果	オークリーのどんぐり	Oakley Acorn
+守护丝巾	まもりのスカーフ	Guardian Scarf
+幸运叶	幸運の葉	Lucky Leaf
+探宝铃	宝探しの鈴	Treasure Bell
+疾风铃铛	はやての鈴	Gale Bell
+贝壳护符	貝のお守り	Shell Charm
+磁石项圈	磁石の首輪	Magnet Collar
+雷云坠饰	雷雲のペンダント	Storm Pendant
+树果点心	きのみのおやつ	Berry Snack
+蘑菇汤	きのこスープ	Mushroom Soup
+噼啪糖	ぱちぱちキャンディ	Popping Candy
+心之碎片	ハートのかけら	Heart Shard
+闪光石！	色違いの石！	Shiny Stone!
+闪光形态	色違いの姿	Shiny form
+货物包	荷物	Cargo Parcel
+树果	きのみ	Berries
+电光石	電光石	Spark Shard
+草原和湖边结的树果，酸酸甜甜	草原や湖畔で採れた甘酸っぱいきのみ	Sweet and tart berries from the meadows and lake
+雷电塔里的小石头，摸上去噼啪响	触るとぱちぱちする雷の塔の小石	A crackling little stone from Thunder Tower
+用途：请罗丝奶奶做料理（以后还能升级饰品）	ローズに料理を作ってもらう（今後は装備強化にも）	Ask Grandma Rose to cook (future accessory upgrades too)
+带回村给罗丝奶奶，能做成料理。	村のローズに持っていくと料理にしてくれる。	Bring these to Grandma Rose for cooking.
+带回起点村交给商人	村の商人に届けよう	Return it to the village merchant
+回复 2 格生命，最多带 5 个	HPを2回復。5個まで持てる	Restores 2 HP. Carry up to 5.
+点心多回 1 格生命	おやつの回復量+1	Snacks restore 1 extra HP
+在水里游得快 30%	泳ぐ速さ+30%	Swim 30% faster
+受伤后的保护时间 +0.75 秒	ダメージ後の無敵時間+0.75秒	+0.75s invincibility after damage
+技能冷却 −25%	わざの待ち時間−25%	Move cooldown −25%
+附近的金币会自己飞过来	近くのコインを引き寄せる	Attract nearby coins
+打倒怪物多掉 1 枚金币	敵のコインドロップ+1	Enemies drop 1 extra coin
+打倒怪物更容易掉材料（两只掉一个）	敵2体ごとに素材を1個落とす	Enemies drop materials more often (1 per 2)
+地图上标出没拿的宝箱、石板和心之碎片	未回収の宝箱・石板・ハートを地図に表示	Mark unopened chests, tablets and Heart Shards
+回满生命；2 分钟内受伤后的保护时间 +0.5 秒	全回復。2分間、ダメージ後の無敵時間+0.5秒	Full heal; +0.5s invincibility for 2 minutes
+2 分钟内技能冷却 −20%	2分間、わざの待ち時間−20%	−20% move cooldown for 2 minutes
+永久变成闪光形态	永続的に色違いの姿になる	Permanently become Shiny
+每 4 片生命上限 +1（只卖一片）	4つで最大HP+1（購入は1つまで）	Every 4 shards grants +1 max HP (one for sale)
+远射	ロングショット	Long Shot
+激流	急流	Torrent
+浪花	しぶき	Splash
+缓流	スローフロー	Slow Flow
+大范围	広範囲	Wide Area
+长麻痹	長時間まひ	Long Paralysis
+连锁	連鎖	Chain Lightning
+静电	静電気	Static
+双发	2連発	Double Shot
+远火	ロングフレイム	Long Flame
+爆燃	爆炎	Burst
+燎原	残り火	Wildfire
+一档	ランク1	Tier 1
+二档	ランク2	Tier 2
+水枪飞得更远、更快	みずでっぽうが遠く速く飛ぶ	Water Gun travels farther and faster
+水枪打中时溅开，旁边 2 格内的怪一起中招	命中時、2マス以内の敵にも水が飛び散る	Water Gun splashes enemies within 2 tiles
+被水枪打中的怪 3 秒内动作变慢，Boss 也一样	命中した敵を3秒間減速（ボスにも有効）	Water Gun slows enemies and bosses for 3 seconds
+受伤后的保护时间里，碰到你的小怪会被电麻	無敵時間中、触れた敵をしびれさせる	Stun enemies that touch you while invincible
+电击的范围扩大一半	でんきショックの範囲+50%	Thunder Shock range +50%
+被电击的怪麻痹的时间加倍	でんきショックのまひ時間2倍	Thunder Shock stun lasts twice as long
+电击会跳到范围外最近的一只怪身上	範囲外の最も近い敵にも電撃が伝わる	Lightning chains to the nearest enemy beyond range
+电击后 2 秒内，碰到你的小怪会被电麻，不会伤到你	発動後2秒間、触れた敵をしびれさせ、被弾しない	For 2s after Thunder Shock, contact stuns enemies instead of hurting you
+火花一次射出两发，一高一低	ひのこを上下に2発放つ	Fire two Embers at different heights
+火花飞得更远，几乎不往下掉	ひのこが遠くまで、ほぼ水平に飛ぶ	Ember flies farther with almost no drop
+火花撞到墙或怪时炸开，伤到周围 1.5 格内的怪	命中時に爆発し、1.5マス以内の敵にダメージ	Ember bursts on impact, hitting enemies within 1.5 tiles
+火花落地后留下一团火，烧 2 秒	着弾した地面が2秒間燃える	Ember leaves a flame for 2 seconds
+草原的大史莱姆好像有心事	草原の大きなスライムに悩みがあるようだ	The Big Slime in the meadows seems troubled
+史莱姆妈妈在找走丢的孩子，它往墓地去了	お母さんが迷子を捜している。墓地へ向かったらしい	Mama Slime's lost child headed toward the graveyard
+小史莱姆跟着你，带它回草原找妈妈	小さなスライムを草原のお母さんのもとへ	Bring the little slime back to its mother in the meadows
+母子团聚，收下了粉色缎带	親子が再会し、ピンクのリボンをもらった	Mother and child reunited; received a pink ribbon
+等你一起回家	一緒に帰ろう	Let's Go Home Together
+被吹散的货	飛ばされた荷物	Scattered Cargo
+风暴里走散的人	嵐ではぐれた仲間	Friends Lost in the Storm
+学会妖精招式「圆瞳」	つぶらなひとみを覚える	Learn Baby-Doll Eyes
+贝儿在草原入口不敢往前走	ベルが草原の入口で立ちすくんでいる	Belle is afraid to enter the meadows
+贝儿回村练胆了，它说一到晚上还是怕黑	ベルは村で勇気の練習中。まだ夜は怖いらしい	Belle returned to practice being brave, but still fears the dark
+贝儿和小史莱姆跟着你，带小史莱姆回草原找妈妈	ベルとスライムを草原のお母さんのもとへ	Bring Belle and the little slime back to Mama Slime
+学会了圆瞳。贝儿回村准备便当，糖果花园见	わざを習得。ベルは弁当作りへ。お菓子の庭で会おう	Move learned. Belle is packing lunch. Meet at Candy Garden
+和贝儿约好一起去糖果花园的星光野餐	ベルとお菓子の庭で星空ピクニックを約束した	Promised Belle a starlight picnic in Candy Garden
+星光野餐，约定完成	星空ピクニック。約束を果たした	Starlight picnic: promise fulfilled
+大家都回来了，去跟村长说一声	皆が帰ってきた。村長に知らせよう	Everyone is back. Tell the mayor
+大家都回来了，村子热闹起来了	皆が戻り、村に活気が戻った	Everyone is home and the village is lively again
+商店开张了，↓ 或点商人的对话框进店	お店が開いた。↓か商人の会話をタップ	Shop open: press ↓ or tap the merchant's dialogue
+商店和贝儿那里能拿到	お店やベルからもらえる	Available from the shop and Belle
+贝儿跑回村里练胆去了。	ベルは勇気をつけに村へ帰った。	Belle returned to the village to practice being brave.
+贝儿鼓起勇气，抱住了小史莱姆。带它们回草原找妈妈吧！	ベルが勇気を出してスライムを抱きしめた。草原のお母さんのもとへ！	Belle bravely hugged the little slime. Take them back to Mama Slime!
+贝儿跑了回来：「我、我来帮你！」	ベルが駆けてきた。「わ、わたしも手伝う！」	Belle came running back: "I-I'll help you!"
+小史莱姆扑进了妈妈怀里！	スライムがお母さんに飛びついた！	The little slime leapt into its mother's arms!
+和贝儿约好了：一起去糖果花园的星光野餐。	ベルと、お菓子の庭の星空ピクニックを約束した。	You promised Belle a starlight picnic in Candy Garden.
+伊布学会了妖精招式「圆瞳」！按 C 切换伊布的技能。	イーブイがつぶらなひとみを覚えた！Cでわざを切替。	Eevee learned Baby-Doll Eyes! Press C to switch moves.
+和贝儿的约定完成了。	ベルとの約束を果たした。	Your promise to Belle is fulfilled.
+伊布系上了贝儿送的粉色缎带……	ベルからのピンクのリボンを結んだ……	Eevee put on Belle's pink ribbon…
+收到了贝儿的点心（Q 或生命见底时会自动吃）	ベルのおやつをもらった（QかHP低下時に使用）	Received Belle's snack (Q, or automatic at low HP)
+商人玛姬的商店开张了！	マギーのお店が開店！	Maggie's shop is open!
+史莱姆妈妈：呜……对不起，刚才我太着急了。那天晚上刮起了怪风暴，我的孩子被风卷走了，再也没回来……有只蝙蝠说，看见它往黑漆漆的墓地那边去了。	スライムのお母さん：うう…ごめんなさい、取り乱して。あの夜の嵐で子どもが飛ばされ、戻らないの…。コウモリが、暗い墓地へ向かうのを見たそうよ。	Mama Slime: Sorry… I was so worried. A strange storm swept my baby away that night. A bat saw them heading toward the dark graveyard.
+史莱姆妈妈：宝宝！	スライムのお母さん：ぼうや！	Mama Slime: My baby!
+史莱姆妈妈：宝宝！……谢谢你们。这条缎带是我小时候最珍惜的东西，送给勇敢的贝儿吧。	スライムのお母さん：ぼうや！…ありがとう。この大切なリボンを、勇敢なベルにあげるわ。	Mama Slime: My baby! Thank you both. This ribbon was my childhood treasure. Please give it to brave Belle.
+史莱姆妈妈：宝宝！……谢谢你把它带回来。	スライムのお母さん：ぼうや！…連れ帰ってくれてありがとう。	Mama Slime: My baby! Thank you for bringing them home.
+史莱姆妈妈：谢谢你们。那条缎带交给贝儿保管了，它说要在野餐那天送给最重要的伙伴。	スライムのお母さん：ありがとう。リボンはベルに預けたわ。ピクニックで大切な友だちに贈るそうよ。	Mama Slime: Thank you. Belle is keeping the ribbon to give to a dear friend at the picnic.
+史莱姆妈妈：贝儿把缎带送给你了呀。这样我们重逢的那一天，就一直系在你身上了。	スライムのお母さん：ベルがリボンをくれたのね。再会した日の思い出が、ずっと一緒だわ。	Mama Slime: Belle gave you the ribbon! Now the memory of our reunion will always be with you.
+小史莱姆波比：呜呜……好黑……我想回家。（它缩成一团，不敢跟陌生的伊布走）	スライムのポピー：うう…暗いよ…帰りたい。（体を丸め、知らないイーブイについていけない）	Poppy the Slime: It's so dark… I want to go home. (They curl up, afraid to follow an unfamiliar Eevee.)
+园丁罗丝奶奶：多亏你了。带点树果和电光石回来，奶奶给你做好吃的。	庭師のローズおばあちゃん：ありがとうね。きのみと電光石を持っておいで。おいしいものを作るよ。	Grandma Rose: Thank you, dear. Bring me berries and Spark Shards, and I'll cook you something lovely.
+园丁罗丝奶奶：风暴那天我出来采蘑菇，被吹到这片树林里……蝙蝠扑来扑去，我这把老骨头可不敢乱走。好孩子，我这就跟着你的脚印回村。等我回去，给你煮蘑菇汤。	庭師のローズおばあちゃん：きのこ採り中に嵐で飛ばされてね…。コウモリが怖くて動けなかったよ。足跡をたどって村へ帰るね。帰ったらスープを作るよ。	Grandma Rose: The storm blew me here while I was gathering mushrooms. Those bats kept me trapped! I'll follow your tracks home and make you mushroom soup.
+学者艾达：嘘……我在记录塔顶的电流。风暴那晚，所有的闪电都指向同一个方向：东边的古代遗迹。我这就回村把笔记整理好。	学者エイダ：しっ…塔の電流を記録していたの。嵐の夜、雷はすべて東の古代遺跡を向いていたわ。村でノートを整理するね。	Ada the Scholar: Shh… I've been recording the current. That night, every bolt pointed east, toward the ancient ruins. I'll return and organize my notes.
+学者艾达：我的笔记说，风暴的中心在进化祭坛的方向。石板上那幅画……恐怕不是巧合。	学者エイダ：記録によると嵐の中心は進化の祭壇の方角。石板の絵…偶然ではなさそうね。	Ada the Scholar: My notes place the storm's center toward Evolution Altar. That picture on the tablets… it can't be a coincidence.
+训练家麦克斯：我在岩顶上练平衡，结果湖水涨了起来，游不回去了……谢啦！回村后我就把训练场重新开起来。	トレーナーのマックス：岩でバランス練習中に水位が上がってさ、帰れなくなったんだ。ありがとな！村で訓練場を再開するよ。	Trainer Max: I was balancing on the rocks when the water rose. I couldn't swim back! Thanks! I'll reopen the training grounds at home.
+见习向导贝儿：……有你在，我就不怕了。咦，那边有个小史莱姆在哭！我们带它回家吧！	見習いガイドのベル：…一緒なら怖くないよ。あっ、スライムが泣いてる！おうちへ連れていこう！	Belle the Guide: I'm not scared when you're here. Look, a little slime is crying! Let's take them home!
+见习向导贝儿：仙子伊布的缎带软软的！我也想要一条，是不是要帮别人解开心结才能得到？	見習いガイドのベル：ニンフィアのリボン、ふわふわ！誰かの心をほぐしてあげたら、わたしももらえるかな？	Belle the Guide: Sylveon's ribbons are so soft! Can I get one too by helping someone feel better?
+见习向导贝儿：你好厉害！……我也要变勇敢。我先回村里练习，下次换我走在前面！	見習いガイドのベル：すごいね！…わたしも勇敢になるよ。村で練習して、次は先頭を歩くね！	Belle the Guide: You're amazing! I'll be brave too. I'll practice back home, and next time I'll lead!
+见习向导贝儿：便当做好啦！有饭团、树果派……糖果花园见，一言为定！	見習いガイドのベル：お弁当できた！おにぎりに、きのみパイ…お菓子の庭で会おうね、約束！	Belle the Guide: Lunch is ready! Rice balls, berry pie… Meet me in Candy Garden. It's a promise!
+见习向导贝儿：冰伊布！你一靠近，池塘的水面都结冰了。冰岩是不是比冰淇淋还冷？	見習いガイドのベル：グレイシアだ！池まで凍っちゃった。あの岩、アイスより冷たいの？	Belle the Guide: Glaceon! You froze the pond just by coming near. Is the Ice Rock colder than ice cream?
+见习向导贝儿：刚才我就是这样看着小史莱姆，它才不哭了。你也试试，睁大眼睛，用心看着对方！	見習いガイドのベル：さっきこうして見つめたら、泣きやんだの。目を大きく開いて、心をこめて見つめてみて！	Belle the Guide: The little slime stopped crying when I looked at them like this. Open your eyes wide and look with all your heart!
+见习向导贝儿：前、前面有史莱姆……你能走在我前面吗？	見習いガイドのベル：ま、前にスライムが…先を歩いてくれる？	Belle the Guide: Th-there's a slime ahead… Could you walk in front?
+见习向导贝儿：叶伊布身上有青草的味道……你是不是在长满青苔的石头旁边睡过觉？	見習いガイドのベル：リーフィアは草の香り…。コケの岩のそばでお昼寝したの？	Belle the Guide: Leafeon smells like fresh grass… Did you nap beside a mossy rock?
+见习向导贝儿：呜……我偷偷跟来了，可是这里好黑……你、你别走开好不好？	見習いガイドのベル：うう…こっそり来ちゃったけど、暗いよ…。そ、そばにいてくれる？	Belle the Guide: I followed you, but it's so dark… P-please don't leave me alone?
+见习向导贝儿：哇，水伊布！你的尾巴好像美人鱼。听说雷之石在湖的另一头，你现在游得过去了吧？	見習いガイドのベル：わあ、シャワーズ！人魚みたいなしっぽ！湖の向こうのかみなりのいしまで泳げるね？	Belle the Guide: Wow, Vaporeon! Your tail looks like a mermaid's! Can you swim to the Thunder Stone across the lake now?
+见习向导贝儿：太阳伊布额头上的红宝石好漂亮！是不是在太阳底下跟伙伴一起打怪才长出来的？	見習いガイドのベル：エーフィの宝石、きれい！太陽の下で仲間と戦ったから生まれたの？	Belle the Guide: Espeon's red gem is beautiful! Did it grow from battling beside a friend in the sunlight?
+见习向导贝儿：我们做到了！……这条缎带，我想送给你。约好了哦，以后也要一起回家。	見習いガイドのベル：やったね！…このリボン、きみにあげる。これからも一緒に帰ろうね、約束。	Belle the Guide: We did it! I want you to have this ribbon. Promise we'll always come home together.
+见习向导贝儿：我回村里准备野餐的便当！糖果花园见，一言为定！	見習いガイドのベル：村でお弁当を作るね！お菓子の庭で会おう、約束！	Belle the Guide: I'll pack our picnic lunch back home! Meet me in Candy Garden. Promise!
+见习向导贝儿：我来帮你！	見習いガイドのベル：わたしも手伝う！	Belle the Guide: I'll help you!
+见习向导贝儿：我每天都在练习不害怕！……可是一到晚上，还是有一点点怕黑。	見習いガイドのベル：毎日、勇気の練習してるよ！…でも夜は、まだちょっと怖いんだ。	Belle the Guide: I practice being brave every day! But at night… I'm still a little scared of the dark.
+见习向导贝儿：星光野餐真好玩！这是我新做的树果点心，带着路上吃。以后我们也要一起回家哦。	見習いガイドのベル：星空ピクニック、楽しかった！新しいきのみのおやつ、旅に持っていって。これからも一緒に帰ろうね。	Belle the Guide: Our starlight picnic was wonderful! Take these berry snacks for the road. Let's always come home together.
+见习向导贝儿：月亮伊布身上的金环会发光……晚上走夜路一定不怕黑吧。	見習いガイドのベル：ブラッキーの輪っか、光ってる…。夜道も怖くなさそうだね。	Belle the Guide: Umbreon's golden rings glow… You must never fear the dark!
+见习向导贝儿：火伊布好暖和！冬天能让我靠着你睡吗？对了，木箱一碰到你就会烧起来哦。	見習いガイドのベル：ブースター、あったかい！冬は隣で寝てもいい？木箱は触れると燃えるんだね。	Belle the Guide: Flareon is so warm! Can I sleep beside you in winter? Wooden crates burn when you touch them!
+见习向导贝儿：雷伊布的毛扎扎的！你一靠近，我的耳朵都竖起来了。塔里的电网你应该不怕吧？	見習いガイドのベル：サンダースの毛、ちくちく！耳までぴんとなっちゃう。塔の電撃も平気だよね？	Belle the Guide: Jolteon's fur is so spiky! My ears stand up when you're near. The tower's electric fences won't bother you, right?
+一场怪风暴吹断了各地的路，好几个伙伴没能回家……	不思議な嵐が道を壊し、仲間たちが帰れなくなった……	A strange storm broke the roads, leaving friends far from home…
+按 Esc 打开背包，M 打开地图。	Escでバッグ、Mで地図を開く。	Press Esc for your bag, M for the map.
+傍晚。奥斯卡站在村口的大橡树下，望着东边。	夕暮れ。オスカーが村の大樫の下で東を見つめている。	At dusk, Oscar stands beneath the great oak, looking east.
+夜里。村口刮起一阵怪风，远处东边的天空卷着风暴。	夜。村に奇妙な風が吹き、東の空で嵐が渦巻く。	At night, a strange wind rises. A storm coils in the eastern sky.
+我们奥克利家有个很老很老的故事：很久很久以前，有一只伊布往那边去了，再也没回来。	オークリー家には古い話があってな。昔、一匹のイーブイがあちらへ行き、帰らなかったそうじゃ。	Our Oakley family has an old story. Long ago, an Eevee went that way… and never returned.
+……没什么，人老了，看到东边的云就爱讲老故事。路断了，大家就回不了家。伊布，你能帮忙把路一条一条接起来吗？	…年寄りの昔話じゃ。道が壊れては皆も帰れん。イーブイ、道をひとつずつ、つないでくれんか？	Just an old story. But broken roads keep everyone from coming home. Eevee, could you help reconnect them, one by one?
+风暴是从东边来的。那边是进化祭坛的方向……	嵐は東から来た。進化の祭壇の方角じゃ……	The storm came from the east… toward Evolution Altar.
+……还没……回来……	…まだ…帰って…いない…	…not… home… yet…
+剪影散开了。奥斯卡站在村口，一句话也没说。	影は消えた。オスカーは村の入口で黙って立っていた。	The silhouette fades. Oscar stands at the village gate in silence.
+刚才那阵风……和塔里记录到的一模一样。风暴的中心在祭坛方向，而且，它好像在喊什么。	今の風…塔で記録したものと同じ。中心は祭壇の方角。それに、何か叫んでいるようだった。	That wind matches what I recorded in the tower. Its center lies toward the altar… and it sounded like someone calling.
+不管是什么，变强了总没错！训练场添了新器材，想换技能强化随时来！	何であれ、強くなって損はない！訓練場に新しい道具を入れたぞ。わざ強化の変更はいつでもどうぞ！	Whatever it is, getting stronger can't hurt! I've added new training equipment. Come change your upgrades anytime!
+序章　风暴之后	序章　嵐のあと	Prologue: After the Storm
+第一章　断掉的路	第一章　途切れた道	Chapter 1: Broken Roads
+第二章　风中的记忆	第二章　風の記憶	Chapter 2: Memories in the Wind
+第一章	第一章	Chapter 1
+第二章	第二章	Chapter 2
+断掉的路	途切れた道	Broken Roads
+风中的记忆	風の記憶	Memories in the Wind
+风里的声音	風の声	A Voice in the Wind
+按任意键继续 · Esc 跳过	キーで進む · Escでスキップ	Any key to continue · Esc to skip
+点屏幕继续	タップで進む	Tap to continue
+古代石板	古代の石板	Ancient Tablet
+全部读完会有奖励	すべて読むとごほうび	Read them all for a reward
+石板上刻着进化的谜语，靠近就能阅读	近づくと進化のなぞなぞが読める	Approach to read an evolution riddle
+八块石板的纹路连成了一幅画：九只伊布围着进化祭坛，祭坛上方卷着一团风暴。心之碎片 +1	8枚の石板が1枚の絵に：9匹のイーブイが祭壇を囲み、その上で嵐が渦巻く。ハートのかけら+1	The eight tablets form a picture: nine Eevee forms around an altar beneath a storm. Heart Shard +1
+太阳伊布只认和它一起在阳光下战斗过的伙伴。去天空遗迹试试，记得用伊布的样子。	エーフィは陽の下で共に戦った絆から生まれる。イーブイの姿で天空遺跡へ行ってみるのじゃ。	Espeon comes from bonds forged in sunlight. Try Sky Ruins in Eevee's form.
+月亮伊布在夜里诞生。夜之墓地的怪物不少，用伊布的样子去和它们较量吧。	ブラッキーは夜に生まれる。イーブイの姿で夜の墓地の敵と戦うのじゃ。	Umbreon is born at night. Battle the graveyard's enemies as Eevee.
+仙子伊布的缎带，是用一颗心结换来的。草原那只大史莱姆，最近好像总在哭……	ニンフィアのリボンは、誰かの心をほどくともらえる。草原のスライムが泣いておるようじゃ…。	Sylveon's ribbons come from healing a troubled heart. The Big Slime in the meadows has been crying lately…
+草原尽头的池塘中央，有块石头闪着蓝光。你要是碰一碰它，说不定就能下水了。	草原の池の真ん中で青い石が光っておる。触れれば泳げるようになるかもしれん。	A blue stone shines in the pond at the meadow's end. Touch it, and perhaps you can swim.
+湖的最西边，有块雷之石嵌在岩缝里。我年轻时去过，那里整天噼啪作响。	湖の西端の岩間にかみなりのいしがある。若い頃行ったが、一日中ぱちぱち鳴っておった。	A Thunder Stone rests in the rocks at the lake's far west. It crackled all day when I visited long ago.
+草原尽头那座塔的塔顶供奉着火之石。塔门的电网只有雷伊布穿得过去……不过我小时候听说，池塘底下有条老水道通到塔基，会游泳的话也许能钻进去。	塔の頂にほのおのいしがある。電撃はサンダースなら通れるが…池の底の古い水路でも塔に入れるらしいぞ。	A Fire Stone rests atop the tower. Jolteon can cross its electric gate… but an old underwater passage may also lead inside.
+我爷爷说，火山洞里有片烧不尽的荆棘，后面藏着长满青苔的巨石。在它旁边待一会儿，伊布会长出叶子。	祖父の話では、火山の燃え続ける茂みの奥にコケの岩がある。そばにいるとイーブイに葉が生えるそうじゃ。	Grandfather spoke of a mossy boulder behind burning thorns in the volcano. Stay beside it, and Eevee may grow leaves.
+湖北面有道冰缝，冷风从里面吹出来。冰岩就在那里沉睡……不过要会二段跳才上得去。	湖の北の氷の割れ目に、氷の岩が眠っておる。2段ジャンプがなければ登れんがの。	An Ice Rock sleeps in a frozen crevice north of the lake. You'll need a double jump to reach it.
+村长奥斯卡：九种样子都齐了！进化祭坛的大门，应该会为你打开。	村長オスカー：9つの姿がそろった！進化の祭壇の扉が開くはずじゃ。	Mayor Oscar: All nine forms! The gates of Evolution Altar should open for you.
+村长奥斯卡：你身后那个小家伙……快带它回草原找妈妈吧。	村長オスカー：後ろの子…草原のお母さんのもとへ連れていくのじゃ。	Mayor Oscar: That little one behind you… Take them back to their mother in the meadows.
+村长奥斯卡：大家都回来了！村子又热闹起来了。学者说，风暴是从进化祭坛的方向来的……这只探宝铃送给你，它会告诉你附近还藏着什么宝物。	村長オスカー：皆が帰った！村がにぎやかじゃ。嵐は祭壇の方角から来たそうじゃ…。この宝探しの鈴で、隠れた宝を見つけるのじゃ。	Mayor Oscar: Everyone is home! Ada says the storm came from the altar. Take this Treasure Bell; it will help you find hidden treasures.
+村长奥斯卡：欢迎回家！那场风暴之后，通往各地的路都断了，	村長オスカー：おかえり！嵐で道が壊れて、	Mayor Oscar: Welcome home! The storm broke all the roads, and 
+商人玛姬：欢迎光临！	商人マギー：いらっしゃい！	Maggie the Merchant: Welcome!
+商人玛姬：我的货全找回来了！太谢谢你了。商店正式开张，	商人マギー：全部戻ってきた！ありがとう！開店するよ。	Maggie the Merchant: All my goods are back! Thank you! We're open. 
+商人玛姬：风暴把我的货吹得满地都是……一共 	商人マギー：嵐で荷物が飛んじゃって…全部で 	Maggie the Merchant: The storm scattered my cargo… There are 
+商人玛姬：还差 	商人マギー：あと 	Maggie the Merchant: Still missing 
+ 个货物包。草原和雷电塔那边都有可能。	個。草原や雷の塔を探してね。	 parcels. Try the meadows and Thunder Tower.
+ 个货物包，路上看到的话帮我捡回来好吗？找齐了我就开张。	個。見つけたら届けてね。そろえば開店できるよ。	 parcels. Bring them back so I can open my shop.
+咦，你已经捡到 	あれ、もう 	Oh, you've already found 
+看看货。	品物を見てね。	Have a look at the goods.
+看看今天能做什么。	今日は何を作ろうか。	Let's see what we can cook today.
+还没回来，路上留意一下。	まだ帰っていない。見かけたら頼むよ。	They haven't returned. Keep an eye out on the road.
+都还没回来，路上帮我留意一下。	がまだ戻っておらん。道中、気をつけて見てくれ。	 haven't returned. Look out for them on your travels.
+听说村里会做菜的罗丝奶奶在草原走散了……	料理上手のローズが草原ではぐれたらしい…。	Grandma Rose, our cook, went missing in the meadows…
+训练家麦克斯：训练场重新开张了！你现在 Lv 	トレーナーのマックス：訓練場を再開したぞ！今はLv 	Trainer Max: Training is open again! You're now Lv 
+ 秒。想换技能强化的话，	秒。わざ強化を変えたければ、	 seconds. To change your move upgrades, 
+还没有解锁的强化。用水、雷、火伊布多打倒怪物、多开机关，熟练度到了就能来这里选。	まだ強化は選べない。シャワーズ・サンダース・ブースターで戦い、仕掛けを動かして熟練度を上げよう。	No upgrades unlocked yet. Battle and activate mechanisms as Vaporeon, Jolteon or Flareon to build mastery.
+按 ↓ 或点这个对话框	↓かこの会話をタップ	Press ↓ or tap this dialogue
+点这个对话框	この会話をタップ	Tap this dialogue
+点这里	ここをタップ	Tap here
+沙沙～	さらさら～	Rustle…
+叮铃～	りんりん～	Ding-ding!
+记下来记下来～	メモしなくちゃ～	Must write that down!
+哎哟哟，	おやおや、	Oh my, 
+嘿哈！	よいしょ！	Hah!
+噗噜～	ぷるる～	Bloop!
+啾～	ちゅん～	Chirp!
+喳	ちゅん	chirp
+啵	ぷる	bloop
+金币	コイン	Coins
+生命 	HP 	HP 
+形态 	姿 	Form 
+任务 · 	クエスト · 	Quest · 
+约定：	約束：	Promise: 
+线索：	ヒント：	Clue: 
+能力：	能力：	Ability: 
+技能（X）：	わざ（X）：	Move (X): 
+   技能（X）：	   わざ（X）：	   Move (X): 
+新能力：	新しい能力：	New ability: 
+熟练度	熟練度	Mastery
+等级加成（所有形态共用）	レベル補正（全ての姿で共通）	Level bonuses (shared across forms)
+10 级时生命上限 +1，探索能力只靠进化	Lv10で最大HP+1。探索能力は進化で獲得	+1 max HP at Lv10. Evolve for exploration abilities
+死亡会掉一半，以后可以在村里花	倒れると半分失う。村で使える	Lose half on defeat. Spend them in the village
+进化时有 1/15 概率闪光，闪光石可直接点亮	進化時1/15で色違い。石でも変更可能	1/15 Shiny chance on evolution, or use a Shiny Stone
+受伤后保护 	被弾後の無敵 	Invincibility: 
+%，受伤后保护 	%、被弾後の無敵 	%, invincibility: 
+技能冷却 −	わざの待ち時間 −	Cooldown −
+：技能冷却 −	：わざの待ち時間 −	: cooldown −
+，技能冷却 −	、わざの待ち時間 −	, cooldown −
+ 秒（含饰品）	秒（装備込み）	s (with accessories)
+%（含饰品）	%（装備込み）	% (with accessories)
+每 4 片血量上限 +1（当前 	4つで最大HP+1（現在 	4 shards = +1 max HP (currently 
+ / 5 个，每个回复 2 格生命	 / 5個、1つでHPを2回復	 / 5; each restores 2 HP
+点一下吃掉；生命只剩 1 格时会自动吃	タップで食べる。HPが1で自動使用	Tap to eat; automatic at 1 HP
+点一下卸下	タップで外す	Tap to unequip
+点一下装备	タップで装備	Tap to equip
+装备中，点一下卸下	装備中。タップで外す	Equipped; tap to unequip
+空着。点右边的饰品装上	空き。右のアクセサリをタップで装備	Empty. Tap an accessory on the right to equip
+两个饰品槽都满了，先点一个装备中的饰品卸下。	装備枠がいっぱい。装備中のものをタップして外そう。	Both slots are full. Tap an equipped accessory to remove it first.
+饰品槽 	装備枠 	Accessory slot 
+点心	おやつ	Snack
+已获得 	獲得済み 	Obtained 
+已收集 	収集済み 	Collected 
+已读 	既読 	Read 
+已进化：	進化済み：	Evolved: 
+已满足条件！按 V 进化	条件達成！Vで進化	Ready! Press V to evolve
+尚未进化成这个形态	まだこの姿に進化していない	This form hasn't been unlocked yet
+感受到了新的力量：按 V 进化	新しい力を感じる：Vで進化	New power: press V to evolve
+✦ 感受到了新的力量	✦ 新しい力を感じる	✦ A new power awaits
+伊布感受到了新的力量……按 V 进化成	イーブイが新しい力を感じる…Vで進化：	Eevee feels a new power… Press V to evolve into 
+：巨石的光芒还在伊布身上回荡。按 V 进化成	：岩の光が残っている。Vで進化：	: the rock's glow lingers. Press V to evolve into 
+V 进化成	Vで進化：	V: evolve into 
+（进化中按 B 可以暂停）	（進化中にBで中止）	(B to cancel evolution)
+进化暂停了。准备好了再按 V。	進化を止めた。準備ができたらV。	Evolution canceled. Press V when you're ready.
+……伊布停止了进化	…イーブイは進化をやめた	…Eevee stopped evolving
+咦？伊布的样子……	おや？イーブイの様子が……	What? Eevee is changing…
+还感受到	まだ感じる力：	More powers await: 
+ 股新的力量，按 V 继续进化。	つ。Vで次の進化へ。	. Press V to continue evolving.
+✨ 闪光！	✨ 色違い！	✨ Shiny!
+ ✨ 闪光	 ✨ 色違い	 ✨ Shiny
+ / 圆瞳（C 切换）	 / つぶらなひとみ（Cで切替）	 / Baby-Doll Eyes (C to switch)
+圆瞳（让前方的怪物不想战斗）	つぶらなひとみ（前の敵の戦意をなくす）	Baby-Doll Eyes (discourage enemies ahead)
+伊布的技能：	イーブイのわざ：	Eevee's move: 
+   C 换招	   Cで切替	   C: switch move
+已存档，体力全满。	セーブ完了。HP全回復。	Saved. HP fully restored.
+伊布倒下了……	イーブイは倒れてしまった……	Eevee fainted…
+回到存档石  	セーブの石へ  	Returning to save stone  
+吃掉了一个点心。	おやつを食べた。	Ate a snack.
+生命快见底了，吃掉了一个点心！	HPが少ないのでおやつを食べた！	Low HP! Ate a snack!
+料理的效果过去了。	料理の効果が切れた。	The meal's effect wore off.
+吃了罗丝奶奶做的	ローズの料理を食べた：	Ate Grandma Rose's 
+买下了	購入した：	Bought 
+材料不够：要	素材が足りない。必要：	Not enough materials. Need 
+金币不够（还差 	コイン不足（あと 	Not enough coins (need 
+已经买过了 / 带满了	購入済み / 持ち物がいっぱい	Already bought / carrying the maximum
+：现在买不了了。	：今は買えない。	: unavailable now.
+，生命上限 +1	、最大HP+1	, max HP +1
+（已自动装备）	（自動で装備した）	(auto-equipped)
+（饰品槽满了，可以在背包里更换）	（装備枠が満杯。バッグで変更可能）	(slots full; change equipment in your bag)
+点商品购买，点外面离开	商品をタップで購入、外をタップで終了	Tap an item to buy; tap outside to close
+点一道料理请奶奶做，点外面离开	料理をタップで注文、外をタップで終了	Tap a dish to cook; tap outside to close
+方向键选择、Enter 换上，Esc 离开	矢印で選択、Enterで変更、Escで終了	Arrows to select, Enter to equip, Esc to close
+点一个强化换上，点外面离开	強化をタップで変更、外をタップで終了	Tap an upgrade to equip; tap outside to close
+点一张卡片选择，点外面稍后再选	カードをタップで決定、外で後回し	Tap a card to choose; tap outside for later
+选一个技能强化。	わざ強化を選ぼう。	Choose a move upgrade.
+ 选一个技能强化	 わざ強化を選ぶ	 Choose an upgrade
+选好以后，可以在训练场找训练家麦克斯免费重选	訓練場のマックスが無料で変更してくれる	Max can change your choice for free at the training grounds
+按 1 / 2（或 ← → 再按 Enter）选择，Esc 稍后再选	1 / 2（または← →とEnter）で決定、Escで後回し	1 / 2 (or ← → then Enter) to choose; Esc for later
+可以选了（U）	選択可能（U）	Ready to choose (U)
+（满级）	（最大レベル）	(max level)
+（满）	（最大）	(max)
+：二选一	：2つから選択	: choose one
+的熟练度到了	の熟練度が到達：	 mastery reached 
+学会了强化「	強化を習得「	Learned upgrade: 
+的强化换成了「	の強化を変更「	 upgrade changed to 
+经验 满级	経験値 最大	XP MAX
+经验 	経験値 	XP 
+ 经验升级）	経験値で次のレベル）	 XP to level up)
+升级了！Lv 	レベルアップ！Lv 	Level up! Lv 
+就绪	準備OK	Ready
+小地图：	ミニマップ：	Minimap: 
+关闭（按 N 打开）	非表示（Nで表示）	Off (N to show)
+小	小	Small
+大	大	Large
+Esc 关闭	Escで閉じる	Esc to close
+x）    M / Esc 关闭	x）    M / Escで閉じる	x)    M / Esc to close
+方向键 移动地图    + / - 或滚轮 缩放（	矢印で移動    + / -・ホイールで拡大縮小（	Arrows to pan    + / - or wheel to zoom (
+探索 	探索 	Explored 
+游玩 	プレイ時間 	Played 
+进度 	進行度 	Progress 
+共 	合計 	Total 
+ 个房间	部屋	 rooms
+ 分钟	分	 min
+ 秒	秒	s
+ 金币	 コイン	 coins
+ 枚	枚	 coins
+ 片	個	 shards
+ 个了！	個だよ！	 already!
+ 个）	個）	)
+ 个	個	 items
+（还差 	（あと 	(need 
+（还有 	（残り 	(remaining 
+还没	まだ	Not yet
+已	済み	Done
+有 	 	There are 
+带着 	持っている：	Carrying 
+ 解锁	で解放	 to unlock
+ 购买	 購入	 Buy
+ 请奶奶做	 料理を頼む	 Ask Rose to cook
+按 U 	Uで 	Press U: 
+按 1～	1～	Press 1–
+按 	キー 	Press 
+ 切换	 切替	 to switch
+ 随时切换形态	でいつでも姿を切替	 to switch forms anytime
+，Esc 离开	、Escで終了	, Esc to close
+点左上角的提示	左上のヒントをタップ	Tap the top-left prompt
+走开即可关闭	離れると閉じる	Walk away to close
+发现了 	発見：	Discovered 
+进入 	到着：	Entered 
+找到了	見つけた：	Found 
+靠近了	近づいた：	Approached 
+发出了微光……	が淡く光った……	 began to glow…
+出现了！	が現れた！	 appeared!
+好像在等着什么……用伊布的样子靠近试试（按 1）。	何かを待っている…イーブイで近づこう（1）。	It seems to be waiting… Approach as Eevee (press 1).
+在阳光下并肩作战，伊布和你的羁绊变深了……	陽の下で共に戦い、絆が深まった……	Fighting side by side in sunlight deepened your bond…
+在月光下并肩作战，伊布和你的羁绊变深了……	月明かりの下で共に戦い、絆が深まった……	Fighting side by side in moonlight deepened your bond…
+吸收了！	吸収した！	Absorbed!
+吸收了电击！	電撃を吸収した！	Absorbed the shock!
+被魅惑了 ♥	魅了された ♥	Charmed ♥
+够不着	届かない	Out of reach
+拉下了拉杆。哐啷——附近的闸门打开了。	レバーを引いた。ガシャン！近くの門が開いた。	Pulled the lever. Clank! A nearby gate opened.
+大史莱姆不再发怒，缩成一团抽泣起来……金币 +20	スライムは怒りをやめ、泣きはじめた…コイン+20	The Big Slime stops raging and begins to cry… Coins +20
+湖蚌把壳合上，慢慢沉回湖底。湖面安静下来，码头的木板漂回了岸边。金币 +20	貝が閉じて湖底へ沈んだ。湖は静まり、桟橋の板が岸に戻った。コイン+20	The clam sinks. The lake calms, and the pier's planks drift ashore. Coins +20
+雷云把电击吸收了……换个办法，等它沉下来踩它！	雷雲が電撃を吸収！降りてきたら踏もう！	The cloud absorbed the shock! Wait for it to descend, then stomp it!
+雷云放完了电，沉了下来！趁现在踩它，或者用水枪、火花打！	雷雲が降りてきた！踏むか、水や炎で攻撃！	The cloud descends! Stomp it or use Water Gun or Ember!
+雷云飘回了天上	雷雲が空へ戻った	The cloud floats skyward
+雷云散开了，塔里乱窜的电流慢慢平静下来……塔基的电网关闭了一段。金币 +20	雷雲が消え、塔の電流が静まった。塔の下の電撃が一部消えた。コイン+20	The cloud disperses. The tower's current calms, and some electric fences shut down. Coins +20
+ 被打倒了！金币 +20	を倒した！コイン+20	 defeated! Coins +20
+得到了	入手：	Received 
+得到心之碎片（	ハートのかけらを入手（	Received a Heart Shard (
+心之碎片集齐 4 片，血量上限 +1！	かけらが4つそろった。最大HP+1！	Four Heart Shards collected! Max HP +1!
+得到饰品「	装備を入手「	Received accessory: 
+得到了材料「	素材を入手「	Received material: 
+」！金币 +5	」！コイン+5	! Coins +5
+读到了古代石板（	古代の石板を読んだ（	Read an Ancient Tablet (
+捡到一个货物包，上面写着「商人玛姬」。	「商人マギー」と書かれた荷物を拾った。	Found a parcel labeled "Maggie the Merchant."
+捡到了写着「商人玛姬」的货物包	「商人マギー」の荷物を拾った	Found a parcel labeled "Maggie the Merchant"
+找到了商人的货物包（	商人の荷物を発見（	Found merchant's cargo (
+打倒了精英「	エリートを倒した「	Defeated elite: 
+找到村长说的三位村民（	村長のいう3人を探す（	Find the mayor's three villagers (
+帮商人玛姬找货物包（	マギーの荷物を探す（	Find Maggie's cargo (
+（Boss 战中回来帮忙），野餐地点 	（ボス戦で手伝いに来る）、ピクニック先 	(helps in boss battles), picnic location: 
+进化成	に進化：	 evolved into 
+恭喜！	おめでとう！	Congratulations! 
+进化成了	に進化した：	 evolved into 
+对伊布使用了	イーブイに使った：	Used on Eevee: 
+，它回村去了。（	、村へ帰った。（	; they returned home. (
+就是在这里进化的。	はここで進化した。	 evolved here.
+写着「商人玛姬」，	「商人マギー」と書かれ、	labeled "Maggie the Merchant", 
+☀ 日光成长 	☀ 日光のきずな 	☀ Sunlight bond 
+☾ 月光成长 	☾ 月光のきずな 	☾ Moonlight bond 
+♥ 圆瞳	♥ つぶらなひとみ	♥ Baby-Doll Eyes
+（先把失散的伙伴带回家）	（まずは仲間を家へ）	(Bring your lost friends home first)
+♫ 音乐	♫ 音楽	♫ Music
+♫ 已静音	♫ ミュート中	♫ Muted
+音乐设置	音楽設定	Music settings
+首次操作后开始播放	操作すると再生を開始	Interact to start music
+选择背景音乐	BGMを選択	Choose background music
+背景音乐音量	BGMの音量	Background music volume
+自动 · 随场景切换	自動 · 場面に合わせる	Auto · Follow the scene
+音量 	音量 	Volume 
+开启	オン	Unmute
+MIDI 改编合成播放 · P 键开关音乐	MIDIアレンジ · Pで音楽切替	MIDI arrangements · P to toggle music
+真新镇	マサラタウン	Pallet Town
+自然公园	しぜんこうえん	National Park
+未白镇	ミシロタウン	Littleroot Town
+丰缘101号道路	ホウエン・101ばんどうろ	Hoenn Route 101
+绿宝石标题曲	エメラルド・タイトル	Emerald Title Theme
+对战竹兰	戦闘！チャンピオンシロナ	Battle! Cynthia
+帆巴市	ホドモエシティ	Driftveil City
+映雪市	エイセツシティ	Snowbelle City
+对战格拉吉欧	戦闘！グラジオ	Battle! Gladion
+对战彼特	戦闘！ビート	Battle! Bede
+伽勒尔1号道路	ガラル・1ばんどうろ	Galar Route 1
+第零区	エリアゼロ	Area Zero
+跳	ジャンプ	Jump
+技	わざ	Move
+形态	姿	Form
+地图	地図	Map
+请把手机横过来玩	横画面で遊んでね	Please rotate your phone
+左下角移动，右下角跳跃，点左上角物品栏切换形态，右上角地图 / 背包，跳跃键左边是技能	左下で移動、右下でジャンプ。左上で姿を切替。右上は地図とバッグ。ジャンプの左はわざ。	Move at bottom left, jump at bottom right. Top-left slots switch forms. Map and bag at top right; move button beside jump.
+入口	入口	Entrance
+坑洼	くぼ地	Hollows
+高崖	高い崖	High Cliffs
+蝙蝠林	コウモリの林	Bat Woods
+史莱姆王	スライム王	Slime King
+池塘	池	Pond
+门口	入口	Gateway
+湖畔	湖畔	Lakeside
+湖面	湖面	Lake Surface
+湖心	湖の中心	Lake Center
+湖蚌洞	貝の洞窟	Clam Grotto
+柠檬岩	レモン岩	Lemon Rock
+中庭	中庭	Atrium
+火之祭坛	炎の祭壇	Fire Altar
+老水道	古い水路	Old Waterway
+线圈井	コイルの縦穴	Coil Shaft
+塔顶	塔の頂	Tower Summit
+储电室	蓄電室	Battery Chamber
+齿轮回廊	歯車の回廊	Gear Gallery
+发电室	発電室	Generator Room
+东翼	東棟	East Wing
+南门	南門	South Gate
+大橡树坡	大樫の坂	Great Oak Slope
+花田	花畑	Flower Fields
+西坡	西の坂	West Slope
+风车坡	風車の坂	Windmill Hill
+北崖	北の崖	North Cliffs
+瞭望台	見晴らし台	Lookout
+森林边缘	森のはずれ	Forest Edge
+瀑布顶	滝の上	Waterfall Crest
+东坡	東の坂	East Slope
+北坡	北の坂	North Slope
+蘑菇丘	きのこの丘	Mushroom Hill
+果园	果樹園	Orchard
+小溪	小川	Stream
+兔子洞	ウサギの穴	Rabbit Burrow
+蘑菇洞	きのこの洞窟	Mushroom Cave
+东岸	東岸	East Shore
+东北坡	北東の坂	Northeast Slope
+观鸟台	野鳥の観察台	Birdwatch Platform
+北岸高地	北岸の高台	North Shore Heights
+栈道	木の遊歩道	Boardwalk
+浮岛	浮島	Floating Isle
+柠檬岩上空	レモン岩の上空	Above Lemon Rock
+西崖顶	西の崖の上	West Cliff Crest
+西岸	西岸	West Shore
+西瀑布	西の滝	West Falls
+码头下	桟橋の下	Under the Pier
+湖心深处	湖心の深み	Lake Depths
+蚌壳湾	貝がらの入り江	Shell Bay
+沉木	沈んだ木	Sunken Timber
+西水洞	西の水の洞窟	West Water Cave
+湖底深渊	湖底の深淵	Lakebed Abyss
+森林高台	森の高台	Forest Canopy
+火山洞	火山の洞窟	Volcanic Cave
+天空遗迹	天空の遺跡	Sky Ruins
+夜之墓地	夜の墓地	Night Graveyard
+糖果花园	お菓子の庭	Candy Garden
+进化祭坛	進化の祭壇	Evolution Altar
+古树之心	古木の心	Heart of the Ancient Tree
+雪峰	雪の峰	Snowy Peak
+冰窟	氷の洞窟	Ice Cavern
+风之塔	風の塔	Wind Tower
+影之祭坛	影の祭壇	Shadow Altar
+深渊海沟	深淵の海溝	Abyssal Trench
+熔岩核心	溶岩の核	Lava Core
+地下水道	地下水路	Sewer
+精英	エリート	Elite
+ · 熟练度	 · 熟練度	 · Mastery
+ 熟练度	 熟練度	 Mastery
+熟练度 	熟練度 	Mastery 
+ 商店、	 お店、	 shop, 
+ 拉杆、	 レバー、	 levers, 
+ 电网（雷云打倒后关闭）、	 電撃（雷雲撃破で停止）、	 electric fences (off after defeating the cloud), 
+ 白天区域 / 	 昼エリア / 	 day areas / 
+ 罗丝奶奶的厨房、	 ローズの台所、	 Grandma Rose's kitchen, 
+ 草地和 	 草地と 	 grass and 
+ 闪烁电网：开一会儿关一会儿，快打开前闪几下；开着的时候和 	 点滅電撃：点いたり消えたりする。作動直前に点滅。作動中は 	 Pulsing fences blink before activating; while on, they behave like 
+点击音乐按钮启用声音	音楽ボタンで再生を開始	Click Music to enable audio
+food_1_blueberry|吃了一颗蓝莓，酸酸甜甜的。……伊布没有进化。看来进化可不是靠吃东西的。	food_1_blueberry|ブルーベリーは甘酸っぱい。…進化はしなかった。食べ物では進化しないらしい。	food_1_blueberry|A sweet and tart blueberry! …Eevee didn't evolve. Food isn't how evolution works.
+吃了一颗蓝莓，酸酸甜甜的。……伊布没有进化。看来进化可不是靠吃东西的。	ブルーベリーは甘酸っぱい。…進化はしなかった。食べ物では進化しないらしい。	A sweet and tart blueberry! …Eevee didn't evolve. Food isn't how evolution works.
+咬了一口辣椒！伊布辣得直吐舌头……但还是没有进化。火之石就在大厅尽头。	トウガラシは辛い！…でも進化しない。ほのおのいしは広間の奥にある。	That chili is hot! …Still no evolution. The Fire Stone waits at the end of the hall.
+古代石板（其一）：「蔚蓝之石，映着池水的光。触碰它的伊布，会生出鱼鳍与长尾。」	古代の石板（一）：「池の光を映す青い石。触れたイーブイには、ひれと長い尾が生まれる。」	Ancient Tablet I: "A blue stone reflects the pond. Eevee that touches it will grow fins and a long tail."
+古代石板（其二）：「黄绿之石，困着一声惊雷。它嵌在湖水尽头的岩缝里。」	古代の石板（二）：「黄緑の石は雷を宿す。湖の果ての岩間に眠る。」	Ancient Tablet II: "A yellow-green stone holds a thunderclap, resting in rocks at the lake's end."
+古代石板（其三）：「赤红之石，供奉在高塔之巅。电网之后，火焰之前。」	古代の石板（三）：「赤い石は高き塔の頂に。電撃の先、炎の手前。」	Ancient Tablet III: "A crimson stone rests atop the tower. Beyond the lightning, before the flame."
+古代石板（其四）：「荆棘烧尽之处，青苔覆着巨石。伊布在它身旁醒来，耳尖冒出了嫩叶。」	古代の石板（四）：「茨を焼いた先にコケの岩。そばで目覚めたイーブイの耳に、新芽が宿る。」	Ancient Tablet IV: "Beyond burned thorns lies a mossy rock. Eevee wakes beside it with leaves upon its ears."
+古代石板（其五）：「冷风从湖北的冰缝里吹出。霜雪覆盖的巨石，在那里等待伊布。」	古代の石板（五）：「湖の北、氷の隙間から冷風が吹く。霜の岩がイーブイを待つ。」	Ancient Tablet V: "Cold wind flows from a frozen crevice north of the lake. A frosted boulder awaits Eevee."
+古代石板（其六）：「与伙伴在烈日下并肩作战。羁绊满溢时，额前会浮现红玉。」	古代の石板（六）：「陽の下で仲間と戦え。絆が満ちると、額に紅玉が現れる。」	Ancient Tablet VI: "Fight beside a friend beneath the sun. When your bond overflows, a red gem appears."
+古代石板（其七）：「与伙伴在月光下并肩作战。羁绊满溢时，周身会浮现金环。」	古代の石板（七）：「月の下で仲間と戦え。絆が満ちると、金色の輪が現れる。」	Ancient Tablet VII: "Fight beside a friend beneath the moon. When your bond overflows, golden rings appear."
+古代石板（其八）：「解开一颗心结，换来一条缎带。哭泣的，未必是敌人。」	古代の石板（八）：「心をほどけばリボンを得る。泣いている者は、敵とは限らない。」	Ancient Tablet VIII: "Heal a troubled heart and receive a ribbon. Not everyone who weeps is an enemy."
+见习向导贝儿：我叫贝儿！听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换学会的形态，按 X 用技能……我、我想去糖果花园的星光野餐，可是风暴把路吹断了，我一个人不敢去。你会等我一起去吗？	見習いガイドのベル：わたしベル！イーブイは石や不思議な岩で進化するんだって。1～9で姿を変えて、Xでわざ。…お菓子の庭のピクニックに行きたいけど、嵐で道が壊れちゃった。一緒に行ってくれる？	Belle the Guide: I'm Belle! Eevee evolves with stones and magical rocks. Press 1–9 to change forms, X to use a move. I want to visit Candy Garden for a starlight picnic, but the storm broke the road. Will you wait and go with me?
+村长奥斯卡：欢迎回家！东边的草原最近有大史莱姆出没，西边的湖没有水伊布的本事可过不去。	村長オスカー：おかえり！東の草原に大きなスライムが出るぞ。西の湖はシャワーズでないと渡れん。	Mayor Oscar: Welcome home! A Big Slime roams the eastern meadows. You'll need Vaporeon to cross the lake to the west.
+商人玛姬：风暴把我的货吹得满地都是……收集金币和徽章吧，等路修好了，我这里会有好东西卖。	商人マギー：嵐で荷物が飛んじゃった…。コインやバッジを集めてね。道が直ったら品物をそろえるよ。	Maggie the Merchant: The storm scattered my goods… Gather coins and badges. I'll have lovely things to sell once the roads are repaired.
+石碑：储电室。地板东边的洞直通中庭，从这里掉下去最快回到塔底。	石碑：蓄電室。東の床の穴は中庭へ続く。塔の下への近道だ。	Marker: Battery Chamber. The hole in the eastern floor leads to the atrium, a quick way back down.
+石碑：再往下是深渊海沟。水太深太黑，水伊布现在还潜不下去。	石碑：この先は深淵の海溝。深く暗すぎて、今のシャワーズでは潜れない。	Marker: The Abyssal Trench lies below. It is too deep and dark for Vaporeon to dive into yet.
+石碑：发电机停了。等它重新转起来，雷伊布也许能学会贴着墙跑。	石碑：発電機は止まっている。再び動けばサンダースが壁走りを覚えるかもしれない。	Marker: The generator stopped. Once it runs again, Jolteon might learn to run along walls.
+石碑：塔顶。雷云盘在头顶，地板上的洞通往下面的储电室。	石碑：塔の頂。上には雷雲。床の穴は下の蓄電室へ続く。	Marker: Tower Summit. A thundercloud looms above. The floor's hole leads to the battery chamber below.
+石碑：大橡树。三百年前，奥克利家的佩妮在这里种下一颗橡果。	石碑：大樫。300年前、オークリー家のペニーがここにどんぐりを植えた。	Marker: The Great Oak. Penny of the Oakley family planted an acorn here three hundred years ago.
+石碑：火之石就供奉在大厅尽头。让伊布碰到它，伊布就会进化成浑身火焰的火伊布。	石碑：広間の奥にほのおのいしがある。イーブイが触れるとブースターに進化する。	Marker: The Fire Stone rests at the hall's end. Touch it as Eevee to evolve into Flareon.
+石碑：瞭望台。天气好的时候，往东能看到很远很远的地方。最近东边的天上，总卷着一团风暴……	石碑：見晴らし台。晴れた日は東まで見渡せる。最近は東の空に嵐が渦巻いている…。	Marker: Lookout. On clear days you can see far to the east. Lately, a storm always coils there…
+石碑：线圈井。风暴那晚，雷云往塔里灌电，线圈到现在还在噼啪乱响。再往上就是塔顶。	石碑：コイルの縦穴。あの嵐から雷雲が電気を送り続け、コイルは今も鳴っている。この上は塔の頂。	Marker: Coil Shaft. The storm cloud flooded the tower with electricity. The coils still crackle. The summit is above.
+石碑：观鸟台。水鸟都被风暴吹跑了，只剩高处那个空鸟窝。	石碑：野鳥の観察台。嵐で水鳥は飛び去り、高い場所の空の巣だけが残った。	Marker: Birdwatch Platform. The storm drove away the water birds, leaving only an empty nest above.
+石碑：这里是雷电塔的门厅。从地板的缺口跳下去就是草原的池塘，往东回到中庭继续向上。	石碑：雷の塔の玄関。床の穴を降りると草原の池。東の中庭から上へ登れる。	Marker: Thunder Tower Foyer. The gap drops to the meadow pond. Head east to the atrium and climb higher.
+石碑：雷电塔。风暴那晚之后，塔里的电网就一直失控，只有雷伊布能穿过。地板下面是老水道，以前塔靠池塘的水降温。一直往上爬，高层供奉着一颗火之石；塔顶上空盘着一团雷云。	石碑：雷の塔。嵐以来、電撃が暴走している。サンダースなら通れる。床下は冷却用の古い水路。上層にはほのおのいしがあり、頂には雷雲が渦巻く。	Marker: Thunder Tower. Since the storm, the electric fences have run wild. Jolteon can pass them. An old cooling waterway runs below. A Fire Stone rests above, beneath a thundercloud.
+石碑：雷电塔的外墙。墙缝里还在冒火花。	石碑：雷の塔の外壁。ひびから火花が出ている。	Marker: Thunder Tower's outer wall. Sparks still fly from its cracks.
+石碑：风车坡。风暴那晚之后，风车就没停过，转得嘎吱嘎吱响。	石碑：風車の坂。嵐以来、風車はきしみながら回り続けている。	Marker: Windmill Hill. Since the storm, the windmill has never stopped creaking and turning.
+路牌：← 湖泊（需要游泳）　　草原 →	道しるべ：← 湖（泳ぎが必要）　草原 →	Sign: ← Lake (swimming required)    Meadows →
+路牌：↑ 森林高台。风暴把吊桥吹断了，现在还过不去……	道しるべ：↑ 森の高台。嵐で吊り橋が壊れ、今は渡れない…。	Sign: ↑ Forest Canopy. The storm broke the rope bridge. You can't cross yet…
+路牌：→ 雷电塔。塔门的电网只有雷伊布能穿过。右边水塘的底下有股凉凉的水流，不知道通到哪里。	道しるべ：→ 雷の塔。電撃はサンダースなら通れる。右の池の底に、冷たい流れがある。	Sign: → Thunder Tower. Jolteon can cross the electric gate. A cool current runs beneath the pond to the right.
+路牌：↓ 火山洞。风暴吹落的大石头把路堵死了，得等人来搬开。	道しるべ：↓ 火山の洞窟。嵐で落ちた大岩が道をふさいでいる。撤去を待とう。	Sign: ↓ Volcanic Cave. A boulder fell in the storm and blocked the path. Someone will need to clear it.
+路牌：冰缝。冷风从里面呼呼地吹出来，往上还能爬，可伊布现在还上不去。	道しるべ：氷の割れ目。冷風が吹き出している。上へ続くが、今のイーブイでは登れない。	Sign: Frozen Crevice. Cold wind rushes out. The path rises farther than Eevee can reach for now.
+路牌：前方是大史莱姆的地盘！它每被踩一次就会分裂出一只小史莱姆。最近它特别暴躁，好像在找什么东西……	道しるべ：大きなスライムの縄張り！踏むたび小さなスライムが分裂する。最近、何かを捜して怒っているようだ…。	Sign: Big Slime territory! Each stomp splits off a little slime. It seems upset, as though searching for something…
+路牌：北崖。再往北就是森林，路在瀑布那边。	道しるべ：北の崖。さらに北は森。滝の向こうに道がある。	Sign: North Cliffs. The forest lies north, beyond the waterfall.
+路牌：小溪。水塘底下好像有条暗道，一直通到土里。	道しるべ：小川。池の底に、土の中へ続く隠し道があるらしい。	Sign: Stream. A hidden passage seems to run beneath the pond into the earth.
+路牌：岩缝里嵌着雷之石！伊布碰到它就会进化成雷伊布，冲过草原尽头的电网。	道しるべ：岩の間にかみなりのいし！イーブイが触れるとサンダースに進化し、電撃を通り抜けられる。	Sign: A Thunder Stone in the rocks! Touch it as Eevee to become Jolteon and cross the electric fence.
+路牌：柠檬岩的上面。底下的岩缝里有东西在噼啪响……	道しるべ：レモン岩の上。下の岩間で何かがぱちぱち鳴っている…。	Sign: Above Lemon Rock. Something crackles in the rocks below…
+路牌：森林边缘。瀑布从山上冲下来，上面就是森林高台。	道しるべ：森のはずれ。山から滝が流れ、その上は森の高台。	Sign: Forest Edge. The falls flow from the mountain. Forest Canopy is above.
+路牌：池塘中央的小岛上闪着蓝光，是水之石！伊布碰到它就会进化成会游泳的水伊布，回头去西边的湖看看吧！	道しるべ：池の島でみずのいしが光っている！シャワーズに進化したら、西の湖へ行ってみよう！	Sign: A Water Stone shines on the pond's island! Evolve into Vaporeon, then visit the lake to the west!
+路牌：浮岛。风暴把湖边的土块卷到了天上，到现在还没落下来。	道しるべ：浮島。嵐で巻き上がった地面が、まだ空に浮かんでいる。	Sign: Floating Isle. The storm lifted this earth from the shore, and it still hasn't fallen.
+路牌：湖水又深又宽，没有水伊布过不去。	道しるべ：湖は深く広い。シャワーズでないと渡れない。	Sign: The lake is deep and wide. You'll need Vaporeon to cross.
+路牌：湖泊·东岸。往西有条旧栈道，能走到湖中间的浮岛。	道しるべ：湖の東岸。西の古い遊歩道は、湖の浮島へ続く。	Sign: East Shore. An old boardwalk to the west leads to the floating isle.
+路牌：蘑菇丘。罗丝奶奶最喜欢来这里采蘑菇。	道しるべ：きのこの丘。ローズおばあちゃんのお気に入りの採集場所。	Sign: Mushroom Hill. Grandma Rose loves gathering mushrooms here.
+路牌：蘑菇洞。罗丝奶奶说，这里的发光蘑菇晚上能当灯用。	道しるべ：きのこの洞窟。ローズによると、光るきのこは夜の灯りになる。	Sign: Mushroom Cave. Rose says these glowing mushrooms can light the night.
+路牌：西岸。柠檬岩西边的小沙滩。	道しるべ：西岸。レモン岩の西の小さな砂浜。	Sign: West Shore. A small beach west of Lemon Rock.
+路牌：西崖顶。瀑布从这里的水塘流下去。	道しるべ：西の崖の上。この池から滝が流れ落ちる。	Sign: West Cliff Crest. The waterfall flows from this pool.
+路牌：西瀑布。水伊布能顺着瀑布游上西崖顶。	道しるべ：西の滝。シャワーズなら滝を泳いで西の崖に登れる。	Sign: West Falls. Vaporeon can swim up the falls to the cliff crest.
+路牌：踩在怪物头上可以打倒它。被碰到会掉血，血没了就回到存档石。	道しるべ：敵の頭を踏むと倒せる。触れるとダメージ。倒れるとセーブの石に戻る。	Sign: Stomp enemies to defeat them. Contact hurts you. If you faint, you'll return to your save stone.

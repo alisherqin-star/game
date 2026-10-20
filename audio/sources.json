@@ -1,0 +1,113 @@
+{
+  "format": "MIDI arrangements rendered by Web Audio; not official recordings",
+  "tracks": [
+    {
+      "id": "g1_pallet",
+      "gen": 1,
+      "title": "真新镇",
+      "url": "https://www.vgmusic.com/music/console/nintendo/gameboy/PkmRB-Pallet.mid",
+      "credit": "Joo *Johnnyz* Buaes",
+      "source": "https://www.vgmusic.com/music/console/nintendo/gameboy/",
+      "sha256": "7c5e100fb5e5c530da0b05472407625585071dbcaede30815f63004aaacdeadc"
+    },
+    {
+      "id": "g2_park",
+      "gen": 2,
+      "title": "自然公园",
+      "url": "https://www.vgmusic.com/music/console/nintendo/gameboy/pkgsc_park.mid",
+      "credit": "Katsumi No",
+      "source": "https://www.vgmusic.com/music/console/nintendo/gameboy/",
+      "sha256": "01bc5aceb385f74b666250c99768e1e6ec68e9d97f92275164eb199d88c41f60"
+    },
+    {
+      "id": "g3_littleroot",
+      "gen": 3,
+      "title": "未白镇",
+      "credit": "Game Freak / pokeemerald-expansion contributors",
+      "source": "https://github.com/rh-hideout/pokeemerald-expansion",
+      "url": "local expansion source",
+      "sha256": "935ff859d90abd20c621dd8474e4604c18c258ef5b358d84fb361b7f5beb88c7"
+    },
+    {
+      "id": "g3_route101",
+      "gen": 3,
+      "title": "丰缘 101 号道路",
+      "credit": "Game Freak / pokeemerald-expansion contributors",
+      "source": "https://github.com/rh-hideout/pokeemerald-expansion",
+      "url": "local expansion source",
+      "sha256": "c96d279c87f47ffa26137a0c9013f40140053c252e3dac3f3b0182e22158e85d"
+    },
+    {
+      "id": "g3_title",
+      "gen": 3,
+      "title": "绿宝石标题曲",
+      "credit": "Game Freak / pokeemerald-expansion contributors",
+      "source": "https://github.com/rh-hideout/pokeemerald-expansion",
+      "url": "local expansion source",
+      "sha256": "ddedf95d3bddf8977d41af2d0be0e6352396d5bb4d6b4d9cfc3a375f1bd24496"
+    },
+    {
+      "id": "g4_cynthia",
+      "gen": 4,
+      "title": "对战竹兰",
+      "url": "https://www.vgmusic.com/music/console/nintendo/ds/Cynthia.mid",
+      "credit": "TomTheTyranitar",
+      "source": "https://www.vgmusic.com/music/console/nintendo/ds/",
+      "sha256": "c35aadc18b63d34c37abb4bd495d1632ca72866bcb6ffd9fc79baf0b27f1a59d"
+    },
+    {
+      "id": "g5_driftveil",
+      "gen": 5,
+      "title": "帆巴市",
+      "url": "https://www.vgmusic.com/music/console/nintendo/ds/Driftveil_City_BW.mid",
+      "credit": "SawtoothOcean",
+      "source": "https://www.vgmusic.com/music/console/nintendo/ds/",
+      "sha256": "a004b7ee8dad563239d89ab8e345ad195f091ef21ce43a14357e7230f33f6255"
+    },
+    {
+      "id": "g6_snowbelle",
+      "gen": 6,
+      "title": "映雪市",
+      "url": "https://www.vgmusic.com/music/console/nintendo/3ds/PXYSnowbelleCity.mid",
+      "credit": "Keiji Uotami",
+      "source": "https://www.vgmusic.com/music/console/nintendo/3ds/",
+      "sha256": "6d2d3f2f6a1a022e33bc7d0f02c75357f40ee4173b9448a5cc3afdbc1bc5dc2a"
+    },
+    {
+      "id": "g7_gladion",
+      "gen": 7,
+      "title": "对战格拉吉欧",
+      "url": "https://www.vgmusic.com/music/console/nintendo/3ds/Battle-_VS_Gladion_SM_-_ShinkoNetCavy.mid",
+      "credit": "ShinkoNetCavy",
+      "source": "https://www.vgmusic.com/music/console/nintendo/3ds/",
+      "sha256": "66c70a1a3ce0d6ec44c7a5e895c71a81cec6d2ea87a53861905d572b210e2a1c"
+    },
+    {
+      "id": "g8_bede",
+      "gen": 8,
+      "title": "对战彼特",
+      "url": "https://raw.githubusercontent.com/LukeZGD/LukeZGD.github.io/main/midi-files/midis/Pokemon%20Sword%20and%20Shield%20-%20Battle%21%20Bede%20-%20MIDI%20by%20LukeeGD.mid",
+      "credit": "LukeeGD / LukeZGD",
+      "source": "https://github.com/LukeZGD/LukeZGD.github.io/blob/main/midi-files/index.html",
+      "sha256": "d460854f7b096e9f93dec140b6d62571d122afedad95b3407052f61e65995297"
+    },
+    {
+      "id": "g8_route1",
+      "gen": 8,
+      "title": "伽勒尔 1 号道路",
+      "url": "https://raw.githubusercontent.com/LukeZGD/LukeZGD.github.io/main/midi-files/midis/Pokemon%20Sword%20and%20Shield%20-%20Route%201%20-%20MIDI%20by%20LukeeGD.mid",
+      "credit": "LukeeGD / LukeZGD",
+      "source": "https://github.com/LukeZGD/LukeZGD.github.io/blob/main/midi-files/index.html",
+      "sha256": "d9d5024f29773a1f3f9715214376b54b952b14227d6c4247cb1e3973ed27bac5"
+    },
+    {
+      "id": "g9_area_zero",
+      "gen": 9,
+      "title": "第零区",
+      "url": "https://www.vgmusic.com/new-files/pkmn-SV-AreaZero.mid",
+      "credit": "ColoredGreen",
+      "source": "https://www.vgmusic.com/file/112ca80bb7adf111df23e2665a1e0370.html",
+      "sha256": "f7a194a9e45ac7bc226cd140f3e7ea4dc3d13cf8a00b7c826a50f3c06126c939"
+    }
+  ]
+}

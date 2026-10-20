@@ -1,0 +1,642 @@
+{
+  "assets": [
+    {
+      "id": "props/chest_0",
+      "path": "sprites/props/chest_0.png",
+      "category": "props",
+      "region": "play",
+      "anchor": [
+        8,
+        13
+      ],
+      "sha256": "dacfd436dee8f98be2e79936cf21bc83388bcf1584baba864d17450c2e32f855"
+    },
+    {
+      "id": "props/chest_1",
+      "path": "sprites/props/chest_1.png",
+      "category": "props",
+      "region": "play",
+      "anchor": [
+        8,
+        13
+      ],
+      "sha256": "dc0445490741ad975c1ccbcf34c78adc4b15973a64bcc8bdd23ba32f825d6435"
+    },
+    {
+      "id": "props/ice_rock",
+      "path": "sprites/props/ice_rock.png",
+      "category": "props",
+      "region": "play",
+      "anchor": [
+        16,
+        24
+      ],
+      "sha256": "915854ee6705dcc9569f2d4992f54ddc5f53fab6b8d03aa820fdd4b8a6bb46ef"
+    },
+    {
+      "id": "props/lever_0",
+      "path": "sprites/props/lever_0.png",
+      "category": "props",
+      "region": "play",
+      "anchor": [
+        6,
+        11
+      ],
+      "sha256": "1716254e44e3c4fc924351ffce2fbf0220b205816486e5c89a4bdfc258cd52a1"
+    },
+    {
+      "id": "props/lever_1",
+      "path": "sprites/props/lever_1.png",
+      "category": "props",
+      "region": "play",
+      "anchor": [
+        6,
+        11
+      ],
+      "sha256": "080809ca8cc6a1d1cc453e6814897437de35f42798b300e7f9e4671ea54a07b5"
+    },
+    {
+      "id": "props/moss_rock",
+      "path": "sprites/props/moss_rock.png",
+      "category": "props",
+      "region": "play",
+      "anchor": [
+        16,
+        24
+      ],
+      "sha256": "fa841ac70c1d7c8f73eec4e47c08595fb9f5b2903cf73d679bc6021334692460"
+    },
+    {
+      "id": "props/tablet",
+      "path": "sprites/props/tablet.png",
+      "category": "props",
+      "region": "play",
+      "anchor": [
+        7,
+        18
+      ],
+      "sha256": "a6ba8104a0f55ef121786d1c9e42519af887f5984ca4a80658ee1b26b32855bf"
+    },
+    {
+      "id": "items/acc_acorn",
+      "path": "sprites/items/acc_acorn.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        6,
+        11
+      ],
+      "sha256": "4917706c38ea7d54f7b36c58a48a053cc22415a85fe4752227ef8e1709929454"
+    },
+    {
+      "id": "items/acc_bell",
+      "path": "sprites/items/acc_bell.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        6,
+        11
+      ],
+      "sha256": "5664e53a9a25c63a1079dbc96be71183343eb8c363a2a0dd6f99b3b0dc5f2c53"
+    },
+    {
+      "id": "items/acc_chime",
+      "path": "sprites/items/acc_chime.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        6,
+        11
+      ],
+      "sha256": "d5dad2264a0b3d395c83723a8e22c7cbfb82999cc3839cf2a67e69dd08e1aff3"
+    },
+    {
+      "id": "items/acc_cloud",
+      "path": "sprites/items/acc_cloud.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        6,
+        11
+      ],
+      "sha256": "5d932323f0565fcd8391793bedc05f65fa5493c22d4450fd52cf4bc74edd0544"
+    },
+    {
+      "id": "items/acc_leaf",
+      "path": "sprites/items/acc_leaf.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        6,
+        11
+      ],
+      "sha256": "3687f9c6128fda6f0ea8d7babe5612b3dda710526d0ab4dac8bc3d8bf3468dea"
+    },
+    {
+      "id": "items/acc_magnet",
+      "path": "sprites/items/acc_magnet.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        6,
+        12
+      ],
+      "sha256": "d926468cd5018af9f528176ad760a0acf72ffa55512119ce21d851b438a6cd94"
+    },
+    {
+      "id": "items/acc_scarf",
+      "path": "sprites/items/acc_scarf.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        6,
+        11
+      ],
+      "sha256": "7a968c47c25e5ab5cbb3c9ba364ad31de38ea1b6584c248a501566f202aabc67"
+    },
+    {
+      "id": "items/acc_shell",
+      "path": "sprites/items/acc_shell.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        6,
+        11
+      ],
+      "sha256": "18569a597be5b048273948ca28d3a52fc910803c0f1e00a336b454bd5572fdc6"
+    },
+    {
+      "id": "items/dish_candy",
+      "path": "sprites/items/dish_candy.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        6,
+        8
+      ],
+      "sha256": "264c3aab5ef64f54632a828dc4719dab245bad2e69448cd79ad291cea0a37e4f"
+    },
+    {
+      "id": "items/dish_soup",
+      "path": "sprites/items/dish_soup.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        6,
+        9
+      ],
+      "sha256": "69eb847fdf16f1e2607374fffa7b63780de103aedc5ac3a69309345687d5231f"
+    },
+    {
+      "id": "items/fire_stone",
+      "path": "sprites/items/fire_stone.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        7,
+        14
+      ],
+      "sha256": "7ef3379643f4d385e1afd245fc701ea8a7eaa1fd6a400fa8a3484bb153986093"
+    },
+    {
+      "id": "items/food_1_blueberry",
+      "path": "sprites/items/food_1_blueberry.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        7,
+        14
+      ],
+      "sha256": "9e4b40bd7d4abff82d2de5dff8ee42171b9708c7365c294a955fdcd02d49f474"
+    },
+    {
+      "id": "items/food_2_lemon",
+      "path": "sprites/items/food_2_lemon.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        7,
+        14
+      ],
+      "sha256": "b5ffa020e17fe909f023c0f8172adbd5a0ade2743494aa3b11f6822c270da6bd"
+    },
+    {
+      "id": "items/food_3_chili",
+      "path": "sprites/items/food_3_chili.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        7,
+        14
+      ],
+      "sha256": "7ffa787c40c5fb75a7b8f4c0bc365ea0cd3a65ab15dab7beb33fd286cd39e1c7"
+    },
+    {
+      "id": "items/food_4_leaf",
+      "path": "sprites/items/food_4_leaf.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        7,
+        14
+      ],
+      "sha256": "2f729914cd815096cc9b2618ac0194a3a9440a53042708e980f5baff38e289ca"
+    },
+    {
+      "id": "items/food_5_icecream",
+      "path": "sprites/items/food_5_icecream.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        7,
+        14
+      ],
+      "sha256": "049a44cb2d756acb48f05b50992be9c8eeb0fa4bfc4a42fe22d4a3ccbf4d4af9"
+    },
+    {
+      "id": "items/food_6_suncake",
+      "path": "sprites/items/food_6_suncake.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        7,
+        14
+      ],
+      "sha256": "b719e9099f27e309645733209ab0a48cba312e78e78edb0e0c9963f83d02d906"
+    },
+    {
+      "id": "items/food_7_mooncake",
+      "path": "sprites/items/food_7_mooncake.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        7,
+        14
+      ],
+      "sha256": "3c102590eb457c089cf51c1de56a98b1e4815230eb47aee0e33a3a531698fc1d"
+    },
+    {
+      "id": "items/food_8_candy",
+      "path": "sprites/items/food_8_candy.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        7,
+        14
+      ],
+      "sha256": "09ec7ba26f2aaa3b952325f759e4c5e3846a80893f8dfb572a12269052433906"
+    },
+    {
+      "id": "items/goods",
+      "path": "sprites/items/goods.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        6,
+        11
+      ],
+      "sha256": "bb73acde96871c2afe335b34fd86cb5fff2edbdf4b5a96f9b6029a080956fd49"
+    },
+    {
+      "id": "items/heart_piece",
+      "path": "sprites/items/heart_piece.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        4,
+        8
+      ],
+      "sha256": "16a1e252af66447c4625b8f0b81b4df0e05caf0f55cb1ba32cdcc3971c3bc244"
+    },
+    {
+      "id": "items/mat_berry",
+      "path": "sprites/items/mat_berry.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        5,
+        9
+      ],
+      "sha256": "20de5a1157946722f12404bcb4806905ffd40dc6e79be36d12b84a1f8b01e8f7"
+    },
+    {
+      "id": "items/mat_spark",
+      "path": "sprites/items/mat_spark.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        5,
+        10
+      ],
+      "sha256": "c6e200a606e58f9f397ad78cfeef61914e82935889c0bd33648d15cb007aa008"
+    },
+    {
+      "id": "items/moon_mark",
+      "path": "sprites/items/moon_mark.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        6,
+        12
+      ],
+      "sha256": "cedf3b174e499229a0b93e45e82d3aacf59194736339a157ca66586114600b24"
+    },
+    {
+      "id": "items/ribbon",
+      "path": "sprites/items/ribbon.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        7,
+        10
+      ],
+      "sha256": "de9fe044b7dea40e8001dabe296b2a04807b9f10a2bafc27a8294db96c7f2860"
+    },
+    {
+      "id": "items/shiny_stone",
+      "path": "sprites/items/shiny_stone.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        5,
+        10
+      ],
+      "sha256": "b96be409b30d27cb446fad402b80c04cdb04376ad3f2b9f997d9f3213ee4f0ff"
+    },
+    {
+      "id": "items/sun_mark",
+      "path": "sprites/items/sun_mark.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        6,
+        12
+      ],
+      "sha256": "70ae54e88c6275e4c69cd02bc035ce7b6e766b527e57c1d449a3e84110fa99a2"
+    },
+    {
+      "id": "items/thunder_stone",
+      "path": "sprites/items/thunder_stone.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        7,
+        14
+      ],
+      "sha256": "868aa049c8ed37b3dfc155f5e4b553431451fc04ce25cb3aeef2ff9e59eff7d5"
+    },
+    {
+      "id": "items/water_stone",
+      "path": "sprites/items/water_stone.png",
+      "category": "items",
+      "region": "play",
+      "anchor": [
+        7,
+        14
+      ],
+      "sha256": "cda7317a2c1c3c9e6b0b23d30c9e75ac5e40f8c49265fa21979365c860845c02"
+    },
+    {
+      "id": "enemies/bat_0",
+      "path": "sprites/enemies/bat_0.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        12
+      ],
+      "sha256": "6edd7556e7690c902f1d2feaf9f9c3b8663e4c255b98350ec08f662ed5df1e91"
+    },
+    {
+      "id": "enemies/bat_1",
+      "path": "sprites/enemies/bat_1.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        12
+      ],
+      "sha256": "9857982133c5eea4bd6feab318faae5226f0f9c6a3b4d22d62ff577b0f833628"
+    },
+    {
+      "id": "enemies/bigslime_0",
+      "path": "sprites/enemies/bigslime_0.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        12,
+        20
+      ],
+      "sha256": "82436740b48b7ca2f545bae47bf86a9982db1ac21237a80a758f857771ddd7b9"
+    },
+    {
+      "id": "enemies/bigslime_1",
+      "path": "sprites/enemies/bigslime_1.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        12,
+        20
+      ],
+      "sha256": "b367cafdc75f322473e0dccce2de5b58e9354b5ab7caff3aa798ff7b4ae34419"
+    },
+    {
+      "id": "enemies/clam_0",
+      "path": "sprites/enemies/clam_0.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        12,
+        16
+      ],
+      "sha256": "c6630aee77d1be7e554997f30d0c4ea300cb2ed551f8015a54b3de2e38c12a3f"
+    },
+    {
+      "id": "enemies/clam_1",
+      "path": "sprites/enemies/clam_1.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        12,
+        16
+      ],
+      "sha256": "8f1c5522cc15baa257a6dacd727c7a530651780d4471581ccf07a5228eda4173"
+    },
+    {
+      "id": "enemies/fish_0",
+      "path": "sprites/enemies/fish_0.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        8
+      ],
+      "sha256": "9eec522ecb3ef7dd6775f752d3859cfd55ffc12e5261e718dd0fc862f666b4dd"
+    },
+    {
+      "id": "enemies/fish_1",
+      "path": "sprites/enemies/fish_1.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        8
+      ],
+      "sha256": "3aa3a8c6501a1fde5c51ec76caca4133581e82d2239e9a45557530ca3cbe061d"
+    },
+    {
+      "id": "enemies/frog_0",
+      "path": "sprites/enemies/frog_0.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        14
+      ],
+      "sha256": "245ee72da1e979cdccf413be32218034099c776e0004645157b8cfbca59bb657"
+    },
+    {
+      "id": "enemies/frog_1",
+      "path": "sprites/enemies/frog_1.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        14
+      ],
+      "sha256": "8609aff98152067fd8a4e2780ce290579912eee2b40231b8f9f805bbb54afdfa"
+    },
+    {
+      "id": "enemies/hedgehog_0",
+      "path": "sprites/enemies/hedgehog_0.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        10
+      ],
+      "sha256": "58b7e8f6c5d1287c434dfe87f32a763f177a48f37374b76f8eae53a3998b1a06"
+    },
+    {
+      "id": "enemies/hedgehog_1",
+      "path": "sprites/enemies/hedgehog_1.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        10
+      ],
+      "sha256": "7230814fb8110df4cdfa3d36ac5dc83764cdc9bc4b9a87c7e8e439f810b116cf"
+    },
+    {
+      "id": "enemies/hedgehog_ball",
+      "path": "sprites/enemies/hedgehog_ball.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        7,
+        11
+      ],
+      "sha256": "82894b2eed86d2eb86ee5434e0cc6014aa6d0cc29683ed9058fafedd77378d58"
+    },
+    {
+      "id": "enemies/puffer_0",
+      "path": "sprites/enemies/puffer_0.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        7,
+        12
+      ],
+      "sha256": "81c40d2fc8fc673f80e860c4cb421e53aa1becb84d224d2faca9f9fbc9667efc"
+    },
+    {
+      "id": "enemies/puffer_1",
+      "path": "sprites/enemies/puffer_1.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        16
+      ],
+      "sha256": "0452f7c8db917881b9962f4c3063efed6f12e10c8031409fea49a63a2ab677fb"
+    },
+    {
+      "id": "enemies/slime_0",
+      "path": "sprites/enemies/slime_0.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        14
+      ],
+      "sha256": "d21cd2824e1f092c938ab1952401c5d8a982504a7c6a8319d5e96a96ffa5659c"
+    },
+    {
+      "id": "enemies/slime_1",
+      "path": "sprites/enemies/slime_1.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        14
+      ],
+      "sha256": "5516bde1a70a06f2ccd1b2940b99a5df407d5418abe4e89e275fc7cadd547214"
+    },
+    {
+      "id": "enemies/turret_0",
+      "path": "sprites/enemies/turret_0.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        12
+      ],
+      "sha256": "a7a60f184512ec67f8b9d6969dea01792f0297b9f5a79c79d06c83bf4dad8813"
+    },
+    {
+      "id": "enemies/turret_1",
+      "path": "sprites/enemies/turret_1.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        12
+      ],
+      "sha256": "3cec13855a48086d39be48c5283dae3816e4f6714c348b911799c3e7006ea101"
+    },
+    {
+      "id": "npcs/baby_slime_0",
+      "path": "sprites/npcs/baby_slime_0.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        6,
+        10
+      ],
+      "sha256": "b5f3c5cecad4453c2925677754d80fa340d74adca4226dd875b804088fdcddf3"
+    },
+    {
+      "id": "npcs/baby_slime_1",
+      "path": "sprites/npcs/baby_slime_1.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        6,
+        10
+      ],
+      "sha256": "e16e47c272244056e71fa4298d6fc2580b69f31f252e6406b964df87fe15b365"
+    },
+    {
+      "id": "tiles/gate",
+      "path": "sprites/tiles/gate.png",
+      "category": "tiles",
+      "region": "play",
+      "anchor": [
+        0,
+        0
+      ],
+      "sha256": "ae1059a2692dd218932755ed5bc36e2a99ff810271d63a8cbde3caeb13a618ae"
+    }
+  ]
+}

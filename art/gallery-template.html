@@ -8,8 +8,8 @@
 <script>
 const manifest=/* MANIFEST */;const data=/* DATA */;
 const imgs={};let region='forest',tick=0;const canvas=document.getElementById('scene'),ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;
-const names={forest:'森林村庄',lake:'湖岸与码头',cave:'水晶洞穴',tower:'雷电遗迹',shared:'通用构件',npc:'NPC伊布'};
-const descriptions={forest:'苔绿色树冠、木屋和草木细节，营造可停留的村庄空间。',lake:'青绿远岸、木码头、系船桩、独木舟与睡莲，保持清晰的岸线。',cave:'冷色岩层、水晶与发光蘑菇，前景边缘清楚，背景保持低对比。',tower:'灰紫砖石配黄铜机械、雷纹旗帜与暖色火光，机关外观等待系统接入。',shared:'统一木纹、石材、矿物与光效；尖刺、电网和熔岩保留清晰的危险提示。',npc:'3 位现有 NPC 已接入游戏：村长·老橡、向导·小铃、商人·栗栗。采用已确认的辨识加强版：苔绿叶帽、湖蓝蝴蝶结、莓红围巾。另备 7 种职业配饰；原伊布的身体与表情保持不变。'};
+const names={forest:'森林村庄',lake:'湖岸与码头',cave:'水晶洞穴',tower:'雷电遗迹',shared:'通用构件',npc:'NPC伊布',play:'冒险素材'};
+const descriptions={play:'新关卡中的怪物、进化石、背包图标、料理、巨石、宝箱与拉杆闸门已统一材质；原尺寸和碰撞逻辑保持不变。对照图中左为原版，右为统一版。',forest:'苔绿色树冠、木屋和草木细节，营造可停留的村庄空间。',lake:'青绿远岸、木码头、系船桩、独木舟与睡莲，保持清晰的岸线。',cave:'冷色岩层、水晶与发光蘑菇，前景边缘清楚，背景保持低对比。',tower:'灰紫砖石配黄铜机械、雷纹旗帜与暖色火光，机关外观等待系统接入。',shared:'统一木纹、石材、矿物与光效；尖刺、电网和熔岩保留清晰的危险提示。',npc:'3 位现有 NPC 已接入游戏：村长·老橡、向导·小铃、商人·栗栗。采用已确认的辨识加强版：苔绿叶帽、湖蓝蝴蝶结、莓红围巾。另备 7 种职业配饰；原伊布的身体与表情保持不变。'};
 for(const [key,info] of Object.entries(manifest.regions||{})){names[key]=info.name;descriptions[key]=info.description}
 const assetsById=Object.fromEntries(manifest.assets.map(a=>[a.id,a]));
 const animationsById=Object.fromEntries(manifest.animations.map(a=>[a.id,a]));
@@ -45,6 +45,7 @@ function drawSharedPreview(){
  });ctx.restore();
 }
 function drawScene(which=region){
+ if(which==='play'){ctx.fillStyle='#263d40';ctx.fillRect(0,0,768,448);const im=imgs['review/gameplay'];if(im){const scale=Math.min(768/im.width,448/im.height);ctx.drawImage(im,(768-im.width*scale)/2,0,im.width*scale,im.height*scale);}return;}
  if(which==='npc')return drawNPCPreview();
  if(which==='shared')return drawSharedPreview();
  if(manifest.regions?.[which]&&document.getElementById('compare').checked&&imgs['review/before']){
@@ -77,7 +78,7 @@ function drawScene(which=region){
  }
  ctx.restore();
 }
-function show(next){region=next;document.getElementById('compare-wrap').hidden=!manifest.regions?.[next]||!imgs['review/before'];document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.region===next));document.getElementById('description').textContent=descriptions[next];const root=document.getElementById('catalog');root.replaceChildren();for(const [type,label]of [['npcs','角色特征'],['ui','界面构件'],['deco','装饰与建筑'],['tiles','地形瓦片'],['backgrounds','视差背景层']]){const list=manifest.assets.filter(a=>a.region===region&&a.category===type);if(!list.length)continue;const h=document.createElement('h2');h.textContent=label;root.append(h);const grid=document.createElement('div');grid.className='grid';root.append(grid);for(const a of list){const card=document.createElement('div');card.className='card';const box=document.createElement('div');box.className='image';const img=imgs[a.id].cloneNode();img.alt=a.id;img.style.width=(a.width*(a.width>96?.43:a.height>48?1.5:3))+'px';box.append(img);const p=document.createElement('p');p.textContent=(a.role?a.role+' · '+a.trait+' · ':'')+a.id;const br=document.createElement('br'),span=document.createElement('span');span.textContent=a.width+'×'+a.height+' · 锚点 '+a.anchor.join(',');p.append(br,span);card.append(box,p);grid.append(card)}}drawScene()}
+function show(next){region=next;document.getElementById('compare-wrap').hidden=!manifest.regions?.[next]||!imgs['review/before'];document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.region===next));document.getElementById('description').textContent=descriptions[next];const root=document.getElementById('catalog');root.replaceChildren();for(const [type,label]of [['enemies','小怪与动态帧'],['props','机关与探索道具'],['items','进化与背包图标'],['npcs','角色特征'],['ui','界面构件'],['deco','装饰与建筑'],['tiles','地形瓦片'],['backgrounds','视差背景层']]){const list=manifest.assets.filter(a=>a.region===region&&a.category===type);if(!list.length)continue;const h=document.createElement('h2');h.textContent=label;root.append(h);const grid=document.createElement('div');grid.className='grid';root.append(grid);for(const a of list){const card=document.createElement('div');card.className='card';const box=document.createElement('div');box.className='image';const img=imgs[a.id].cloneNode();img.alt=a.id;img.style.width=(a.width*(a.width>96?.43:a.height>48?1.5:3))+'px';box.append(img);const p=document.createElement('p');p.textContent=(a.role?a.role+' · '+a.trait+' · ':'')+a.id;const br=document.createElement('br'),span=document.createElement('span');span.textContent=a.width+'×'+a.height+' · 锚点 '+a.anchor.join(',');p.append(br,span);card.append(box,p);grid.append(card)}}drawScene()}
 for(const [key,name]of Object.entries(names)){const b=document.createElement('button');b.textContent=name;b.dataset.region=key;b.onclick=()=>{show(key);location.hash=key};document.getElementById('tabs').append(b)}
 document.getElementById('light').onchange=e=>document.body.classList.toggle('light',e.target.checked);
 document.getElementById('stats').textContent=manifest.assets.length+' 张美术素材 / '+manifest.animations.length+' 组动画';

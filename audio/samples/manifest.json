@@ -1,0 +1,51 @@
+[
+  {
+    "id": "p48",
+    "file": "sc88pro_piano1_48.wav",
+    "root": 60,
+    "loopStart": 0.09283205022796921,
+    "loopEnd": 0.14638612751326707
+  },
+  {
+    "id": "p60",
+    "file": "sc88pro_piano1_60.wav",
+    "root": 60,
+    "loopStart": 0.23559309365423425,
+    "loopEnd": 0.426788250242918
+  },
+  {
+    "id": "p72",
+    "file": "sc88pro_piano1_72.wav",
+    "root": 60,
+    "loopStart": 0.4174017042906264,
+    "loopEnd": 0.8147705187621468
+  },
+  {
+    "id": "p84",
+    "file": "sc88pro_piano1_84.wav",
+    "root": 60,
+    "loopStart": 0.9186602870813397,
+    "loopEnd": 1.757177033492823
+  },
+  {
+    "id": "flute",
+    "file": "sc88pro_flute.wav",
+    "root": 60,
+    "loopStart": 0.3923444976076555,
+    "loopEnd": 0.5607057416267942
+  },
+  {
+    "id": "bass",
+    "file": "sc88pro_fingered_bass.wav",
+    "root": 60,
+    "loopStart": 0.07756558786157411,
+    "loopEnd": 0.1350997832423948
+  },
+  {
+    "id": "guitar",
+    "file": "sc88pro_nylon_str_guitar.wav",
+    "root": 60,
+    "loopStart": 0.8639557482433846,
+    "loopEnd": 1.2004783973688145
+  }
+]
