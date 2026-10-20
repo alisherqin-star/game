@@ -14,6 +14,10 @@
 #         彩蛋：'T' 古代石板（刻着进化线索的谜语）  'o' 旧时代的果子（吃了回血但不会进化）
 #         伙伴：'k' 贝儿出现的地点，notes 写 '步骤|角色'，例如 '1|slimes'（起点村的贝儿是 texts 里以「见习向导贝儿：」开头的村民）
 #         RPG：'C' 宝箱（notes 写饰品 id，例如 'bell'）  'g' 商人被吹散的货物包  'u' 材料采集点（notes 写材料 id：berry 树果、spark 电光石）
+#         第二批敌人：'n' 刺猬  'b' 电球炮台  'j' 跳鱼  'x' 精英（notes 写本体：hedgehog / frog / turret / slime / fish）
+#         机关：'l' 拉杆（碰一下打开同一间房里所有的 'J' 闸门）  'q' 移动平台（notes 写 h4 往右 4 格 / v5 往上 5 格，三格宽）
+#         机关地形：'Q' 闪烁电网  'J' 闸门  '<' '>' 水里的水流（往箭头方向推）；房间加 wind=1 / -1 是隔一会儿往东 / 往西刮阵风
+#         以上新实体都按坐标编号、排在实体表最后，往老房间里加也不会让旧存档的编号错位。
 #              'V' 走散的村民（notes 写 '谁|lost' 是在外面等人找，'谁|home' 是找到后回村站的位置）
 #         '!' 和 'N' 的文字按出现顺序取 texts=[...]；'T'、'o'、'k'、'C'、'V'、'u' 的文字按出现顺序取 notes=[...]，
 #         果子的写法是 '图片名|吃下时的话'，例如 'food_1_blueberry|……'。
@@ -28,12 +32,12 @@ import json, os, sys
 RW, RH = 24, 14
 T = 16
 ROOMS = []
-def room(pos, name, region, rows, texts=(), size=(1, 1), deco=(), notes=()):
+def room(pos, name, region, rows, texts=(), size=(1, 1), deco=(), notes=(), wind=0):
     w, h = RW * size[0], RH * size[1]
     assert len(rows) == h, (name, len(rows))
     for i, r in enumerate(rows): assert len(r) == w, (name, i, len(r), r)
     for d in deco: assert 0 <= d[1] < w and 0 <= d[2] <= h, (name, d)
-    ROOMS.append(dict(pos=pos, name=name, region=region, rows=rows, texts=list(texts), size=size, deco=list(deco), notes=list(notes)))
+    ROOMS.append(dict(pos=pos, name=name, region=region, rows=rows, texts=list(texts), size=size, deco=list(deco), notes=list(notes), wind=wind))
 
 # ================= 起点村 =================
 room((7, 2), '起点村', 'village', [
@@ -69,7 +73,7 @@ room((9, 2), '草原·入口', 'plains', [
 '                    --- ',
 '                  co    ',
 '                 ###    ',
-' k !      e    u      e ',
+' k !      e   nu      e ',
 '##################    ##',
 '##################    ##',
 '##################-   ##'], texts=['路牌：踩在怪物头上可以打倒它。被碰到会掉血，血没了就回到存档石。'], notes=['food_1_blueberry|吃了一颗蓝莓，酸酸甜甜的。……伊布没有进化。看来进化可不是靠吃东西的。', '1|slimes', 'berry'], deco=[('forest_tree_0', 6, 11), ('forest_tree_1', 19, 11), ('env_berry_bush', 23, 11, -4)])
@@ -84,7 +88,7 @@ room((10, 2), '草原·坑洼', 'plains', [
 '                        ',
 '                     g  ',
 '                     W  ',
-'   e        v    c   W c',
+'   e     n  v    c   W c',
 '#####^^^#####^^^########',
 '########################',
 '########################'], notes=['古代石板（其八）：「解开一颗心结，换来一条缎带。哭泣的，未必是敌人。」'], deco=[('forest_tree_2', 2, 11), ('env_stump', 10, 11), ('env_berry_bush', 18, 11)])
@@ -178,7 +182,7 @@ room((6, 2), '湖畔', 'lake', [
 '                        ',
 '             ----       ',
 '   fHHHHHHHHH  s   ! u  ',
-'###~~~~~~~~~~###########',
+'###~~~~~j~~~~###########',
 '###~~~~~~~~~~###########',
 '###~~c~c~c~c~###########'], notes=['berry'], texts=['路牌：湖水又深又宽，没有水伊布过不去。'], deco=[('biome_reeds', 1, 11), ('env_river_stones', 14, 11), ('biome_reeds', 17, 11), ('env_lake_willow', 21, 11), ('env_bench', 21, 11), ('env_fern', 23, 11), ('env_mooring_post', 13, 11), ('env_canoe', 10, 11, 0, 4), ('env_lily_0', 5, 11, 0, 5), ('env_waterweed', 3, 14), ('env_waterweed', 11, 14)])
 room((5, 2), '湖面', 'lake', [
@@ -193,7 +197,7 @@ room((5, 2), '湖面', 'lake', [
 '   f         f          ',
 '  ---       ---         ',
 'HHHHHHHHHHHHHHHHHHHHHHHH',
-'~~~~~~~~~~~~~~~~~~~~~~~~',
+'~~~~~~~~~j~~~~~~~~~j~~~~',
 '~~~~~~~~~~~~~~~~~~~~~~~~',
 '~~~~p~~~~~~~~~~~~~~~~p~~'], deco=[('env_lily_0', 2, 11, 0, 5), ('env_lily_0', 18, 11, 0, 5), ('env_lily_0', 22, 11, 0, 5), ('env_waterweed', 1, 14), ('env_waterweed', 22, 14)])
 room((5, 3), '湖底洞穴', 'lakecave', [
@@ -223,7 +227,7 @@ room((4, 2), '湖心', 'lake', [
 '                        ',
 '                        ',
 'HHHfHHHHHHHHHHHHHHHHHHHH',
-'~~~~~~~~~~~~~~~~~~~~~~~~',
+'~~~~~~~~j~~~~~~~j~~~~~~~',
 '~~~~p~~~~~~~~~~~~~p~~~~~',
 '~~~~~~~~~~h~~~~~~~~~~~~~'], deco=[('env_lily_0', 5, 11, 0, 5), ('env_lily_0', 20, 11, 0, 5), ('env_waterweed', 2, 14), ('env_waterweed', 15, 14), ('env_river_stones', 21, 14)])
 room((3, 2), '湖蚌洞', 'lake', [
@@ -281,7 +285,7 @@ room((14, 0), '雷电塔·中庭', 'tower', [
 'BB ----               BB',
 'BB                    BB',
 'BB      ----          BB',
-'BB      EEE             ',
+'BB      QQQ             ',
 'BB           ---- v     ',
 'BB                 c    ',
 '                  ----BB',
@@ -299,7 +303,7 @@ room((14, 0), '雷电塔·中庭', 'tower', [
 'BB      -------       BB',
 'FF           ccc      BB',
 'FF           ----     K ',
-'FF  s   !            gKh',
+'FF  s   !   b        gKh',
 'BBBBBBBBBBBBBBBBB--BBBBB',
 'BBBBBBBBBBBBBBBBB~~BBBBB',
 'BBBBBBBBBBBBBBBBB~~BBBBB'], texts=['石碑：雷电塔。风暴那晚之后，塔里的电网就一直失控，只有雷伊布能穿过。地板下面是老水道，以前塔靠池塘的水降温。一直往上爬，高层供奉着一颗火之石；塔顶上空盘着一团雷云。'], size=(1, 3), deco=[
@@ -318,7 +322,7 @@ room((15, 0), '雷电塔·火之祭坛', 'tower', [
 'BB              v                     v         ',
 '                    E                           ',
 '                    E                           ',
-'                    E                     3   BB',
+'                    E                 b   3   BB',
 '    s   u   !   V   E        f   o   BBBBBBBBBBB',
 'BBBBBBBBBBBBBB~~~BBBBBBB~~~BBBBBBBB^^BBBBBBBBBBB',
 'BBBBBBBBBBBBBB~~~~~~~~~~~~~BBBBBBBBBBBBBBBBBBBBB',
@@ -367,7 +371,7 @@ room((17, -4), '雷电塔·线圈井', 'tower', [
 'BB -----              BB',
 'BB                    BB',
 'BB       ----         BB',
-'BB EEEE               BB',
+'BB QQQQ               BB',
 'BB             -----  BB',
 'BB                    BB',
 'BB       -----        BB',
@@ -377,15 +381,15 @@ room((17, -4), '雷电塔·线圈井', 'tower', [
 'BB            -----   BB',
 'BB          v         BB',
 'BB       -----        BB',
-'BB   c         E      BB',
-'BB -----       E      BB',
+'BB   c         Q      BB',
+'BB -----       Q      BB',
 'BB                    BB',
 'BB       -----        K ',
-'BB                    K*',
+'BB              x     K*',
 'BB             -------BB',
 '                      BB',
 '          ----        BB',
-'           c          BB',
+'   b       c          BB',
 'BBBBBBBB-             BB',
 'BB                    BB',
 'BB        -----       BB',
@@ -395,13 +399,13 @@ room((17, -4), '雷电塔·线圈井', 'tower', [
 'BB        ----        BB',
 'BB    u               BB',
 'BB  -----             BB',
-'BB                   EBB',
-'BB        -----      EBB',
+'BB      Q             BB',
+'BB      Q -----       BB',
 'BB               c    BB',
 'BB             -----  BB',
 '                      BB',
 '         -----        BB',
-'                      BB',
+'   b                  BB',
 'BBBBBBB               BB',
 'BB                    BB',
 'BB        -----       BB',
@@ -415,11 +419,11 @@ room((17, -4), '雷电塔·线圈井', 'tower', [
 'BB       -----        BB',
 '                      BB',
 '               -----  BB',
-'                      BB',
+'                   q  BB',
 'BBBBBBBBBBBBBBBBBBBBBBBB',
 'BB                    BB',
 'BBBBBBBBBBBBBBBBBBBBBBBB',
-'BBBBBBBBBBBBBBBBBBBBBBBB'], texts=['石碑：线圈井。风暴那晚，雷云往塔里灌电，线圈到现在还在噼啪乱响。再往上就是塔顶。'], notes=['spark'], size=(1, 5), deco=[('env_coil', 20, 66), ('env_torch_0', 2, 58), ('env_coil', 3, 52), ('env_gear', 20, 44), ('env_torch_0', 21, 36), ('env_coil', 2, 22), ('env_gear', 18, 14), ('env_torch_0', 2, 10)])
+'BBBBBBBBBBBBBBBBBBBBBBBB'], texts=['石碑：线圈井。风暴那晚，雷云往塔里灌电，线圈到现在还在噼啪乱响。再往上就是塔顶。'], notes=['turret', 'spark', 'v30'], size=(1, 5), deco=[('env_coil', 20, 66), ('env_torch_0', 2, 58), ('env_coil', 3, 52), ('env_gear', 20, 44), ('env_torch_0', 21, 36), ('env_coil', 2, 22), ('env_gear', 18, 14), ('env_torch_0', 2, 10)])
 # 塔顶：三屏宽的 Boss 房，雷云（Y）在头顶来回放雷。打倒以后塔基的电网（中庭的 F）关闭，奖励雷云坠饰。
 # 地板西边的洞掉进储电室，再从储电室掉回中庭，是回塔底的捷径。
 room((14, -4), '雷电塔·塔顶', 'tower', [
@@ -477,7 +481,7 @@ room((14, -3), '雷电塔·储电室', 'tower', [
 'BB-----               BB',
 'BB                      ',
 'BB      -----           ',
-'BB  !                   ',
+'BB  !          b        ',
 'BBBBBBBBBBBBBBBBBB  BBBB',
 'BB                    BB',
 'BBBBBBBBBBBBBBBBBB  BBBB',
@@ -489,12 +493,12 @@ room((15, -1), '雷电塔·齿轮回廊', 'tower', [
 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-'           c   W                W   c           ',
-'          ---- W                W -----         ',
-'               W        v       W               ',
-'               W                W               ',
-'      u        W           f    W               ',
-'BBBBBBBBBBBBBBBBBBBBBBEEEBBBBBBBBBBBBBBBBBBBBBBB',
+'           c   W    Q        Q  W   c           ',
+'          ---- W    Q        Q  W -----         ',
+'               W    Q   v    Q  W               ',
+'               W    Q        Q  W               ',
+'      u        W    Q      f Q  W       b       ',
+'BBBBBBBBBBBBBBBBBBBBBBQQQBBBBBBBBBBBBBBBBBBBBBBB',
 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'], notes=['spark'], size=(2, 1), deco=[('env_gear', 4, 10), ('env_gear', 20, 10), ('env_lever', 27, 10), ('env_gear', 43, 10), ('env_torch_0', 9, 5), ('env_torch_0', 38, 5)])
@@ -540,7 +544,7 @@ room((15, 1), '雷电塔·东翼', 'tower', [
 '                -----        W            ----BB',
 '            c               WW                BB',
 '          -----             WW      -----     BB',
-'BB                    f     WW   c            BB',
+'BB          b         f     WW   c      b     BB',
 'BBBB  BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
 'BBBB  BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
 'BBBB  BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
@@ -595,10 +599,10 @@ room((7, 0), '草原·花田', 'plains', [
 '              c         -----                   ',
 '               e                                ',
 '            #######                             ',
-'        u   #######           e                 ',
+'        u   #######       n   e                 ',
 '####################################         ###',
 '####################################         ###',
-'####################################  ----   ###'], notes=['berry'], size=(2, 1), deco=[('flower', 3, 11), ('flower', 6, 11), ('flower', 21, 11), ('flower', 33, 11), ('bush', 15, 9), ('forest_tree_1', 46, 11), ('env_fern', 30, 11)])
+'####################################  ----   ###'], notes=['berry'], size=(2, 1), deco=[('flower', 3, 11), ('flower', 6, 11), ('flower', 21, 11), ('flower', 33, 11), ('bush', 15, 9), ('forest_tree_1', 46, 11), ('env_fern', 30, 11)], wind=1)
 # 草原·西坡：草原入口上面。从入口天上的木板爬上来，西接大橡树坡，往上通风车坡。东边是土崖（高崖要从别的路去）。
 room((9, 1), '草原·西坡', 'plains', [
 '      ----            ##',
@@ -610,7 +614,7 @@ room((9, 1), '草原·西坡', 'plains', [
 '        ----          ##',
 '    c                 ##',
 '   ----               ##',
-'  e                   ##',
+'  e  n                ##',
 '###########        #####',
 '###########    ----#####',
 '###########        #####',
@@ -627,10 +631,10 @@ room((9, 0), '草原·风车坡', 'plains', [
 '                                  ----          ',
 '                           e                    ',
 '                        ########      ----      ',
-'                s   !   ########            e   ',
+'                s   !   ########    n       e   ',
 '######     #####################################',
 '######     #####################################',
-'######---- #####################################'], texts=['石碑：风车坡。风暴那晚之后，风车就没停过，转得嘎吱嘎吱响。'], size=(2, 1), deco=[('exp_wind_windmill', 28, 9), ('forest_tree_2', 4, 11), ('bush', 12, 11), ('flower', 33, 11), ('forest_tree_1', 45, 11)])
+'######---- #####################################'], texts=['石碑：风车坡。风暴那晚之后，风车就没停过，转得嘎吱嘎吱响。'], size=(2, 1), deco=[('exp_wind_windmill', 28, 9), ('forest_tree_2', 4, 11), ('bush', 12, 11), ('flower', 33, 11), ('forest_tree_1', 45, 11)], wind=1)
 # 草原·北崖：草原最北边的岩坡。地上一排木箱盖着个小坑，火伊布烧开（或雷伊布跑过去撞碎）能拿到心之碎片。
 room((9, -1), '草原·北崖', 'plains', [
 '##                                              ',
@@ -643,10 +647,10 @@ room((9, -1), '草原·北崖', 'plains', [
 '##    rrr   c e                                 ',
 '##    rrr                   e                   ',
 '##  rrrrrrr               rrrrr                 ',
-'## !rrrrrrr               rrrrr             u   ',
+'## !rrrrrrr               rrrrr  n          u   ',
 '####################WWW#############      ######',
 '#################### h #############      ######',
-'#################################### ---- ######'], texts=['路牌：北崖。再往北就是森林，路在瀑布那边。'], notes=['berry'], size=(2, 1), deco=[('env_boulder', 17, 11), ('forest_tree_2', 33, 11), ('env_fern', 24, 11), ('forest_tree_0', 46, 11)])
+'#################################### ---- ######'], texts=['路牌：北崖。再往北就是森林，路在瀑布那边。'], notes=['berry'], size=(2, 1), deco=[('env_boulder', 17, 11), ('forest_tree_2', 33, 11), ('env_fern', 24, 11), ('forest_tree_0', 46, 11)], wind=1)
 # 草原·瞭望台：望远镜在台子上。剧情伏笔：东边的风暴。
 room((11, -1), '草原·瞭望台', 'plains', [
 '                        ',
@@ -662,7 +666,7 @@ room((11, -1), '草原·瞭望台', 'plains', [
 '                    e   ',
 '########################',
 '########################',
-'########################'], texts=['石碑：瞭望台。天气好的时候，往东能看到很远很远的地方。最近东边的天上，总卷着一团风暴……'], deco=[('exp_wind_telescope', 12, 7), ('forest_tree_1', 21, 11), ('bush', 2, 11)])
+'########################'], texts=['石碑：瞭望台。天气好的时候，往东能看到很远很远的地方。最近东边的天上，总卷着一团风暴……'], deco=[('exp_wind_telescope', 12, 7), ('forest_tree_1', 21, 11), ('bush', 2, 11)], wind=1)
 # 草原·森林边缘：瀑布从上面的瀑布顶冲下来，落进地上的水塘。水伊布能逆着瀑布游上去（二十多格高，不会游泳的憋不住气）。
 # 西接瞭望台，东接东坡顶。
 room((12, -1), '草原·森林边缘', 'plains', [
@@ -722,7 +726,7 @@ room((13, -1), '草原·东坡', 'plains', [
 '                 ----BBB',
 '              c      BBB',
 '             ----    BBB',
-'      e          !   BBB',
+'      e   n      !   BBB',
 '#####################BBB',
 '#####################BBB',
 '#####################BBB'], texts=['石碑：雷电塔的外墙。墙缝里还在冒火花。'], notes=['berry'], size=(1, 2), deco=[('forest_tree_0', 4, 25), ('bush', 18, 25), ('forest_tree_1', 5, 11)])
@@ -770,7 +774,7 @@ room((11, 0), '草原·果园', 'plains', [
 '               c        ',
 '             -----      ',
 '                        ',
-'   e          u      u  ',
+'   e          u   n  u  ',
 '######     #############',
 '######     #############',
 '######---- #############'], notes=['berry', 'berry'], deco=[('env_berry_bush', 13, 11), ('env_berry_bush', 17, 11), ('env_berry_bush', 21, 11), ('forest_tree_2', 2, 11)])
@@ -802,27 +806,27 @@ room((9, 3), '草原·兔子洞', 'burrow', [
 'rr                  ---              v          ',
 'rr                                              ',
 'rr             ---       c c c                  ',
-'rr        e                       e             ',
+'rr        e   x     n             e             ',
 'rrrrrrWWWWWWrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
 'rrrrrr      rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
 'rrrrrr   *  rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
-'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'], size=(2, 1), deco=[('env_glow_mushrooms', 12, 10), ('env_stalactite', 26, 5), ('env_glow_mushrooms', 40, 10)])
+'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'], notes=['hedgehog'], size=(2, 1), deco=[('env_glow_mushrooms', 12, 10), ('env_stalactite', 26, 5), ('env_glow_mushrooms', 40, 10)])
 # 草原·蘑菇洞：有存档石。西接兔子洞，西头的竖井一级一级爬上蝙蝠林。
 room((11, 3), '草原·蘑菇洞', 'burrow', [
 'rr    rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
 'rr--  rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
 'rr    rrrrrrrrrrrr             rrrrrrrrrrrrrrrrr',
 'rr  --rrrrrrrrrrrr  c   c   c  rrrrrrrrrrrrrrrrr',
-'rr    rrrrrrrrrrrr             rrrrrrrrrrrrrrrrr',
-'  --                  rrrrr                  rrr',
-'                              v              rrr',
-'      ---                                    rrr',
-'                                             rrr',
-'            e       s                 e   !  rrr',
+'rrl   rrrrrrrrrrrr             rrrrrrrrrrrrrrrrr',
+'  --                  rrrrr                J   r',
+'                              v            J   r',
+'      ---                                  J   r',
+'                                           J   r',
+'            e       s                 e   !J uur',
 'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
 'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
 'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
-'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'], texts=['路牌：蘑菇洞。罗丝奶奶说，这里的发光蘑菇晚上能当灯用。'], size=(2, 1), deco=[('env_glow_mushrooms', 9, 10), ('env_glow_mushrooms', 16, 10), ('env_glow_mushrooms', 33, 10), ('env_stalactite', 14, 5), ('env_stalactite', 36, 5)])
+'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'], notes=['berry', 'berry'], texts=['路牌：蘑菇洞。罗丝奶奶说，这里的发光蘑菇晚上能当灯用。'], size=(2, 1), deco=[('env_glow_mushrooms', 9, 10), ('env_glow_mushrooms', 16, 10), ('env_glow_mushrooms', 33, 10), ('env_stalactite', 14, 5), ('env_stalactite', 36, 5)])
 
 
 # ================= 湖泊扩建（第二阶段标杆：含湖底洞穴 28 屏）=================
@@ -919,12 +923,12 @@ room((3, 1), '湖泊·浮岛', 'lake', [
 '                  #####                         ',
 '                  #####                         ',
 '                                                ',
-'    u  !                    c c                 ',
+'    u  !                    cxc                 ',
 '###########               ########              ',
 '###########       f       ########        f     ',
 '###########   #########              ###########',
 '              #########              ###########',
-'                                                '], texts=['路牌：浮岛。风暴把湖边的土块卷到了天上，到现在还没落下来。'], notes=['berry'], size=(2, 1), deco=[('forest_tree_0', 3, 9), ('bush', 20, 11), ('biome_reeds', 30, 9), ('forest_tree_1', 44, 11), ('flower', 21, 5)])
+'                                                '], texts=['路牌：浮岛。风暴把湖边的土块卷到了天上，到现在还没落下来。'], notes=['berry', 'frog'], size=(2, 1), deco=[('forest_tree_0', 3, 9), ('bush', 20, 11), ('biome_reeds', 30, 9), ('forest_tree_1', 44, 11), ('flower', 21, 5)])
 # 湖泊·柠檬岩上空：柠檬岩上面的岩台，地面整块挡住柠檬岩（雷之石要从水里去）。
 room((2, 1), '湖泊·柠檬岩上空', 'lake', [
 '                        ',
@@ -986,7 +990,7 @@ room((0, 2), '湖泊·西瀑布', 'lake', [
 '## c      ~~            ',
 '##        ~~            ',
 '##  !     ~~        f   ',
-'######~~~~~~~~~~~~######',
+'######~~~~~~~j~~~~######',
 '######~~~~~~~~~~~~######',
 '######~~~~~~~~~~~~######'], texts=['路牌：西瀑布。水伊布能顺着瀑布游上西崖顶。'], deco=[('biome_reeds', 19, 11), ('env_river_stones', 22, 11)])
 # 湖泊·码头下：湖畔的水塘底下，西接湖底洞穴。
@@ -1063,9 +1067,9 @@ room((0, 3), '湖泊·西水洞', 'lakecave', [
 'rrrr~~~~~~~~~~rr~~~~p~~~~~~~~~~~~~rr~~~~~~~~~~~~',
 'rrrr~~~~~~~~~~rr~~~~~~~~~~~~~~~~~~rr~~~~~~~~~~~~',
 'rrrr~~~~~~~~~~~~~~~~~~~~rr~~~~~~~~~~~~~~~~~~~~~~',
-'rrrr~~~~~~~~~~~~~~~~~~~~rr~~~~p~~~~~~~~~~~~~~~~~',
-'rrrr~~~~c~c~~~~~~~~~~~~~rr~~~~~~~~~~~~~~~~~~~rrr',
-'rrrr~~~~~~~~~~~~~~~~~~~~rr~~~~~~~~~~~~~~~~~~~rrr',
+'rrrr~~~~~~~~~~~~>>>>>>>>rr>>>>p>>>>>>>>>>~~~~~~~',
+'rrrr~~~~c~c~~~~~>>>>>>>>rr>>>>>>>>>>>>>>>~~~~rrr',
+'rrrr~~~~~~~~~~~~>>>>>>>>rr>>>>>>>>>>>>>>>~~~~rrr',
 'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr~~~~~~rrrr',
 'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr~c~c~crrrr',
 'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'], size=(2, 1), deco=[('env_waterweed', 6, 11), ('biome_crystal_1', 30, 11), ('env_waterweed', 42, 11)])
@@ -1074,16 +1078,16 @@ room((3, 4), '湖泊·湖底深渊', 'lakecave', [
 'rrrr~~~~~rrrrrrrrrrrrrrrrrrrrrrrrr~~~~rrrrrrrrrrrrrrrrrrr~~~rrrrrrrrrrrr',
 'rrrr~~~~~rrrrrrrrrrrrrrrrrrrrrrrrr~~~~rrrrrrrrrrrrrrrrrrr~~~rrrrrrrrrrrr',
 'rrrr~~~~~rrrrrrrrrrrrrrrrrrrrrrrrr~~~~rrrrrrrrrrrrrrrrrrr~~~rrrrrrrrrrrr',
-'rr~~~~~~~~~~~~~~~~~~rrr~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~rr',
-'rr~~~~~~~~~~~~~~~~~~rrr~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~p~~~~~~~rr',
-'rr~~~~~~~~~~p~~~~~~~rrr~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~rr',
+'rr~~~~~~~~~~~~~~~~~~rrr~<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<~~~~~~~~~~~~~rr',
+'rr~~~~~~~~~~~~~~~~~~rrr~<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<~~~~~p~~~~~~~rr',
+'rr~~~~~~~~~~p~~~~~~~rrr~<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<~~~~~~~~~~~~~rr',
 'rr~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~p~~~~~~~~~~~~~~~~~~~~~~~~~~~~~rr',
 'rr~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~rrr~~~~~~~~~~~~~~~~~~~~~rr',
-'rr~~~~~~c~~~~~~~~~~~~~~~~~c~~~~~~~~~~~~~~~~~~~rrr~~~c~~~~~~~~~~~~~~~~~rr',
+'rr~l~~~~c~~~~~~~~~~~~~~~~~c~~~~~~~~~~~~~~~~~~~rrr~~~c~~~~~~~~~~~~~~~~~rr',
 'rr~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~rrr~~~~~~~~~~~~~~~~~~~~~rr',
-'rrrrrrrrrrrrrrrrrrrrrrrrrrrr~~~~rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr~~~~~rrr',
-'rrrrrrrrrrrrrrrrrrrrrrrrrrrr~!~~rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr~~h~~rrr',
-'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
+'rrrrrrrrrrrrrrrrrrrrrrrrrrrr~~~~rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrJJJJJJJrrr',
+'rrrrrrrrrrrrrrrrrrrrrrrrrrrr~!~~rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr~~~~~~~rrr',
+'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr~~~h~~~rrr',
 'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'], texts=['石碑：再往下是深渊海沟。水太深太黑，水伊布现在还潜不下去。'], size=(3, 1), deco=[('biome_crystal_0', 10, 10), ('exp_abyss_kelp', 24, 10), ('biome_crystal_1', 44, 10), ('exp_abyss_kelp', 60, 10)])
 
 # ================= 输出 =================
@@ -1103,15 +1107,15 @@ def build():
         for yy, row in enumerate(r['rows']):
             for xx, ch in enumerate(row):
                 X, Y = x0 + xx, y0 + yy
-                if ch in 'Pevpf GMY123miych*s!NTokCgVu'.replace(' ', ''):
+                if ch in 'Pevpf GMY123miych*s!NTokCgVunbjxlq'.replace(' ', ''):
                     e = dict(t=ch, x=X, y=Y, room=i)
                     if ch in '!N': e['text'] = r['texts'][ti] if ti < len(r['texts']) else '……'; ti += 1
-                    if ch in 'TokCVu': assert ni < len(r['notes']), ('notes 不够', r['name']); e['text'] = r['notes'][ni]; ni += 1
+                    if ch in 'TokCVuxq': assert ni < len(r['notes']), ('notes 不够', r['name']); e['text'] = r['notes'][ni]; ni += 1
                     ents.append(e)
                     nb = [row[xx - 1] if xx > 0 else ' ', row[xx + 1] if xx + 1 < len(row) else ' ']
-                    grid[Y][X] = '~' if '~' in nb else ' '      # 水里的实体所在格仍是水
+                    grid[Y][X] = '~' if set(nb) & set('~<>') else ' '      # 水里的实体所在格仍是水
                 else: grid[Y][X] = ch
-        rooms_out.append(dict(id=i, name=r['name'], region=r['region'], x=x0, y=y0, w=sw * RW, h=sh * RH))
+        rooms_out.append(dict(id=i, name=r['name'], region=r['region'], x=x0, y=y0, w=sw * RW, h=sh * RH, **({'wind': r['wind']} if r['wind'] else {})))
         for d in r['deco']:
             assert os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'sprites', 'deco', d[0] + '.png')), ('装饰素材不存在', d[0])
             decos.append(dict(k=d[0], x=(x0 + d[1]) * T + T // 2 + (d[3] if len(d) > 3 else 0), y=(y0 + d[2]) * T + (d[4] if len(d) > 4 else 0)))
@@ -1122,7 +1126,7 @@ def build():
         assert ti == len(r['texts']), ('texts 数量和路牌 / 村民不一致', r['name'], ti, len(r['texts']))
         assert ni == len(r['notes']), ('notes 数量和石板 / 果子不一致', r['name'], ni, len(r['notes']))
     # 后加的实体种类各自成组排在最后（先彩蛋，再伙伴地点），已有实体的编号不变
-    ents = [e for e in ents if e['t'] not in 'TokCgVu'] + [e for e in ents if e['t'] in 'To'] + [e for e in ents if e['t'] == 'k'] + [e for e in ents if e['t'] in 'CgVu']
+    ents = [e for e in ents if e['t'] not in 'TokCgVunbjxlq'] + [e for e in ents if e['t'] in 'To'] + [e for e in ents if e['t'] == 'k'] + [e for e in ents if e['t'] in 'CgVu'] + [e for e in ents if e['t'] in 'nbjxlq']
     start = next(e for e in ents if e['t'] == 'P')
     world = dict(tw=TW, th=TH, ox=-mx * RW, oy=-my * RH, rows=[''.join(r) for r in grid], rooms=rooms_out, entities=[e for e in ents if e['t'] != 'P'], start=dict(x=start['x'], y=start['y']), deco=decos)
     root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')

@@ -21,11 +21,12 @@ const NAMES = { eevee: '伊布', vaporeon: '水伊布', jolteon: '雷伊布', fl
 const ORDER = ['eevee', 'vaporeon', 'jolteon', 'flareon', 'leafeon', 'glaceon', 'espeon', 'umbreon', 'sylveon'];
 
 // ---------------- 地形 ----------------
-const ORIG = WORLD.rows.map(r => r.split('').map(c => c === 'F' ? 'E' : c === 'H' ? ' ' : c));   // Boss 开关地形按打 Boss 之前算（打完是捷径）
+// Boss 开关地形按打 Boss 之前算（打完是捷径）；闪烁电网当成能等它关掉再过；水流当成普通的水
+const ORIG = WORLD.rows.map(r => r.split('').map(c => c === 'F' ? 'E' : c === 'H' ? ' ' : c === 'Q' ? ' ' : c === '<' || c === '>' ? '~' : c));
 const grid = ORIG.map(r => r.slice());
 const get = (x, y) => (x < 0 || x >= TW || y < 0 || y >= TH) ? '#' : grid[y][x];
 const BREAKABLE = new Uint8Array(TW * TH);   // 原本是木箱或裂墙的格子
-for (let y = 0; y < TH; y++) for (let x = 0; x < TW; x++) if (ORIG[y][x] === 'W' || ORIG[y][x] === 'K') BREAKABLE[y * TW + x] = 1;
+for (let y = 0; y < TH; y++) for (let x = 0; x < TW; x++) if ('WKJ'.includes(ORIG[y][x])) BREAKABLE[y * TW + x] = 1;   // 闸门也算：拉杆拉下以后会打开
 let broke, observed;   // 这次模拟打开了哪些格子（格子 → 烧 / 撞）、碰到过哪些可打开的格子（用来判断缓存还能不能用）
 function solidFor(tx, ty, f, vx) {   // 照抄 index.html 的 solidFor
   const t = get(tx, ty);
@@ -33,7 +34,7 @@ function solidFor(tx, ty, f, vx) {   // 照抄 index.html 的 solidFor
   if (tx >= 0 && tx < TW && ty >= 0 && ty < TH && BREAKABLE[ty * TW + tx]) observed.add(ty * TW + tx);
   if (t === 'W') { if (f === 'flareon') { broke.set(ty * TW + tx, 'burn'); return false; } if (f === 'jolteon' && Math.abs(vx) > 2.2) { broke.set(ty * TW + tx, 'smash'); return false; } return true; }
   if (t === 'K') { if (f === 'jolteon' && Math.abs(vx) > 2.2) { broke.set(ty * TW + tx, 'smash'); return false; } return true; }
-  if (t === 'D') return true;
+  if (t === 'D' || t === 'J') return true;
   if (t === 'S') return f !== 'umbreon';
   if (t === '~') return f === 'glaceon' && get(tx, ty - 1) !== '~';
   return false;
@@ -102,8 +103,9 @@ function simulate(s0, f, inp, maxT = 240) {
       s.jumpsLeft = f === 'leafeon' ? 1 : 0;
     } else {
       if (s.onGround) s.breath = Math.min(1, s.breath + 0.02);
+      if (s.onGround) s.coyote = 6; else if (s.coyote > 0) s.coyote--;   // 走出边缘 6 帧内还能起跳（index.html 的 COYOTE）
       if (k.press) {
-        if (s.onGround) { s.vy = JUMP_V * (f === 'jolteon' ? 1.08 : 1); s.jumpsLeft = f === 'leafeon' ? 1 : 0; }
+        if (s.onGround || s.coyote > 0) { s.vy = JUMP_V * (f === 'jolteon' ? 1.08 : 1); s.jumpsLeft = f === 'leafeon' ? 1 : 0; s.coyote = 0; }
         else if (s.jumpsLeft > 0) { s.jumpsLeft--; s.vy = JUMP_V * 0.92; }
       }
       if (!k.hold && s.vy < -1.6) s.vy = -1.6;
@@ -134,6 +136,14 @@ function plans(f) {
       return { dir: s.left ? after : d, walk: true, landOk: s.left || Math.abs(s.x - s.x0) >= 8 };
     });
   }
+  for (const d of [-1, 1]) for (const k of [1, 5]) {   // 走出台子边缘以后第 k 帧才按跳
+    out.push((t, s) => {
+      if (t === 0) { s.left = false; s.leftAt = -1; }
+      if (!s.onGround && !s.left) { s.left = true; s.leftAt = t; }
+      const u = s.left ? t - s.leftAt : -1;
+      return { dir: d, walk: !s.left, press: u === k, hold: s.left && u >= k, landOk: s.left && u > k };
+    });
+  }
   const runs = [[0, 0], [-1, 14], [1, 14]];
   const seconds = f === 'leafeon' ? [0, 10, 18, 26] : [0];
   const dashes = f === 'eevee' ? [0, 6, 16] : [0];
@@ -149,7 +159,7 @@ function plans(f) {
   return out;
 }
 const PLANS = Object.fromEntries(ORDER.map(f => [f, plans(f)]));
-const startState = (x, y) => ({ x, y, x0: x, vx: 0, vy: 0, onGround: true, jumpsLeft: 0, facing: 1, dash: 0, dashCd: 0, breath: 1 });
+const startState = (x, y) => ({ x, y, x0: x, vx: 0, vy: 0, onGround: true, jumpsLeft: 0, facing: 1, dash: 0, dashCd: 0, breath: 1, coyote: 0 });
 
 // 水伊布在水里：能放得下身体的水格之间自由移动；在水面可以跳出去（vy = -3.6）。
 function boxFree(x, y, f) {
@@ -202,7 +212,7 @@ function edges(n, f) {
 function explore(forms) {
   opened = new Uint8Array(TW * TH);
   for (let y = 0; y < TH; y++) for (let x = 0; x < TW; x++) grid[y][x] = ORIG[y][x];
-  const all = new Map(), hit = new Set();
+  const all = new Map(), hit = new Set(), leverDone = new Set();
   const start = standNode({ x: WORLD.start.x * T, y: WORLD.start.y * T + T - PH });
   let seeds = [start];
   for (;;) {
@@ -217,13 +227,18 @@ function explore(forms) {
         for (const m of e.nodes) if (!seen.has(m.key)) { seen.add(m.key); queue.push(m); all.set(m.key, m); }
       }
     }
+    // 碰到过的拉杆：打开同一间房里的闸门
+    for (const e of TARGETS) if (e.t === 'l' && hit.has(e.i) && !leverDone.has(e.room)) {
+      leverDone.add(e.room); const r = WORLD.rooms[e.room];
+      for (let y = r.y; y < r.y + r.h; y++) for (let x = r.x; x < r.x + r.w; x++) if (ORIG[y][x] === 'J') fresh.set(y * TW + x, 'lever');
+    }
     if (!fresh.size) return hit;
     // 打开新碰到的格子：火烧木箱会连着烧，裂墙上下连着一起碎，雷伊布撞木箱只碎撞到的格子；再从已经到过的所有地方接着找
     for (const [k, how] of fresh) {
       const stack = [[k % TW, Math.floor(k / TW)]];
       while (stack.length) {
-        const [x, y] = stack.pop(), t = get(x, y); if (t !== 'W' && t !== 'K') continue;
-        grid[y][x] = ' '; opened[y * TW + x] = 1;
+        const [x, y] = stack.pop(), t = get(x, y); if (t !== 'W' && t !== 'K' && t !== 'J') continue;
+        grid[y][x] = t === 'J' && [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => ORIG[y + dy] && ORIG[y + dy][x + dx] === '~') ? '~' : ' '; opened[y * TW + x] = 1;   // 水里的闸门打开后是水
         const nb = t === 'K' ? [[0, 1], [0, -1]] : how === 'burn' ? [[1, 0], [-1, 0], [0, 1], [0, -1]] : [];
         for (const [dx, dy] of nb) if (get(x + dx, y + dy) === t) stack.push([x + dx, y + dy]);
       }
@@ -234,9 +249,9 @@ function explore(forms) {
 
 // ---------------- 报告 ----------------
 const roomName = i => WORLD.rooms[i]?.name || '?';
-const KIND = { 1: '水之石', 2: '雷之石', 3: '火之石', m: '苔藓岩', i: '冰岩', h: '心之碎片', '*': '闪光石', T: '石板', C: '宝箱', g: '货物包', V: '村民', o: '果子', s: '存档石', G: '大史莱姆', M: '湖蚌', Y: '雷云', y: '小史莱姆', u: '材料点' };
+const KIND = { 1: '水之石', 2: '雷之石', 3: '火之石', m: '苔藓岩', i: '冰岩', h: '心之碎片', '*': '闪光石', T: '石板', C: '宝箱', g: '货物包', V: '村民', o: '果子', s: '存档石', G: '大史莱姆', M: '湖蚌', Y: '雷云', y: '小史莱姆', u: '材料点', x: '精英', l: '拉杆' };
 const label = e => {
-  const note = e.t === 'T' ? (e.text.match(/（[^）]+）/) || [''])[0] : e.t === 'C' || e.t === 'V' || e.t === 'u' ? '「' + e.text.split('|')[0] + '」' : '';
+  const note = e.t === 'T' ? (e.text.match(/（[^）]+）/) || [''])[0] : 'CVux'.includes(e.t) ? '「' + e.text.split('|')[0] + '」' : '';
   return `${KIND[e.t]}${note}（${roomName(e.room)}）`;
 };
 const setName = fs_ => fs_.map(f => NAMES[f]).join(' + ');
