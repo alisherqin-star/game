@@ -101,7 +101,6 @@ Q / 点点心图标	Q / おやつ	Q / Snack icon
 大眼史莱姆	大目玉スライム	Wide-Eyed Slime
 史莱姆妈妈	スライムのお母さん	Mama Slime
 小史莱姆波比	スライムのポピー	Poppy the Slime
-村长奥斯卡	村長オスカー	Mayor Oscar
 商人玛姬	商人マギー	Maggie the Merchant
 见习向导贝儿	見習いガイドのベル	Belle the Guide
 园丁罗丝奶奶	庭師のローズおばあちゃん	Grandma Rose
@@ -111,7 +110,6 @@ Q / 点点心图标	Q / おやつ	Q / Snack icon
 商人玛姬的商店	マギーのお店	Maggie's Shop
 罗丝奶奶的厨房	ローズの台所	Grandma Rose's Kitchen
 训练场：免费重选技能强化	訓練場：無料でわざ強化を変更	Training: change upgrades for free
-奥克利橡果	オークリーのどんぐり	Oakley Acorn
 守护丝巾	まもりのスカーフ	Guardian Scarf
 幸运叶	幸運の葉	Lucky Leaf
 探宝铃	宝探しの鈴	Treasure Bell
@@ -233,13 +231,10 @@ Q / 点点心图标	Q / おやつ	Q / Snack icon
 见习向导贝儿：雷伊布的毛扎扎的！你一靠近，我的耳朵都竖起来了。塔里的电网你应该不怕吧？	見習いガイドのベル：サンダースの毛、ちくちく！耳までぴんとなっちゃう。塔の電撃も平気だよね？	Belle the Guide: Jolteon's fur is so spiky! My ears stand up when you're near. The tower's electric fences won't bother you, right?
 一场怪风暴吹断了各地的路，好几个伙伴没能回家……	不思議な嵐が道を壊し、仲間たちが帰れなくなった……	A strange storm broke the roads, leaving friends far from home…
 按 Esc 打开背包，M 打开地图。	Escでバッグ、Mで地図を開く。	Press Esc for your bag, M for the map.
-傍晚。奥斯卡站在村口的大橡树下，望着东边。	夕暮れ。オスカーが村の大樫の下で東を見つめている。	At dusk, Oscar stands beneath the great oak, looking east.
 夜里。村口刮起一阵怪风，远处东边的天空卷着风暴。	夜。村に奇妙な風が吹き、東の空で嵐が渦巻く。	At night, a strange wind rises. A storm coils in the eastern sky.
-我们奥克利家有个很老很老的故事：很久很久以前，有一只伊布往那边去了，再也没回来。	オークリー家には古い話があってな。昔、一匹のイーブイがあちらへ行き、帰らなかったそうじゃ。	Our Oakley family has an old story. Long ago, an Eevee went that way… and never returned.
-……没什么，人老了，看到东边的云就爱讲老故事。路断了，大家就回不了家。伊布，你能帮忙把路一条一条接起来吗？	…年寄りの昔話じゃ。道が壊れては皆も帰れん。イーブイ、道をひとつずつ、つないでくれんか？	Just an old story. But broken roads keep everyone from coming home. Eevee, could you help reconnect them, one by one?
-风暴是从东边来的。那边是进化祭坛的方向……	嵐は東から来た。進化の祭壇の方角じゃ……	The storm came from the east… toward Evolution Altar.
+……没什么，人老了，看到东边的云就爱讲老故事。路断了，大家就回不了家。伊布，你能帮忙把路一条一条接起来吗？	…なんでもないよ。年を取ると、東の雲を見るたびに昔話をしたくなるのさ。道が壊れたままじゃ、みんな帰れない。イーブイ、道をひとつずつつないでくれるかい？	Oh, never mind me. Old folks see clouds in the east and start telling old stories. But with the roads broken, no one can come home. Eevee, could you help reconnect them, one by one?
+风暴是从东边来的。那边是进化祭坛的方向……	嵐は東から来たんだよ。進化の祭壇の方角さ……	The storm came from the east… toward Evolution Altar.
 ……还没……回来……	…まだ…帰って…いない…	…not… home… yet…
-剪影散开了。奥斯卡站在村口，一句话也没说。	影は消えた。オスカーは村の入口で黙って立っていた。	The silhouette fades. Oscar stands at the village gate in silence.
 刚才那阵风……和塔里记录到的一模一样。风暴的中心在祭坛方向，而且，它好像在喊什么。	今の風…塔で記録したものと同じ。中心は祭壇の方角。それに、何か叫んでいるようだった。	That wind matches what I recorded in the tower. Its center lies toward the altar… and it sounded like someone calling.
 不管是什么，变强了总没错！训练场添了新器材，想换技能强化随时来！	何であれ、強くなって損はない！訓練場に新しい道具を入れたぞ。わざ強化の変更はいつでもどうぞ！	Whatever it is, getting stronger can't hurt! I've added new training equipment. Come change your upgrades anytime!
 序章　风暴之后	序章　嵐のあと	Prologue: After the Storm
@@ -264,10 +259,6 @@ Q / 点点心图标	Q / おやつ	Q / Snack icon
 草原尽头那座塔的塔顶供奉着火之石。塔门的电网只有雷伊布穿得过去……不过我小时候听说，池塘底下有条老水道通到塔基，会游泳的话也许能钻进去。	塔の頂にほのおのいしがある。電撃はサンダースなら通れるが…池の底の古い水路でも塔に入れるらしいぞ。	A Fire Stone rests atop the tower. Jolteon can cross its electric gate… but an old underwater passage may also lead inside.
 我爷爷说，火山洞里有片烧不尽的荆棘，后面藏着长满青苔的巨石。在它旁边待一会儿，伊布会长出叶子。	祖父の話では、火山の燃え続ける茂みの奥にコケの岩がある。そばにいるとイーブイに葉が生えるそうじゃ。	Grandfather spoke of a mossy boulder behind burning thorns in the volcano. Stay beside it, and Eevee may grow leaves.
 湖北面有道冰缝，冷风从里面吹出来。冰岩就在那里沉睡……不过要会二段跳才上得去。	湖の北の氷の割れ目に、氷の岩が眠っておる。2段ジャンプがなければ登れんがの。	An Ice Rock sleeps in a frozen crevice north of the lake. You'll need a double jump to reach it.
-村长奥斯卡：九种样子都齐了！进化祭坛的大门，应该会为你打开。	村長オスカー：9つの姿がそろった！進化の祭壇の扉が開くはずじゃ。	Mayor Oscar: All nine forms! The gates of Evolution Altar should open for you.
-村长奥斯卡：你身后那个小家伙……快带它回草原找妈妈吧。	村長オスカー：後ろの子…草原のお母さんのもとへ連れていくのじゃ。	Mayor Oscar: That little one behind you… Take them back to their mother in the meadows.
-村长奥斯卡：大家都回来了！村子又热闹起来了。学者说，风暴是从进化祭坛的方向来的……这只探宝铃送给你，它会告诉你附近还藏着什么宝物。	村長オスカー：皆が帰った！村がにぎやかじゃ。嵐は祭壇の方角から来たそうじゃ…。この宝探しの鈴で、隠れた宝を見つけるのじゃ。	Mayor Oscar: Everyone is home! Ada says the storm came from the altar. Take this Treasure Bell; it will help you find hidden treasures.
-村长奥斯卡：欢迎回家！那场风暴之后，通往各地的路都断了，	村長オスカー：おかえり！嵐で道が壊れて、	Mayor Oscar: Welcome home! The storm broke all the roads, and 
 商人玛姬：欢迎光临！	商人マギー：いらっしゃい！	Maggie the Merchant: Welcome!
 商人玛姬：我的货全找回来了！太谢谢你了。商店正式开张，	商人マギー：全部戻ってきた！ありがとう！開店するよ。	Maggie the Merchant: All my goods are back! Thank you! We're open. 
 商人玛姬：风暴把我的货吹得满地都是……一共 	商人マギー：嵐で荷物が飛んじゃって…全部で 	Maggie the Merchant: The storm scattered my cargo… There are 
@@ -277,7 +268,7 @@ Q / 点点心图标	Q / おやつ	Q / Snack icon
 咦，你已经捡到 	あれ、もう 	Oh, you've already found 
 看看货。	品物を見てね。	Have a look at the goods.
 看看今天能做什么。	今日は何を作ろうか。	Let's see what we can cook today.
-还没回来，路上留意一下。	まだ帰っていない。見かけたら頼むよ。	They haven't returned. Keep an eye out on the road.
+还没回来，路上留意一下。	がまだ帰ってこないんだよ。見かけたら頼むね。	 still haven’t come home. Keep an eye out for them on the road. 
 都还没回来，路上帮我留意一下。	がまだ戻っておらん。道中、気をつけて見てくれ。	 haven't returned. Look out for them on your travels.
 听说村里会做菜的罗丝奶奶在草原走散了……	料理上手のローズが草原ではぐれたらしい…。	Grandma Rose, our cook, went missing in the meadows…
 训练家麦克斯：训练场重新开张了！你现在 Lv 	トレーナーのマックス：訓練場を再開したぞ！今はLv 	Trainer Max: Training is open again! You're now Lv 
@@ -589,14 +580,11 @@ food_1_blueberry|吃了一颗蓝莓，酸酸甜甜的。……伊布没有进化
 古代石板（其六）：「与伙伴在烈日下并肩作战。羁绊满溢时，额前会浮现红玉。」	古代の石板（六）：「陽の下で仲間と戦え。絆が満ちると、額に紅玉が現れる。」	Ancient Tablet VI: "Fight beside a friend beneath the sun. When your bond overflows, a red gem appears."
 古代石板（其七）：「与伙伴在月光下并肩作战。羁绊满溢时，周身会浮现金环。」	古代の石板（七）：「月の下で仲間と戦え。絆が満ちると、金色の輪が現れる。」	Ancient Tablet VII: "Fight beside a friend beneath the moon. When your bond overflows, golden rings appear."
 古代石板（其八）：「解开一颗心结，换来一条缎带。哭泣的，未必是敌人。」	古代の石板（八）：「心をほどけばリボンを得る。泣いている者は、敵とは限らない。」	Ancient Tablet VIII: "Heal a troubled heart and receive a ribbon. Not everyone who weeps is an enemy."
-见习向导贝儿：我叫贝儿！听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换学会的形态，按 X 用技能……我、我想去糖果花园的星光野餐，可是风暴把路吹断了，我一个人不敢去。你会等我一起去吗？	見習いガイドのベル：わたしベル！イーブイは石や不思議な岩で進化するんだって。1～9で姿を変えて、Xでわざ。…お菓子の庭のピクニックに行きたいけど、嵐で道が壊れちゃった。一緒に行ってくれる？	Belle the Guide: I'm Belle! Eevee evolves with stones and magical rocks. Press 1–9 to change forms, X to use a move. I want to visit Candy Garden for a starlight picnic, but the storm broke the road. Will you wait and go with me?
-村长奥斯卡：欢迎回家！东边的草原最近有大史莱姆出没，西边的湖没有水伊布的本事可过不去。	村長オスカー：おかえり！東の草原に大きなスライムが出るぞ。西の湖はシャワーズでないと渡れん。	Mayor Oscar: Welcome home! A Big Slime roams the eastern meadows. You'll need Vaporeon to cross the lake to the west.
 商人玛姬：风暴把我的货吹得满地都是……收集金币和徽章吧，等路修好了，我这里会有好东西卖。	商人マギー：嵐で荷物が飛んじゃった…。コインやバッジを集めてね。道が直ったら品物をそろえるよ。	Maggie the Merchant: The storm scattered my goods… Gather coins and badges. I'll have lovely things to sell once the roads are repaired.
 石碑：储电室。地板东边的洞直通中庭，从这里掉下去最快回到塔底。	石碑：蓄電室。東の床の穴は中庭へ続く。塔の下への近道だ。	Marker: Battery Chamber. The hole in the eastern floor leads to the atrium, a quick way back down.
 石碑：再往下是深渊海沟。水太深太黑，水伊布现在还潜不下去。	石碑：この先は深淵の海溝。深く暗すぎて、今のシャワーズでは潜れない。	Marker: The Abyssal Trench lies below. It is too deep and dark for Vaporeon to dive into yet.
 石碑：发电机停了。等它重新转起来，雷伊布也许能学会贴着墙跑。	石碑：発電機は止まっている。再び動けばサンダースが壁走りを覚えるかもしれない。	Marker: The generator stopped. Once it runs again, Jolteon might learn to run along walls.
 石碑：塔顶。雷云盘在头顶，地板上的洞通往下面的储电室。	石碑：塔の頂。上には雷雲。床の穴は下の蓄電室へ続く。	Marker: Tower Summit. A thundercloud looms above. The floor's hole leads to the battery chamber below.
-石碑：大橡树。三百年前，奥克利家的佩妮在这里种下一颗橡果。	石碑：大樫。300年前、オークリー家のペニーがここにどんぐりを植えた。	Marker: The Great Oak. Penny of the Oakley family planted an acorn here three hundred years ago.
 石碑：火之石就供奉在大厅尽头。让伊布碰到它，伊布就会进化成浑身火焰的火伊布。	石碑：広間の奥にほのおのいしがある。イーブイが触れるとブースターに進化する。	Marker: The Fire Stone rests at the hall's end. Touch it as Eevee to evolve into Flareon.
 石碑：瞭望台。天气好的时候，往东能看到很远很远的地方。最近东边的天上，总卷着一团风暴……	石碑：見晴らし台。晴れた日は東まで見渡せる。最近は東の空に嵐が渦巻いている…。	Marker: Lookout. On clear days you can see far to the east. Lately, a storm always coils there…
 石碑：线圈井。风暴那晚，雷云往塔里灌电，线圈到现在还在噼啪乱响。再往上就是塔顶。	石碑：コイルの縦穴。あの嵐から雷雲が電気を送り続け、コイルは今も鳴っている。この上は塔の頂。	Marker: Coil Shaft. The storm cloud flooded the tower with electricity. The coils still crackle. The summit is above.
@@ -626,3 +614,28 @@ food_1_blueberry|吃了一颗蓝莓，酸酸甜甜的。……伊布没有进化
 路牌：西崖顶。瀑布从这里的水塘流下去。	道しるべ：西の崖の上。この池から滝が流れ落ちる。	Sign: West Cliff Crest. The waterfall flows from this pool.
 路牌：西瀑布。水伊布能顺着瀑布游上西崖顶。	道しるべ：西の滝。シャワーズなら滝を泳いで西の崖に登れる。	Sign: West Falls. Vaporeon can swim up the falls to the cliff crest.
 路牌：踩在怪物头上可以打倒它。被碰到会掉血，血没了就回到存档石。	道しるべ：敵の頭を踏むと倒せる。触れるとダメージ。倒れるとセーブの石に戻る。	Sign: Stomp enemies to defeat them. Contact hurts you. If you faint, you'll return to your save stone.
+村长奶奶	村長おばあちゃん	Village Elder
+大橡树的橡果	大樫のどんぐり	Great Oak Acorn
+、	、	, 
+石碑：大橡树。三百年前，有人在这里种下一颗橡果，说要等一个朋友回来。	石碑：大樫。300年前、友だちの帰りを待つと言って、だれかがここにどんぐりを植えた。	Marker: The Great Oak. Three hundred years ago, someone planted an acorn here and said they would wait for a friend to come home.
+见习向导贝儿：我叫贝儿，是见习向导！……还是见习的那种。听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换学会的形态，按 X 用技能。不知道去哪的话，就回村来问我！……我、我想去糖果花园的星光野餐，可是风暴把路吹断了，我一个人不敢去。你会等我一起去吗？	見習いガイドのベル：わたしベル、ガイドなの！…まだ見習いだけど。イーブイは石や不思議な岩で進化するんだって。1～9で姿を変えて、Xでわざ。どこへ行くか迷ったら、村に戻って聞いてね！…わ、わたし、お菓子の庭の星空ピクニックに行きたいの。でも嵐で道が壊れて、ひとりじゃ怖くて。一緒に行くまで待っててくれる？	Belle the Guide: I’m Belle, a guide! …Well, a guide in training. Eevee evolves with stones and magical rocks. Press 1–9 to change forms, X to use a move. If you don’t know where to go, come back to the village and ask me! …I-I want to visit Candy Garden for a starlight picnic, but the storm broke the road and I’m too scared to go alone. Will you wait and go with me?
+村长奶奶：大家都回来了！村子好久没这么热闹了。学者说，风暴是从进化祭坛的方向来的……这只探宝铃送给你，它会告诉你附近还藏着什么宝物。	村長おばあちゃん：みんな帰ってきたねえ！村がこんなににぎやかなのは久しぶりだよ。エイダが言うには、嵐は進化の祭壇の方角から来たそうだね…。この宝探しの鈴をおあげ。近くに隠れた宝を教えてくれるよ。	Village Elder: Everyone is home! The village hasn’t been this lively in ages. Ada says the storm came from the direction of Evolution Altar… Take this Treasure Bell. It will tell you what treasures are hidden nearby.
+你醒啦。昨晚的风，比我这辈子见过的都大……我这辈子可长着呢。	目が覚めたかい。ゆうべの風は、わたしの一生でいちばん強かったよ…。まあ、長い一生なんだけどねえ。	Ah, you’re awake. That was the strongest wind I’ve seen in my life… and it’s been a long life. 
+都还没回来。我老了，走不远，只能拜托你了。	がまだ帰ってこないんだよ。わたしはもう年で遠くへ行けない。おまえさんに頼むよ。	 still haven’t come home. I’m too old to go far, so I’m counting on you. 
+出了村子就是草原，草原尽头的池塘中央，有块石头闪着蓝光。你碰一碰它，说不定就能下水了。	村を出れば草原だよ。草原の奥の池の真ん中で、青い石が光ってる。触れれば、水に入れるかもしれないよ。	Past the village lie the Meadows. At their far end, a blue stone glows in the pond. Touch it, and you might be able to swim.
+不知道下一站去哪，就问问贝儿吧。	次にどこへ行くか迷ったら、ベルに聞いてごらん。	If you’re not sure where to go next, ask Belle.
+见习向导贝儿：池、池塘那边有块会发光的石头……应该是往那边吧？出了村子，一直走到草原尽头就是了。	見習いガイドのベル：い、池のほうに光る石があるって…たぶん、あっちかな？村を出て、草原のいちばん奥まで行けばいいはず！	Belle the Guide: Th-there’s a glowing stone over by the pond… I think it’s that way? Leave the village and keep going to the far end of the Meadows.
+见习向导贝儿：湖！你会游泳了，湖的另一头说不定有新的石头。听说最西边的岩缝里，整天噼啪作响。	見習いガイドのベル：湖だよ！泳げるようになったし、湖の向こうに新しい石があるかも。いちばん西の岩の割れ目が、一日中ぱちぱち鳴ってるんだって。	Belle the Guide: The lake! You can swim now, so there might be a new stone across it. They say the rocks at the far west end crackle all day long.
+见习向导贝儿：雷电塔！我听见塔顶一直在打雷，火之石就供在上面。塔门的电网你现在穿得过去了。对了，池塘底下好像也有条老水道通到塔里。	見習いガイドのベル：雷の塔！てっぺんでずっと雷が鳴ってるの。ほのおのいしはそこにまつられてるんだって。塔の入口の電撃も、今なら通れるよ。そうそう、池の底にも塔へ続く古い水路があるみたい。	Belle the Guide: Thunder Tower! I keep hearing thunder at the top, where the Fire Stone is kept. You can get through the electric gate now. Oh, and there seems to be an old waterway under the pond that leads into the tower.
+见习向导贝儿：罗丝奶奶说，火山脚下有片烧不尽的荆棘，后面藏着长青苔的大石头。要先把荆棘烧掉哦。	見習いガイドのベル：ローズおばあちゃんが言ってたよ。火山のふもとに燃えつきないイバラがあって、その奥にコケの生えた大きな岩があるんだって。まずイバラを燃やさなきゃ！	Belle the Guide: Grandma Rose says there’s a thicket of thorns at the foot of the volcano that never burns away, with a mossy boulder hidden behind it. Burn the thorns first!
+见习向导贝儿：我把石板上说的地方都记下来了！冰缝在湖的北边，冷风就是从那里吹出来的。不过要跳得很高才上得去。	見習いガイドのベル：石板に書いてあった場所、ぜんぶメモしたよ！氷の割れ目は湖の北。冷たい風はそこから吹いてくるの。でも、うんと高く跳べないと登れないみたい。	Belle the Guide: I wrote down every place the tablets mention! The ice crevice is north of the lake. That’s where the cold wind comes from. You’ll need to jump really high to reach it, though.
+见习向导贝儿：太阳伊布只认和它一起在阳光下战斗过的伙伴。去天空遗迹吧，记得用伊布的样子。	見習いガイドのベル：エーフィは、日の光の下で一緒に戦った仲間にしか応えないんだって。天空の遺跡へ行ってみて。イーブイの姿でね！	Belle the Guide: Espeon only answers to a partner who fought beside it in the sunlight. Try the Sky Ruins, and stay in your Eevee form!
+见习向导贝儿：夜之墓地……我、我是有点怕啦。月亮伊布是在夜里诞生的，用伊布的样子去和那边的怪物较量吧。	見習いガイドのベル：夜の墓地…わ、わたしはちょっと怖いけど。ブラッキーは夜に生まれるんだって。イーブイの姿で、あそこの魔物と勝負してみて。	Belle the Guide: The Night Graveyard… I-I’m a little scared of it. Umbreon is born at night, so go face the monsters there in your Eevee form.
+见习向导贝儿：草原那只大史莱姆，最近好像总在哭……你去问问它怎么了？	見習いガイドのベル：草原の大きなスライム、最近ずっと泣いてるみたい…。どうしたのか聞いてあげて？	Belle the Guide: The Big Slime in the Meadows seems to cry all the time lately… Could you go ask what’s wrong?
+见习向导贝儿：九种样子都齐了！东边的进化祭坛……我会在门口等你。这次我不怕了。	見習いガイドのベル：9つの姿がそろったね！東の進化の祭壇…わたし、入口で待ってる。今度は怖くないよ。	Belle the Guide: All nine forms! Evolution Altar lies to the east… I’ll wait for you at the gate. I’m not scared this time.
+见习向导贝儿：小史莱姆一直跟着你呢！快带它回草原找妈妈吧。	見習いガイドのベル：スライムの子がついてきてるよ！早く草原のお母さんのところへ連れていこう。	Belle the Guide: The little slime is following you! Let’s hurry them back to their mother in the Meadows.
+傍晚。村长奶奶站在村口的大橡树下，望着东边。	夕暮れ。村長おばあちゃんが村の入口の大樫の下で、東を見つめている。	At dusk, the Village Elder stands beneath the great oak at the village gate, looking east.
+它转过身看着伊布，愣了一下。	おばあちゃんは振り返ってイーブイを見ると、はっと息をのんだ。	She turns to look at Eevee, and freezes for a moment.
+……你会变样子了。好久没见过会变样子的伊布了。很久很久以前，我认识一只伊布，一下子就能变成好几种样子。它往东边去了。	…姿を変えられるんだね。そんなイーブイを見るのは久しぶりだよ。ずっとずっと昔、いくつもの姿にくるくる変われるイーブイを知っていた。その子は東へ行ったきりさ。	…You can change your shape. It’s been so long since I’ve seen an Eevee who could. Long, long ago, I knew one who could become many forms in a blink. That one went east.
+西边的湖、草原尽头的雷电塔……好多路都断了。想不起来先去哪，就回来问我！	西の湖、草原の奥の雷の塔…道がいっぱい壊れちゃった。どこから行くか迷ったら、戻ってきて聞いてね！	The lake to the west, Thunder Tower past the Meadows… So many roads are broken. If you can’t decide where to go first, come back and ask me!
+剪影散开了。村长奶奶站在大橡树下，一句话也没说，拐杖握得紧紧的。	影は消えた。村長おばあちゃんは大樫の下で何も言わず、杖をぎゅっと握りしめていた。	The silhouette fades. Beneath the great oak, the Village Elder says nothing, gripping her cane tightly.
