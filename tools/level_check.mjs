@@ -54,7 +54,7 @@ function collide(s, f) {   // 照抄 index.html 的 collide
 
 // ---------------- 碰到的东西 ----------------
 // 物品（金币、进化石、心之碎片……）按 index.html 的拾取范围；宝箱、巨石、石板和村民按各自的对话范围。
-const REACH = { c: [11, 14], h: [11, 14], '*': [11, 14], 1: [11, 14], 2: [11, 14], 3: [11, 14], o: [11, 14], g: [11, 14], C: [14, 16], m: [24, 20], i: [24, 20] };
+const REACH = { c: [11, 14], h: [11, 14], '*': [11, 14], 1: [11, 14], 2: [11, 14], 3: [11, 14], o: [11, 14], g: [11, 14], u: [11, 14], C: [14, 16], m: [24, 20], i: [24, 20] };
 const TARGETS = WORLD.entities.map((e, i) => ({ ...e, i, cx: e.x * T + 8, cy: e.y * T + 8, r: REACH[e.t] || [18, 20] }));
 const near = new Map();   // 格子 → 附近的实体
 for (const e of TARGETS) for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) {
@@ -230,9 +230,9 @@ function explore(forms) {
 
 // ---------------- 报告 ----------------
 const roomName = i => WORLD.rooms[i]?.name || '?';
-const KIND = { 1: '水之石', 2: '雷之石', 3: '火之石', m: '苔藓岩', i: '冰岩', h: '心之碎片', '*': '闪光石', T: '石板', C: '宝箱', g: '货物包', V: '村民', o: '果子', s: '存档石', G: '大史莱姆', M: '湖蚌', y: '小史莱姆' };
+const KIND = { 1: '水之石', 2: '雷之石', 3: '火之石', m: '苔藓岩', i: '冰岩', h: '心之碎片', '*': '闪光石', T: '石板', C: '宝箱', g: '货物包', V: '村民', o: '果子', s: '存档石', G: '大史莱姆', M: '湖蚌', y: '小史莱姆', u: '材料点' };
 const label = e => {
-  const note = e.t === 'T' ? (e.text.match(/（[^）]+）/) || [''])[0] : e.t === 'C' || e.t === 'V' ? '「' + e.text.split('|')[0] + '」' : '';
+  const note = e.t === 'T' ? (e.text.match(/（[^）]+）/) || [''])[0] : e.t === 'C' || e.t === 'V' || e.t === 'u' ? '「' + e.text.split('|')[0] + '」' : '';
   return `${KIND[e.t]}${note}（${roomName(e.room)}）`;
 };
 const setName = fs_ => fs_.map(f => NAMES[f]).join(' + ');

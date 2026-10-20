@@ -10,12 +10,12 @@
 #         'c' 金币  'h' 心之碎片  '*' 闪光石  's' 存档石  '!' 路牌  'N' 村民伊布
 #         彩蛋：'T' 古代石板（刻着进化线索的谜语）  'o' 旧时代的果子（吃了回血但不会进化）
 #         伙伴：'k' 贝儿出现的地点，notes 写 '步骤|角色'，例如 '1|slimes'（起点村的贝儿是 texts 里以「见习向导贝儿：」开头的村民）
-#         RPG：'C' 宝箱（notes 写饰品 id，例如 'bell'）  'g' 商人被吹散的货物包
+#         RPG：'C' 宝箱（notes 写饰品 id，例如 'bell'）  'g' 商人被吹散的货物包  'u' 材料采集点（notes 写材料 id：berry 树果、spark 电光石）
 #              'V' 走散的村民（notes 写 '谁|lost' 是在外面等人找，'谁|home' 是找到后回村站的位置）
-#         '!' 和 'N' 的文字按出现顺序取 texts=[...]；'T'、'o'、'k'、'C'、'V' 的文字按出现顺序取 notes=[...]，
+#         '!' 和 'N' 的文字按出现顺序取 texts=[...]；'T'、'o'、'k'、'C'、'V'、'u' 的文字按出现顺序取 notes=[...]，
 #         果子的写法是 '图片名|吃下时的话'，例如 'food_1_blueberry|……'。
 #         彩蛋实体统一排在实体表最后，加新彩蛋不会改变已有实体的编号（旧存档仍然有效）。
-#         'T' 'o' 'k' 'C' 'g' 'V' 的存档编号按坐标生成，移动它们只会影响它们自己。
+#         'T' 'o' 'k' 'C' 'g' 'V' 'u' 的存档编号按坐标生成，移动它们只会影响它们自己。
 #
 # 装饰：room(..., deco=[(素材名, 列, 地面行[, 像素偏移]), ...])，素材名是 sprites/deco/ 下的文件名（不含 .png）。
 #   图片底边中点对齐到「列」那一格的中间、「地面行」那一行的顶边，也就是站在这一行的地面上。
@@ -66,10 +66,10 @@ room((9, 2), '草原·入口', 'plains', [
 '                        ',
 '                  co    ',
 '                 ###    ',
-' k !      e           e ',
+' k !      e    u      e ',
 '########################',
 '########################',
-'########################'], texts=['路牌：踩在怪物头上可以打倒它。被碰到会掉血，血没了就回到存档石。'], notes=['food_1_blueberry|吃了一颗蓝莓，酸酸甜甜的。……伊布没有进化。看来进化可不是靠吃东西的。', '1|slimes'], deco=[('forest_tree_0', 6, 11), ('forest_tree_1', 19, 11), ('env_berry_bush', 23, 11, -4)])
+'########################'], texts=['路牌：踩在怪物头上可以打倒它。被碰到会掉血，血没了就回到存档石。'], notes=['food_1_blueberry|吃了一颗蓝莓，酸酸甜甜的。……伊布没有进化。看来进化可不是靠吃东西的。', '1|slimes', 'berry'], deco=[('forest_tree_0', 6, 11), ('forest_tree_1', 19, 11), ('env_berry_bush', 23, 11, -4)])
 room((10, 2), '草原·坑洼', 'plains', [
 '                        ',
 '                        ',
@@ -111,10 +111,10 @@ room((11, 2), '草原·蝙蝠林', 'plains', [
 '     ---     ---     ---',
 '                        ',
 '                        ',
-'   c  V   e      e    c ',
+'   c  V   e  u   e    c ',
 '########################',
 '########################',
-'########################'], notes=['leaf', '古代石板（其七）：「与伙伴在月光下并肩作战。羁绊满溢时，周身会浮现金环。」', 'grandma|lost'], deco=[('forest_tree_0', 2, 11), ('forest_tree_1', 8, 11), ('forest_tree_2', 14, 11), ('forest_tree_0', 20, 11, 4)])
+'########################'], notes=['leaf', '古代石板（其七）：「与伙伴在月光下并肩作战。羁绊满溢时，周身会浮现金环。」', 'grandma|lost', 'berry'], deco=[('forest_tree_0', 2, 11), ('forest_tree_1', 8, 11), ('forest_tree_2', 14, 11), ('forest_tree_0', 20, 11, 4)])
 room((12, 2), '草原·史莱姆王', 'plains', [
 '                        ',
 '                        ',
@@ -141,10 +141,10 @@ room((13, 2), '草原·池塘', 'plains', [
 '                        ',
 '                        ',
 '           1            ',
-' s   !    ####       !  ',
+' su  !    ####       !  ',
 '######~~~~####~~~~######',
 '######~T~~####~~~~######',
-'###############~~#######'], notes=['古代石板（其二）：「黄绿之石，困着一声惊雷。它嵌在湖水尽头的岩缝里。」'], texts=['路牌：池塘中央的小岛上闪着蓝光，是水之石！伊布碰到它就会进化成会游泳的水伊布，回头去西边的湖看看吧！', '路牌：→ 雷电塔。塔门的电网只有雷伊布能穿过。右边水塘的底下有股凉凉的水流，不知道通到哪里。'], deco=[('env_berry_bush', 3, 11), ('forest_tree_2', 20, 11)])
+'###############~~#######'], notes=['berry', '古代石板（其二）：「黄绿之石，困着一声惊雷。它嵌在湖水尽头的岩缝里。」'], texts=['路牌：池塘中央的小岛上闪着蓝光，是水之石！伊布碰到它就会进化成会游泳的水伊布，回头去西边的湖看看吧！', '路牌：→ 雷电塔。塔门的电网只有雷伊布能穿过。右边水塘的底下有股凉凉的水流，不知道通到哪里。'], deco=[('env_berry_bush', 3, 11), ('forest_tree_2', 20, 11)])
 room((13, 1), '雷电塔·门口', 'tower', [
 'BBBBBBBBBBBBBBBBBBBBBBBB',
 'BBBBBBBBBBBBBBBBBBBBBBBB',
@@ -174,10 +174,10 @@ room((6, 2), '湖畔', 'lake', [
 '                        ',
 '                        ',
 '                        ',
-'   f           s   !    ',
+'   f           s   ! u  ',
 '###~~~~~~~~~~###########',
 '###~~~~~~~~~~###########',
-'###~~c~c~c~c~###########'], texts=['路牌：湖水又深又宽，没有水伊布过不去。'], deco=[('biome_reeds', 1, 11), ('env_river_stones', 14, 11), ('biome_reeds', 17, 11), ('env_lake_willow', 21, 11), ('env_bench', 21, 11), ('env_fern', 23, 11), ('env_mooring_post', 13, 11), ('env_canoe', 10, 11, 0, 4), ('env_lily_0', 5, 11, 0, 5), ('env_waterweed', 3, 14), ('env_waterweed', 11, 14)])
+'###~~c~c~c~c~###########'], notes=['berry'], texts=['路牌：湖水又深又宽，没有水伊布过不去。'], deco=[('biome_reeds', 1, 11), ('env_river_stones', 14, 11), ('biome_reeds', 17, 11), ('env_lake_willow', 21, 11), ('env_bench', 21, 11), ('env_fern', 23, 11), ('env_mooring_post', 13, 11), ('env_canoe', 10, 11, 0, 4), ('env_lily_0', 5, 11, 0, 5), ('env_waterweed', 3, 14), ('env_waterweed', 11, 14)])
 room((5, 2), '湖面', 'lake', [
 '                        ',
 '                        ',
@@ -249,10 +249,10 @@ room((2, 2), '柠檬岩', 'lake', [
 '                        ',
 '      2 V               ',
 '    ######              ',
-'  ! ######   s          ',
+'  ! ######   s  u       ',
 '####################~~~~',
 '####################~~~~',
-'####################~~~~'], texts=['路牌：岩缝里嵌着雷之石！伊布碰到它就会进化成雷伊布，冲过草原尽头的电网。'], notes=['trainer|lost'], deco=[('biome_reeds', 18, 11), ('env_mooring_post', 19, 11), ('env_lily_0', 22, 11, 0, 5), ('env_waterweed', 23, 14), ('env_boulder', 8, 11), ('env_river_stones', 15, 11), ('env_fern', 0, 11), ('biome_reeds', 3, 11), ('biome_pebbles', 9, 9), ('env_lake_willow', 11, 11)])
+'####################~~~~'], texts=['路牌：岩缝里嵌着雷之石！伊布碰到它就会进化成雷伊布，冲过草原尽头的电网。'], notes=['trainer|lost', 'berry'], deco=[('biome_reeds', 18, 11), ('env_mooring_post', 19, 11), ('env_lily_0', 22, 11, 0, 5), ('env_waterweed', 23, 14), ('env_boulder', 8, 11), ('env_river_stones', 15, 11), ('env_fern', 0, 11), ('biome_reeds', 3, 11), ('biome_pebbles', 9, 9), ('env_lake_willow', 11, 11)])
 
 # ================= 雷电塔内部（新房间放在最后，已有房间和实体的编号不变，旧存档仍然有效） =================
 # 中庭：三屏高的竖井，一路往上爬不换页。塔基西墙是电网门（只有雷伊布能穿过），东墙裂墙后藏着心之碎片。
@@ -268,7 +268,7 @@ room((14, 0), '雷电塔·中庭', 'tower', [
 'BB  ----         v      ',
 'BB                      ',
 'BB         ----         ',
-'BB                      ',
+'BB                 u    ',
 'BB               BBBBBBB',
 'BB                    BB',
 'BB           ----     BB',
@@ -283,7 +283,7 @@ room((14, 0), '雷电塔·中庭', 'tower', [
 'BB                 c  BB',
 '                  ----BB',
 '                      BB',
-'             ----     BB',
+'    u        ----     BB',
 'BBBBBB                BB',
 'BB      ----          BB',
 'BB                    BB',
@@ -301,7 +301,7 @@ room((14, 0), '雷电塔·中庭', 'tower', [
 'BBBBBBBBBBBBBBBBB~~BBBBB',
 'BBBBBBBBBBBBBBBBB~~BBBBB'], texts=['石碑：雷电塔。风暴那晚之后，塔里的电网就一直失控，只有雷伊布能穿过。地板下面是老水道，以前塔靠池塘的水降温。一直往上爬，塔顶供奉着一颗火之石。'], size=(1, 3), deco=[
     ('env_coil', 20, 39), ('env_torch_0', 2, 33), ('env_torch_0', 21, 30), ('env_lever', 4, 26),
-    ('env_gear', 20, 18), ('env_torch_0', 2, 19), ('env_torch_0', 21, 15), ('env_torch_0', 2, 7)], notes=['magnet'])
+    ('env_gear', 20, 18), ('env_torch_0', 2, 19), ('env_torch_0', 21, 15), ('env_torch_0', 2, 7)], notes=['magnet', 'spark', 'spark'])
 
 # 塔顶：两屏宽的大厅，镜头连续横移。电网帘子挡住不是雷伊布的形态，尽头的祭坛上是火之石。
 # 帘子下面是一道水沟：雷伊布走中间的石桥穿过电网，水伊布从桥下潜过去（电网的第二把钥匙）。
@@ -316,10 +316,10 @@ room((15, 0), '雷电塔·塔顶', 'tower', [
 '                    E                         BB',
 '                    E                         BB',
 '                    E                     3   BB',
-'    s       !   V   E        f   o   BBBBBBBBBBB',
+'    s   u   !   V   E        f   o   BBBBBBBBBBB',
 'BBBBBBBBBBBBBB~~~BBBBBBB~~~BBBBBBBB^^BBBBBBBBBBB',
 'BBBBBBBBBBBBBB~~~~~~~~~~~~~BBBBBBBBBBBBBBBBBBBBB',
-'BBBBBBBBBBBBBB~~~~~~~~~~~~~BBBBBBBBBBBBBBBBBBBBB'], texts=['石碑：火之石就供奉在大厅尽头。让伊布碰到它，伊布就会进化成浑身火焰的火伊布。'], notes=['scholar|lost', 'food_3_chili|咬了一口辣椒！伊布辣得直吐舌头……但还是没有进化。火之石就在大厅尽头。'], size=(2, 1), deco=[
+'BBBBBBBBBBBBBB~~~~~~~~~~~~~BBBBBBBBBBBBBBBBBBBBB'], texts=['石碑：火之石就供奉在大厅尽头。让伊布碰到它，伊布就会进化成浑身火焰的火伊布。'], notes=['spark', 'scholar|lost', 'food_3_chili|咬了一口辣椒！伊布辣得直吐舌头……但还是没有进化。火之石就在大厅尽头。'], size=(2, 1), deco=[
     ('env_torch_0', 6, 9), ('biome_pillar', 9, 11), ('env_coil', 17, 11), ('env_gear', 24, 4),
     ('env_torch_0', 26, 9), ('biome_pillar', 33, 11), ('env_torch_0', 41, 8), ('env_lever', 44, 10)])
 
@@ -337,9 +337,9 @@ room((13, 3), '雷电塔·老水道', 'tower', [
 'BBBBBBBBBBBBBBBBBBBBB~~c~~~~~~~~~c~~~~~~~~~BBBBB',
 'BBBBBBBBBBBBBBBBBBBBB~~~~~~~~~~~~~~p~~~~~~~BBBBB',
 'BBBBBBBBBBBBBBBBBBBBB~~~~~~~~~~~~~~~~~~~~~~BBBBB',
-'BBBBBBBBBBBBBBBBBBBBBBBBBB~~h~~~BBBBBBBBBBBBBBBB',
+'BBBBBBBBBBBBBBBBBBBBBBBBBB~~h~u~BBBBBBBBBBBBBBBB',
 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'], size=(2, 1), deco=[
+'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'], notes=['spark'], size=(2, 1), deco=[
     ('env_waterweed', 13, 5), ('env_waterweed', 22, 11), ('env_waterweed', 36, 11), ('env_gear', 18, 2), ('biome_crystal_0', 31, 6)])
 
 # ================= 输出 =================
@@ -358,10 +358,10 @@ def build():
         for yy, row in enumerate(r['rows']):
             for xx, ch in enumerate(row):
                 X, Y = x0 + xx, y0 + yy
-                if ch in 'Pevpf GM123miych*s!NTokCgV'.replace(' ', ''):
+                if ch in 'Pevpf GM123miych*s!NTokCgVu'.replace(' ', ''):
                     e = dict(t=ch, x=X, y=Y, room=i)
                     if ch in '!N': e['text'] = r['texts'][ti] if ti < len(r['texts']) else '……'; ti += 1
-                    if ch in 'TokCV': assert ni < len(r['notes']), ('notes 不够', r['name']); e['text'] = r['notes'][ni]; ni += 1
+                    if ch in 'TokCVu': assert ni < len(r['notes']), ('notes 不够', r['name']); e['text'] = r['notes'][ni]; ni += 1
                     ents.append(e)
                     nb = [row[xx - 1] if xx > 0 else ' ', row[xx + 1] if xx + 1 < len(row) else ' ']
                     grid[Y][X] = '~' if '~' in nb else ' '      # 水里的实体所在格仍是水
@@ -377,7 +377,7 @@ def build():
         assert ti == len(r['texts']), ('texts 数量和路牌 / 村民不一致', r['name'], ti, len(r['texts']))
         assert ni == len(r['notes']), ('notes 数量和石板 / 果子不一致', r['name'], ni, len(r['notes']))
     # 后加的实体种类各自成组排在最后（先彩蛋，再伙伴地点），已有实体的编号不变
-    ents = [e for e in ents if e['t'] not in 'TokCgV'] + [e for e in ents if e['t'] in 'To'] + [e for e in ents if e['t'] == 'k'] + [e for e in ents if e['t'] in 'CgV']
+    ents = [e for e in ents if e['t'] not in 'TokCgVu'] + [e for e in ents if e['t'] in 'To'] + [e for e in ents if e['t'] == 'k'] + [e for e in ents if e['t'] in 'CgVu']
     start = next(e for e in ents if e['t'] == 'P')
     world = dict(tw=TW, th=TH, rows=[''.join(r) for r in grid], rooms=rooms_out, entities=[e for e in ents if e['t'] != 'P'], start=dict(x=start['x'], y=start['y']), deco=decos)
     root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
