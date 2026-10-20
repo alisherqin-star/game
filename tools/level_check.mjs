@@ -21,7 +21,7 @@ const NAMES = { eevee: '伊布', vaporeon: '水伊布', jolteon: '雷伊布', fl
 const ORDER = ['eevee', 'vaporeon', 'jolteon', 'flareon', 'leafeon', 'glaceon', 'espeon', 'umbreon', 'sylveon'];
 
 // ---------------- 地形 ----------------
-const ORIG = WORLD.rows.map(r => r.split(''));
+const ORIG = WORLD.rows.map(r => r.split('').map(c => c === 'F' ? 'E' : c === 'H' ? ' ' : c));   // Boss 开关地形按打 Boss 之前算（打完是捷径）
 const grid = ORIG.map(r => r.slice());
 const get = (x, y) => (x < 0 || x >= TW || y < 0 || y >= TH) ? '#' : grid[y][x];
 const BREAKABLE = new Uint8Array(TW * TH);   // 原本是木箱或裂墙的格子
@@ -54,10 +54,10 @@ function collide(s, f) {   // 照抄 index.html 的 collide
 
 // ---------------- 碰到的东西 ----------------
 // 物品（金币、进化石、心之碎片……）按 index.html 的拾取范围；宝箱、巨石、石板和村民按各自的对话范围。
-const REACH = { c: [11, 14], h: [11, 14], '*': [11, 14], 1: [11, 14], 2: [11, 14], 3: [11, 14], o: [11, 14], g: [11, 14], u: [11, 14], C: [14, 16], m: [24, 20], i: [24, 20] };
+const REACH = { c: [11, 14], h: [11, 14], '*': [11, 14], 1: [11, 14], 2: [11, 14], 3: [11, 14], o: [11, 14], g: [11, 14], u: [11, 14], C: [14, 16], m: [24, 20], i: [24, 20], Y: [400, 120] };   // 雷云飘在高处，进了 Boss 房就算到了
 const TARGETS = WORLD.entities.map((e, i) => ({ ...e, i, cx: e.x * T + 8, cy: e.y * T + 8, r: REACH[e.t] || [18, 20] }));
 const near = new Map();   // 格子 → 附近的实体
-for (const e of TARGETS) for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) {
+for (const e of TARGETS) for (let dy = -Math.ceil(e.r[1] / T) - 1; dy <= Math.ceil(e.r[1] / T) + 1; dy++) for (let dx = -Math.ceil(e.r[0] / T) - 1; dx <= Math.ceil(e.r[0] / T) + 1; dx++) {
   const k = (e.y + dy) * TW + e.x + dx; if (!near.has(k)) near.set(k, []); near.get(k).push(e);
 }
 let touched;
@@ -173,11 +173,15 @@ function edges(n, f) {
   for (const v of variants) if (v.obs.every(([i, o]) => opened[i] === o)) return v.res;
   broke = new Map(); observed = new Set(); touched = new Set();
   const nodes = [];
-  const take = r => { if (r.end === 'land') nodes.push(standNode(r.s)); else if (r.end === 'swim') { const w = swimNode(r.tx, r.ty); if (w) nodes.push(w); } };
+  // 这次模拟撞开了木箱或裂墙的话，落点要等这些格子真的打开以后（下一轮）再算，不然别的形态会从「墙里」出发
+  let b0 = 0; const run = (...a) => { b0 = broke.size; return simulate(...a); };
+  const take = r => { if (broke.size > b0) return; if (r.end === 'land') nodes.push(standNode(r.s)); else if (r.end === 'swim') { const w = swimNode(r.tx, r.ty); if (w) nodes.push(w); } };
   if (n.kind === 'a') {
     touch({ x: n.x, y: n.y });
-    take(simulate(startState(n.x, n.y), f, () => ({ landOk: true }), 200));   // 换成这个形态后原地掉下去（比如冰面上换形态）
-    for (const p of PLANS[f]) take(simulate(startState(n.x, n.y), f, p));
+    if (boxFree(n.x, n.y, f)) {   // 这个形态站在这里会卡进墙里（比如冰面上换成别的形态）就不从这里出发
+      take(run(startState(n.x, n.y), f, () => ({ landOk: true }), 200));   // 换成这个形态后原地掉下去
+      for (const p of PLANS[f]) take(run(startState(n.x, n.y), f, p, f === 'espeon' ? 420 : 240));   // 太阳伊布滑翔很久才落地
+    }
   } else if (f === 'vaporeon') {
     touch(swimPos(n.tx, n.ty));
     for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [1, -1], [-1, -1]]) { const w = swimNode(n.tx + dx, n.ty + dy); if (w) nodes.push(w); }
@@ -186,7 +190,7 @@ function edges(n, f) {
         const s = startState(n.tx * T + 8 - PW / 2 + ox, n.ty * T - PH / 2 + 1); s.onGround = false; s.vy = -3.6; s.vx = d * RUN;
         if (!boxFree(s.x, s.y, f)) continue;
         collide(s, f);   // 起跳这一帧在水里，vy = -3.6 直接生效；之后身体中心出了水面，按陆地上算
-        take(simulate(s, f, t => ({ dir: d, hold: t < h, landOk: t > 2 })));
+        take(run(s, f, t => ({ dir: d, hold: t < h, landOk: t > 2 })));
       }
     }
   }
@@ -230,7 +234,7 @@ function explore(forms) {
 
 // ---------------- 报告 ----------------
 const roomName = i => WORLD.rooms[i]?.name || '?';
-const KIND = { 1: '水之石', 2: '雷之石', 3: '火之石', m: '苔藓岩', i: '冰岩', h: '心之碎片', '*': '闪光石', T: '石板', C: '宝箱', g: '货物包', V: '村民', o: '果子', s: '存档石', G: '大史莱姆', M: '湖蚌', y: '小史莱姆', u: '材料点' };
+const KIND = { 1: '水之石', 2: '雷之石', 3: '火之石', m: '苔藓岩', i: '冰岩', h: '心之碎片', '*': '闪光石', T: '石板', C: '宝箱', g: '货物包', V: '村民', o: '果子', s: '存档石', G: '大史莱姆', M: '湖蚌', Y: '雷云', y: '小史莱姆', u: '材料点' };
 const label = e => {
   const note = e.t === 'T' ? (e.text.match(/（[^）]+）/) || [''])[0] : e.t === 'C' || e.t === 'V' || e.t === 'u' ? '「' + e.text.split('|')[0] + '」' : '';
   return `${KIND[e.t]}${note}（${roomName(e.room)}）`;

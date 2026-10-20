@@ -1,4 +1,4 @@
-# RPG 系统的小图标：材料（树果、电光石）和罗丝奶奶的料理（蘑菇汤、噼啪糖）。
+# RPG 系统的小图标：材料（树果、电光石）、罗丝奶奶的料理（蘑菇汤、噼啪糖）和第二批饰品（橡果、贝壳护符、雷云坠饰）。
 # 用法：python3 tools/make_rpg_assets.py  → 写出 sprites/items/<名字>.png，然后运行 tools/embed_assets.py。
 # 字符画，一个字母一个像素，'.' 透明。以后美术重画时直接替换同名 PNG 即可。
 import os
@@ -54,6 +54,44 @@ A('items/dish_candy', dict(o='#3a2a10', P='#ff9ac8', Y='#ffd84a', H='#fff6b0', W
 'oPPoYYYYoPPo',
 'oPo.oooo.oPo',
 '.o........o.'])
+
+# ---------------- 饰品 12x11：草原宝箱的橡果、湖蚌掉的贝壳护符、雷云掉的雷云坠饰 ----------------
+A('items/acc_acorn', dict(o='#3a2410', C='#8a5a2a', c='#b07a3a', N='#c8803a', H='#f0b070', d='#9a5a22', g='#4f9a3a'), [
+'.....og.....',
+'...oooooo...',
+'..oCcCcCCo..',
+'..occCcCco..',
+'...oooooo...',
+'...oNHNNo...',
+'..oNHNNNNo..',
+'..oNNNNNdo..',
+'...oNNNdo...',
+'....oNdo....',
+'.....oo.....'])
+A('items/acc_shell', dict(o='#5a2a3a', P='#ffb0c8', H='#fff0f4', d='#e0809a', s='#c8a060'), [
+'.....ss.....',
+'....s..s....',
+'...oooooo...',
+'..oPHPPHPo..',
+'.oPHPPHPPPo.',
+'oPHPPHPPHPPo',
+'oPPHPPHPPHdo',
+'oPPPHPPHPddo',
+'.oddPPPPddo.',
+'..oooddooo..',
+'....oooo....'])
+A('items/acc_cloud', dict(o='#1a1a2a', C='#5a5a7a', H='#8a8aaa', Y='#ffe94a', W='#ffffff'), [
+'............',
+'...ooo.oo...',
+'..oHHCoHCo..',
+'.oHCCCCCCCo.',
+'oCCCCCCCCCCo',
+'.oooooooooo.',
+'.....oYo....',
+'....oYYo....',
+'...oYWYo....',
+'....oYo.....',
+'.....o......'])
 
 def render(rows, pal):
     w, h = len(rows[0]), len(rows)
