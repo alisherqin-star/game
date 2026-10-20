@@ -7,7 +7,7 @@ const I18n=(()=>{
  const pattern=new RegExp(Object.keys(bank).sort((a,b)=>b.length-a.length).map(escape).join('|'),'g');
  function t(value){const s=String(value??'');if(lang==='zh'||!s||outputs[lang].has(s))return s;if(cache[lang].has(s))return cache[lang].get(s);const result=bank[s]?.[lang]??s.replace(pattern,k=>bank[k][lang]);cache[lang].set(s,result);outputs[lang].add(result);return result;}
  function mark(s){if(lang!=='zh')outputs[lang].add(s);return s;}
- function trackLabel(track){return lang==='zh'?`第 ${track.gen} 世代 · ${track.title}`:lang==='ja'?`第${track.gen}世代 · ${t(track.title)}`:`Gen ${track.gen} · ${t(track.title)}`;}
+ function trackLabel(track){if(!track.gen)return lang==='zh'?`原创 · ${track.title}`:lang==='ja'?`オリジナル · ${t(track.title)}`:`Original · ${t(track.title)}`;return lang==='zh'?`第 ${track.gen} 世代 · ${track.title}`:lang==='ja'?`第${track.gen}世代 · ${t(track.title)}`:`Gen ${track.gen} · ${t(track.title)}`;}
  const ids={bJ:'跳',bS:'技',bF:'形态',bM:'地图',bI:'背包'};
  function refreshMusic(){
   const box=document.getElementById('eeveeMusic');if(!box)return;

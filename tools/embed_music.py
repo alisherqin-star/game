@@ -4,7 +4,7 @@ import base64,bisect,json,struct
 
 ROOT=Path(__file__).resolve().parents[1]
 
-def decode(raw):
+def decode(raw,exact=False):
  assert raw[:4]==b'MThd'
  hlen=int.from_bytes(raw[4:8],'big');fmt,ntracks,division=struct.unpack('>HHH',raw[8:14]);assert fmt in (0,1) and division<32768
  pos=8+hlen;events=[];tempos=[(0,500000)];markers=[];last=0
@@ -49,13 +49,14 @@ def decode(raw):
  for (track,ch,note),(begin,vel,prog) in active.items():notes.append([sec(begin),min(2,max(.03,sec(last)-sec(begin))),note,vel,prog,ch])
  assert notes,'No playable notes'
  start=min(n[0] for n in notes);notes=sorted([[round(t-start,3),round(min(d,12),3),p,v,pg,c] for t,d,p,v,pg,c in notes])
- duration=max(t+d for t,d,*_ in notes)+.3
+ # Original loops end exactly on the end-of-track tick so the next pass lands on the beat.
+ duration=sec(last)-start if exact else max(t+d for t,d,*_ in notes)+.3
  return {'duration':round(duration,3),'notes':notes}
 
 def main():
  sources=json.loads((ROOT/'audio/sources.json').read_text());bank=[]
  for t in sources['tracks']:
-  track={**t,'gain':{'g1_pallet':1.3,'g2_park':1.3,'g7_gladion':.85,'g9_area_zero':2.5}.get(t['id'],1),**decode((ROOT/'audio/midi'/(t['id']+'.mid')).read_bytes())};bank.append(track)
+  track={**t,'gain':{'g1_pallet':1.3,'g2_park':1.3,'g7_gladion':.85,'g9_area_zero':2.5,'orig_oak':1.4,'orig_lake':1.7,'orig_tower':1.9,'orig_burrow':2.5,'orig_storm':1.6}.get(t['id'],1),**decode((ROOT/'audio/midi'/(t['id']+'.mid')).read_bytes(),t.get('loop',False))};bank.append(track)
  runtime=(ROOT/'audio/player-source.js').read_text().replace('/* MUSIC_DATA */',json.dumps(bank,ensure_ascii=False,separators=(',',':')))
  (ROOT/'audio/music-player.js').write_text(runtime)
  html=ROOT/'index.html';s=html.read_text();begin='/* MUSIC_BEGIN */';end='/* MUSIC_END */'

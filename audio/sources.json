@@ -108,6 +108,56 @@
       "credit": "ColoredGreen",
       "source": "https://www.vgmusic.com/file/112ca80bb7adf111df23e2665a1e0370.html",
       "sha256": "f7a194a9e45ac7bc226cd140f3e7ea4dc3d13cf8a00b7c826a50f3c06126c939"
+    },
+    {
+      "id": "orig_oak",
+      "gen": 0,
+      "title": "橡树下",
+      "url": "tools/compose_music.py",
+      "credit": "原创 · Claude 为本作作曲",
+      "source": "tools/compose_music.py",
+      "loop": true,
+      "sha256": "add9781c9261e6bb7b4704a6790bfc8c9ae0d2c983278cc8dbc4cb77552c1be8"
+    },
+    {
+      "id": "orig_lake",
+      "gen": 0,
+      "title": "湖面",
+      "url": "tools/compose_music.py",
+      "credit": "原创 · Claude 为本作作曲",
+      "source": "tools/compose_music.py",
+      "loop": true,
+      "sha256": "8da5dad11cf9bf773317a87d91b98795dcf4754ee7d622058d1158677bfdc40d"
+    },
+    {
+      "id": "orig_tower",
+      "gen": 0,
+      "title": "雷电塔",
+      "url": "tools/compose_music.py",
+      "credit": "原创 · Claude 为本作作曲",
+      "source": "tools/compose_music.py",
+      "loop": true,
+      "sha256": "fce05ea70e06c0e40caa1eb91d2d60154feeed3ad7ada63685f6df72e6faddf7"
+    },
+    {
+      "id": "orig_burrow",
+      "gen": 0,
+      "title": "地洞",
+      "url": "tools/compose_music.py",
+      "credit": "原创 · Claude 为本作作曲",
+      "source": "tools/compose_music.py",
+      "loop": true,
+      "sha256": "034379555e816cff4d06db76a1ca563d01b30f6d065a4d445d996d54846a455e"
+    },
+    {
+      "id": "orig_storm",
+      "gen": 0,
+      "title": "风里的声音",
+      "url": "tools/compose_music.py",
+      "credit": "原创 · Claude 为本作作曲",
+      "source": "tools/compose_music.py",
+      "loop": true,
+      "sha256": "e6969db55f2c310abed7e18bb1fd68d1f9f380d5de62b3b2b534ba4aba7ef55c"
     }
   ]
 }
