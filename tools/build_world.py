@@ -144,7 +144,7 @@ room((13, 2), '草原·池塘', 'plains', [
 ' s   !    ####       !  ',
 '######~~~~####~~~~######',
 '######~T~~####~~~~######',
-'########################'], notes=['古代石板（其二）：「黄绿之石，困着一声惊雷。它嵌在湖水尽头的岩缝里。」'], texts=['路牌：池塘中央的小岛上闪着蓝光，是水之石！伊布碰到它就会进化成会游泳的水伊布，回头去西边的湖看看吧！', '路牌：→ 雷电塔。塔门的电网只有雷伊布能穿过。'], deco=[('env_berry_bush', 3, 11), ('forest_tree_2', 20, 11)])
+'###############~~#######'], notes=['古代石板（其二）：「黄绿之石，困着一声惊雷。它嵌在湖水尽头的岩缝里。」'], texts=['路牌：池塘中央的小岛上闪着蓝光，是水之石！伊布碰到它就会进化成会游泳的水伊布，回头去西边的湖看看吧！', '路牌：→ 雷电塔。塔门的电网只有雷伊布能穿过。右边水塘的底下有股凉凉的水流，不知道通到哪里。'], deco=[('env_berry_bush', 3, 11), ('forest_tree_2', 20, 11)])
 room((13, 1), '雷电塔·门口', 'tower', [
 'BBBBBBBBBBBBBBBBBBBBBBBB',
 'BBBBBBBBBBBBBBBBBBBBBBBB',
@@ -256,6 +256,7 @@ room((2, 2), '柠檬岩', 'lake', [
 
 # ================= 雷电塔内部（新房间放在最后，已有房间和实体的编号不变，旧存档仍然有效） =================
 # 中庭：三屏高的竖井，一路往上爬不换页。塔基西墙是电网门（只有雷伊布能穿过），东墙裂墙后藏着心之碎片。
+# 台阶每级两格高，所有形态都爬得上去（普通跳 45.8 像素，三格 48 像素只有雷伊布跳得上）。地板东边的格栅下面是老水道的出水口，水伊布从池塘游过来。
 room((14, 0), '雷电塔·中庭', 'tower', [
 'BBBBBBBBBBBBBBBBBBBBBBBB',
 'BBBBBBBBBBBBBBBBBBBBBBBB',
@@ -264,45 +265,46 @@ room((14, 0), '雷电塔·中庭', 'tower', [
 'BB    c c c c c C     BB',
 'BB    -----------     BB',
 'BB                    BB',
-'BB               v      ',
-'BB   ----               ',
+'BB  ----         v      ',
 'BB                      ',
+'BB         ----         ',
 'BB                      ',
-'BB        -----  BBBBBBB',
+'BB               BBBBBBB',
 'BB                    BB',
-'BB    ----            BB',
-'BB                    BB',
+'BB           ----     BB',
 'BB                    BB',
 'BB      ----          BB',
-'BB      EEEE          BB',
 'BB                    BB',
-'BB          ---       BB',
+'BB ----               BB',
 'BB                    BB',
-'BB               v    BB',
-'BB  ------            BB',
-'           c          BB',
+'BB      ----          BB',
+'BB      EEE           BB',
+'BB           ---- v   BB',
+'BB                 c  BB',
+'                  ----BB',
 '                      BB',
-'         -----        BB',
+'             ----     BB',
 'BBBBBB                BB',
-'BB         -----      BB',
+'BB      ----          BB',
 'BB                    BB',
+'BB           ----     BB',
 'BB                    BB',
-'BB  -----             BB',
-'BB              v     BB',
+'BB      ----     v    BB',
 'BB                    BB',
-'BB          -----     BB',
+'BB ----               BB',
 'BB                    BB',
-'BB     c  c  c        BB',
-'EE    ---------    ---BB',
-'EE                    K ',
-'EE  s   !           g Kh',
-'BBBBBBBBBBBBBBBBBBBBBBBB',
-'BBBBBBBBBBBBBBBBBBBBBBBB',
-'BBBBBBBBBBBBBBBBBBBBBBBB'], texts=['石碑：雷电塔。风暴那晚之后，塔里的电网就一直失控，只有雷伊布能穿过。一直往上爬，塔顶供奉着一颗火之石。'], size=(1, 3), deco=[
-    ('env_coil', 18, 39), ('env_torch_0', 2, 33), ('env_torch_0', 21, 30), ('env_lever', 4, 26),
-    ('env_gear', 20, 24), ('env_torch_0', 2, 19), ('env_torch_0', 21, 15), ('env_torch_0', 2, 7)], notes=['magnet'])
+'BB      ----          BB',
+'EE           ccc      BB',
+'EE           ----     K ',
+'EE  s   !            gKh',
+'BBBBBBBBBBBBBBBBB--BBBBB',
+'BBBBBBBBBBBBBBBBB~~BBBBB',
+'BBBBBBBBBBBBBBBBB~~BBBBB'], texts=['石碑：雷电塔。风暴那晚之后，塔里的电网就一直失控，只有雷伊布能穿过。地板下面是老水道，以前塔靠池塘的水降温。一直往上爬，塔顶供奉着一颗火之石。'], size=(1, 3), deco=[
+    ('env_coil', 20, 39), ('env_torch_0', 2, 33), ('env_torch_0', 21, 30), ('env_lever', 4, 26),
+    ('env_gear', 20, 18), ('env_torch_0', 2, 19), ('env_torch_0', 21, 15), ('env_torch_0', 2, 7)], notes=['magnet'])
 
 # 塔顶：两屏宽的大厅，镜头连续横移。电网帘子挡住不是雷伊布的形态，尽头的祭坛上是火之石。
+# 帘子下面是一道水沟：雷伊布走中间的石桥穿过电网，水伊布从桥下潜过去（电网的第二把钥匙）。
 room((15, 0), '雷电塔·塔顶', 'tower', [
 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
@@ -315,11 +317,30 @@ room((15, 0), '雷电塔·塔顶', 'tower', [
 '                    E                         BB',
 '                    E                     3   BB',
 '    s       !   V   E        f   o   BBBBBBBBBBB',
-'BBBBBBBBBBBBBBBBBBBBBBBBB^^^BBBBBBBBBBBBBBBBBBBB',
-'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'], texts=['石碑：火之石就供奉在大厅尽头。让伊布碰到它，伊布就会进化成浑身火焰的火伊布。'], notes=['scholar|lost', 'food_3_chili|咬了一口辣椒！伊布辣得直吐舌头……但还是没有进化。火之石就在大厅尽头。'], size=(2, 1), deco=[
+'BBBBBBBBBBBBBB~~~BBBBBBB~~~BBBBBBBB^^BBBBBBBBBBB',
+'BBBBBBBBBBBBBB~~~~~~~~~~~~~BBBBBBBBBBBBBBBBBBBBB',
+'BBBBBBBBBBBBBB~~~~~~~~~~~~~BBBBBBBBBBBBBBBBBBBBB'], texts=['石碑：火之石就供奉在大厅尽头。让伊布碰到它，伊布就会进化成浑身火焰的火伊布。'], notes=['scholar|lost', 'food_3_chili|咬了一口辣椒！伊布辣得直吐舌头……但还是没有进化。火之石就在大厅尽头。'], size=(2, 1), deco=[
     ('env_torch_0', 6, 9), ('biome_pillar', 9, 11), ('env_coil', 17, 11), ('env_gear', 24, 4),
     ('env_torch_0', 26, 9), ('biome_pillar', 33, 11), ('env_torch_0', 41, 8), ('env_lever', 44, 10)])
+
+# 老水道：池塘右边水塘的底下通到中庭地板的出水口，整段泡在水里，只有水伊布游得过去（不会游泳的形态憋气只有 2.5 秒）。
+# 这是雷电塔的第二个入口：塔门电网要雷伊布，这里要水伊布（DESIGN.md 第 2 节「雷电塔走塔门电网（雷）或从池塘水底游进塔基（水）」）。
+room((13, 3), '雷电塔·老水道', 'tower', [
+'BBBBBBBBBBBBBBB~~BBBBBBBBBBBBBBBBBBBBBBBB~~BBBBB',
+'BBBBBBBBBBBBBBB~~BBBBBBBBBBBBBBBBBBBBBBBB~~BBBBB',
+'BBBBBBBBBBBB~~~~~~~~~~~~~~~~BBBBBBBBBBBBB~~BBBBB',
+'BBBBBBBBBBBB~~c~~~~~~c~~~~~~BBBBBBBBBBBBB~~BBBBB',
+'BBBBBBBBBBBB~~~~~~~~~~~~~~~~~BBBBBBBBBBBB~~BBBBB',
+'BBBBBBBBBBBBBBBBBBBBBBBB~~~~~~BBBBBBBBBBB~~BBBBB',
+'BBBBBBBBBBBBBBBBBBBBB~~~~~~~BB~~~~~~~~BBB~~BBBBB',
+'BBBBBBBBBBBBBBBBBBBBB~~~~p~~BB~~~~~~~~BBB~~BBBBB',
+'BBBBBBBBBBBBBBBBBBBBB~~c~~~~~~~~~c~~~~~~~~~BBBBB',
+'BBBBBBBBBBBBBBBBBBBBB~~~~~~~~~~~~~~p~~~~~~~BBBBB',
+'BBBBBBBBBBBBBBBBBBBBB~~~~~~~~~~~~~~~~~~~~~~BBBBB',
+'BBBBBBBBBBBBBBBBBBBBBBBBBB~~h~~~BBBBBBBBBBBBBBBB',
+'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'], size=(2, 1), deco=[
+    ('env_waterweed', 13, 5), ('env_waterweed', 22, 11), ('env_waterweed', 36, 11), ('env_gear', 18, 2), ('biome_crystal_0', 31, 6)])
 
 # ================= 输出 =================
 def build():
