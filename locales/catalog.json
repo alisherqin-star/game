@@ -3038,5 +3038,69 @@
   "剪影散开了。村长奶奶站在大橡树下，一句话也没说，拐杖握得紧紧的。": {
     "ja": "影は消えた。村長おばあちゃんは大樫の下で何も言わず、杖をぎゅっと握りしめていた。",
     "en": "The silhouette fades. Beneath the great oak, the Village Elder says nothing, gripping her cane tightly."
+  },
+  "去草原尽头的池塘，碰一碰水之石": {
+    "ja": "草原の奥の池で、みずのいしに触れる",
+    "en": "Touch the Water Stone in the pond at the far end of the Meadows"
+  },
+  "去西边的湖，找雷之石": {
+    "ja": "西の湖で、かみなりのいしを探す",
+    "en": "Find the Thunder Stone at the lake to the west"
+  },
+  "爬上雷电塔，拿到火之石": {
+    "ja": "雷の塔を登って、ほのおのいしを手に入れる",
+    "en": "Climb Thunder Tower and get the Fire Stone"
+  },
+  "烧掉荆棘，找到长青苔的大石头": {
+    "ja": "イバラを燃やして、コケの岩を探す",
+    "en": "Burn the thorns and find the mossy boulder"
+  },
+  "去湖北边的冰缝，找冰岩": {
+    "ja": "湖の北の氷の割れ目で、氷の岩を探す",
+    "en": "Find the Ice Rock in the crevice north of the lake"
+  },
+  "在阳光下，用伊布的样子打倒怪物": {
+    "ja": "日の光の下で、イーブイの姿で魔物を倒す",
+    "en": "Defeat monsters in the sunlight as Eevee"
+  },
+  "在月光下，用伊布的样子打倒怪物": {
+    "ja": "月の光の下で、イーブイの姿で魔物を倒す",
+    "en": "Defeat monsters in the moonlight as Eevee"
+  },
+  "问问草原的大史莱姆怎么了": {
+    "ja": "草原の大きなスライムに、どうしたのか聞く",
+    "en": "Ask the Big Slime in the Meadows what’s wrong"
+  },
+  "带小史莱姆回草原找妈妈": {
+    "ja": "スライムの子を、草原のお母さんのもとへ",
+    "en": "Take the little slime home to its mother in the Meadows"
+  },
+  "去东边的进化祭坛": {
+    "ja": "東の進化の祭壇へ",
+    "en": "Head east to Evolution Altar"
+  },
+  "后面的路还在修": {
+    "ja": "この先の道は、まだ修理中",
+    "en": "The roads ahead are still being repaired"
+  },
+  "回起点村看看": {
+    "ja": "はじまりの村に戻ってみる",
+    "en": "Head back to Hearth Village"
+  },
+  "可以进化成": {
+    "ja": "進化できる：",
+    "en": "Ready to evolve into "
+  },
+  "下一站": {
+    "ja": "次の目的地",
+    "en": "Next stop"
+  },
+  "见习向导贝儿：我知道的地方你都去过啦！再往后的路，大家还在修呢。修好了我第一个告诉你！": {
+    "ja": "見習いガイドのベル：わたしが知ってる場所は、もうぜんぶ行ったね！この先の道は、みんながまだ直してるところ。直ったら、いちばんに教えるね！",
+    "en": "Belle the Guide: You’ve been everywhere I know about! The roads ahead are still being repaired. I’ll tell you first when they’re open!"
+  },
+  "我知道的地方你都去过啦！再往后的路，大家还在修呢。修好了我第一个告诉你！": {
+    "ja": "わたしが知ってる場所は、もうぜんぶ行ったね！この先の道は、みんながまだ直してるところ。直ったら、いちばんに教えるね！",
+    "en": "You’ve been everywhere I know about! The roads ahead are still being repaired. I’ll tell you first when they’re open!"
   }
 }
