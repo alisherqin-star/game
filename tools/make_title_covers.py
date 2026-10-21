@@ -9,6 +9,15 @@ from PIL import Image,ImageDraw,ImageFont
 from pixel_nature import blend,curve,soften
 ROOT=Path(__file__).resolve().parents[1];W,H=384,224
 
+def warm_outline(pic,color):
+ """Replace the sprites' near-black outline with a dark tone from the scene's own palette."""
+ c=tuple(int(color[i:i+2],16) for i in (1,3,5));px=pic.load()
+ for y in range(pic.height):
+  for x in range(pic.width):
+   r,g,b,a=px[x,y]
+   if a and max(r,g,b)<24:px[x,y]=(*c,a)
+ return pic
+
 def ancient_oak():
  """Independently authored landmark, not a scaled forest-tree sprite.
 
@@ -181,7 +190,7 @@ def make_departure():
   source=Image.open(ROOT/'sprites'/name).convert('RGBA')
   source=source.crop(source.getbbox())
   if flip:source=source.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
-  pic=source.resize((source.width*2,source.height*2),Image.Resampling.NEAREST)
+  pic=warm_outline(source.resize((source.width*2,source.height*2),Image.Resampling.NEAREST),'#2e1f1a')
   w,h=pic.size;x=cx-w//2;y=ground-h
   # Contact shadows touch the feet; their colour belongs to the receiving surface.
   shadow=('#766f67' if night else '#998b71') if on_cloth else ('#4e6650' if night else '#64794e')
@@ -319,10 +328,10 @@ def make_departure():
   if flip:pic=pic.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
   d.ellipse((cx-7,base-1,cx+7,base+2),fill='#748455')
   im.paste(pic,(cx-pic.width//2,base-pic.height),pic)
- resident('merchant.png',211,182)
- resident('gardener.png',265,180,True)
+ resident('merchant.png',198,182)
+ resident('gardener.png',232,180,True)
  # A pair of produce boxes and a watering can explain what the residents are doing.
- for x,y in [(223,180),(231,177)]:
+ for x,y in [(210,180),(218,177)]:
   d.rectangle((x,y-5,x+7,y),fill='#9b825a');d.line((x,y-4,x+7,y-4),fill='#c9ad76')
   for xx in [x+2,x+5]:d.point((xx,y-6),fill='#b9b76d')
  d.rectangle((276,176,280,179),fill='#879b8d');d.line((280,176,283,174),fill='#aeb9a1')
@@ -476,7 +485,7 @@ def make_lakeside():
  def actor(name,cx,base,flip=False):
   p=Image.open(ROOT/'sprites'/name).convert('RGBA');p=p.crop(p.getbbox())
   if flip:p=p.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
-  p=p.resize((p.width*2,p.height*2),Image.Resampling.NEAREST)
+  p=warm_outline(p.resize((p.width*2,p.height*2),Image.Resampling.NEAREST),'#1f2a33')
   d.ellipse((cx-10,base-1,cx+9,base+2),fill='#746c70')
   im.paste(p,(cx-p.width//2,base-p.height),p)
  actor('npcs/elder.png',38,193)
