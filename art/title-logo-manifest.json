@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "transparent": true,
+  "pixelEdges": true,
+  "assets": [
+    {
+      "id": "ui/title_logo_homeward_zh",
+      "path": "sprites/ui/title_logo_homeward_zh.png",
+      "width": 240,
+      "height": 104,
+      "anchor": [
+        120,
+        52
+      ],
+      "language": "zh",
+      "titleVariant": "homeward",
+      "sha256": "bb8eff980049051ff99d9217445375fcf8c78f8cad1c9a041820c1cb3a1a18fc"
+    },
+    {
+      "id": "ui/title_logo_homeward_ja",
+      "path": "sprites/ui/title_logo_homeward_ja.png",
+      "width": 240,
+      "height": 104,
+      "anchor": [
+        120,
+        52
+      ],
+      "language": "ja",
+      "titleVariant": "homeward",
+      "sha256": "164702539416510e2c90d7cc04592fc170b4f509a712ee40ceb8ea7219443230"
+    },
+    {
+      "id": "ui/title_logo_homeward_en",
+      "path": "sprites/ui/title_logo_homeward_en.png",
+      "width": 240,
+      "height": 104,
+      "anchor": [
+        120,
+        52
+      ],
+      "language": "en",
+      "titleVariant": "homeward",
+      "sha256": "c2b0ece9c15473482b9b90bee11e57a9bd176b7c0554c0e962c02945f1e1bd09"
+    },
+    {
+      "id": "ui/title_logo_oakbound_zh",
+      "path": "sprites/ui/title_logo_oakbound_zh.png",
+      "width": 240,
+      "height": 104,
+      "anchor": [
+        120,
+        52
+      ],
+      "language": "zh",
+      "titleVariant": "oakbound",
+      "sha256": "d53d241f9ec77f52c5d5bc321304997b8c058f684ec6f8248a179a375e937ffc"
+    },
+    {
+      "id": "ui/title_logo_oakbound_ja",
+      "path": "sprites/ui/title_logo_oakbound_ja.png",
+      "width": 240,
+      "height": 104,
+      "anchor": [
+        120,
+        52
+      ],
+      "language": "ja",
+      "titleVariant": "oakbound",
+      "sha256": "4af3d4ea7eb39e2ea0ca36986c68e992b96f3a5e160e03c146588cf4cc6331fb"
+    },
+    {
+      "id": "ui/title_logo_oakbound_en",
+      "path": "sprites/ui/title_logo_oakbound_en.png",
+      "width": 240,
+      "height": 104,
+      "anchor": [
+        120,
+        52
+      ],
+      "language": "en",
+      "titleVariant": "oakbound",
+      "sha256": "4cc9579fef55b6027603e7a647effb4e1604aab35ca34f0f102e7ee6f0a4b7cb"
+    }
+  ]
+}

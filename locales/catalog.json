@@ -3102,5 +3102,29 @@
   "我知道的地方你都去过啦！再往后的路，大家还在修呢。修好了我第一个告诉你！": {
     "ja": "わたしが知ってる場所は、もうぜんぶ行ったね！この先の道は、みんながまだ直してるところ。直ったら、いちばんに教えるね！",
     "en": "You’ve been everywhere I know about! The roads ahead are still being repaired. I’ll tell you first when they’re open!"
+  },
+  "封面切换": {
+    "ja": "カバー切替",
+    "en": "Cover selection"
+  },
+  "准备出发": {
+    "ja": "旅立ち",
+    "en": "Setting out"
+  },
+  "星光野餐": {
+    "ja": "星空ピクニック",
+    "en": "Starlight picnic"
+  },
+  "自动切换": {
+    "ja": "自動切替",
+    "en": "Auto cycle"
+  },
+  "暂停切换": {
+    "ja": "切替を停止",
+    "en": "Pause cycle"
+  },
+  "把每一位伙伴，带回家": {
+    "ja": "仲間をみんな、家へ",
+    "en": "Bring every friend home"
   }
 }

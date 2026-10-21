@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "nativeScale": 1,
+  "renderOrder": [
+    "back",
+    "wood",
+    "front"
+  ],
+  "endingOnlyLayer": "blossom",
+  "assets": [
+    {
+      "id": "deco/title_oak_back",
+      "path": "sprites/deco/title_oak_back.png",
+      "category": "deco",
+      "region": "forest",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        72,
+        202
+      ],
+      "layer": "back",
+      "sha256": "939b9f7b0f05216c8d461745827b1651db979fd945b8bb1b58e4091ea1524e63"
+    },
+    {
+      "id": "deco/title_oak_wood",
+      "path": "sprites/deco/title_oak_wood.png",
+      "category": "deco",
+      "region": "forest",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        72,
+        202
+      ],
+      "layer": "wood",
+      "sha256": "426f0548ea4fcfcfee6b544087841a6de5cfe6c8b6f7a9febf060138f8760d97"
+    },
+    {
+      "id": "deco/title_oak_front",
+      "path": "sprites/deco/title_oak_front.png",
+      "category": "deco",
+      "region": "forest",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        72,
+        202
+      ],
+      "layer": "front",
+      "sha256": "6154f406b5ce0a12b7c5f81c17ef5c6f7fbff051ff7b71282d0410b73cdc63ae"
+    },
+    {
+      "id": "deco/title_oak_blossom",
+      "path": "sprites/deco/title_oak_blossom.png",
+      "category": "deco",
+      "region": "forest",
+      "width": 384,
+      "height": 224,
+      "anchor": [
+        72,
+        202
+      ],
+      "layer": "blossom",
+      "sha256": "68957bb4da152a85df2c046f76c535f9852a61880460c6f0cf8ae8fe1e47d55e"
+    }
+  ]
+}

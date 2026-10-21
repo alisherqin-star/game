@@ -21,10 +21,10 @@ const I18n=(()=>{
   box.querySelector('small:last-child').textContent=t('MIDI 改编合成播放 · P 键开关音乐');
  }
  function apply(){
-  document.documentElement.lang={zh:'zh-CN',ja:'ja',en:'en'}[lang];document.title=lang==='zh'?'伊布：归途的约定':lang==='ja'?'イーブイ：帰り道の約束':'Eevee: A Promise to Return';
+  document.documentElement.lang={zh:'zh-CN',ja:'ja',en:'en'}[lang];document.title=lang==='zh'?'伊布冒险物语：橡树的约定':lang==='ja'?'イーブイ冒険物語：オークの約束':"Eevee’s Adventure: Oakbound";
   for(const [id,source]of Object.entries(ids))document.getElementById(id).textContent=t(source);
   const rotate=document.getElementById('rotate');rotate.replaceChildren();const icon=document.createElement('div');icon.style.fontSize='48px';icon.textContent='📱↻';const help=document.createElement('span');help.style.cssText='font-size:14px;opacity:.7';help.textContent=t('左下角移动，右下角跳跃，点左上角物品栏切换形态，右上角地图 / 背包，跳跃键左边是技能');rotate.append(icon,t('请把手机横过来玩'),document.createElement('br'),help);
-  document.querySelectorAll('[data-l10n]').forEach(el=>el.textContent=t(el.dataset.l10n));refreshMusic();
+  document.querySelectorAll('[data-l10n]').forEach(el=>el.textContent=t(el.dataset.l10n));refreshMusic();if(typeof TitleCover!=='undefined')TitleCover.sync();
  }
  function set(next){if(!['zh','ja','en'].includes(next))return;lang=next;try{localStorage.setItem('eevee-language-v1',lang);}catch{}apply();document.querySelectorAll('[data-language]').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.language===lang));});}
  let modal=null,returnFocus=null;
