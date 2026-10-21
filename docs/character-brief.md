@@ -1,6 +1,6 @@
 # 剧本大纲与人物修改说明（给 Codex）
 
-完整剧本在 `SCRIPT.md`（`claude/fun-pass` 分支，路径 `/Users/shin/Documents/伊布游戏/.claude/worktrees/dev/SCRIPT.md`）。这份是摘要，重点是人物外观。先做村长奶奶，上线试玩前要换掉。
+完整剧本在仓库根目录的 `SCRIPT.md`（`claude/fun-pass` 分支）。这份是摘要，重点是人物外观。先做村长奶奶，上线试玩前要换掉。
 
 ## 一段话的故事
 
