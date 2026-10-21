@@ -1,22 +1,22 @@
 {
-  "version": 3,
-  "variant": "identity-B",
-  "fit": "native oblique face; curved ruff; ears and eyes preserved",
+  "version": 4,
+  "variant": "identity-B-story-grannies",
+  "fit": "native oblique face; Penny warm grey fur; eye positions and shared foot anchor preserved",
   "base": "sprites/characters/eevee.png",
   "assets": [
     {
       "id": "npcs/elder",
       "path": "sprites/npcs/elder.png",
-      "role": "村长",
-      "trait": "叶帽＋圆眼镜",
+      "role": "村长奶奶",
+      "trait": "灰白毛＋金边眼镜＋橡叶拐杖",
       "width": 32,
       "height": 28,
       "anchor": [
         16,
         28
       ],
-      "accent": "#739747",
-      "sha256": "555a8c2c6dccbca7660d965f4c2a20547d3c7db4a3bec0dec004297d28937987"
+      "accent": "#aab594",
+      "sha256": "088b74eed561e194ab0ea8ae31e3f6743d33ef06cae895562a2f65815b7a5c9c"
     },
     {
       "id": "npcs/guide",
@@ -77,16 +77,16 @@
     {
       "id": "npcs/gardener",
       "path": "sprites/npcs/gardener.png",
-      "role": "园丁",
-      "trait": "小草帽＋绿围裙",
+      "role": "罗丝奶奶",
+      "trait": "花草帽＋陶粉围裙",
       "width": 32,
       "height": 28,
       "anchor": [
         16,
         28
       ],
-      "accent": "#8ab85b",
-      "sha256": "cc495ffefc55b36574e4e2826688795485860139e1e3e7141dfebc091d88d714"
+      "accent": "#c3927c",
+      "sha256": "ec019dbd3938a6593dee6632be3404445763049995d8fb2189ad4744821601d0"
     },
     {
       "id": "npcs/miner",
