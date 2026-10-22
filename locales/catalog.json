@@ -2907,13 +2907,13 @@
     "ja": "大樫。300年前、友だちの帰りを待つと言って、だれかがここにどんぐりを植えた。",
     "en": "The Great Oak. Three hundred years ago, someone planted an acorn here and said they would wait for a friend to come home."
   },
-  "见习向导贝儿：我叫贝儿，是见习向导！……还是见习的那种。听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换学会的形态，按 X 用技能。不知道去哪的话，就回村来问我！……我、我想去糖果花园的星光野餐，可是风暴把路吹断了，我一个人不敢去。你会等我一起去吗？": {
-    "ja": "見習いガイドのベル：わたしベル、ガイドなの！…まだ見習いだけど。イーブイは石や不思議な岩で進化するんだって。1～9で姿を変えて、Xでわざ。どこへ行くか迷ったら、村に戻って聞いてね！…わ、わたし、お菓子の庭の星空ピクニックに行きたいの。でも嵐で道が壊れて、ひとりじゃ怖くて。一緒に行くまで待っててくれる？",
-    "en": "Belle the Guide: I’m Belle, a guide! …Well, a guide in training. Eevee evolves with stones and magical rocks. Press 1–9 to change forms, X to use a move. If you don’t know where to go, come back to the village and ask me! …I-I want to visit Candy Garden for a starlight picnic, but the storm broke the road and I’m too scared to go alone. Will you wait and go with me?"
+  "见习向导贝儿：我叫贝儿，是见习向导！……还是见习的那种。听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换学会的形态，按 J 用技能。不知道去哪的话，就回村来问我！……我、我想去糖果花园的星光野餐，可是风暴把路吹断了，我一个人不敢去。你会等我一起去吗？": {
+    "ja": "見習いガイドのベル：わたしベル、ガイドなの！…まだ見習いだけど。イーブイは石や不思議な岩で進化するんだって。1～9で姿を変えて、Jでわざ。どこへ行くか迷ったら、村に戻って聞いてね！…わ、わたし、お菓子の庭の星空ピクニックに行きたいの。でも嵐で道が壊れて、ひとりじゃ怖くて。一緒に行くまで待っててくれる？",
+    "en": "Belle the Guide: I’m Belle, a guide! …Well, a guide in training. Eevee evolves with stones and magical rocks. Press 1–9 to change forms, J to use a move. If you don’t know where to go, come back to the village and ask me! …I-I want to visit Candy Garden for a starlight picnic, but the storm broke the road and I’m too scared to go alone. Will you wait and go with me?"
   },
-  "我叫贝儿，是见习向导！……还是见习的那种。听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换学会的形态，按 X 用技能。不知道去哪的话，就回村来问我！……我、我想去糖果花园的星光野餐，可是风暴把路吹断了，我一个人不敢去。你会等我一起去吗？": {
-    "ja": "わたしベル、ガイドなの！…まだ見習いだけど。イーブイは石や不思議な岩で進化するんだって。1～9で姿を変えて、Xでわざ。どこへ行くか迷ったら、村に戻って聞いてね！…わ、わたし、お菓子の庭の星空ピクニックに行きたいの。でも嵐で道が壊れて、ひとりじゃ怖くて。一緒に行くまで待っててくれる？",
-    "en": "I’m Belle, a guide! …Well, a guide in training. Eevee evolves with stones and magical rocks. Press 1–9 to change forms, X to use a move. If you don’t know where to go, come back to the village and ask me! …I-I want to visit Candy Garden for a starlight picnic, but the storm broke the road and I’m too scared to go alone. Will you wait and go with me?"
+  "我叫贝儿，是见习向导！……还是见习的那种。听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换学会的形态，按 J 用技能。不知道去哪的话，就回村来问我！……我、我想去糖果花园的星光野餐，可是风暴把路吹断了，我一个人不敢去。你会等我一起去吗？": {
+    "ja": "わたしベル、ガイドなの！…まだ見習いだけど。イーブイは石や不思議な岩で進化するんだって。1～9で姿を変えて、Jでわざ。どこへ行くか迷ったら、村に戻って聞いてね！…わ、わたし、お菓子の庭の星空ピクニックに行きたいの。でも嵐で道が壊れて、ひとりじゃ怖くて。一緒に行くまで待っててくれる？",
+    "en": "I’m Belle, a guide! …Well, a guide in training. Eevee evolves with stones and magical rocks. Press 1–9 to change forms, J to use a move. If you don’t know where to go, come back to the village and ask me! …I-I want to visit Candy Garden for a starlight picnic, but the storm broke the road and I’m too scared to go alone. Will you wait and go with me?"
   },
   "村长奶奶：大家都回来了！村子好久没这么热闹了。学者说，风暴是从进化祭坛的方向来的……这只探宝铃送给你，它会告诉你附近还藏着什么宝物。": {
     "ja": "村長おばあちゃん：みんな帰ってきたねえ！村がこんなににぎやかなのは久しぶりだよ。エイダが言うには、嵐は進化の祭壇の方角から来たそうだね…。この宝探しの鈴をおあげ。近くに隠れた宝を教えてくれるよ。",
@@ -3287,13 +3287,13 @@
     "ja": "はまだ帰ってこない。どんぐり祭りはひとまずお休み。みんなが帰ってきたら、にぎやかにやり直そうね。",
     "en": " still haven’t come home. The festival can wait. Once everyone is back, we’ll throw a proper one. "
   },
-  "见习向导贝儿：我叫贝儿，是见习向导！……还是见习的那种。听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换形态，按 X 用技能。不知道去哪，就回村来问我！还有……等橡果节重新办的时候，晚上要去糖果花园看星星、吃野餐！你会等我一起去吗？": {
-    "ja": "見習いガイドのベル：わたしベル、ガイドなの！……まだ見習いだけど。イーブイは石や不思議な岩で進化するんだって。1～9で姿を変えて、Xでわざ。どこへ行くか迷ったら、村に戻って聞いてね！それと……どんぐり祭りをやり直す夜は、お菓子の庭で星を見ながらピクニックするの！一緒に行くまで待っててくれる？",
-    "en": "Belle the Guide: I’m Belle, a guide! …Well, a guide in training. Eevee evolves with stones and magical rocks. Press 1–9 to change forms, X to use a move. If you don’t know where to go, come back to the village and ask me! And… when the festival is on again, we’re having a starlight picnic in Candy Garden that night! Will you wait and go with me?"
+  "见习向导贝儿：我叫贝儿，是见习向导！……还是见习的那种。听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换形态，按 J 用技能。不知道去哪，就回村来问我！还有……等橡果节重新办的时候，晚上要去糖果花园看星星、吃野餐！你会等我一起去吗？": {
+    "ja": "見習いガイドのベル：わたしベル、ガイドなの！……まだ見習いだけど。イーブイは石や不思議な岩で進化するんだって。1～9で姿を変えて、Jでわざ。どこへ行くか迷ったら、村に戻って聞いてね！それと……どんぐり祭りをやり直す夜は、お菓子の庭で星を見ながらピクニックするの！一緒に行くまで待っててくれる？",
+    "en": "Belle the Guide: I’m Belle, a guide! …Well, a guide in training. Eevee evolves with stones and magical rocks. Press 1–9 to change forms, J to use a move. If you don’t know where to go, come back to the village and ask me! And… when the festival is on again, we’re having a starlight picnic in Candy Garden that night! Will you wait and go with me?"
   },
-  "我叫贝儿，是见习向导！……还是见习的那种。听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换形态，按 X 用技能。不知道去哪，就回村来问我！还有……等橡果节重新办的时候，晚上要去糖果花园看星星、吃野餐！你会等我一起去吗？": {
-    "ja": "わたしベル、ガイドなの！……まだ見習いだけど。イーブイは石や不思議な岩で進化するんだって。1～9で姿を変えて、Xでわざ。どこへ行くか迷ったら、村に戻って聞いてね！それと……どんぐり祭りをやり直す夜は、お菓子の庭で星を見ながらピクニックするの！一緒に行くまで待っててくれる？",
-    "en": "I’m Belle, a guide! …Well, a guide in training. Eevee evolves with stones and magical rocks. Press 1–9 to change forms, X to use a move. If you don’t know where to go, come back to the village and ask me! And… when the festival is on again, we’re having a starlight picnic in Candy Garden that night! Will you wait and go with me?"
+  "我叫贝儿，是见习向导！……还是见习的那种。听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换形态，按 J 用技能。不知道去哪，就回村来问我！还有……等橡果节重新办的时候，晚上要去糖果花园看星星、吃野餐！你会等我一起去吗？": {
+    "ja": "わたしベル、ガイドなの！……まだ見習いだけど。イーブイは石や不思議な岩で進化するんだって。1～9で姿を変えて、Jでわざ。どこへ行くか迷ったら、村に戻って聞いてね！それと……どんぐり祭りをやり直す夜は、お菓子の庭で星を見ながらピクニックするの！一緒に行くまで待っててくれる？",
+    "en": "I’m Belle, a guide! …Well, a guide in training. Eevee evolves with stones and magical rocks. Press 1–9 to change forms, J to use a move. If you don’t know where to go, come back to the village and ask me! And… when the festival is on again, we’re having a starlight picnic in Candy Garden that night! Will you wait and go with me?"
   },
   "商人玛姬：我的货……我的货全飞了！一共 ": {
     "ja": "商人マギー：わたしの荷物……荷物が全部飛んでいっちゃった！全部で ",
