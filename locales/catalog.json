@@ -1333,7 +1333,7 @@
   },
   "约定": {
     "ja": "約束",
-    "en": "Promise"
+    "en": "The Promise"
   },
   "": {
     "ja": "",
@@ -3126,5 +3126,241 @@
   "把每一位伙伴，带回家": {
     "ja": "仲間をみんな、家へ",
     "en": "Bring every friend home"
+  },
+  "第三章　约定": {
+    "ja": "第三章　約束",
+    "en": "Chapter 3: The Promise"
+  },
+  "终章　归途": {
+    "ja": "終章　帰り道",
+    "en": "Final Chapter: The Way Home"
+  },
+  "序章": {
+    "ja": "序章",
+    "en": "Prologue"
+  },
+  "风暴之后": {
+    "ja": "嵐のあと",
+    "en": "After the Storm"
+  },
+  "第三章": {
+    "ja": "第三章",
+    "en": "Chapter 3"
+  },
+  "终章": {
+    "ja": "終章",
+    "en": "Final Chapter"
+  },
+  "归途": {
+    "ja": "帰り道",
+    "en": "The Way Home"
+  },
+  "远方的声音": {
+    "ja": "遠くの声",
+    "en": "A Distant Voice"
+  },
+  "风弱了一点。风里传来一段话……": {
+    "ja": "風が少し弱まった。風の中から、声が聞こえる……",
+    "en": "The wind eases a little. A voice drifts through it…"
+  },
+  "清晨。起点村挂满了彩旗和橡果灯笼。今天是一年一度的橡果节。": {
+    "ja": "朝。はじまりの村は旗とどんぐりの灯籠でいっぱいだ。今日は年に一度のどんぐり祭り。",
+    "en": "Morning. Hearth Village is strung with flags and acorn lanterns. Today is the yearly Acorn Festival."
+  },
+  "见习向导贝儿：快起来快起来！今天是橡果节！我要给大家当向导，守则我背了一晚上。第一条：向导永远不迷路！……第二条是什么来着？": {
+    "ja": "見習いガイドのベル：起きて起きて！今日はどんぐり祭り！わたし、みんなのガイドをするの。ガイドの心得、ひと晩かけて覚えたんだから。その一、ガイドは絶対に迷わない！……その二は、なんだっけ？",
+    "en": "Belle the Guide: Up, up! It’s the Acorn Festival! I’m guiding everyone today. I spent all night learning the Guide’s Code. Rule one: a guide never gets lost! …What was rule two again?"
+  },
+  "快起来快起来！今天是橡果节！我要给大家当向导，守则我背了一晚上。第一条：向导永远不迷路！……第二条是什么来着？": {
+    "ja": "起きて起きて！今日はどんぐり祭り！わたし、みんなのガイドをするの。ガイドの心得、ひと晩かけて覚えたんだから。その一、ガイドは絶対に迷わない！……その二は、なんだっけ？",
+    "en": "Up, up! It’s the Acorn Festival! I’m guiding everyone today. I spent all night learning the Guide’s Code. Rule one: a guide never gets lost! …What was rule two again?"
+  },
+  "商人玛姬：橡果节限定！会发光的橡果，只要 5 枚金币！……什么？涂了漆？那叫手工！": {
+    "ja": "商人マギー：どんぐり祭り限定！光るどんぐり、たったの5枚！……え？塗っただけ？手作りって言ってよ！",
+    "en": "Maggie the Merchant: Festival special! Glowing acorns, only 5 coins! …What? It’s paint? That’s called handmade!"
+  },
+  "橡果节限定！会发光的橡果，只要 5 枚金币！……什么？涂了漆？那叫手工！": {
+    "ja": "どんぐり祭り限定！光るどんぐり、たったの5枚！……え？塗っただけ？手作りって言ってよ！",
+    "en": "Festival special! Glowing acorns, only 5 coins! …What? It’s paint? That’s called handmade!"
+  },
+  "园丁罗丝奶奶：汤还差一把蘑菇。好孩子，尝一口？再尝一口？再……": {
+    "ja": "庭師のローズおばあちゃん：スープにきのこがひとつかみ足りないねえ。いい子だ、ひと口どう？もうひと口？もう……",
+    "en": "Grandma Rose: The soup needs one more handful of mushrooms. Here, dear, have a taste? Another? And…"
+  },
+  "汤还差一把蘑菇。好孩子，尝一口？再尝一口？再……": {
+    "ja": "スープにきのこがひとつかみ足りないねえ。いい子だ、ひと口どう？もうひと口？もう……",
+    "en": "The soup needs one more handful of mushrooms. Here, dear, have a taste? Another? And…"
+  },
+  "训练家麦克斯：橡果节就要做橡果节的俯卧撑！一个橡果，两个橡果……": {
+    "ja": "トレーナーのマックス：どんぐり祭りには、どんぐり祭りの腕立てだ！どんぐりひとつ、どんぐりふたつ……",
+    "en": "Trainer Max: A festival calls for festival push-ups! One acorn, two acorns…"
+  },
+  "橡果节就要做橡果节的俯卧撑！一个橡果，两个橡果……": {
+    "ja": "どんぐり祭りには、どんぐり祭りの腕立てだ！どんぐりひとつ、どんぐりふたつ……",
+    "en": "A festival calls for festival push-ups! One acorn, two acorns…"
+  },
+  "学者艾达：别碰那个！那是我的风向鸡。今天的风有点怪，从早上起就一直往东边转。": {
+    "ja": "学者エイダ：それに触らないで！わたしの風見鶏なの。今日の風は変だわ、朝からずっと東を向いてる。",
+    "en": "Ada the Scholar: Don’t touch that! It’s my weather vane. The wind is odd today. It’s pointed east since morning."
+  },
+  "别碰那个！那是我的风向鸡。今天的风有点怪，从早上起就一直往东边转。": {
+    "ja": "それに触らないで！わたしの風見鶏なの。今日の風は変だわ、朝からずっと東を向いてる。",
+    "en": "Don’t touch that! It’s my weather vane. The wind is odd today. It’s pointed east since morning."
+  },
+  "村长奶奶靠在村口的大橡树下打瞌睡。": {
+    "ja": "村長おばあちゃんは村の入口の大樫にもたれて、うとうとしている。",
+    "en": "The Village Elder dozes against the great oak at the village gate."
+  },
+  "村长奶奶：嗯？……我没睡，我在听树说话。": {
+    "ja": "村長おばあちゃん：ん？……寝てないよ。木の話を聞いてたのさ。",
+    "en": "Village Elder: Hm? …I wasn’t asleep. I was listening to the tree."
+  },
+  "嗯？……我没睡，我在听树说话。": {
+    "ja": "ん？……寝てないよ。木の話を聞いてたのさ。",
+    "en": "Hm? …I wasn’t asleep. I was listening to the tree."
+  },
+  "村长奶奶：橡果节是怎么来的？很久很久以前啊，有人在这里种下一颗橡果，说等它长大……后来呀，后来就长这么大啦。去玩吧，别等我这个老太婆讲完。": {
+    "ja": "村長おばあちゃん：どんぐり祭りの由来かい？ずっとずっと昔にね、だれかがここにどんぐりを植えて、大きくなったら……って。……それでね、それで、こんなに大きくなったのさ。遊んでおいで、こんな年寄りの話を待ってちゃいけないよ。",
+    "en": "Village Elder: How did the festival start? Long, long ago, someone planted an acorn right here and said, when it grows up… …And then, well, then it grew this big. Off you go. Don’t wait around for an old lady to finish."
+  },
+  "橡果节是怎么来的？很久很久以前啊，有人在这里种下一颗橡果，说等它长大……后来呀，后来就长这么大啦。去玩吧，别等我这个老太婆讲完。": {
+    "ja": "どんぐり祭りの由来かい？ずっとずっと昔にね、だれかがここにどんぐりを植えて、大きくなったら……って。……それでね、それで、こんなに大きくなったのさ。遊んでおいで、こんな年寄りの話を待ってちゃいけないよ。",
+    "en": "How did the festival start? Long, long ago, someone planted an acorn right here and said, when it grows up… …And then, well, then it grew this big. Off you go. Don’t wait around for an old lady to finish."
+  },
+  "傍晚，橡果节刚要开始。东边刮来一阵大风，彩旗、汤锅和村民一个接一个被吹上了天。": {
+    "ja": "夕方、祭りが始まろうとしたそのとき。東から大風が吹き、旗も鍋も村のみんなも、次々に空へ舞い上がった。",
+    "en": "Dusk, just as the festival is about to begin. A great wind blows in from the east, and flags, soup pots and villagers go flying one after another."
+  },
+  "园丁罗丝奶奶：我的汤——！": {
+    "ja": "庭師のローズおばあちゃん：わたしのスープがーっ！",
+    "en": "Grandma Rose: My soup!"
+  },
+  "我的汤——！": {
+    "ja": "わたしのスープがーっ！",
+    "en": "My soup!"
+  },
+  "训练家麦克斯：正好练抗风！……哇啊啊啊！": {
+    "ja": "トレーナーのマックス：ちょうどいい、風に耐える特訓だ！……うわああああ！",
+    "en": "Trainer Max: Perfect, wind-resistance training! …Whoaaaa!"
+  },
+  "正好练抗风！……哇啊啊啊！": {
+    "ja": "ちょうどいい、風に耐える特訓だ！……うわああああ！",
+    "en": "Perfect, wind-resistance training! …Whoaaaa!"
+  },
+  "学者艾达：风速……记、记不下来了！": {
+    "ja": "学者エイダ：風速が……き、記録できない！",
+    "en": "Ada the Scholar: Wind speed… I-I can’t write it down!"
+  },
+  "风速……记、记不下来了！": {
+    "ja": "風速が……き、記録できない！",
+    "en": "Wind speed… I-I can’t write it down!"
+  },
+  "风里掉下来一群奇怪的小魔物，追着贝儿的铃铛跑。": {
+    "ja": "風の中から奇妙な小さな魔物たちが落ちてきて、ベルの鈴を追いかけ回す。",
+    "en": "Strange little monsters tumble out of the wind and chase after Belle’s bell."
+  },
+  "村长奶奶：抓紧，别松手。": {
+    "ja": "村長おばあちゃん：しっかりつかまって。手を離すんじゃないよ。",
+    "en": "Village Elder: Hold tight. Don’t let go."
+  },
+  "抓紧，别松手。": {
+    "ja": "しっかりつかまって。手を離すんじゃないよ。",
+    "en": "Hold tight. Don’t let go."
+  },
+  "村长奶奶：……这风，我认得。": {
+    "ja": "村長おばあちゃん：……この風、知ってる。",
+    "en": "Village Elder: …I know this wind."
+  },
+  "……这风，我认得。": {
+    "ja": "……この風、知ってる。",
+    "en": "…I know this wind."
+  },
+  "风停了。村子乱成一团，好几个村民不见了。": {
+    "ja": "風がやんだ。村はめちゃくちゃで、何人もの村人がいなくなっていた。",
+    "en": "The wind dies down. The village is a mess, and several villagers are gone."
+  },
+  "你醒啦。昨晚的风可真大，把我这把老骨头都吹精神了。": {
+    "ja": "目が覚めたかい。ゆうべの風はすごかったねえ。この老いぼれの骨まで、しゃんとしちゃったよ。",
+    "en": "Ah, you’re awake. What a wind last night. It blew the sleep right out of these old bones. "
+  },
+  "都还没回来。橡果节先放一放，等大家都回来，咱们再热热闹闹地办一场。": {
+    "ja": "はまだ帰ってこない。どんぐり祭りはひとまずお休み。みんなが帰ってきたら、にぎやかにやり直そうね。",
+    "en": " still haven’t come home. The festival can wait. Once everyone is back, we’ll throw a proper one. "
+  },
+  "见习向导贝儿：我叫贝儿，是见习向导！……还是见习的那种。听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换形态，按 X 用技能。不知道去哪，就回村来问我！还有……等橡果节重新办的时候，晚上要去糖果花园看星星、吃野餐！你会等我一起去吗？": {
+    "ja": "見習いガイドのベル：わたしベル、ガイドなの！……まだ見習いだけど。イーブイは石や不思議な岩で進化するんだって。1～9で姿を変えて、Xでわざ。どこへ行くか迷ったら、村に戻って聞いてね！それと……どんぐり祭りをやり直す夜は、お菓子の庭で星を見ながらピクニックするの！一緒に行くまで待っててくれる？",
+    "en": "Belle the Guide: I’m Belle, a guide! …Well, a guide in training. Eevee evolves with stones and magical rocks. Press 1–9 to change forms, X to use a move. If you don’t know where to go, come back to the village and ask me! And… when the festival is on again, we’re having a starlight picnic in Candy Garden that night! Will you wait and go with me?"
+  },
+  "我叫贝儿，是见习向导！……还是见习的那种。听说伊布碰到进化石、靠近神奇的巨石就会进化。按 1～9 切换形态，按 X 用技能。不知道去哪，就回村来问我！还有……等橡果节重新办的时候，晚上要去糖果花园看星星、吃野餐！你会等我一起去吗？": {
+    "ja": "わたしベル、ガイドなの！……まだ見習いだけど。イーブイは石や不思議な岩で進化するんだって。1～9で姿を変えて、Xでわざ。どこへ行くか迷ったら、村に戻って聞いてね！それと……どんぐり祭りをやり直す夜は、お菓子の庭で星を見ながらピクニックするの！一緒に行くまで待っててくれる？",
+    "en": "I’m Belle, a guide! …Well, a guide in training. Eevee evolves with stones and magical rocks. Press 1–9 to change forms, X to use a move. If you don’t know where to go, come back to the village and ask me! And… when the festival is on again, we’re having a starlight picnic in Candy Garden that night! Will you wait and go with me?"
+  },
+  "商人玛姬：我的货……我的货全飞了！一共 ": {
+    "ja": "商人マギー：わたしの荷物……荷物が全部飛んでいっちゃった！全部で ",
+    "en": "Maggie the Merchant: My goods… My goods all blew away! There are "
+  },
+  "我的货……我的货全飞了！一共 ": {
+    "ja": "わたしの荷物……荷物が全部飛んでいっちゃった！全部で ",
+    "en": "My goods… My goods all blew away! There are "
+  },
+  " 个货物包，帮我捡回来好吗？找齐了我就开张，给你打个……九九折。": {
+    "ja": "個。拾ってきてくれる？そろったら開店して、割引してあげる……1パーセントね。",
+    "en": " parcels. Bring them back for me? Once they’re all here I’ll open up and give you a discount… one percent."
+  },
+  "园丁罗丝奶奶：我连人带锅被吹到这片林子里了！汤还是热的，你喝一口？……蝙蝠扑来扑去的，我这把老骨头可不敢乱走。好孩子，我跟着你的脚印回村。": {
+    "ja": "庭師のローズおばあちゃん：鍋ごとこの林に吹き飛ばされちゃってねえ！スープはまだ熱いよ、ひと口どう？……こうもりが飛び回ってて、この老いぼれの骨じゃ動けやしない。いい子だ、あんたの足あとをたどって村へ帰るよ。",
+    "en": "Grandma Rose: I got blown into these woods, soup pot and all! It’s still warm, want a sip? …With all these bats flapping about, these old bones didn’t dare move. Good child, I’ll follow your footprints home."
+  },
+  "我连人带锅被吹到这片林子里了！汤还是热的，你喝一口？……蝙蝠扑来扑去的，我这把老骨头可不敢乱走。好孩子，我跟着你的脚印回村。": {
+    "ja": "鍋ごとこの林に吹き飛ばされちゃってねえ！スープはまだ熱いよ、ひと口どう？……こうもりが飛び回ってて、この老いぼれの骨じゃ動けやしない。いい子だ、あんたの足あとをたどって村へ帰るよ。",
+    "en": "I got blown into these woods, soup pot and all! It’s still warm, want a sip? …With all these bats flapping about, these old bones didn’t dare move. Good child, I’ll follow your footprints home."
+  },
+  "园丁罗丝奶奶：村长奶奶没被吹走？我就知道。我还是小丫头的时候，她就是现在这个样子了，风吹不动，雨打不倒。你说她到底多大岁数了？": {
+    "ja": "庭師のローズおばあちゃん：村長おばあちゃんは飛ばされなかったって？だろうねえ。わたしが小娘だった頃から、あの人はもう今の姿だったよ。風にも雨にもびくともしない。いったい何歳なんだろうねえ？",
+    "en": "Grandma Rose: The Elder wasn’t blown away? I knew it. When I was a little girl she looked exactly as she does now. Wind can’t move her, rain can’t topple her. How old do you suppose she is?"
+  },
+  "村长奶奶没被吹走？我就知道。我还是小丫头的时候，她就是现在这个样子了，风吹不动，雨打不倒。你说她到底多大岁数了？": {
+    "ja": "村長おばあちゃんは飛ばされなかったって？だろうねえ。わたしが小娘だった頃から、あの人はもう今の姿だったよ。風にも雨にもびくともしない。いったい何歳なんだろうねえ？",
+    "en": "The Elder wasn’t blown away? I knew it. When I was a little girl she looked exactly as she does now. Wind can’t move her, rain can’t topple her. How old do you suppose she is?"
+  },
+  "学者艾达：我把风向鸡架到村口了。每天傍晚，它都指着东边，一动不动。像在找什么人。": {
+    "ja": "学者エイダ：風見鶏を村の入口に立てたの。毎日夕方になると、東を向いたまま動かない。だれかを探してるみたいに。",
+    "en": "Ada the Scholar: I set my weather vane up at the village gate. Every evening it points east and won’t budge. As if it’s looking for someone."
+  },
+  "我把风向鸡架到村口了。每天傍晚，它都指着东边，一动不动。像在找什么人。": {
+    "ja": "風見鶏を村の入口に立てたの。毎日夕方になると、東を向いたまま動かない。だれかを探してるみたいに。",
+    "en": "I set my weather vane up at the village gate. Every evening it points east and won’t budge. As if it’s looking for someone."
+  },
+  "训练家麦克斯：被风吹到岩顶上，正好练平衡！……其实是湖水涨了下不去。没关系，我已经做了三百个俯卧撑了！谢啦，回村我就把训练场重新开起来！": {
+    "ja": "トレーナーのマックス：風で岩のてっぺんに飛ばされて、ちょうどバランスの特訓だ！……ほんとは湖が増水して降りられないだけだけど。平気さ、もう腕立て三百回やったからな！助かったよ、村に戻ったら訓練場を開き直すぞ！",
+    "en": "Trainer Max: The wind put me on top of this rock. Perfect for balance training! …Okay, the lake rose and I couldn’t get down. No matter, I’ve done three hundred push-ups already! Thanks, I’ll reopen the training ground when I’m home!"
+  },
+  "被风吹到岩顶上，正好练平衡！……其实是湖水涨了下不去。没关系，我已经做了三百个俯卧撑了！谢啦，回村我就把训练场重新开起来！": {
+    "ja": "風で岩のてっぺんに飛ばされて、ちょうどバランスの特訓だ！……ほんとは湖が増水して降りられないだけだけど。平気さ、もう腕立て三百回やったからな！助かったよ、村に戻ったら訓練場を開き直すぞ！",
+    "en": "The wind put me on top of this rock. Perfect for balance training! …Okay, the lake rose and I couldn’t get down. No matter, I’ve done three hundred push-ups already! Thanks, I’ll reopen the training ground when I’m home!"
+  },
+  "训练家麦克斯：橡果节的俯卧撑我还欠着三百个，等大家都回来一起做！": {
+    "ja": "トレーナーのマックス：どんぐり祭りの腕立て、まだ三百回残ってるんだ。みんなが帰ったら一緒にやるぞ！",
+    "en": "Trainer Max: I still owe three hundred festival push-ups. We’ll do them together when everyone’s home!"
+  },
+  "橡果节的俯卧撑我还欠着三百个，等大家都回来一起做！": {
+    "ja": "どんぐり祭りの腕立て、まだ三百回残ってるんだ。みんなが帰ったら一緒にやるぞ！",
+    "en": "I still owe three hundred festival push-ups. We’ll do them together when everyone’s home!"
+  },
+  "找到村长奶奶说的村民（": {
+    "ja": "村長おばあちゃんの言っていた村人を見つける（",
+    "en": "Find the villagers the Elder mentioned ("
+  },
+  "大家都回来了，去跟村长奶奶说一声": {
+    "ja": "みんな帰ってきた。村長おばあちゃんに伝えよう",
+    "en": "Everyone is home. Go tell the Elder"
+  },
+  "学者艾达：嘘……别吵，我在记录塔顶的电流。风暴那晚，所有的闪电都指向东边。还有一件怪事：风每天傍晚最大，而且总往村口吹，像在找什么人。我这就回村把笔记整理好。": {
+    "ja": "学者エイダ：しっ……静かに、塔の頂の電流を記録してるの。嵐の夜、稲妻はぜんぶ東を指してた。それにもうひとつ変なこと：風は毎日夕方にいちばん強くなって、いつも村の入口へ吹く。だれかを探してるみたいに。村に戻ってノートをまとめるわ。",
+    "en": "Ada the Scholar: Shh… quiet, I’m recording the current at the summit. On the night of the storm, every bolt of lightning pointed east. And another odd thing: the wind peaks every evening and always blows toward the village gate, as if it’s looking for someone. I’ll head home and sort out my notes."
+  },
+  "嘘……别吵，我在记录塔顶的电流。风暴那晚，所有的闪电都指向东边。还有一件怪事：风每天傍晚最大，而且总往村口吹，像在找什么人。我这就回村把笔记整理好。": {
+    "ja": "しっ……静かに、塔の頂の電流を記録してるの。嵐の夜、稲妻はぜんぶ東を指してた。それにもうひとつ変なこと：風は毎日夕方にいちばん強くなって、いつも村の入口へ吹く。だれかを探してるみたいに。村に戻ってノートをまとめるわ。",
+    "en": "Shh… quiet, I’m recording the current at the summit. On the night of the storm, every bolt of lightning pointed east. And another odd thing: the wind peaks every evening and always blows toward the village gate, as if it’s looking for someone. I’ll head home and sort out my notes."
   }
 }
