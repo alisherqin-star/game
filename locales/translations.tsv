@@ -700,3 +700,35 @@ food_1_blueberry|吃了一颗蓝莓，酸酸甜甜的。……伊布没有进化
 找到村长奶奶说的村民（	村長おばあちゃんの言っていた村人を見つける（	Find the villagers the Elder mentioned (
 大家都回来了，去跟村长奶奶说一声	みんな帰ってきた。村長おばあちゃんに伝えよう	Everyone is home. Go tell the Elder
 学者艾达：嘘……别吵，我在记录塔顶的电流。风暴那晚，所有的闪电都指向东边。还有一件怪事：风每天傍晚最大，而且总往村口吹，像在找什么人。我这就回村把笔记整理好。	学者エイダ：しっ……静かに、塔の頂の電流を記録してるの。嵐の夜、稲妻はぜんぶ東を指してた。それにもうひとつ変なこと：風は毎日夕方にいちばん強くなって、いつも村の入口へ吹く。だれかを探してるみたいに。村に戻ってノートをまとめるわ。	Ada the Scholar: Shh… quiet, I’m recording the current at the summit. On the night of the storm, every bolt of lightning pointed east. And another odd thing: the wind peaks every evening and always blows toward the village gate, as if it’s looking for someone. I’ll head home and sort out my notes.
+存档	セーブ	Save
+选择存档	セーブデータを選ぶ	Choose a save
+新游戏 · 选一个存档位	はじめから · スロットを選ぶ	New game · pick a slot
+空存档 · 从这里开始新的冒险	空き · ここから新しい冒険を	Empty · start a new adventure here
+游戏时长	プレイ時間	Play time
+删除	削除	Delete
+确定	OK	OK
+取消	キャンセル	Cancel
+要删除这个存档吗？	このセーブデータを削除しますか？	Delete this save?
+要覆盖这个存档吗？	このセーブデータを上書きしますか？	Overwrite this save?
+里面的进度会丢失，找不回来。	中の進み具合は消えて、元には戻せません。	Its progress will be lost for good.
+Enter 选择 · Delete 删除 · Esc 返回	Enter 決定 · Delete 削除 · Esc 戻る	Enter select · Delete remove · Esc back
+轻点存档继续，点「删除」清空	セーブをタップして続ける。「削除」で空に	Tap a save to continue; “Delete” clears it
+已自动保存	オートセーブしました	Auto-saved
+复制存档码	セーブコードをコピー	Copy save code
+读入存档码	セーブコードを読み込む	Load save code
+确定读入	読み込みを実行	Confirm load
+保存并回到标题	セーブしてタイトルへ	Save and return to title
+存档码已复制，可以粘贴到别的设备。	セーブコードをコピーしました。別の端末に貼り付けられます。	Save code copied. Paste it on another device.
+存档码已生成，请手动复制。	セーブコードを作成しました。手動でコピーしてください。	Save code generated; copy it by hand.
+这个存档位是空的。	このスロットは空です。	This slot is empty.
+先把存档码粘贴到下面的框里。	まず下の枠にセーブコードを貼り付けてください。	Paste a save code into the box below first.
+存档码无效。	セーブコードが正しくありません。	Invalid save code.
+再点一次就会覆盖存档	もう一度押すと上書きします：セーブ	Press again to overwrite save
+已读入存档	読み込みました：セーブ	Loaded into save
+现在不能存档。	今はセーブできません。	Can’t save right now.
+正在玩存档	プレイ中：セーブ	Playing save
+上次保存	最後のセーブ	last saved
+存档码会写入存档	セーブコードの書き込み先：セーブ	Save codes load into save
+刚刚	たった今	just now
+分钟前	分前	min ago
+小时前	時間前	h ago
