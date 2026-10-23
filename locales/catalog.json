@@ -3490,5 +3490,17 @@
   "小时前": {
     "ja": "時間前",
     "en": "h ago"
+  },
+  "⚙ 设置 · 存档": {
+    "ja": "⚙ 設定 · セーブ",
+    "en": "⚙ Settings · Save"
+  },
+  "背包（O 设置 · 存档）": {
+    "ja": "持ち物（O 設定 · セーブ）",
+    "en": "Inventory (O: settings · save)"
+  },
+  "O 设置 · 存档": {
+    "ja": "O 設定 · セーブ",
+    "en": "O Settings · Save"
   }
 }

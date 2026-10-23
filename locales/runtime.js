@@ -12,6 +12,7 @@ const I18n=(()=>{
  function refreshMusic(){
   const box=document.getElementById('eeveeMusic');if(!box)return;
   const s=Music.status();box.querySelector('#eeveeMusicOpen').textContent=t(s.muted?'♫ 已静音':'♫ 音乐');
+  const sb=box.querySelector('#eeveeSettingsOpen');if(sb)sb.textContent=t('⚙ 设置 · 存档');
   box.querySelector('section').setAttribute('aria-label',t('音乐设置'));
   const sel=box.querySelector('select');sel.setAttribute('aria-label',t('选择背景音乐'));sel.options[0].textContent=t('自动 · 随场景切换');
   Music.tracks.forEach((track,i)=>sel.options[i+1].textContent=trackLabel(track));
