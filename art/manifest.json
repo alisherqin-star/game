@@ -4488,6 +4488,36 @@
       "sha256": "9857982133c5eea4bd6feab318faae5226f0f9c6a3b4d22d62ff577b0f833628"
     },
     {
+      "id": "enemies/bat_dive_0",
+      "path": "sprites/enemies/bat_dive_0.png",
+      "region": "play",
+      "category": "enemies",
+      "width": 16,
+      "height": 12,
+      "anchor": [
+        8,
+        12
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "b7d521f87828dbe3b304155f24d75126e4b9f57a65bcb5291752468f4ffe5f16"
+    },
+    {
+      "id": "enemies/bat_dive_1",
+      "path": "sprites/enemies/bat_dive_1.png",
+      "region": "play",
+      "category": "enemies",
+      "width": 16,
+      "height": 12,
+      "anchor": [
+        8,
+        12
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "9a74ee7bb44add98d65d240a1d2e71a13f75b8968f495eb2838fee02ca9c6e52"
+    },
+    {
       "id": "enemies/bigslime_0",
       "path": "sprites/enemies/bigslime_0.png",
       "region": "play",
@@ -4608,6 +4638,21 @@
       "sha256": "8609aff98152067fd8a4e2780ce290579912eee2b40231b8f9f805bbb54afdfa"
     },
     {
+      "id": "enemies/frog_land",
+      "path": "sprites/enemies/frog_land.png",
+      "region": "play",
+      "category": "enemies",
+      "width": 18,
+      "height": 10,
+      "anchor": [
+        9,
+        10
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "54fed3ebd27f6caaf141ad2160c2fc5d91b56faec6186b862a40fd5c273e8690"
+    },
+    {
       "id": "enemies/hedgehog_0",
       "path": "sprites/enemies/hedgehog_0.png",
       "region": "play",
@@ -4711,6 +4756,36 @@
       "anchorConvention": "pixel boundary, top-left origin",
       "collision": "none; assign explicitly in level data",
       "sha256": "5516bde1a70a06f2ccd1b2940b99a5df407d5418abe4e89e275fc7cadd547214"
+    },
+    {
+      "id": "enemies/slime_small_0",
+      "path": "sprites/enemies/slime_small_0.png",
+      "region": "play",
+      "category": "enemies",
+      "width": 12,
+      "height": 10,
+      "anchor": [
+        6,
+        10
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "8b2073776749798fd11c571f67491e9ed4a1ecb808a73123af162f9ffb44a8aa"
+    },
+    {
+      "id": "enemies/slime_small_1",
+      "path": "sprites/enemies/slime_small_1.png",
+      "region": "play",
+      "category": "enemies",
+      "width": 12,
+      "height": 10,
+      "anchor": [
+        6,
+        10
+      ],
+      "anchorConvention": "pixel boundary, top-left origin",
+      "collision": "none; assign explicitly in level data",
+      "sha256": "9eadf4841d3473a5bae9572fafa5cdb6c4a40336131f1f6b9fd4e56b25f397aa"
     },
     {
       "id": "enemies/turret_0",
@@ -5238,10 +5313,10 @@
       ],
       "anchorConvention": "pixel boundary, top-left origin",
       "collision": "none; assign explicitly in level data",
-      "sha256": "555a8c2c6dccbca7660d965f4c2a20547d3c7db4a3bec0dec004297d28937987",
-      "role": "村长",
-      "trait": "叶帽＋圆眼镜",
-      "accent": "#739747"
+      "sha256": "088b74eed561e194ab0ea8ae31e3f6743d33ef06cae895562a2f65815b7a5c9c",
+      "role": "村长奶奶",
+      "trait": "灰白毛＋金边眼镜＋橡叶拐杖",
+      "accent": "#aab594"
     },
     {
       "id": "npcs/explorer",
@@ -5274,10 +5349,10 @@
       ],
       "anchorConvention": "pixel boundary, top-left origin",
       "collision": "none; assign explicitly in level data",
-      "sha256": "cc495ffefc55b36574e4e2826688795485860139e1e3e7141dfebc091d88d714",
-      "role": "园丁",
-      "trait": "小草帽＋绿围裙",
-      "accent": "#8ab85b"
+      "sha256": "ec019dbd3938a6593dee6632be3404445763049995d8fb2189ad4744821601d0",
+      "role": "罗丝奶奶",
+      "trait": "花草帽＋陶粉围裙",
+      "accent": "#c3927c"
     },
     {
       "id": "npcs/guard",

@@ -637,6 +637,61 @@
         0
       ],
       "sha256": "ae1059a2692dd218932755ed5bc36e2a99ff810271d63a8cbde3caeb13a618ae"
+    },
+    {
+      "id": "enemies/slime_small_0",
+      "path": "sprites/enemies/slime_small_0.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        6,
+        10
+      ],
+      "sha256": "8b2073776749798fd11c571f67491e9ed4a1ecb808a73123af162f9ffb44a8aa"
+    },
+    {
+      "id": "enemies/slime_small_1",
+      "path": "sprites/enemies/slime_small_1.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        6,
+        10
+      ],
+      "sha256": "9eadf4841d3473a5bae9572fafa5cdb6c4a40336131f1f6b9fd4e56b25f397aa"
+    },
+    {
+      "id": "enemies/bat_dive_0",
+      "path": "sprites/enemies/bat_dive_0.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        12
+      ],
+      "sha256": "b7d521f87828dbe3b304155f24d75126e4b9f57a65bcb5291752468f4ffe5f16"
+    },
+    {
+      "id": "enemies/bat_dive_1",
+      "path": "sprites/enemies/bat_dive_1.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        8,
+        12
+      ],
+      "sha256": "9a74ee7bb44add98d65d240a1d2e71a13f75b8968f495eb2838fee02ca9c6e52"
+    },
+    {
+      "id": "enemies/frog_land",
+      "path": "sprites/enemies/frog_land.png",
+      "category": "enemies",
+      "region": "play",
+      "anchor": [
+        9,
+        10
+      ],
+      "sha256": "54fed3ebd27f6caaf141ad2160c2fc5d91b56faec6186b862a40fd5c273e8690"
     }
   ]
 }
